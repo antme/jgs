@@ -4,20 +4,10 @@
 <head>
 <title></title>
 <link href="resources/css/comm.css" rel="stylesheet"/>
-<link href="resources/css/pf.css" rel="stylesheet"/>
-<link rel="stylesheet" type="text/css" href="/resources/css/easyui.css" />
-<link rel="stylesheet" type="text/css" href="/resources/css/mfc/orderCSS.css" />
-<link rel="stylesheet" type="text/css" href="/resources/css/public_class.css" />
-<link rel="stylesheet" type="text/css" href="/resources/css/user_info.css" />
-<link rel="stylesheet" type="text/css" href="/resources/css/Evaluation_publick.css" />
-<link rel="stylesheet" type="text/css" href="/resources/css/admin/admin.css" />
+
 <script type="text/javascript" src="resources/js/jquery.min.js"></script>
 <script type="text/javascript" src="resources/js/ecommerce.js"></script>
 <script type="text/javascript" src="resources/js/json2.js"></script>
-<script type="text/javascript" src="/resources/js/city-price.public.js"></script>
-<script type="text/javascript" src="/resources/js/public_css.js"></script>
-
-
 </head>
 
 <%
@@ -93,108 +83,6 @@
         var roleName = "<%=userRoleName%>";
         var pagePath = "<%=pagePath%>";
         
-      
-        $(document).ready(function(){
-        	//样式初始化
-        	loading_css();
-            loading_css_s();
-            loading_css_t();
-            loading_nodes_css();          
-            
-            
-            //数据初始化
-            var csp=$("#c_s_province");
-            var csc=$("#c_s_city");
-            var cso=$("#c_s_county");
-            if(csp.length!=0 && csc.length!=0 && cso.length!=0){
-            	loading_province("c_s_province","c_s_city","c_s_county");
-            }
-            
-            var cateid=$("#categoryId");
-            if(cateid.length!=0){
-            	loading_category_sum("categoryId");
-            }
-            
-            var ad_sum=$("#c_s_category");
-            if(ad_sum.length){
-            	loading_category_sum("c_s_category");
-            }
-            
-            var ssp=$("#s_s_province");
-            var ssc=$("#s_s_city");
-            var sso=$("#s_s_county");
-            if(ssp.length!=0 && ssc.length!=0  && sso.length!=0){
-            	loading_area("s_s_province", "s_s_city", "s_s_county");
-            }
-            
-            var msp=$("#mfc_s_province");
-            var msc=$("#mfc_s_city");
-            var mso=$("#mfc_s_county");
-            if(msp.length!=0 && msc.length!=0 && mso.length!=0){
-            	loading_area("mfc_s_province", "mfc_s_city", "mfc_s_county");
-            }
-            //初始化表格样式
-            updata_tables_css();
-            
-            
-            //初始化回到顶部按钮
-            var re=$(".return_top");
-            if(re.length==0){
-            	
-            }else{
-            	$(".handle_events").css("right","90px");
-            }
-            
-            //初始化右边高度
-            var height =document.documentElement.clientHeight;
-            var topheight=height - $(".head").height();
-            var index_height = ($(".title_cs").length+8)*40;
-            var right_height=$(".right").height();
-            if(right_height<=topheight){
-                if(right_height<=index_height){
-                    $(".right").css("height",index_height+"px");
-                    $(".right").css("min-height",index_height+"px");
-                }else{
-                    $(".right").css("height",topheight);
-                    $(".right").css("min-height",topheight);
-                }
-            }else{
-            	if(right_height<=index_height){
-                    $(".right").css("height",index_height+"px");
-                    $(".right").css("min-height",index_height+"px");
-                }
-            }   
-            
-            //初始化页面最小宽度
-            $("body").css("min-width","1250px");
-            
-            
-            var links = $("#sidebar a");
-            for(index in links){
-                if(links[index].href && pagePath && pagePath!=null && links[index].href.endWith(pagePath)){
-                    var $a = $(links[index].parentNode);
-                    if($a.find("a").hasClass("title_cs")){
-                        $(".title_cs").removeClass("display_inline");
-                        $a.find("a").addClass("display_inline");
-                    }else{
-                        $(".title_cs").removeClass("display_inline");
-                        $(".display_none").find("a").removeClass("dispaly_back2");
-                        $a.parent().show();
-                        $a.find("a").addClass("dispaly_back2");
-                        $a.parent().parent().find(".title_cs").addClass("display_inline");
-                    } 
-                }
-            }
-            
-            initDataGridEvent();
-        });
-
-        function  resizeder(){
-            resizeTabAndGrid();
-            $("body").css("min-width","1250px");
-        }
-        
-    
 
      </script>
     
