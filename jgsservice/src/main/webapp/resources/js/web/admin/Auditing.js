@@ -1,0 +1,16 @@
+$(".a_ch").click(function(){
+	$(".div_ch").show();
+	$(".div_fu").hide();
+	$(this).addClass("title_btn");
+	$(this).removeClass("title_btn_back");
+	$(".a_fu").addClass("title_btn_back");
+	$(".a_fu").removeClass("title_btn");
+});
+$(".a_fu").click(function(){
+	$(".div_fu").show();
+	$(".div_ch").hide();
+	$(this).addClass("title_btn");
+	$(this).removeClass("title_btn_back");
+	$(".a_ch").addClass("title_btn_back");
+	$(".a_ch").removeClass("title_btn");
+});

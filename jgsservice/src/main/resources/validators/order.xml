@@ -1,0 +1,14 @@
+<!DOCTYPE form-validation PUBLIC
+     "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.4.0//EN"
+     "http://commons.apache.org/dtds/validator_1_4_0.dtd">
+<form-validation>
+	<formset>
+
+		<form name="add">
+			<field property="poGoodsNumber" depends="required, int">
+				<arg key="order.poGoodsNumber" />
+			</field>
+		</form>
+
+	</formset>
+</form-validation>

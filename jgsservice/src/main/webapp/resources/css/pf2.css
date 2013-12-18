@@ -1,0 +1,108 @@
+.head {
+    padding: 0;
+    margin: 0;
+    border: 0px;
+    height: 43px;
+    line-height: 43px;
+    background: url(../images/head_back2.jpg) repeat-x;
+    border-bottom:1px solid #acafb3;
+}
+.info_has_info {
+    float: right;
+    margin-top: 7px;
+    margin-right: 18px;
+    width: 119px;
+    height: 30px;
+    background: url(../images/head_info2.jpg) no-repeat;
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;
+    line-height: 30px;
+}
+.center {
+    padding: 0;
+    margin: 0;
+    border: 0px;
+    width: 100%;
+    height: auto;
+    position: relative;
+    background-color: #eaeef3;
+}
+#sidebar li {
+    width: 100%;
+    line-height: 40px;
+    border-top: 1px solid #d2d6da;
+    border-bottom:0;
+    text-align: center;
+}
+#sidebar li a {
+    float;
+    width: 220px;
+    height: 40px;
+    display: inline-block;
+    cursor: pointer;
+    z-index: 99;
+    color:#000;
+    text-decoration:none;
+}
+.info_has_info_title {
+    background: url(../images/head_info.png) no-repeat 0px -45px; *+
+    background: url(../images/head_info.png) no-repeat 0px -46px;
+    _background: url(../images/ie6/head_info_title.jpg) no-repeat 0px 4px;
+    height: 20px;
+    color: #000;
+    padding-left: 18px;
+    font-weight: bold;
+    line-height: 20px;
+    display: inline-block;
+}
+.info_user {
+    color: #000;
+    font-size: 12px;
+    float: right;
+    margin-right: 20px;
+}
+
+.display_none li a{
+    color: #BCBCBC;
+}
+
+#sidebar ul ul li {
+    border-top: 1px solid #333333;
+    border-bottom: 1px solid #202020;
+}
+#sidebar ul ul li a{
+    color: #BCBCBC;
+}
+.info_done {
+    float: right;
+    margin-right: 44px;
+    margin-top: 7px;
+    width: 66px;
+    height: 27px;
+    background: url(../images/head_info_btn.jpg) no-repeat;
+    cursor: pointer;
+    display: inline-block;
+}
+
+#sidebar li a.display_inline {
+    background:url(../images/left_backg.jpg) repeat-x;
+    color: #000;
+    font-weight: bold;
+}
+
+.info_photo {
+    float: right;
+    margin-right: 20px;
+    margin-top: 12px;
+    width: 213px;
+    height: 17px;
+    background: url(../images/head_right_back.png) no-repeat;
+    width: 213px;
+    _background-image: none;
+    _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="resources/images/ie6/head_info_ie6.png");
+}
+
+
+
+

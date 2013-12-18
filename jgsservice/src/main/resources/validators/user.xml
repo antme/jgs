@@ -1,0 +1,38 @@
+<!DOCTYPE form-validation PUBLIC
+     "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.4.0//EN"
+     "http://commons.apache.org/dtds/validator_1_4_0.dtd">
+<form-validation>
+	<formset>
+
+		<form name="login">
+			<field property="userName" depends="required">
+				<arg key="user.userName" />
+			</field>
+			<field property="password" depends="required">
+				<arg key="user.password" />
+			</field>
+		</form>
+
+		<form name="userReg">
+		    <field property="userName" depends="required">
+                <arg key="user.userName" />
+                <var>
+                    <var-name>maxLength</var-name>
+                    <var-value>20</var-value>
+                </var>
+                <var>
+                    <var-name>minLength</var-name>
+                    <var-value>8</var-value>
+                </var>                
+            </field>
+            <field property="password" depends="required">
+                <arg key="user.password" />
+            </field>
+            <field property="mobileNumber" depends="required">
+                <arg key="user.mobileNumber" />
+            </field>
+		</form>
+
+
+	</formset>
+</form-validation>
