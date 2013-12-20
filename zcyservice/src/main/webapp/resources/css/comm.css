@@ -1,195 +1,108 @@
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent
+}
 body {
-	margin: 0;
-	border: 0;
-	padding: 0;
-	width:100%;
-	height: 100%;
-	background-color: rgb(68, 68, 68);
+    line-height:1;
+    background:url(../images/body_back.jpg) repeat 100% 0;
 }
-
-ul,li,a,span,img {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	margin: none;
-	padding: none;
-	border: none;
+ol, ul {
+    list-style:none
 }
-.bottom{
-	margin-left: 220px;
-    margin-right: 0;
-    position: relative;
-	width:auto;
-	height:30px;
-	line-height:30px;
-	text-align:center;
-	background:url(../images/bg.jpg) repeat;
-	z-index:1;
-	*+z-index:-1;
+.head{
+	width:980px;
+	height:80px;
+	margin:0px auto;
+	background:url(../images/logo.png) no-repeat 0px 0px;
+	position:relative;
 }
-
-
-.head_login {
-	float: left;
-	margin-left: 20px;
-	margin-top: 3px;
-	width: 140px;
-	height: 32px;
-	background: url(../images/logo_back_new.png) no-repeat;
-	_background-image: none;
-	_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="resources/images/logo_back_new.png",
-		sizingMethod='scale');
-}
-
-.login_info {
-	float: right;
-	wdith: auto;
-	height: 43px;
-	line-height: 43px;
-}
-
-.info_done:hover {
-	margin-top: 8px;
-}
-
-
-
-.info_has_info div {
-	width: 100%;
-	margin-top: 5px;
-	line-height: 20px;
-}
-
-
-
-.info_has_info_num {
-	background: url(../images/head_info.png) no-repeat -195px -19px; *+
-	background: url(../images/head_info.png) no-repeat -195px -18px;
-	color: #fff;
-	width: 8px;
-	height: 20px;
-	padding-left: 5px;
-	padding-right: 5px;
-	display: inline-block;
-	line-height: 20px;
-	margin-left: 10px;
-	_background-image: none;
-	_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="resources/images/ie6/head_info_num.png");
-	_backgrond-position: 0px 4px;
-	text-decoration:none;
-	_position: relative;
-	cursor:pointer;
-}
-
-
-
-.left {
-	padding: 0;
-	position: absolute;
-	width: 220px; *+
-	margin-left: -220px;
-	overflow:hidden;
-}
-
-#sidebar {
-	width: 220px;
-	height: auto;
-	line-height: 32px;
-	color: #bcbcbc;
-	overflow:hidden;
-}
-
-#sidebar ul,#sidebar li,#sidebar ul li ul {
-	float: left;
-	list-style: none;
-}
-
-#sidebar ul {
-	margin-top:
-}
-
-#sidebar ul ul {
-	background-color: rgb(42, 42, 42);
-	border: 1px solid #4e4e4e;
-}
-
-
-
-.margin_top {
-	margin-top: 26px;
-}
-
-
-#sidebar li a.title_cs{
-	font-size:16px;
-}
-#sidebar li ul li a{
+.user_name{
+    position:absolute;
+    right:10px;
+    top:20px;
     font-size:12px;
 }
-#sidebar li a:hover {
-	color: #fff;
-	font-weight: bold;
+.time{
+	margin-top:30px;
+	text-align:right;
+}
+.end_btn{
+	color:#ff6600;
+	text-decoration:underline;
+	cursor:pointer;
+}
+.menu{
+	width:980px;
+	height:80px;
+	margin:0px auto;
+	background:url(../images/index_menu.png) no-repeat;
+	line-height: 50px;
+}
+.menu li{
+	float: left;
+    font-family: "Microsoft Yahei","微软雅黑";
+    color: white;
+    font-size: 16px;
+    position:relative;
+}
+.menu li a{
+	margin: 0 22px;
+	color: white;
+	text-decoration:none;
+}
+.menu li a:hover{
+    text-decoration:underline;
+}
+.menu li:hover .ul_display{
+	display:block;
+}
+.menu_cline{
+	margin-top:7px;
+	width: 6px;
+    height: 30px;
+    background: url(../images/index_icons.png) no-repeat 1px -380px;
+}
+.ul_display{
+	position:absolute;
+	padding:5px;
+	padding-top:0;
+	height:auto;
+	background-color:#fff;
+	border:1px solid #cdcdcd;
+	border-top:none;
+	display:none;
+	*+top:50px;
+	*+left:0px;
+}
+.menu .ul_display a{
+	margin:0;
+	margin:none;
+	background: url(../images/pic.png) no-repeat 0px -30px;
+    float: left;
+    width: 110px;
+    height: 30px;
+    line-height: 30px;
+    color: white;
+    font-size: 14px;
+    text-align: left;
+    padding-left: 25px;
+}
+.menu .ul_display a:hover{
+	background: url(../images/pic.png) no-repeat;
+}
+.ul_display li{
+	padding-top:5px;
+}
+.context{
+	width:980px;
+	height:500px;
+	margin:10px auto;
+	background-color:#fff;
 }
 
-.display_none {
-	display: none;
-}
-
-
-
-#sidebar li.dispaly_back {
-	background: url(../images/title_back.png) no-repeat right center;
-	font-weight: bold;
-	color: #fff;
-	_background: url(../images/ie6/div_li_a_back.jpg) no-repeat right center;
-}
-#sidebar li.dispaly_back a{color: #fff;}
-#sidebar li a.dispaly_back2 {
-    background: url(../images/test_01_x.png) no-repeat 0px center;
-    font-weight: bold;
-    font-size:14px;
-    color: #ff6600;
-    _background: url(../images/test_02_x.jpg) no-repeat 0px center;
-}
-.right {
-	margin-left: 220px;
-	margin-right: 0;
-	position: relative;
-	width: auto;
-	height:100%;
-	background-color: #f4f4f4;
-	height: auto !important;
-	height: 751px;
-	min-height: 751px;
-	padding-left:10px;
-	padding-right:20px;
-	padding-top:20px;
-	background:url(../images/bg.jpg) repeat;
-	overflow:none;
-	_overflow:none;
-}
-.navigation{
-	float:left;
-	margin-top:10px;
-	margin-left:25px;
-	font-size:12px;
-	height:12px;
-	background:url(../images/top_title_jp.png) no-repeat;
-	text-indent:17px;
-	width:80%;
-}
-.navigation label{
-	font-weight:bold;
-}
-
-.demo{width:400px; height:150px;}
-
-.access{
-	display: none;
-}
-
-.select_pf{
-	float:right;
-	margin-right:10px;
-	margin-top:12px;
-}
