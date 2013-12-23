@@ -63,30 +63,30 @@ public class SystemSchedule {
 
 	public void run() {
 		logger.info("schedule run start");
-		sendOrderIntallNoticeMsg();
-
-		// 测试环境不允许读取数据
-		if (CFGManager.isProductEnviroment()) {
-			getSmsReply();
-		}
-
-		generateOrder24HoursNotice();
-
-		orderService.updateServiceOrderOperator();
-
-		orderService.updateProductOrderOperator();
-
-		changeOrderToOtherSp();
-
-		updateLocationGeoInfo();
-
-		updateSpcategoryInfo();
-
-		closeSercieOrder();
-
-		checkAccountStatus();
-
-		updateLocationAndCategoryName();
+//		sendOrderIntallNoticeMsg();
+//
+//		// 测试环境不允许读取数据
+//		if (CFGManager.isProductEnviroment()) {
+//			getSmsReply();
+//		}
+//
+//		generateOrder24HoursNotice();
+//
+//		orderService.updateServiceOrderOperator();
+//
+//		orderService.updateProductOrderOperator();
+//
+//		changeOrderToOtherSp();
+//
+//		updateLocationGeoInfo();
+//
+//		updateSpcategoryInfo();
+//
+//		closeSercieOrder();
+//
+//		checkAccountStatus();
+//
+//		updateLocationAndCategoryName();
 
 		logger.info("schedule run end");
 	}
