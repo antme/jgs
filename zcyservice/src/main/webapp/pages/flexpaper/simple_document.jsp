@@ -20,7 +20,7 @@
 			#flashContent { display:none; }
         </style>
 
-		<script type="text/javascript" src="<%=dir %>js/jquery.min.js"></script>
+		<script type="text/javascript" src="/resources/js/jquery.min.js"></script>
 		<script type="text/javascript" src="<%=dir %>js/jquery.extensions.min.js"></script>
 		<script type="text/javascript" src="<%=dir %>js/flexpaper.js"></script>
 		<script type="text/javascript" src="<%=dir %>js/flexpaper_handlers.js"></script>
