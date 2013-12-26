@@ -1,5 +1,6 @@
 package com.ecomm.dao;
 
+import java.io.File;
 import java.io.IOException;
 
 import junit.framework.TestCase;
@@ -58,6 +59,11 @@ public class BaseTestCase extends TestCase {
 
 	public void testEmpty() throws IOException, InterruptedException {
 //		System.out.println(smsService.getSmsRemainingMongey(null));
+		
+		File classPathFile = new File("");
+		
+		System.out.println(this.getClass().getResource("/").getPath());
+		
 		
 	}
 

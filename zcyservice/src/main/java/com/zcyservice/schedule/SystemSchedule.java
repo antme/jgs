@@ -26,5 +26,10 @@ public class SystemSchedule {
 
 		logger.info("schedule run end");
 	}
+	
+	
+	public void scanArchiveDocuments(){
+		
+	}
 
 }

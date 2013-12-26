@@ -7,6 +7,8 @@ import java.util.regex.Pattern;
 
 import org.apache.regexp.RE;
 
+import com.zcy.cfg.CFGManager;
+
 //hkh <?php date_default_timezone_set('America/New_York'); ?>
 public class Config {
 	protected static JArray config = null;
@@ -65,7 +67,9 @@ public class Config {
 	}
 
 	public String getConfigFilename(){
-		String configPath = ROOT + DIRECTORY_SEPARATOR + "jspConfig" + DIRECTORY_SEPARATOR;
+		String configPath = this.getClass().getResource("/").getPath()  +  DIRECTORY_SEPARATOR;
+		File classPathFile = new File(".");
+		
 		File f = new File(configPath);
 		if(!f.isDirectory())
 			f.mkdirs();
