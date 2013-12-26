@@ -94,7 +94,7 @@
 			</table>
 			</div>
 	<div id="manage_form" style="display:none;">
-	<div id="edituser" class="easyui-window" data-options="modal:true,closed:true,minimizable:false,maximizable:false,collapsible:false,iconCls:'icon-save',top:50" style="width:650px;height:auto;padding:10px; top:50px;">
+	<div id="edituser" class="easyui-window" data-options="modal:true,closed:true,minimizable:false,maximizable:false,collapsible:false,iconCls:'icon-save',top:50" style="width:550px;height:auto;padding:10px; top:50px;">
 		<form id="edituserform" action="" method="post">
 			<input type="hidden" name ="id" id="mfcId"/>
 			     <ul class="f-information">
@@ -102,7 +102,7 @@
 						<div class="r-edit-label">用户名：</div>
 						<div class="r-edit-field cc">
 							<input name="mfcStoreName" id="mfcStoreName" class="r-textbox easyui-validatebox"
-								type="text" missingMessage="请输入店铺名称"/> <label class="r-need">*</label><label id="c_info">不能修改</label>
+								type="text" missingMessage="请输入店铺名称"/> <label class="r-need">*</label>
 						</div>
 					</li>
 					<li>
@@ -138,7 +138,7 @@
 					</li>
 					<li>
 					    <div class="r-edit-label"></div>
-                        <div class="r-edit-field4">
+                        <div class="r-edit-field">
                             <button id="btn_mfc_s" type="button" class="r-submit fw">提交</button>
                             <input id="mfc_info_sum" style="display:none" type="submit" value="提交" />
                         </div>

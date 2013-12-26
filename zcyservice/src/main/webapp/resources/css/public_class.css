@@ -63,4 +63,48 @@
     width: 22px;
     height: 23px;
 }
-
+.r-edit-label{
+	float: left;
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+    width: 120px;
+}
+.r-edit-field {
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    margin-left: 10px;
+    width: 350px;
+}
+.r-textbox {
+    background: url("../images/login_icon.png") no-repeat scroll 0 -340px ;
+    border: 0 none;
+    float: left;
+    height: 30px;
+    line-height: 29px;
+    overflow: hidden;
+    width: 194px;
+}
+.f-information{
+	height:auto;
+	overflow:hidden;
+}
+.f-information li{
+	float:left;
+	width:100%;
+	margin-top:10px;
+}
+.r-submit{
+	width:82px;
+	height:28px;
+	border:0;
+	text-algin:center;
+	line-height:28px;
+	background: url("../images/public_submit.png") no-repeat;
+	color:#fff;
+	cursor:pointer;
+}
+.r-need{
+	color:red;
+}
