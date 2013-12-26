@@ -26,7 +26,6 @@ import com.zcy.util.EcUtil;
 import com.zcy.util.ImgUtil;
 import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.IECommerceUserService;
-import com.zcyservice.service.ISmsService;
 import com.zcyservice.util.PermissionConstants;
 
 @Controller
@@ -44,9 +43,6 @@ public class EcommerceUserController extends AbstractController {
 
 	@Autowired
 	private IECommerceUserService userService;
-
-	@Autowired
-	private ISmsService smsService;
 
 	private static Logger logger = LogManager.getLogger(EcommerceUserController.class);
 
@@ -83,7 +79,6 @@ public class EcommerceUserController extends AbstractController {
 
 			String regCode = ImgUtil.getRandomWord(4);
 			setSessionValue(request, REG_CODE, regCode);
-			smsService.sendRegCode(user.getMobileNumber(), regCode);
 			responseWithData(null, request, response);
 		} else {
 			throw new ResponseException("请输入正确验证码");

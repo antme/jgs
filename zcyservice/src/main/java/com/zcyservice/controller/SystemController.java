@@ -19,9 +19,7 @@ import com.zcy.bean.SystemConfig;
 import com.zcy.bean.User;
 import com.zcy.controller.AbstractController;
 import com.zcyservice.bean.Menu;
-import com.zcyservice.bean.SmsTemplate;
 import com.zcyservice.bean.vo.SearchVo;
-import com.zcyservice.service.ISmsService;
 import com.zcyservice.service.ISystemService;
 import com.zcyservice.util.PermissionConstants;
 
@@ -33,24 +31,7 @@ public class SystemController extends AbstractController {
 
 
 	@Autowired
-	private ISmsService smsService;
-
-	@Autowired
 	private ISystemService sys;
-
-	@RequestMapping("/sms/template/add.do")
-	@Permission(groupName = PermissionConstants.ADM_SMS_MANAGE, permissionID = PermissionConstants.ADM_SMS_MANAGE)
-	public void addSmsTemplate(HttpServletRequest request, HttpServletResponse response) {
-		SmsTemplate template = (SmsTemplate) parserJsonParameters(request, false, SmsTemplate.class);
-		smsService.addSmsTemplate(template);
-		responseWithData(null, request, response);
-	}
-
-	@RequestMapping("/sms/template/list.do")
-	@Permission(groupName = PermissionConstants.ADM_SMS_MANAGE, permissionID = PermissionConstants.ADM_SMS_MANAGE)
-	public void listSmsTemplates(HttpServletRequest request, HttpServletResponse response) {
-		responseWithListData(smsService.listSmsTemplates(), request, response);
-	}
 
 	@RequestMapping("/cfg/list.do")
 	public void listSystemConfig(HttpServletRequest request, HttpServletResponse response) {
@@ -186,15 +167,6 @@ public class SystemController extends AbstractController {
 
 
 	}
-	
-	@RequestMapping("/report/location_cate/spcount.do")
-	public void listSpLocationCateReport(HttpServletRequest request, HttpServletResponse response) {
-		SearchVo search = (SearchVo)parserJsonParameters(request, true, SearchVo.class);
-
-		responseWithData(sys.listSpLocationCateReport(search), request, response);
-
-
-	}
 
 
 	@RequestMapping("/report/order.do")
@@ -228,15 +200,8 @@ public class SystemController extends AbstractController {
 	@RequestMapping("/report/workerlist.do")
 	public void getWorkerReport(HttpServletRequest request, HttpServletResponse response) {
 		SearchVo svo = (SearchVo)parserJsonParameters(request, false, SearchVo.class);
-		responseWithListData(sys.getWorkerReport(svo), request, response);
 
 	}
 	
-	@RequestMapping("/account/test.do")
-	public void testAccount(HttpServletRequest request, HttpServletResponse response) {
-		SearchVo svo = (SearchVo)parserJsonParameters(request, false, SearchVo.class);
-		sys.testAccount(svo);
-		responseWithData(null, request, response);
 
-	}
 }

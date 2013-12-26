@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zcy.bean.BaseEntity;
@@ -20,24 +19,13 @@ import com.zcy.dbhelper.DataBaseQueryBuilder;
 import com.zcy.dbhelper.DataBaseQueryOpertion;
 import com.zcy.exception.LoginException;
 import com.zcy.exception.ResponseException;
-import com.zcy.log.EcJDBCAppender;
 import com.zcy.service.AbstractService;
 import com.zcy.util.DataEncrypt;
 import com.zcy.util.EcThreadLocal;
 import com.zcy.util.EcUtil;
 import com.zcy.validators.ValidatorUtil;
-import com.zcyservice.bean.Manufacturer;
-import com.zcyservice.bean.ProductOrder;
-import com.zcyservice.bean.ServiceOrder;
-import com.zcyservice.bean.ServiceProvider;
-import com.zcyservice.bean.Worker;
 import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.IECommerceUserService;
-import com.zcyservice.service.ILocationService;
-import com.zcyservice.service.IManufacturerService;
-import com.zcyservice.service.IOrderService;
-import com.zcyservice.service.ISProviderService;
-import com.zcyservice.service.ISmsService;
 import com.zcyservice.util.PermissionConstants;
 import com.zcyservice.util.Role;
 import com.zcyservice.util.UserStatus;
@@ -48,21 +36,7 @@ public class ECommerceUserServiceImpl extends AbstractService implements IEComme
 
 	private static Logger logger = LogManager.getLogger(ECommerceUserServiceImpl.class);
 
-	@Autowired
-	private ISmsService smsService;
-
-	@Autowired
-	private ISProviderService spService;
-
-	@Autowired
-	private IManufacturerService mfcService;
-
-	@Autowired
-	private IOrderService orderService;
-
-	@Autowired
-	private ILocationService locationService;
-
+	
 
 	@Override
 	public void updateUser(User user) {
@@ -200,7 +174,6 @@ public class ECommerceUserServiceImpl extends AbstractService implements IEComme
 			throw new ResponseException("此手机号码没有注册");
 		}
 
-		smsService.sendFgtPwdCode(user.getMobileNumber(), code);
 
 	}
 
@@ -251,14 +224,9 @@ public class ECommerceUserServiceImpl extends AbstractService implements IEComme
 			String roleName = user.getRoleName();
 			if (Role.CUSTOMER_SERVICE.toString().equalsIgnoreCase(roleName)) {
 				user.setUserCode(generateCode("K", User.TABLE_NAME, true));
-				String address = locationService.getLocationString(user.getUserLocationAreaId(), "");
-				user.setAddresses(address);
-				user.setUserLocation(address);
 
 			}
 			if (Role.USER.toString().equalsIgnoreCase(roleName)) {
-				String address = locationService.getLocationString(user.getUserLocationAreaId(), "");
-				user.setUserLocation(address);
 			}
 
 			if (EcUtil.isEmpty(user.getUserName())) {
@@ -269,8 +237,6 @@ public class ECommerceUserServiceImpl extends AbstractService implements IEComme
 			this.regUser(user);
 		} else {
 			if (!EcUtil.isEmpty(user.getUserLocationAreaId())) {
-				String address = locationService.getLocationString(user.getUserLocationAreaId(), "");
-				user.setUserLocation(address);
 			}
 			User old = (User) this.dao.findById(user.getId(), User.TABLE_NAME, User.class);
 			if (!old.getMobileNumber().equalsIgnoreCase(user.getMobileNumber())) {
@@ -319,26 +285,13 @@ public class ECommerceUserServiceImpl extends AbstractService implements IEComme
 
 	public Map<String, Object> getTodoListInfo() {
 		Map<String, Object> result = new HashMap<String, Object>();
-		if (inRole(PermissionConstants.ADM_USER_APPROVE)) {
-			result.put("NEW_SP_COUNT", dao.count(spService.getNewServiceProvidersQueryBuilder()));
-			result.put("UPDATE_SP_COUNT", dao.count(spService.getUpdateServiceProvidersQueryBuilder()));
 
-			result.put("NEW_MFC_COUNT", dao.count(mfcService.getNewMfcQueryBuilder()));
-			result.put("UPDATE_MFC_COUNT", dao.count(mfcService.getUpdateMfcQueryBuilder()));
 
-		}
-
-		if (inRole(PermissionConstants.ADM_ORDER_MANAGE)) {
-			result.put("SYS_REJECTED_ORDER_COUNT", dao.count(orderService.getSystemRejectOrderQueryBuilder()));
-			result.put("USER_REJECTED_ORDER_COUNT", dao.count(orderService.getUserRejectedOrderQueryBuilder()));
-
-		}
+	
 		SearchVo vo = new SearchVo();
 		vo.setOrderNoticType(0);
 
-		result.put("T_HOURS_ORDER_COUNT", dao.count(orderService.getOrderNoticeQueryBuilder(vo)));
 		vo.setOrderNoticType(1);
-		result.put("F_HOURS_ORDER_COUNT", dao.count(orderService.getOrderNoticeQueryBuilder(vo)));
 
 		if (CFGManager.getProperty(SystemConfig.BAIDU_MAP_KEY_ERROR) != null) {
 			result.put(SystemConfig.BAIDU_MAP_KEY_ERROR, CFGManager.getProperty(SystemConfig.BAIDU_MAP_KEY_ERROR));
@@ -353,38 +306,6 @@ public class ECommerceUserServiceImpl extends AbstractService implements IEComme
 		return result;
 	}
 
-	public User getManualProductOrderOperator(ProductOrder order) {
-		DataBaseQueryBuilder roleQuery = new DataBaseQueryBuilder(RoleGroup.TABLE_NAME);
-		roleQuery.and(DataBaseQueryOpertion.LIKE, RoleGroup.PERMISSIONS, ADM_ORDER_MANAGE);
-		List<RoleGroup> groupList = this.dao.listByQuery(roleQuery, RoleGroup.class);
-		List<String> ids = new ArrayList<String>();
-		for (RoleGroup group : groupList) {
-			ids.add(group.getId());
-		}
-
-		if (ids.size() > 0) {
-
-			DataBaseQueryBuilder userQuery = new DataBaseQueryBuilder(User.TABLE_NAME);
-			userQuery.and(DataBaseQueryOpertion.IN, User.GROUP_ID, ids);
-			userQuery.and(DataBaseQueryOpertion.NOT_EQUALS, User.STATUS, UserStatus.LOCKED.toString());
-
-			List<User> userList = this.dao.listByQuery(userQuery, User.class);
-			if (!userList.isEmpty()) {
-
-				int index = (int) (Math.random() * 100) % (userList.size());
-
-				if (index >= userList.size()) {
-					index = userList.size() - 1;
-				}
-
-				User user = userList.get(index);
-
-				return user;
-			}
-		}
-
-		return null;
-	}
 
 	public boolean inRole(String groupIds, String roleId){
 		
@@ -424,124 +345,12 @@ public class ECommerceUserServiceImpl extends AbstractService implements IEComme
 		
 
 	}
-	public User getManualServiceOrderOperator(ServiceOrder order) {
-		DataBaseQueryBuilder roleQuery = new DataBaseQueryBuilder(RoleGroup.TABLE_NAME);
-		roleQuery.and(DataBaseQueryOpertion.LIKE, RoleGroup.PERMISSIONS, ADM_ORDER_MANAGE);
+	
+	
 
-		List<RoleGroup> groupList = this.dao.listByQuery(roleQuery, RoleGroup.class);
-		List<String> ids = new ArrayList<String>();
-		for (RoleGroup group : groupList) {
-			ids.add(group.getId());
-		}
-
-		if (ids.size() > 0) {
-
-			DataBaseQueryBuilder userQuery = new DataBaseQueryBuilder(User.TABLE_NAME);
-			userQuery.and(DataBaseQueryOpertion.IN, User.GROUP_ID, ids);
-			userQuery.and(DataBaseQueryOpertion.NOT_EQUALS, User.STATUS, UserStatus.LOCKED.toString());
-
-
-			List<User> userList = this.dao.listByQuery(userQuery, User.class);
-			if (!userList.isEmpty()) {
-
-				int index = (int) (Math.random() * 100) % (userList.size());
-
-				if (index >= userList.size()) {
-					index = userList.size() - 1;
-				}
-
-				User user = userList.get(index);
-
-				return user;
-			}
-		}
-
-		return null;
-	}
-
-	public User getServiceOrderNoticeOperator(ServiceOrder order) {
-
-		DataBaseQueryBuilder roleQuery = new DataBaseQueryBuilder(RoleGroup.TABLE_NAME);
-		roleQuery.and(DataBaseQueryOpertion.LIKE, RoleGroup.PERMISSIONS, "adm_order_notice_manage");
-
-		List<RoleGroup> groupList = this.dao.listByQuery(roleQuery, RoleGroup.class);
-		List<String> ids = new ArrayList<String>();
-		for (RoleGroup group : groupList) {
-			ids.add(group.getId());
-		}
-
-		if (ids.size() > 0) {
-
-			DataBaseQueryBuilder userQuery = new DataBaseQueryBuilder(User.TABLE_NAME);
-			for (String id : ids) {
-				userQuery.or(DataBaseQueryOpertion.LIKE, User.GROUP_ID, id);
-			}
-
-			List<User> userList = this.dao.listByQuery(userQuery, User.class);
-			for (User user : userList) {
-				if (order.getOperatorId() != null && user.getId().equalsIgnoreCase(order.getOperatorId())) {
-					return user;
-				}
-			}
-			if (!userList.isEmpty()) {
-
-				int index = (int) (Math.random() * 100) % (userList.size());
-
-				if (index >= userList.size()) {
-					index = userList.size() - 1;
-				}
-
-				User user = userList.get(index);
-
-				return user;
-			}
-		}
-
-		return null;
-
-	}
-
-	public void checkUserMobile(String mobilePhone) {
-		DataBaseQueryBuilder builder = new DataBaseQueryBuilder(Manufacturer.TABLE_NAME);
-		builder.and(Manufacturer.MFC_CONTACT_MOBILE_PHONE, mobilePhone);
-		if (dao.exists(builder)) {
-			throw new ResponseException("此手机号已经被注册");
-		}
-
-//		builder = new DataBaseQueryBuilder(User.TABLE_NAME);
-//		builder.and(User.USER_NAME, mobilePhone);
-//		if (dao.exists(builder)) {
-//			throw new ResponseException("此手机号已经注册");
-//		}
-
-		builder = new DataBaseQueryBuilder(ServiceProvider.TABLE_NAME);
-		builder.and(ServiceProvider.SP_CONTACT_MOBILE_PHONE, mobilePhone);
-		if (dao.exists(builder)) {
-			throw new ResponseException("此手机号已经被注册");
-		}
-
-		builder = new DataBaseQueryBuilder(User.TABLE_NAME);
-		builder.and(User.MOBILE_NUMBER, mobilePhone);
-		if (dao.exists(builder)) {
-			throw new ResponseException("此手机号已经被注册");
-		}
-
-	}
 	
 	public void checkUserName(String userName){
-		DataBaseQueryBuilder builder = new DataBaseQueryBuilder(Manufacturer.TABLE_NAME);
-		builder.and(Manufacturer.MFC_STORE_NAME, userName);
-		if (dao.exists(builder)) {
-			throw new ResponseException("此用户已经注册");
-		}
-		
-		builder = new DataBaseQueryBuilder(ServiceProvider.TABLE_NAME);
-		builder.and(ServiceProvider.SP_USER_NAME, userName);
-		if (dao.exists(builder)) {
-			throw new ResponseException("此用户已经注册");
-		}
-		
-		builder = new DataBaseQueryBuilder(User.TABLE_NAME);
+		DataBaseQueryBuilder builder  = new DataBaseQueryBuilder(User.TABLE_NAME);
 		builder.and(User.USER_NAME, userName);
 		if (dao.exists(builder)) {
 			throw new ResponseException("此用户已经注册");
@@ -567,6 +376,14 @@ public class ECommerceUserServiceImpl extends AbstractService implements IEComme
 			}
 			dao.updateById(user);
 		}
+    }
+
+	
+
+	@Override
+    public void checkUserMobile(String mobilePhone) {
+	    // TODO Auto-generated method stub
+	    
     }
 
 }

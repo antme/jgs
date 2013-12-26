@@ -10,7 +10,6 @@ import com.zcy.bean.SystemConfig;
 import com.zcy.bean.User;
 import com.zcyservice.bean.Menu;
 import com.zcyservice.bean.vo.SearchVo;
-import com.zcyservice.bean.vo.WorkerReport;
 
 public interface ISystemService {
 
@@ -53,10 +52,6 @@ public interface ISystemService {
 
 	public Map<String, Object> getOrderEffectiveReport(SearchVo search);
 
-	public Map<String, Object> listSpLocationCateReport(SearchVo search);
 
-	public void testAccount(SearchVo svo);
-
-	public List<WorkerReport> getWorkerReport(SearchVo svo);
 
 }

@@ -1,45 +1,23 @@
 package com.zcyservice.service;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.zcy.dbhelper.DataBaseQueryBuilder;
 import com.zcy.dbhelper.DataBaseQueryOpertion;
 import com.zcy.service.AbstractService;
 import com.zcy.util.DateUtil;
 import com.zcy.util.EcUtil;
-import com.zcyservice.bean.ServiceOrder;
 import com.zcyservice.bean.vo.SearchVo;
 
 public abstract class EcommerceService extends AbstractService {
 
 
-	@Autowired
-	protected ICategoryService cateService;
-	
-	@Autowired
-	protected ILocationService locationService;
-	
+
 	public DataBaseQueryBuilder mergeCommonSearchQuery(SearchVo search, DataBaseQueryBuilder builder, String table, String closeKey, boolean defaultQuery) {
 		DataBaseQueryBuilder searchBuilder = new DataBaseQueryBuilder(table);
 		
-	
-		
-		if(!EcUtil.isEmpty(search.getSpId())){
-			searchBuilder.and(ServiceOrder.SP_ID, search.getSpId());
-			defaultQuery = false;
-		}
-		
-		if(!EcUtil.isEmpty(search.getMfcId())){
-			searchBuilder.and(ServiceOrder.MFC_ID, search.getMfcId());
-			defaultQuery = false;
-		}
+
 		
 
 		if (!EcUtil.isEmpty(search.getStartDate())) {
@@ -104,70 +82,8 @@ public abstract class EcommerceService extends AbstractService {
 	    return endDate;
     }
 	
-	
-	
-	protected void mergeLocationAndCateQuery(SearchVo search, DataBaseQueryBuilder builder, String cateKey, String locationKey) {
-
-		buildCateSearch(search, builder, cateKey);
-
-		buildLocationSearch(search, builder, locationKey);
-	}
 
 
 
-	public void buildCateSearch(SearchVo search, DataBaseQueryBuilder builder, String cateKey) {
-	    String cateId = search.getCategoryId();
-		if (EcUtil.isValid(cateId) && !search.getCategoryId().equalsIgnoreCase("0")) {
-			mergeCateQuery(cateId, builder, cateKey);
-		} else if (EcUtil.isValid(search.getCategoryParentId()) && !search.getCategoryParentId().equalsIgnoreCase("0")) {
-			mergeCateQuery(search.getCategoryParentId(), builder, cateKey);
-		} else if (EcUtil.isValid(search.getCategoryGrandpaId()) && !search.getCategoryGrandpaId().equalsIgnoreCase("0")) {
-			mergeCateQuery(search.getCategoryGrandpaId(), builder, cateKey);
-		}
-    }
-
-
-
-	public void mergeCateQuery(String cateID, DataBaseQueryBuilder builder, String cateKey) {
-	    List<String> ids = new ArrayList<String>();
-	    ids.add(cateID);
-	    List<String> cateIds = cateService.getAllChildren(ids);
-	    Set<String> searchIds = new HashSet<String>();
-	    for (String id : cateIds) {
-	    	searchIds.add(id);
-
-	    }
-	    searchIds.addAll(ids);
-	    builder.and(DataBaseQueryOpertion.IN, cateKey, searchIds);
-    }
-
-	public void buildLocationSearch(SearchVo search, DataBaseQueryBuilder builder, String locationKey) {
-	    String countyId = search.getCountyId();
-		if (EcUtil.isValid(countyId) && !countyId.equalsIgnoreCase("0")) {
-
-			buildLocationSearch(builder, countyId, locationKey);
-		} else if (EcUtil.isValid(search.getCityId()) && !search.getCityId().equalsIgnoreCase("0")) {
-			buildLocationSearch(builder, search.getCityId(), locationKey);
-
-		} else if (EcUtil.isValid(search.getProvinceId()) && !search.getProvinceId().equalsIgnoreCase("0")) {
-			buildLocationSearch(builder, search.getProvinceId(), locationKey);
-
-		}
-    }
-	
-
-	protected void buildLocationSearch(DataBaseQueryBuilder searchBuilder, String countyId, String locationKey) {
-	    List<String> ids = new ArrayList<String>();
-	    ids.add(countyId);
-
-	    List<String> cateIds = locationService.getAllChildren(ids);
-	    Set<String> searchIds = new HashSet<String>();
-	    for (String id : cateIds) {
-	    	searchIds.add(id);
-
-	    }
-	    searchIds.addAll(ids);
-	    searchBuilder.and(DataBaseQueryOpertion.IN, locationKey, searchIds);
-    }
 
 }

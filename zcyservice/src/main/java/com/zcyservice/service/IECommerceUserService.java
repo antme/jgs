@@ -6,8 +6,6 @@ import java.util.Map;
 import com.zcy.bean.BaseEntity;
 import com.zcy.bean.EntityResults;
 import com.zcy.bean.User;
-import com.zcyservice.bean.ProductOrder;
-import com.zcyservice.bean.ServiceOrder;
 import com.zcyservice.bean.vo.SearchVo;
 
 
@@ -44,12 +42,6 @@ public interface IECommerceUserService{
 
     
 	public Map<String, Object> getTodoListInfo();
-	
-	public User getManualProductOrderOperator(ProductOrder order);
-	
-	public User getManualServiceOrderOperator(ServiceOrder order);
-	
-	public User getServiceOrderNoticeOperator(ServiceOrder order);
 	
 	public void checkUserMobile(String mobilePhone);
 	
