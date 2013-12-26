@@ -108,3 +108,13 @@
 .r-need{
 	color:red;
 }
+.btn_add{
+	width:100px;
+	height:28px;
+	background: url("../images/add_btn.png") no-repeat;
+    color:#fff;
+    cursor:pointer;
+    border:0;
+    text-algin:center;
+    line-height:28px;
+}

@@ -7,6 +7,7 @@
 <link href="resources/css/easyui.css" rel="stylesheet"/>
 <link href="resources/css/public_class.css" rel="stylesheet"/>
 <script type="text/javascript" src="resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="resources/js/public_css.js"></script>
 </head>
 <body>
     <div class="head">
@@ -81,7 +82,7 @@
               <ul class="ul_display">
                  <li><a href="#">组织结构管理</a></li>
                  <li><a href="#">角色管理</a></li>
-                 <li><a href="#">权限管理</a></li>
+                 <li><a href="?p=admin/user/role">权限管理</a></li>
                  <li><a href="?p=admin/user/manage">用户组管理</a></li>
                  <li><a href="#">日志管理</a></li>
               </ul>
