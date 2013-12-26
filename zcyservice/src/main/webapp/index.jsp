@@ -4,6 +4,8 @@
 <head>
 <title>电子档案管理系统</title>
 <link href="resources/css/comm.css" rel="stylesheet"/>
+<link href="resources/css/easyui.css" rel="stylesheet"/>
+<link href="resources/css/public_class.css" rel="stylesheet"/>
 <script type="text/javascript" src="resources/js/jquery.min.js"></script>
 </head>
 <body>
@@ -26,7 +28,7 @@
            </div>
        </div>
     </div>
-    <div class="menu">
+    <div class="index_menu">
        <ul>
            <li>
               <a href="login.jsp">档案管理</a>
@@ -80,14 +82,31 @@
                  <li><a href="#">组织结构管理</a></li>
                  <li><a href="#">角色管理</a></li>
                  <li><a href="#">权限管理</a></li>
-                 <li><a href="#">用户组管理</a></li>
+                 <li><a href="?p=admin/user/manage">用户组管理</a></li>
                  <li><a href="#">日志管理</a></li>
               </ul>
            </li>
        </ul>
     </div>
     <div class="context">
-        <div></div>
+	    <div>
+	      <% 
+	                   String pagePath = request.getParameter("p"); 
+	                   if(pagePath == null){
+	         
+	                         pagePath = "admin/user/manage";
+	                        
+	                   }
+	                   if(pagePath != null){
+	                       pageContext.setAttribute("pagePath","pages/"+pagePath+".jsp");                           
+	                
+	                %>
+	                    <jsp:include page="${pagePath}" />
+	                
+	                <% } %>
+	    </div>
+         <div id="remotePage"  class="remotePage" style="display:none;"></div>
+         <div id="remotePageWindow"  style="display:none; overflow-y: scroll;"></div>
     </div>
 </body>
 </html>

@@ -1,0 +1,66 @@
+@CHARSET "UTF-8";
+.public_search_btn{
+	background: url("../images/public_search.png") no-repeat;
+    border: medium none;
+    cursor: pointer;
+    height: 34px;
+    width: 117px;
+}
+.public_search_input_text{
+	background: url("../images/public_select.png") no-repeat;
+    border: medium none;
+    color: #000000;
+    height: 30px;
+    line-height: 29px;
+    margin-top: 0;
+    width: 128px;
+}
+.span_style{
+	display: inline-block;
+    font-size: 14px;
+    overflow: hidden;
+    vertical-align: middle;
+}
+.line_clear{
+	height: 15px;
+    width: 100%;
+}
+.public_search_div{
+	margin-left:40px;
+}
+.public_search_tab{
+    margin-left:40px;
+}
+.public_title{
+	margin-left:40px;
+	width:900px;
+	height:41px;
+	background: url("../images/public_tip.png") no-repeat;
+}
+.public_title_icon{
+	float: left;
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 13px;
+    height: 19px;
+    background: url("../images/public_tip_icon.png") no-repeat;
+}
+.public_title_text{
+	float: left;
+    margin-left: 10px;
+    margin-top: 11px;
+    font-size: 18px;
+    font-family: "Microsoft Yahei","微软雅黑";
+}
+.public_title_btn{
+	float:right;
+	margin-right:20px;
+	margin-top:10px;
+	cursor:pointer;
+	display:inline-block;
+}
+.public_title_btn .btn_img{
+    width: 22px;
+    height: 23px;
+}
+

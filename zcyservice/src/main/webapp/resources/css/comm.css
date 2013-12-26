@@ -37,29 +37,29 @@ ol, ul {
 	text-decoration:underline;
 	cursor:pointer;
 }
-.menu{
+.index_menu{
 	width:980px;
 	height:80px;
 	margin:0px auto;
 	background:url(../images/index_menu.png) no-repeat;
 	line-height: 50px;
 }
-.menu li{
+.index_menu li{
 	float: left;
     font-family: "Microsoft Yahei","微软雅黑";
     color: white;
     font-size: 16px;
     position:relative;
 }
-.menu li a{
+.index_menu li a{
 	margin: 0 22px;
 	color: white;
 	text-decoration:none;
 }
-.menu li a:hover{
+.index_menu li a:hover{
     text-decoration:underline;
 }
-.menu li:hover .ul_display{
+.index_menu li:hover .ul_display{
 	display:block;
 }
 .menu_cline{
@@ -79,8 +79,9 @@ ol, ul {
 	display:none;
 	*+top:50px;
 	*+left:0px;
+	z-index:99999;
 }
-.menu .ul_display a{
+.index_menu .ul_display a{
 	margin:0;
 	margin:none;
 	background: url(../images/pic.png) no-repeat 0px -30px;
@@ -93,7 +94,7 @@ ol, ul {
     text-align: left;
     padding-left: 25px;
 }
-.menu .ul_display a:hover{
+.index_menu .ul_display a:hover{
 	background: url(../images/pic.png) no-repeat;
 }
 .ul_display li{
