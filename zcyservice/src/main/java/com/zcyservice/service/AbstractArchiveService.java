@@ -10,7 +10,7 @@ import com.zcy.util.DateUtil;
 import com.zcy.util.EcUtil;
 import com.zcyservice.bean.vo.SearchVo;
 
-public abstract class EcommerceService extends AbstractService {
+public abstract class AbstractArchiveService extends AbstractService {
 
 
 

@@ -17,12 +17,12 @@ import com.zcy.dbhelper.DataBaseQueryBuilder;
 import com.zcy.util.EcUtil;
 import com.zcyservice.bean.Menu;
 import com.zcyservice.bean.vo.SearchVo;
-import com.zcyservice.service.EcommerceService;
+import com.zcyservice.service.AbstractArchiveService;
 import com.zcyservice.service.ISystemService;
 import com.zcyservice.util.Role;
 
 @Service(value = "sys")
-public class SystemServiceImpl extends EcommerceService implements ISystemService {
+public class SystemServiceImpl extends AbstractArchiveService implements ISystemService {
 	private static Logger logger = LogManager.getLogger(SystemServiceImpl.class);
 
 	

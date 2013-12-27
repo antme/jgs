@@ -25,16 +25,16 @@ import com.zcy.util.EcThreadLocal;
 import com.zcy.util.EcUtil;
 import com.zcy.validators.ValidatorUtil;
 import com.zcyservice.bean.vo.SearchVo;
-import com.zcyservice.service.IECommerceUserService;
+import com.zcyservice.service.IUserService;
 import com.zcyservice.util.PermissionConstants;
 import com.zcyservice.util.Role;
 import com.zcyservice.util.UserStatus;
 
 @Service(value = "userService")
-public class ECommerceUserServiceImpl extends AbstractService implements IECommerceUserService {
+public class UserServiceImpl extends AbstractService implements IUserService {
 	public static final String ADM_ORDER_MANAGE = "adm_order_manage";
 
-	private static Logger logger = LogManager.getLogger(ECommerceUserServiceImpl.class);
+	private static Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
 	
 

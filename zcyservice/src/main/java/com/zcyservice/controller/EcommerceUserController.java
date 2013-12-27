@@ -25,7 +25,7 @@ import com.zcy.util.EcThreadLocal;
 import com.zcy.util.EcUtil;
 import com.zcy.util.ImgUtil;
 import com.zcyservice.bean.vo.SearchVo;
-import com.zcyservice.service.IECommerceUserService;
+import com.zcyservice.service.IUserService;
 import com.zcyservice.util.PermissionConstants;
 
 @Controller
@@ -42,7 +42,7 @@ public class EcommerceUserController extends AbstractController {
 	private static final String FORGET_PWD_MOBILE_PHONE = "pwdMobilePhone_User";
 
 	@Autowired
-	private IECommerceUserService userService;
+	private IUserService userService;
 
 	private static Logger logger = LogManager.getLogger(EcommerceUserController.class);
 

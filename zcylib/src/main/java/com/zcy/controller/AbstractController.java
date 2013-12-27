@@ -21,7 +21,7 @@ import com.zcy.bean.EntityResults;
 import com.zcy.bean.OrderBy;
 import com.zcy.bean.Pagination;
 import com.zcy.bean.User;
-import com.zcy.constants.EConstants;
+import com.zcy.constants.ZcyConstants;
 import com.zcy.exception.ResponseException;
 import com.zcy.util.DataEncrypt;
 import com.zcy.util.EcThreadLocal;
@@ -51,7 +51,7 @@ public abstract class AbstractController {
 	protected HashMap<String, Object> parserJsonParameters(HttpServletRequest request, boolean emptyParameter) {
 		HashMap<String, Object> parametersMap = new HashMap<String, Object>();
 
-		String parameters = request.getParameter(EConstants.JSON_PARAMETERS_LABEL);
+		String parameters = request.getParameter(ZcyConstants.JSON_PARAMETERS_LABEL);
 
 		int filterLength = 0;
 		if (parameters != null) {
@@ -97,7 +97,7 @@ public abstract class AbstractController {
 		}
 		if (EcUtil.isEmpty(parametersMap) && !emptyParameter) {
 			logger.error(String.format("Parameters required for path [%s]", request.getPathInfo()));
-			throw new ResponseException(EConstants.PARAMETER_REQUIRED);
+			throw new ResponseException("参数不能为空");
 		}
 
 		parametersMap.remove("_");
@@ -106,12 +106,12 @@ public abstract class AbstractController {
 		parametersMap.remove("filter[logic]");
 		parametersMap.remove("filter");
 
-		if (parametersMap.get(EConstants.CURRENT_PAGE) != null && parametersMap.get(EConstants.PAGE_SIZE) != null) {
+		if (parametersMap.get(ZcyConstants.CURRENT_PAGE) != null && parametersMap.get(ZcyConstants.PAGE_SIZE) != null) {
 			Pagination pagination = new Pagination();
-			pagination.setPage(EcUtil.getInteger(parametersMap.get(EConstants.CURRENT_PAGE), 0));
+			pagination.setPage(EcUtil.getInteger(parametersMap.get(ZcyConstants.CURRENT_PAGE), 0));
 			// default is 10;
-			pagination.setRows(EcUtil.getInteger(parametersMap.get(EConstants.PAGE_SIZE), 10));
-			EcThreadLocal.set(EConstants.PAGENATION, pagination);
+			pagination.setRows(EcUtil.getInteger(parametersMap.get(ZcyConstants.PAGE_SIZE), 10));
+			EcThreadLocal.set(ZcyConstants.PAGENATION, pagination);
 		}
 
 		// FIXME: only support sort by one column
@@ -121,13 +121,13 @@ public abstract class AbstractController {
 			order.setOrder(parametersMap.get("order").toString());
 			order.setSort(parametersMap.get("sort").toString());
 			
-			EcThreadLocal.set(EConstants.DB_QUERY_ORDER_BY, order);
+			EcThreadLocal.set(ZcyConstants.DB_QUERY_ORDER_BY, order);
 
 		}
 
 		parametersMap.remove("createdOn");
 		parametersMap.remove("updatedOn");
-		parametersMap.remove(EConstants.JSON_PARAMETERS_LABEL);
+		parametersMap.remove(ZcyConstants.JSON_PARAMETERS_LABEL);
 		return parametersMap;
 	}
 	

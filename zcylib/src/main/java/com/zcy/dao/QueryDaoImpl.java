@@ -18,7 +18,7 @@ import com.zcy.bean.BaseEntity;
 import com.zcy.bean.EntityResults;
 import com.zcy.bean.OrderBy;
 import com.zcy.bean.Pagination;
-import com.zcy.constants.EConstants;
+import com.zcy.constants.ZcyConstants;
 import com.zcy.dbhelper.DataBaseQueryBuilder;
 import com.zcy.exception.ResponseException;
 import com.zcy.log.EcJDBCAppender;
@@ -120,11 +120,11 @@ public class QueryDaoImpl implements IQueryDao {
 			Table table = classzz.getAnnotation(Table.class);
 			builder = new DataBaseQueryBuilder(table.name());
 		}
-		if (EcThreadLocal.get(EConstants.PAGENATION) != null) {
-			builder.pagination((Pagination) EcThreadLocal.get(EConstants.PAGENATION));
+		if (EcThreadLocal.get(ZcyConstants.PAGENATION) != null) {
+			builder.pagination((Pagination) EcThreadLocal.get(ZcyConstants.PAGENATION));
 		}
-		if (EcThreadLocal.get(EConstants.DB_QUERY_ORDER_BY) != null) {
-			OrderBy order = (OrderBy) EcThreadLocal.get(EConstants.DB_QUERY_ORDER_BY);
+		if (EcThreadLocal.get(ZcyConstants.DB_QUERY_ORDER_BY) != null) {
+			OrderBy order = (OrderBy) EcThreadLocal.get(ZcyConstants.DB_QUERY_ORDER_BY);
 			if(order.getOrder().equalsIgnoreCase("asc")){
 				builder.orderBy(order.getSort(), true);
 			}else{
@@ -179,7 +179,7 @@ public class QueryDaoImpl implements IQueryDao {
 	
 	public <T extends BaseEntity> BaseEntity findById(String id, String table, Class<T> classzz) {
 		DataBaseQueryBuilder builder = new DataBaseQueryBuilder(table);
-		builder.and(EConstants.ID, id);
+		builder.and(ZcyConstants.ID, id);
 		
 		Map<String, Object> result = dao.findOneByQuery(builder);
 

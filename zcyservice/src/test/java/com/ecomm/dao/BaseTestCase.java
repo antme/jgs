@@ -12,9 +12,9 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.zcy.dao.IQueryDao;
 import com.zcy.dao.QueryDaoImpl;
-import com.zcyservice.service.IECommerceUserService;
+import com.zcyservice.service.IUserService;
 import com.zcyservice.service.ISystemService;
-import com.zcyservice.service.impl.ECommerceUserServiceImpl;
+import com.zcyservice.service.impl.UserServiceImpl;
 import com.zcyservice.service.impl.SystemServiceImpl;
 
 public class BaseTestCase extends TestCase {
@@ -25,7 +25,7 @@ public class BaseTestCase extends TestCase {
 	
 	public IQueryDao dao;
 
-	public IECommerceUserService userService;
+	public IUserService userService;
 
 	
 
@@ -48,7 +48,7 @@ public class BaseTestCase extends TestCase {
 		}
 		dao = ac.getBean(QueryDaoImpl.class);
 
-		userService = ac.getBean(ECommerceUserServiceImpl.class);
+		userService = ac.getBean(UserServiceImpl.class);
 		
 		
 		sys = ac.getBean(SystemServiceImpl.class);
