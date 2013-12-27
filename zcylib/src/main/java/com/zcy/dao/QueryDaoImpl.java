@@ -57,8 +57,7 @@ public class QueryDaoImpl implements IQueryDao {
 			throw new ResponseException("保存失败");
 		}
 
-		logger.info(entity.getClass().getName());
-		
+	
 		EcJDBCAppender.appendLog(entity, false, entity.getClass());
 		return entity;
 

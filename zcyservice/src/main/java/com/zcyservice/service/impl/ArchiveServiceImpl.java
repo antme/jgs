@@ -1,14 +1,18 @@
 package com.zcyservice.service.impl;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import com.zcy.bean.EntityResults;
 import com.zcy.cfg.CFGManager;
+import com.zcy.dbhelper.DataBaseQueryBuilder;
 import com.zcyservice.bean.Archive;
 import com.zcyservice.bean.ArchiveFile;
+import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.AbstractArchiveService;
 import com.zcyservice.service.IArchiveService;
 import com.zcyservice.util.ZcyServiceConstants;
@@ -19,9 +23,13 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 	public void scanArchines() {
 
 		String scanPath = CFGManager.getProperty(ZcyServiceConstants.DOCUMENT_SCAN_PATH);
-
 		scanDocumentFolder(scanPath, null);
 
+	}
+	
+	public EntityResults<Archive> listArchives(SearchVo vo){
+		
+		return this.dao.listByQueryWithPagnation(new DataBaseQueryBuilder(Archive.TABLE_NAME), Archive.class);
 	}
 
 	private void scanDocumentFolder(String path, Archive archive) {
@@ -44,8 +52,10 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 				File subFiles[] = file.listFiles();
 				for (File subFile : subFiles) {
+
 					Archive arc = new Archive();
 					arc.setArchiveCode(UUID.randomUUID().toString());
+
 					arc.setArchiveName(subFile.getName());
 					this.dao.insert(arc);
 					scanDocumentFolder(subFile.getAbsolutePath(), arc);

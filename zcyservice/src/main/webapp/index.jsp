@@ -63,7 +63,7 @@
            <li>
               <a href="#">查询统计</a>
               <ul class="ul_display">
-                 <li><a href="#">档案查询</a></li>
+                 <li><a href="?p=web/archive/archivelist">档案查询</a></li>
                  <li><a href="#">数据统计</a></li>
               </ul>
            </li>
@@ -109,5 +109,13 @@
          <div id="remotePage"  class="remotePage" style="display:none;"></div>
          <div id="remotePageWindow"  style="display:none; overflow-y: scroll;"></div>
     </div>
+    
+ 	<script type="text/javascript">
+	    $(document).ready(function(){
+	    	loading_css();
+	    	initDataGridEvent();
+	    	 
+	    });
+    </script>
 </body>
 </html>
