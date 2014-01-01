@@ -32,31 +32,17 @@
     <div class="index_menu">
        <ul>
            <li>
-              <a href="login.jsp">档案管理</a>
-              <ul class="ul_display">
-                 <li><a href="login.jsp">采集整理</a></li>
-                 <li><a href="#">归档管理</a></li>
-                 <li><a href="#">变更管理</a></li>
-                 <li><a href="#">档案管理</a></li>
-                 <li><a href="#">销毁管理</a></li>
-              </ul>
+              <a href="?p=web/archive/archivemanager">档案管理</a>
+           
            </li>
            <li class="menu_cline"></li>
+      
            <li>
-              <a href="#">业务管理</a>
-              <ul class="ul_display">
-                 <li><a href="#">业务配置</a></li>
-                 <li><a href="#">任务管理</a></li>
-              </ul>
-           </li>
-           <li class="menu_cline"></li>
-           <li>
-              <a href="#">借阅管理</a>
+              <a href="?p=web/archive/archiveborrow">借阅管理</a>
               <ul class="ul_display">
                  <li><a href="#">借阅</a></li>
                  <li><a href="#">归还</a></li>
-                 <li><a href="#">催还</a></li>
-                 <li><a href="#">催还</a></li>
+           
               </ul>
            </li>
            <li class="menu_cline"></li>
@@ -64,19 +50,11 @@
               <a href="#">查询统计</a>
               <ul class="ul_display">
                  <li><a href="?p=web/archive/archivelist">档案查询</a></li>
-                 <li><a href="#">数据统计</a></li>
+                 <li><a href="?p=web/archive/archivereport">数据统计</a></li>
               </ul>
            </li>
            <li class="menu_cline"></li>
-           <li>
-              <a href="#">工作流管理</a>
-              <ul class="ul_display">
-                 <li><a href="#">工作流配置</a></li>
-                 <li><a href="#">工作流发布</a></li>
-                 <li><a href="#">工作流状态查询</a></li>
-              </ul>
-           </li>
-           <li class="menu_cline"></li>
+          
            <li>
               <a href="#">系统管理</a>
               <ul class="ul_display">

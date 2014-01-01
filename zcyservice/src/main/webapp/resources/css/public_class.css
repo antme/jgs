@@ -21,6 +21,16 @@
     overflow: hidden;
     vertical-align: middle;
 }
+
+.span_style_label{
+    display: inline-block;
+    font-size: 14px;
+    overflow: hidden;
+    vertical-align: middle;
+    width:100px;
+    text-align: right;
+}
+
 .line_clear{
 	height: 15px;
     width: 100%;
