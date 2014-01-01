@@ -1,5 +1,8 @@
 <%@ page import="lib.*,java.io.*" %>
 <%
+     out.println("............");
+    out.clear();
+    out = pageContext.pushBody();
     BufferedOutputStream outs = new BufferedOutputStream(response.getOutputStream());
 
 	common conf 	= new common();
@@ -9,6 +12,7 @@
 	String format	= request.getParameter("format");
 	String resolution	= request.getParameter("resolution");
 	String callback = request.getParameter("callback");
+	
 	
 
 	if(doc == null)return;

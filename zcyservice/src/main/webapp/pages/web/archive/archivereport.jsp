@@ -1,66 +1,148 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>档案查询</title>
-<script type="text/javascript" src="resources/js/ecommerce.js"></script>
-<script type="text/javascript" src="/resources/js/jquery.easyui.min.js"></script>
-<link href="/resources/css/easyui.css" rel="stylesheet"/>
-<script type="text/javascript" src="resources/js/archive.js"></script>
-
-<script type="text/javascript">
- function mfcAndSpstatusformatter(val, row, rowindex){
-       var status = row.userStatus;
-       if (status == 'NORMAL'){
-           return "正常";
-       }else if (status == 'LOCKED'){
-           return "已冻结";
-       }else{
-           return "";
-       }
-    } 
- function userstatusformatter(val, row, rowindex){
-       var status = row.status;
-       if (status == 'NORMAL'){
-           return "正常";
-       }else if (status == 'LOCKED'){
-           return "已冻结";
-       }else{
-           return "";
-       }
-    } 
-
-</script>
+<title>我的订单</title>
+<script type="text/javascript" src="/resources/js/highcharts.js"></script>
+<style type="text/css">
+    .highcharts-legend{
+        display : none;
+    }
+    
+    tspan {
+        font-size :16px;
+    }
+    
+    .highcharts-container{
+        margin-top : 30px;
+    }
+</style>
 </head>
 <body>
 
-   <%@ include file="/pages/web/archive/searcharchive.jsp"%>
-    <div style="margin-left:40px;">
-            <table id="newmfc"  class="easyui-datagrid_tf" url="/ecs/archive/listArchives.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
-                <thead>
-                    <tr>
-                        <th align="center"  field="archiveCode"  width="100"  sortable="false">档案编号</th>
-                        <th align="center"  field="archiveName"  width="100"  sortable="false">档案名称</th>
-                        <th align="center"  field="archiveStatus" width="100" sortable="false" >档案状态</th>
-                        <th align="center"  field="createdOn" width="120" sortable="false" >档案归档时间</th>
-                        <th align="center"  field="updatedOn" width="120" sortable="false" >档案修改时间</th>
-                        
-                        <th align="center" data-options="field:'id'" width="150">档案预览</th>
-                    </tr>
-                </thead>
-            </table>
-    </div>
+      <div class="page_tip">说明： 鼠标移到图标上可以看详细信息.</div>
+      <div class="p_height_div"></div>
+
+    <div id="sp-chart"></div>
+    
     
     <script type="text/javascript">
+    var chart;
 
-  $(document).ready(function(){
-     
     
-  });
+    function queryOrderStat(type){
+       
+    	var response ={
+    			"year13":800,
+    			"year12":500,
+    			"year14":100
+    	};
+             var text = "档案数汇总";
+           
+                var colors = Highcharts.getOptions().colors,
+                    categories = ['<a style="text-decoration:none;*+line-height:19px;margin-top:10px;display:inline-block;" href="index.jsp?p=web/archive/archivelist&poStatus=INACTIVE">2012</a>', 
+                            '<a style="text-decoration:none;*+line-height:19px;margin-top:10px;display:inline-block;" href="index.jsp?p=web/archive/archivelist&poStatus=NEED_SP_CONFIRM">2013</a>', 
+                            '<a style="text-decoration:none;*+line-height:19px;margin-top:10px;display:inline-block;" href="index.jsp?p=web/archive/archivelist&poStatus=ACCEPTED">2014</a>'],
+                    name = '订单状态',
+                    data = [{
+                            y: response.year12,
+                            color: colors[0]
+                        }, {
+                            y: response.year13,
+                            color: colors[1]
+                        }, {
+                            y: response.year14,
+                            color: colors[2]
+                        }];
+            
+
+            
+                var chart = $('#sp-chart').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: text
+                    },
+                    subtitle: {
+                        text: ''
+                    },
+                    xAxis: {
+                        categories: categories
+                    },
+                    yAxis: {
+                        title: {
+                            text: '单位（份）'
+                        }
+                    },
+                    plotOptions: {
+                        column: {
+                            cursor: 'pointer',
+                            point: {
+                                events: {
+                                    click: function() {
+                                       
+                                    }
+                                }
+                            },
+                            dataLabels: {
+                                enabled: true,
+                                color: colors[0],
+                                style: {
+                                    fontWeight: 'bold'
+                                },
+                                formatter: function() {
+                                    return this.y +'份';
+                                }
+                            }
+                        }
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            var url = "index.jsp?p=web/archive/archivelist";
+
+                            if(this.x == "未激活"){
+                                url = url + "&poStatus=INACTIVE";
+                            }else if(this.x == "待服务商确认"){
+                                url = url + "&poStatus=NEED_SP_CONFIRM";
+                            }else if(this.x == "已确认待分配"){
+                                url = url + "&poStatus=ACCEPTED";
+                            }else if(this.x == "已分配未安装"){
+                                url = url + "&poStatus=ASSIGNED";
+                            }else if(this.x == "人工处理"){
+                                url = url + "&poStatus=MANUAL";
+                            }else if(this.x == "已取消"){
+                                url = url + "&poStatus=CANCELLED";
+                            }
+                            
+                            var point = this.point,
+                                s = this.x +': <a target="_blank"  style="color:red;" href="' + url +'">'+ this.y +'</a> 份档案归档';
+                            return s;
+                        }
+                    },
+                    series: [{
+                        name: name,
+                        data: data,
+                        color: 'white'
+                    }],
+                    exporting: {
+                        enabled: false
+                    }
+                })
+                .highcharts(); // return chart
+        
+           
+ 
+    }
+    
+    $(function () {
+    	queryOrderStat();
+       
   
-  
-  </script>
+    });
+    </script>
 </body>
 </html>

@@ -418,7 +418,7 @@ public class Config {
 			byte[] cont = new byte[(int) f.length()];
 			fstream.read(cont);
 			fstream.close();
-			con = new String(cont,"iso8859-1");
+			con = new String(cont,"utf-8");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -428,7 +428,7 @@ public class Config {
 	public boolean file_write_contents(String file, String content) {
 		try {
 			FileOutputStream fstream = new FileOutputStream(file);
-			byte[] cont = content.getBytes("iso8859-1");
+			byte[] cont = content.getBytes("utf-8");
 			fstream.write(cont);
 			fstream.close();
 		} catch (Exception e) {
@@ -441,7 +441,7 @@ public class Config {
 	public int getTotalPage(String file){
 		String content = "";
 		try {
-			content = new String(file_get_contents(file), "iso8859-1");
+			content = new String(file_get_contents(file), "utf-8");
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}

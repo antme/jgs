@@ -14,6 +14,11 @@
 <body>
 
     <%@ include file="/pages/web/archive/searcharchive.jsp"%>
+       <div style="margin-left:50px;">
+        <button class="btn_add" onclick="openAddGroupWindow();">新增借阅记录</button>
+        <button class="btn_add" onclick="openAddGroupWindow();">新增归还记录</button>
+    </div>
+    <div class="line_clear"></div>
     <div style="margin-left:40px;">
             <table id="newmfc"  class="easyui-datagrid_tf" url="/ecs/archive/listArchives.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
                 <thead>

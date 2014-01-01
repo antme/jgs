@@ -40,11 +40,7 @@
       
            <li>
               <a href="?p=web/archive/archiveborrow">借阅管理</a>
-              <ul class="ul_display">
-                 <li><a href="#">借阅</a></li>
-                 <li><a href="#">归还</a></li>
-           
-              </ul>
+          
            </li>
            <li class="menu_cline"></li>
            <li>
