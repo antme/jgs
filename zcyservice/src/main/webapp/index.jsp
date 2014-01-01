@@ -6,8 +6,9 @@
 <link href="resources/css/comm.css" rel="stylesheet"/>
 <link href="resources/css/easyui.css" rel="stylesheet"/>
 <link href="resources/css/public_class.css" rel="stylesheet"/>
-<script type="text/javascript" src="resources/js/jquery.min.js"></script>
-<script type="text/javascript" src="resources/js/public_css.js"></script>
+<script type="text/javascript" src="/resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="/resources/js/public_css.js"></script>
+<script type="text/javascript" src="/resources/js/ecommerce.js"></script>
 </head>
 <body>
     <div class="head">

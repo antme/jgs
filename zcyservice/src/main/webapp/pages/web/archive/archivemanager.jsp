@@ -8,33 +8,19 @@
 <script type="text/javascript" src="resources/js/ecommerce.js"></script>
 <script type="text/javascript" src="/resources/js/jquery.easyui.min.js"></script>
 <link href="/resources/css/easyui.css" rel="stylesheet"/>
-<script type="text/javascript">
- function mfcAndSpstatusformatter(val, row, rowindex){
-       var status = row.userStatus;
-       if (status == 'NORMAL'){
-           return "正常";
-       }else if (status == 'LOCKED'){
-           return "已冻结";
-       }else{
-           return "";
-       }
-    } 
- function userstatusformatter(val, row, rowindex){
-       var status = row.status;
-       if (status == 'NORMAL'){
-           return "正常";
-       }else if (status == 'LOCKED'){
-           return "已冻结";
-       }else{
-           return "";
-       }
-    } 
+<script type="text/javascript" src="resources/js/archive.js"></script>
 
-</script>
 </head>
 <body>
 
     <%@ include file="/pages/web/archive/searcharchive.jsp"%>
+    
+    <div style="margin-left:50px;">
+        <button class="btn_add" onclick="openAddGroupWindow();">新增档案</button>
+        <button class="btn_add" onclick="openAddGroupWindow();">编辑档案</button>
+        <button class="btn_add" onclick="openAddGroupWindow();">销毁档案</button>
+    </div>
+    <div class="line_clear"></div>
     <div style="margin-left:40px;">
             <table id="newmfc"  class="easyui-datagrid_tf" url="/ecs/archive/listArchives.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
                 <thead>
@@ -45,7 +31,7 @@
                         <th align="center"  field="createdOn" width="120" sortable="false" >档案归档时间</th>
                         <th align="center"  field="updatedOn" width="120" sortable="false" >档案修改时间</th>
                         
-                        <th align="center" data-options="field:'id'" width="150">档案预览</th>
+                         <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="150">档案预览</th>
                     </tr>
                 </thead>
             </table>

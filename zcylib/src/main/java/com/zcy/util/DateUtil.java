@@ -79,6 +79,12 @@ public class DateUtil {
 	}
 	
 	
+	public static String getDateYearString(Date date){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+		return sdf.format(date);
+	}
+	
+	
 	
 	public static String getDateStringByLong(Long times){
 	    SimpleDateFormat sdf = new SimpleDateFormat(format);

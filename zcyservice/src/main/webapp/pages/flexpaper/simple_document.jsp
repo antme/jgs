@@ -7,7 +7,7 @@
 	String doc = request.getParameter("doc");
 	if(doc == null)
 		doc = "Paper.pdf";
-	String dir = "../";
+	String dir = "../pages/";
 %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
     <head>
@@ -26,13 +26,13 @@
 		<script type="text/javascript" src="<%=dir %>js/flexpaper_handlers.js"></script>
     </head>
     <body>
-		<div id="documentViewer" class="flexpaper_viewer" style="position:absolute;left:10px;top:10px;width:770px;height:500px">ssssssssss</div>
+		<div id="documentViewer" class="flexpaper_viewer" style="position:absolute;width:770px;height:500px">ssssssssss</div>
 		<script type="text/javascript">
 			function getDocumentUrl(document){
-				return "view.jsp?doc={doc}&format={format}&page={page}".replace("{doc}",document);     
+				return "/pages/flexpaper/view.jsp&doc={doc}&format={format}&page={page}".replace("{doc}",document);     
 			}
 			function getDocQueryServiceUrl(document){
-				return "swfsize.jsp?doc={doc}&page={page}".replace("{doc}",document);
+				return "?p=flexpaper/swfsize&doc={doc}&page={page}".replace("{doc}",document);
 			}
 			var startDocument = "<%=doc%>";
 
@@ -72,7 +72,7 @@
 					 CursorToolsVisible : true,
 					 SearchToolsVisible : true,
 
-					 DocSizeQueryService : "swfsize.jsp?doc=" + startDocument,
+					 DocSizeQueryService : "?p=flexpaper/swfsize&doc=" + startDocument,
 					 jsDirectory : '<%=dir%>js/',
 					 localeDirectory : '<%=dir %>locale/',
 

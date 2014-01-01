@@ -19,7 +19,7 @@ public class CFGManager {
 	private static Properties properties = new Properties();
 
 	public static IQueryDao dao;
-	
+
 	public static void setConfiguraion(String configFiles, IQueryDao dao) {
 		CFGManager.dao = dao;
 		if (properties.isEmpty()) {
@@ -36,20 +36,29 @@ public class CFGManager {
 
 			}
 		}
-		
+
 		loadDbConfig();
 	}
 
 	public static void loadDbConfig() {
-	    DataBaseQueryBuilder query = new DataBaseQueryBuilder(SystemConfig.TABLE_NAME);
-		query.limitColumns(new String[]{SystemConfig.CONFIG_ID, SystemConfig.CONFIG_VALUE});
+		DataBaseQueryBuilder query = new DataBaseQueryBuilder(SystemConfig.TABLE_NAME);
+		query.limitColumns(new String[] { SystemConfig.CONFIG_ID, SystemConfig.CONFIG_VALUE });
 		List<SystemConfig> list = dao.listByQuery(query, SystemConfig.class);
-		for(SystemConfig sc: list){
+		for (SystemConfig sc : list) {
 			properties.put(sc.getConfigId(), sc.getCfgValue());
 		}
-    }
+	}
+
+	public static String OS = System.getProperty("os.name").toLowerCase();
 
 	public static String getProperty(String key) {
+
+		if (isWindows()) {
+
+			if (properties.getProperty(key + "_windows") != null) {
+				return properties.getProperty(key + "_windows");
+			}
+		}
 		return properties.getProperty(key);
 	}
 
@@ -70,7 +79,7 @@ public class CFGManager {
 	public static void setProperties(String key, String value) {
 		properties.setProperty(key, value);
 	}
-	
+
 	public static void remove(String key) {
 		properties.remove(key);
 	}
@@ -91,5 +100,29 @@ public class CFGManager {
 
 	public static boolean isDevEnviroment() {
 		return !isProductEnviroment();
+	}
+
+	public static boolean isWindows() {
+
+		return (OS.indexOf("win") >= 0);
+
+	}
+
+	public static boolean isMac() {
+
+		return (OS.indexOf("mac") >= 0);
+
+	}
+
+	public static boolean isUnix() {
+
+		return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0);
+
+	}
+
+	public static boolean isSolaris() {
+
+		return (OS.indexOf("sunos") >= 0);
+
 	}
 }

@@ -8,29 +8,8 @@
 <script type="text/javascript" src="resources/js/ecommerce.js"></script>
 <script type="text/javascript" src="/resources/js/jquery.easyui.min.js"></script>
 <link href="/resources/css/easyui.css" rel="stylesheet"/>
-<script type="text/javascript">
- function mfcAndSpstatusformatter(val, row, rowindex){
-       var status = row.userStatus;
-       if (status == 'NORMAL'){
-           return "正常";
-       }else if (status == 'LOCKED'){
-           return "已冻结";
-       }else{
-           return "";
-       }
-    } 
- function userstatusformatter(val, row, rowindex){
-       var status = row.status;
-       if (status == 'NORMAL'){
-           return "正常";
-       }else if (status == 'LOCKED'){
-           return "已冻结";
-       }else{
-           return "";
-       }
-    } 
+<script type="text/javascript" src="resources/js/archive.js"></script>
 
-</script>
 </head>
 <body>
 
@@ -45,20 +24,12 @@
                         <th align="center"  field="createdOn" width="120" sortable="false" >档案归档时间</th>
                         <th align="center"  field="updatedOn" width="120" sortable="false" >档案修改时间</th>
                         
-                        <th align="center" data-options="field:'id'" width="150">档案预览</th>
+                        <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="150">档案预览</th>
                     </tr>
                 </thead>
             </table>
     </div>
     
-    <script type="text/javascript">
 
-  $(document).ready(function(){
-     
-    
-  });
-  
-  
-  </script>
 </body>
 </html>

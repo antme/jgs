@@ -8,6 +8,8 @@
 <script type="text/javascript" src="resources/js/ecommerce.js"></script>
 <script type="text/javascript" src="/resources/js/jquery.easyui.min.js"></script>
 <link href="/resources/css/easyui.css" rel="stylesheet"/>
+<script type="text/javascript" src="resources/js/archive.js"></script>
+
 <script type="text/javascript">
  function mfcAndSpstatusformatter(val, row, rowindex){
        var status = row.userStatus;

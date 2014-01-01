@@ -73,6 +73,10 @@ public class Config {
 		File f = new File(configPath);
 		if(!f.isDirectory())
 			f.mkdirs();
+		
+		if(isWin()){
+			return configPath + "jspconfig.win.ini";
+		}
 		return configPath + "jspconfig.ini";
 	}
 
