@@ -58,11 +58,9 @@
            <li>
               <a href="#">系统管理</a>
               <ul class="ul_display">
-                 <li><a href="#">组织结构管理</a></li>
-                 <li><a href="#">角色管理</a></li>
-                 <li><a href="?p=admin/user/role">权限管理</a></li>
-                 <li><a href="?p=admin/user/manage">用户组管理</a></li>
-                 <li><a href="#">日志管理</a></li>
+                 <li><a href="#">系统设置</a></li>
+                 <li><a href="?p=admin/user/role">科室管理</a></li>
+                 <li><a href="?p=admin/user/manage">用户账号管理</a></li>
               </ul>
            </li>
        </ul>
