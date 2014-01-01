@@ -32,6 +32,10 @@
     </div>
     <div class="index_menu">
        <ul>
+        	<li>
+              <a href="?p=web/archive/archivereport">首页</a>
+           
+           </li>
            <li>
               <a href="?p=web/archive/archivemanager">档案管理</a>
            
@@ -53,11 +57,19 @@
            <li class="menu_cline"></li>
           
            <li>
+              <a href="#">用户管理</a>
+              <ul class="ul_display">
+                 <li><a href="?p=admin/user/role">科室管理</a></li>
+                 <li><a href="?p=admin/user/manage">用户账号管理</a></li>
+              </ul>
+           </li>
+           <li class="menu_cline"></li>
+          
+           <li>
               <a href="#">系统管理</a>
               <ul class="ul_display">
                  <li><a href="#">系统设置</a></li>
-                 <li><a href="?p=admin/user/role">科室管理</a></li>
-                 <li><a href="?p=admin/user/manage">用户账号管理</a></li>
+                 <li><a href="#">系统状态监控</a></li>
               </ul>
            </li>
        </ul>
@@ -68,7 +80,7 @@
 	                   String pagePath = request.getParameter("p"); 
 	                   if(pagePath == null){
 	         
-	                         pagePath = "admin/user/manage";
+	                         pagePath = "web/archive/archivereport";
 	                        
 	                   }
 	                   if(pagePath != null){
