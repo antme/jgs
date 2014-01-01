@@ -15,7 +15,7 @@
        <div class="user_name">
            <div>
                <label>欢迎xx进入电子信息管理系统</label>
-               <a class="end_btn">退出</a>
+               <a class="end_btn" href="login.jsp">退出</a>
            </div>
            <div class="time">
                <label id="time"></label>
