@@ -73,17 +73,17 @@
 			$('#documentViewer').FlexPaperViewer({
 				 config : {
 					 DOC : escape(getDocumentUrl(startDocument)),
-					 Scale : 0.6, 
+					 Scale : 1.0, 
 					 ZoomTransition : 'easeOut',
 					 ZoomTime : 0.5, 
 					 ZoomInterval : 0.1,
 					 FitPageOnLoad : true,
 					 FitWidthOnLoad : false, 
-					 FullScreenAsMaxWindow : false,
-					 ProgressiveLoading : false,
-					 MinZoomSize : 0.2,
-					 MaxZoomSize : 5,
-					 SearchMatchAll : false,
+					 FullScreenAsMaxWindow : true,
+					 ProgressiveLoading : true,
+					 MinZoomSize : 0.5,
+					 MaxZoomSize : 8,
+					 SearchMatchAll : true,
 					 RenderingOrder : '<%=(conf.getConfig("renderingorder.primary", "") + "," +	conf.getConfig("renderingorder.secondary", "")) %>',
 
 					 ViewModeToolsVisible : true,
