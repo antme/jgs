@@ -1,4 +1,6 @@
 <!doctype html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@page import="lib.Config" %>
 <%
 	Config conf = new Config();
@@ -7,7 +9,7 @@
 	String doc = request.getParameter("doc");
 	if(doc == null)
 		doc = "Paper.pdf";
-	String dir = "../";
+	String dir = "../pages/";
 %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
     <head>
@@ -16,7 +18,7 @@
         <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width" />
         <style type="text/css" media="screen">
 			html, body	{ height:100%; }
-			body { margin:0; padding:0; overflow:auto; }
+			
 			#flashContent { display:none; }
         </style>
 
@@ -26,13 +28,31 @@
 		<script type="text/javascript" src="<%=dir %>js/flexpaper_handlers.js"></script>
     </head>
     <body>
-		<div id="documentViewer" class="flexpaper_viewer" style="position:absolute;left:10px;top:10px;width:770px;height:500px">ssssssssss</div>
+		<div id="documentViewer" class="flexpaper_viewer" style="position:absolute;width:770px;height:650px"></div>
+		<div id="documentFiles" style="width:170px;height:350px; float:right; margin-top:20px;">
+		   <ul>
+		               <li>
+                    <a href="#">档案主文件</a>
+                 </li>
+		         <li>
+		            <a href="#">文件一</a>
+		         </li>
+		            <li>
+                   <a href="#"> 文件二</a>
+                 </li>
+                    <li>
+                     <a href="#">文件三</a>
+                 </li>
+		   </ul>
+		
+		</div>
 		<script type="text/javascript">
 			function getDocumentUrl(document){
-				return "view.jsp?doc={doc}&format={format}&page={page}".replace("{doc}",document);     
+				console.log("/pages/flexpaper/view.jsp?doc={doc}&format={format}&page={page}".replace("{doc}",document));
+				return "/pages/flexpaper/view.jsp?doc={doc}&format={format}&page={page}".replace("{doc}",document);     
 			}
 			function getDocQueryServiceUrl(document){
-				return "swfsize.jsp?doc={doc}&page={page}".replace("{doc}",document);
+				return "/pages/flexpaper/swfsize.jsp&doc={doc}&page={page}".replace("{doc}",document);
 			}
 			var startDocument = "<%=doc%>";
 
@@ -72,7 +92,7 @@
 					 CursorToolsVisible : true,
 					 SearchToolsVisible : true,
 
-					 DocSizeQueryService : "swfsize.jsp?doc=" + startDocument,
+					 DocSizeQueryService : "?p=flexpaper/swfsize&doc=" + startDocument,
 					 jsDirectory : '<%=dir%>js/',
 					 localeDirectory : '<%=dir %>locale/',
 

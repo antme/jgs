@@ -704,10 +704,10 @@ function updateParent(field, width){
 	 });
 }
 
-//function fixWidth(width)  
-//{   
-//	return document.body.clientWidth -270 ; //这里你可以自己做调整  
-//}
+function fixWidth(width)  
+{   
+	return 900 ; //这里你可以自己做调整  
+}
 
 
 

@@ -1,85 +1,13 @@
-[ {
-	"text" : "用户审核",
-	"id" : "adm_user_approve",
-	"indexPage" : "admin/user/newuser"
-}, {
+[  {
 	"text" : "用户管理",
 	"id" : "adm_user_manage",
 	"indexPage" : "admin/user/manage"
 }, {
-	"text" : "订单处理",
+	"text" : "档案管理",
 	"id" : "adm_order_manage",
 	"indexPage" : "admin/order/sysreject"
 }, {
-	"text" : "订单查询",
+	"text" : "档案查询",
 	"id" : "adm_order_query",
 	"indexPage" : "admin/order/list"
-}, {
-	"text" : "催单提醒",
-	"id" : "adm_order_notice_manage",
-	"indexPage" : "admin/order/noticelist"
-}, {
-	"text" : "投诉管理",
-	"id" : "adm_complaint_manage",
-	"indexPage" : "service/complaint/complaint"
-}, {
-	"text" : "投诉类型管理",
-	"id" : "adm_complaint_type_manage",
-	"indexPage" : "service/complaint/complaintType"
-}, {
-	"text" : "定价管理",
-	"id" : "adm_setprice_manage",
-	"indexPage" : "admin/price/setprice"
-},{
-	"text" : "定价查询",
-	"id" : "adm_price_query",
-	"indexPage" : "admin/price/admsearchprice"
-}, {
-	"text" : "区域管理",
-	"id" : "adm_location_manage",
-	"indexPage" : "admin/regional/Regional"
-}, {
-	"text" : "服务商区域查询",
-	"id" : "adm_sp_regional_query",
-	"indexPage" : "admin/user/spregional"
-}, {
-	"text" : "品类管理",
-	"id" : "adm_category_manage",
-	"indexPage" : "admin/regional/adm_category"
-}, {
-	"text" : "账单管理",
-	"id" : "adm_bill_manage",
-	"indexPage" : "admin/order/mfcbill"
-}, {
-	"text" : "短信模板管理",
-	"id" : "adm_sms_manage",
-	"indexPage" : "admin/sms/template"
-}, {
-	"text" : "系统设置",
-	"id" : "adm_rule_manage",
-	"indexPage" : "admin/cfg/cfg"
-}, {
-	"text" : "站内信息",
-	"id" : "adm_site_msg_manage",
-	"indexPage" : "message/suadmin/add"
-}, {
-	"text" : "新闻发布",
-	"id" : "adm_news_manage",
-	"indexPage" : "admin/news/addNews"
-}, {
-	"text" : "广告位发布",
-	"id" : "adm_adv_manage",
-	"indexPage" : "admin/ad/adList"
-}, {
-	"text" : "数据统计",
-	"id" : "adm_report_manage",
-	"indexPage" : "admin/report/user"
-},  {
-	"text" : "评价查询",
-	"id" : "adm_judge_manage",
-	"indexPage" : "admin/evaluation/evaluation"
-} , {
-	"text" : "日志查看",
-	"id" : "adm_log_manage",
-	"indexPage" : "admin/cfg/log"
 }]

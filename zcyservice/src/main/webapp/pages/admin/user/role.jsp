@@ -12,17 +12,17 @@
     <div class="line_clear"></div>
     <div class="public_title">
         <div class="public_title_icon">​</div>​
-        <label class="public_title_text">权限管理</label>
+        <label class="public_title_text">科室管理</label>
     </div>
     <div class="line_clear"></div>
 	<div id="groupTab" class="public_search_div" style="width:900px;">
-		<div title="权限组设置" style="padding: 10px">
-			<button class="btn_add" onclick="openAddGroupWindow();">新增权限组</button>
+		<div title="科室设置" style="padding: 10px">
+			<button class="btn_add" onclick="openAddGroupWindow();">新增科室</button>
 			<div class="line_clear"></div>
 			<table class="easyui-datagrid_tf" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true" id="groupList"  url="/ecs/sys/cfg/role/group/list.do" iconCls="icon-save" sortOrder="asc"  pagination="true"  singleSelect="true" data-options="onClickRow: onGroupPermissionClickRow">
 	        <thead>
 	            <tr>
-	                <th align="center"  field="groupName"  sortable="false" width='200' align="center" resizable="true">权限组</th>
+	                <th align="center"  field="groupName"  sortable="false" width='200' align="center" resizable="true">科室名称</th>
 	                <th align="center"  field="description"  sortable="false" width='200' align="center" resizable="true">描述</th>
 	                <th data-options="field:'id'" width='200' align="center" resizable="true">操作</th>
 	            </tr>
@@ -36,7 +36,7 @@
                 </tbody>
 	       </table>
 		</div>
-		<div title="用户权限设置" style="padding: 10px">
+		<div title="用户科室设置" style="padding: 10px">
 			<table class="" id="userList"  url="/ecs/sys/cfg/role/bakend/user/list.do" 
 		         iconCls="icon-save" sortOrder="asc"  pagination="true"  singleSelect="true"  data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true">
 		        <thead>
@@ -59,14 +59,14 @@
 	</div>
 
 <div style="display:none;">
-	<div id="addRoleGroup" class="easyui-window" title="编辑权限组" data-options="modal:true,closed:true,maximizable:false,minimizable:false,collapsible:false,iconCls:'icon-save'" style="width:650px;height:auto;padding:10px;">
+	<div id="addRoleGroup" class="easyui-window" title="编辑科室信息" data-options="modal:true,closed:true,maximizable:false,minimizable:false,collapsible:false,iconCls:'icon-save'" style="width:650px;height:auto;padding:10px;">
 			<form action="" id="addRoleGroupForm" method="post" novalidate>
 					<input  id="permissionsId" name="id" type="hidden" />
 					<input  id="permissions" name="permissions" type="hidden" />
 					<table>
 						<tbody>
 							<tr>
-								<td><label for="groupName"> 权限组名字 </label>:</td>
+								<td><label for="groupName"> 科室名字 </label>:</td>
 								<td><input class="ui-widget-content ui-corner-all ui-input r-textbox easyui-validatebox" id="groupName" name="groupName" size="55" required missingMessage="请输入名称"/></td>
 							</tr>
 							<tr>
@@ -77,10 +77,7 @@
 								    </div>
                                 </td>
 							</tr>
-							<tr>
-                                <td><label for="indexPageCom"> 首页设置 </label>:</td>
-                                <td> <input class="easyui-combobox" id="indexPageCom" name="indexPage" data-options="valueField:'indexPage',textField:'text',multiple:false,width:128,height:30"></td>
-                            </tr>
+						
 							<tr>
 								<td><label for="description"> 描述 </label>:</td>
 								<td><textarea rows="15" cols="60" id="description" name="description"></textarea></td>
@@ -132,12 +129,12 @@
 	 $('#groupTab').tabs({
  	    border:false,
  	    onSelect:function(title){
- 	    	if(title=="权限组设置"){
+ 	    	if(title=="科室设置"){
  	    	     $('#groupList').datagrid({
  	    	         url:'/ecs/sys/cfg/role/group/select.do'
  	    	     });
  	
- 	    	}else if(title =="用户权限设置"){
+ 	    	}else if(title =="用户科室设置"){
  	    		 $('#userList').datagrid({
                      url:'/ecs/sys/cfg/role/bakend/user/list.do'
                });  

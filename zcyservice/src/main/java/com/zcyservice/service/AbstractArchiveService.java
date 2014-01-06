@@ -10,15 +10,17 @@ import com.zcy.util.DateUtil;
 import com.zcy.util.EcUtil;
 import com.zcyservice.bean.vo.SearchVo;
 
-public abstract class EcommerceService extends AbstractService {
+public abstract class AbstractArchiveService extends AbstractService {
 
+	public String generateCode(String prefix, String db) {
+		DataBaseQueryBuilder builder = new DataBaseQueryBuilder(db);
 
+		int index = 1000 + this.dao.count(builder) + 1;
+		return prefix + "-" + DateUtil.getDateYearString(new Date()) + "-" + index;
+	}
 
 	public DataBaseQueryBuilder mergeCommonSearchQuery(SearchVo search, DataBaseQueryBuilder builder, String table, String closeKey, boolean defaultQuery) {
 		DataBaseQueryBuilder searchBuilder = new DataBaseQueryBuilder(table);
-		
-
-		
 
 		if (!EcUtil.isEmpty(search.getStartDate())) {
 			searchBuilder.and(DataBaseQueryOpertion.GREATER_THAN_EQUALS, closeKey, search.getStartDate());
@@ -31,8 +33,8 @@ public abstract class EcommerceService extends AbstractService {
 			searchBuilder.and(DataBaseQueryOpertion.LESS_THAN_EQUAILS, closeKey, endDate);
 			defaultQuery = false;
 		}
-		
-		if(defaultQuery && EcUtil.isEmpty(search.getDateType())){
+
+		if (defaultQuery && EcUtil.isEmpty(search.getDateType())) {
 			search.setDateType("0");
 		}
 		if (!EcUtil.isEmpty(search.getDateType())) {
@@ -55,11 +57,11 @@ public abstract class EcommerceService extends AbstractService {
 				searchBuilder.and(DataBaseQueryOpertion.LESS_THAN, closeKey, c.getTime());
 
 			} else if (search.getDateType().equalsIgnoreCase("2")) {
-				c.add(Calendar.MONTH, -3);		
+				c.add(Calendar.MONTH, -3);
 				c.set(Calendar.DAY_OF_MONTH, 1);
 				searchBuilder.and(DataBaseQueryOpertion.GREATER_THAN_EQUALS, closeKey, c.getTime());
-				
-				c.add(Calendar.MONTH, 2);		
+
+				c.add(Calendar.MONTH, 2);
 				c.set(Calendar.DAY_OF_MONTH, c.getMaximum(Calendar.DAY_OF_MONTH) + 1);
 				searchBuilder.and(DataBaseQueryOpertion.LESS_THAN, closeKey, c.getTime());
 			}
@@ -71,19 +73,13 @@ public abstract class EcommerceService extends AbstractService {
 		}
 		return builder;
 	}
-	
-	
 
 	public Date getQueryEndDate(SearchVo search) {
-	    Date endDate = search.getEndDate();
-	    if(DateUtil.getDateStringTime(endDate).endsWith("00:00:00")){
-	    	endDate = new Date(endDate.getTime() + 86400000L - 1L);
-	    }
-	    return endDate;
-    }
-	
-
-
-
+		Date endDate = search.getEndDate();
+		if (DateUtil.getDateStringTime(endDate).endsWith("00:00:00")) {
+			endDate = new Date(endDate.getTime() + 86400000L - 1L);
+		}
+		return endDate;
+	}
 
 }

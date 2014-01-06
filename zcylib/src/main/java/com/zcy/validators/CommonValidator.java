@@ -33,7 +33,7 @@ import org.apache.commons.validator.util.ValidatorUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import com.zcy.constants.EConstants;
+import com.zcy.constants.ZcyConstants;
 import com.zcy.exception.ResponseException;
 import com.zcy.util.EcUtil;
 
@@ -466,7 +466,7 @@ public class CommonValidator {
 
         } else {
 			logger.error(String.format("Must set in values into configuration", bean));
-            throw new ResponseException(EConstants.NOT_SET_IN_VALID_FILE);
+            throw new ResponseException("可填的值没有配置");
         }
 
         return false;

@@ -23,10 +23,6 @@ public class Archive extends BaseEntity {
 	@Expose
 	public String archiveDescription;
 
-	@Column(name = "archiveFilePath")
-	@Expose
-	public String archiveFilePath;
-
 	@Column(name = "archiveStatus")
 	@Expose
 	public String archiveStatus;
@@ -53,14 +49,6 @@ public class Archive extends BaseEntity {
 
 	public void setArchiveDescription(String archiveDescription) {
 		this.archiveDescription = archiveDescription;
-	}
-
-	public String getArchiveFilePath() {
-		return archiveFilePath;
-	}
-
-	public void setArchiveFilePath(String archiveFilePath) {
-		this.archiveFilePath = archiveFilePath;
 	}
 
 	public String getArchiveStatus() {

@@ -9,7 +9,7 @@ import com.zcy.bean.User;
 import com.zcyservice.bean.vo.SearchVo;
 
 
-public interface IECommerceUserService{
+public interface IUserService{
 
 
     public void updateUser(User user);

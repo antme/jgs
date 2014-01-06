@@ -1,6 +1,10 @@
 <%@ page import="lib.*,java.io.*" %>
 <%
-	BufferedOutputStream outs = new BufferedOutputStream(response.getOutputStream());
+     out.println("............");
+    out.clear();
+    out = pageContext.pushBody();
+    BufferedOutputStream outs = new BufferedOutputStream(response.getOutputStream());
+
 	common conf 	= new common();
 	String doc 		= request.getParameter("doc");
 	String pdfdoc	= doc;
@@ -8,6 +12,8 @@
 	String format	= request.getParameter("format");
 	String resolution	= request.getParameter("resolution");
 	String callback = request.getParameter("callback");
+	
+	
 
 	if(doc == null)return;
 	if(!doc.endsWith(".pdf"))	{pdfdoc 	= doc + ".pdf";}

@@ -7,6 +7,8 @@ import java.util.regex.Pattern;
 
 import org.apache.regexp.RE;
 
+import com.zcy.cfg.CFGManager;
+
 //hkh <?php date_default_timezone_set('America/New_York'); ?>
 public class Config {
 	protected static JArray config = null;
@@ -65,10 +67,16 @@ public class Config {
 	}
 
 	public String getConfigFilename(){
-		String configPath = ROOT + DIRECTORY_SEPARATOR + "jspConfig" + DIRECTORY_SEPARATOR;
+		String configPath = this.getClass().getResource("/").getPath()  +  DIRECTORY_SEPARATOR;
+		File classPathFile = new File(".");
+		
 		File f = new File(configPath);
 		if(!f.isDirectory())
 			f.mkdirs();
+		
+		if(isWin()){
+			return configPath + "jspconfig.win.ini";
+		}
 		return configPath + "jspconfig.ini";
 	}
 
@@ -410,7 +418,7 @@ public class Config {
 			byte[] cont = new byte[(int) f.length()];
 			fstream.read(cont);
 			fstream.close();
-			con = new String(cont,"iso8859-1");
+			con = new String(cont,"utf-8");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -420,7 +428,7 @@ public class Config {
 	public boolean file_write_contents(String file, String content) {
 		try {
 			FileOutputStream fstream = new FileOutputStream(file);
-			byte[] cont = content.getBytes("iso8859-1");
+			byte[] cont = content.getBytes("utf-8");
 			fstream.write(cont);
 			fstream.close();
 		} catch (Exception e) {
@@ -433,7 +441,7 @@ public class Config {
 	public int getTotalPage(String file){
 		String content = "";
 		try {
-			content = new String(file_get_contents(file), "iso8859-1");
+			content = new String(file_get_contents(file), "utf-8");
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}

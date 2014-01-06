@@ -16,11 +16,11 @@ import com.zcy.util.DataEncrypt;
 import com.zcyservice.bean.mock.TestTable;
 import com.zcyservice.bean.mock.TestTableRef;
 import com.zcyservice.service.IUnitTestService;
-import com.zcyservice.service.impl.ECommerceUserServiceImpl;
+import com.zcyservice.service.impl.UserServiceImpl;
 import com.zcyservice.service.impl.UnitTestServiceImpl;
 
 public class QueryCommonDaoImpTest extends BaseTestCase {
-	private static Logger logger = LogManager.getLogger(ECommerceUserServiceImpl.class);
+	private static Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
 	public static final String CAT = "cat";
 
