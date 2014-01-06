@@ -86,11 +86,22 @@
                         <th align="center"  field="mfcStoreName"  width="100"  sortable="false">用户名</th>
                         <th align="center"  field="mfcCompanyName" width="100" sortable="false" >联系手机</th>
                         <th align="center"  field="mfcLocation" width="120" sortable="false" >Email</th>
-                        <th align="center"  field="createdOn" width="80" data-options="formatter:showEstDateFormatter">注册日期</th>
+                        <th align="center"  field="createdOn" width="80" data-options="formatter:showEstDateFormatter">创建日期</th>
                         <th align="center"  field="userStatus"  data-options="formatter:mfcAndSpstatusformatter" width="60">状态</th>
                         <th align="center" data-options="field:'id'" width="150">操作</th>
                     </tr>
 				</thead>
+				<tbody>
+                    <tr>
+                       <td>JG20223448112</td>
+                       <td>sea.king</td>
+                       <td>18221757291</td>
+                       <td>11921209@qq.com</td>
+                       <td>2013-12-25</td>
+                       <td>正常</td>
+                       <td><button onclick="eidtuser();">编辑</button></td>
+                    </tr>
+                </tbody>
 			</table>
 			</div>
 	<div id="manage_form" style="display:none;">
@@ -111,12 +122,6 @@
 							<input id="mfcCompanyName" name="mfcCompanyName" class="r-textbox easyui-validatebox"
 								required type="text" missingMessage="请输入公司名称" /> <label
 								class="r-need">*</label>
-						</div>
-					</li>
-					<li>
-						<div class="r-edit-label">联系电话：</div>
-						<div class="r-edit-field">
-							<input id="mfcContactPhone" name="mfcContactPhone" class="r-textbox" type="text" />
 						</div>
 					</li>
 					<li>
@@ -168,7 +173,13 @@
 	  $('#edituser').window('setTitle', "添加用户");
 	  openDialog("edituser");
   });
-  
+  function eidtuser(){
+	  $('#edituser').window('setTitle', "编辑用户");
+      openDialog("edituser");
+      $("#mfcStoreName").val("sea.king");
+      $("#mfcCompanyName").val("11921209@qq.com");
+      $("#mfcContactMobilePhone").val("18221757291");
+  }
   </script>
 </body>
 </html>

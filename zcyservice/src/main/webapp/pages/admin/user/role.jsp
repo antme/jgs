@@ -25,9 +25,15 @@
 	                <th align="center"  field="groupName"  sortable="false" width='200' align="center" resizable="true">科室名称</th>
 	                <th align="center"  field="description"  sortable="false" width='200' align="center" resizable="true">描述</th>
 	                <th data-options="field:'id'" width='200' align="center" resizable="true">操作</th>
-	                
 	            </tr>
 	        </thead>
+	         <tbody>
+                    <tr>
+                       <td>管理员</td>
+                       <td>系统管理员</td>
+                       <td><button onclick="openAddGroupWindow();">编辑</button></td>
+                    </tr>
+                </tbody>
 	       </table>
 		</div>
 		<div title="用户科室设置" style="padding: 10px">
@@ -41,6 +47,13 @@
 		                
 		            </tr>
 		        </thead>
+		        <tbody>
+		            <tr>
+		               <td>张三</td>
+		               <td>管理员</td>
+		               <td><button>编辑</button></td>
+		            </tr>
+		        </tbody>
 		       </table>
 		</div>
 	</div>
