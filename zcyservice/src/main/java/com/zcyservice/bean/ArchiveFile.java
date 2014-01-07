@@ -19,6 +19,14 @@ public class ArchiveFile extends BaseEntity {
 	@Column(name = "archiveFileName")
 	@Expose
 	public String archiveFileName;
+	
+	@Column(name = "archiveFileType")
+	@Expose
+	public String archiveFileType;
+	
+	@Column(name = "archiveType")
+	@Expose
+	public String archiveType;
 
 	@Column(name = "archiveFileLastModifyDate")
 	@Expose

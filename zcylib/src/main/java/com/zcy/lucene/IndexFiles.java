@@ -3,6 +3,7 @@ package com.zcy.lucene;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -105,12 +106,12 @@ public class IndexFiles {
 				doc.add(new LongField("modified", file.lastModified(), Field.Store.NO));
 
 				try {
-	                String docString = getDocString(file.getAbsolutePath());
-//	                System.out.println(docString);
+					String docString = getDocString(file.getAbsolutePath());
+					// System.out.println(docString);
 					doc.add(new TextField("contents", docString, Field.Store.YES));
-                } catch (Exception e) {
-                	doc.add(new TextField("contents", "", Field.Store.YES));
-                }
+				} catch (Exception e) {
+					doc.add(new TextField("contents", "", Field.Store.YES));
+				}
 
 				if (writer.getConfig().getOpenMode() == IndexWriterConfig.OpenMode.CREATE) {
 					System.out.println("adding " + file);
@@ -128,7 +129,7 @@ public class IndexFiles {
 		if (fileName.endsWith(".pdf")) {
 
 			return PdfboxFileReader(fileName);
-			
+
 		} else if (fileName.endsWith(".doc") || fileName.endsWith(".docx")) {
 
 			return WordFileReader(fileName);
@@ -139,18 +140,31 @@ public class IndexFiles {
 	}
 
 	public String PdfboxFileReader(String fileName) throws Exception {
+		PDFTextStripper ts = new PDFTextStripper();
+
+		return extractPdfText(fileName, ts);
+	}
+
+	private String extractPdfText(String fileName, PDFTextStripper ts) throws FileNotFoundException, IOException {
 		StringBuffer content = new StringBuffer("");// 文档内容
 		FileInputStream fis = new FileInputStream(fileName);
 		PDFParser p = new PDFParser(fis);
 		p.parse();
-		PDFTextStripper ts = new PDFTextStripper();
 		PDDocument pdDocument = p.getPDDocument();
-		
+
 		content.append(ts.getText(pdDocument));
 		pdDocument.close();
 		fis.close();
-		
+
 		return content.toString().trim();
+	}
+
+	public String PdfboxFileReader(String fileName, int startPage, int endPage) throws Exception {
+
+		PDFTextStripper ts = new PDFTextStripper();
+		ts.setStartPage(startPage);
+		ts.setEndPage(endPage);
+		return extractPdfText(fileName, ts);
 	}
 
 	/**

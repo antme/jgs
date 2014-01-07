@@ -1,8 +1,9 @@
 package com.zcyservice.service.impl;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.UUID;
+import java.util.List;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -13,6 +14,7 @@ import com.zcy.cfg.CFGManager;
 import com.zcy.dbhelper.DataBaseQueryBuilder;
 import com.zcyservice.bean.Archive;
 import com.zcyservice.bean.ArchiveFile;
+import com.zcyservice.bean.vo.ArvhiveTree;
 import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.AbstractArchiveService;
 import com.zcyservice.service.IArchiveService;
@@ -29,10 +31,33 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		scanDocumentFolder(scanPath, null);
 
 	}
-	
-	public EntityResults<Archive> listArchives(SearchVo vo){
-		
+
+	public EntityResults<Archive> listArchives(SearchVo vo) {
+
 		return this.dao.listByQueryWithPagnation(new DataBaseQueryBuilder(Archive.TABLE_NAME), Archive.class);
+	}
+
+	public List<ArvhiveTree> listArchiveFiles(SearchVo vo) {
+
+		List<ArvhiveTree> trees = new ArrayList<ArvhiveTree>();
+		ArvhiveTree menuTree = new ArvhiveTree();
+		menuTree.setText("目录");
+
+		List<ArvhiveTree> menuTreeChildren = new ArrayList<ArvhiveTree>();
+		ArvhiveTree menuTreeChild1 = new ArvhiveTree();
+		menuTreeChild1.setText("目录1");
+
+		ArvhiveTree menuTreeChild2 = new ArvhiveTree();
+		menuTreeChild2.setText("目录2");
+
+		menuTreeChildren.add(menuTreeChild1);
+		menuTreeChildren.add(menuTreeChild2);
+
+		menuTree.setChildren(menuTreeChildren);
+
+		trees.add(menuTree);
+		return trees;
+
 	}
 
 	private void scanDocumentFolder(String path, Archive archive) {
@@ -59,7 +84,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 					Archive arc = new Archive();
 					arc.setArchiveCode(generateCode("BH", Archive.TABLE_NAME));
 					arc.setArchiveStatus("已归档");
-					
+
 					arc.setArchiveName(subFile.getName());
 					this.dao.insert(arc);
 					scanDocumentFolder(subFile.getAbsolutePath(), arc);

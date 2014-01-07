@@ -1,7 +1,9 @@
 package com.ecomm.dao;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 
 import junit.framework.TestCase;
 
@@ -59,14 +61,32 @@ public class BaseTestCase extends TestCase {
 
 	public void testEmpty() throws IOException, InterruptedException {
 
-//		 archiveService.scanArchines();
-		new IndexFiles().runIndex();
+		// archiveService.scanArchines();
+		// new IndexFiles().runIndex();
+		// try {
+		// new SearchFiles().search("money", true);
+		// } catch (Exception e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+
 		try {
-	        new SearchFiles().search("money", true);
-        } catch (Exception e) {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-        }
+			String pdfboxFileReader = new IndexFiles().PdfboxFileReader("/Users/ymzhou/Documents/pdf/demo.pdf", 1, 2);
+			pdfboxFileReader.length();
+			// System.out.println(pdfboxFileReader);
+			BufferedReader buff = new BufferedReader(new StringReader(pdfboxFileReader));
+			String line = buff.readLine();
+
+			while (line != null) {
+				System.out.println(line);
+				System.out.println(line.indexOf("文 件"));
+				line = buff.readLine();
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

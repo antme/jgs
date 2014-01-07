@@ -29,5 +29,13 @@ public class ArchiveController extends AbstractController {
 		SearchVo vo = (SearchVo) parserJsonParameters(request, true, SearchVo.class);
 		responseWithDataPagnation(archiveService.listArchives(vo), request, response);
 	}
+	
+	@RequestMapping("/files.do")
+	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
+	public void listArchiveFiles(HttpServletRequest request, HttpServletResponse response) {
+		SearchVo vo = (SearchVo) parserJsonParameters(request, true, SearchVo.class);
+		responseWithListData(archiveService.listArchiveFiles(vo), request, response);
+	}
+	
 
 }

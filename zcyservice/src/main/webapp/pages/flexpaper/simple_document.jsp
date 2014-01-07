@@ -10,6 +10,11 @@
 	if(doc == null)
 		doc = "Paper.pdf";
 	String dir = "../pages/";
+	
+	String startPage = request.getParameter("startPage");
+	if(startPage == null){
+		startPage = "0";
+	}
 %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
     <head>
@@ -26,24 +31,16 @@
 		<script type="text/javascript" src="<%=dir %>js/jquery.extensions.min.js"></script>
 		<script type="text/javascript" src="<%=dir %>js/flexpaper.js"></script>
 		<script type="text/javascript" src="<%=dir %>js/flexpaper_handlers.js"></script>
+		<script type="text/javascript" src="/resources/js/jquery.easyui.min.js"></script>
     </head>
     <body>
 		<div id="documentViewer" class="flexpaper_viewer" style="position:absolute;width:770px;height:650px"></div>
 		<div id="documentFiles" style="width:170px;height:350px; float:right; margin-top:20px;">
-		   <ul>
-		               <li>
-                    <a href="#">档案主文件</a>
-                 </li>
-		         <li>
-		            <a href="#">文件一</a>
-		         </li>
-		            <li>
-                   <a href="#"> 文件二</a>
-                 </li>
-                    <li>
-                     <a href="#">文件三</a>
-                 </li>
-		   </ul>
+		
+		 	<ul class="easyui-tree" data-options="url:'/ecs/archive/files.do', method:'get',animate:true,loadFilter:function(data){
+							                    	return data.rows;
+							                    }"></ul>
+	
 		
 		</div>
 		<script type="text/javascript">
@@ -59,6 +56,8 @@
 			function append_log(msg){
 				$('#txt_eventlog').val(msg+'\n'+$('#txt_eventlog').val());
 			}
+			
+			var startPage = <%=startPage%>;
 
 			String.format = function() {
 				var s = arguments[0];
@@ -83,6 +82,7 @@
 					 ProgressiveLoading : true,
 					 MinZoomSize : 0.5,
 					 MaxZoomSize : 8,
+					 StartAtPage : startPage,
 					 SearchMatchAll : true,
 					 RenderingOrder : '<%=(conf.getConfig("renderingorder.primary", "") + "," +	conf.getConfig("renderingorder.secondary", "")) %>',
 
