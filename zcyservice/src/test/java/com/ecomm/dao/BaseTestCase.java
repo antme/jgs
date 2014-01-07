@@ -12,6 +12,8 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.zcy.dao.IQueryDao;
 import com.zcy.dao.QueryDaoImpl;
+import com.zcy.lucene.IndexFiles;
+import com.zcy.lucene.SearchFiles;
 import com.zcyservice.service.IArchiveService;
 import com.zcyservice.service.IUserService;
 import com.zcyservice.service.ISystemService;
@@ -57,8 +59,14 @@ public class BaseTestCase extends TestCase {
 
 	public void testEmpty() throws IOException, InterruptedException {
 
-		 archiveService.scanArchines();
-
+//		 archiveService.scanArchines();
+		new IndexFiles().runIndex();
+		try {
+	        new SearchFiles().search("money", true);
+        } catch (Exception e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+        }
 
 	}
 

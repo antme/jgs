@@ -43,7 +43,14 @@
 			<artifactId>quartz-all</artifactId>
 			<version>1.6.1</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.textmining</groupId>
+			<artifactId>tm-extractors</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/tm-extractors-1.0.jar</systemPath>
+		</dependency>
+
 
 	</dependencies>
 
@@ -72,7 +79,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
