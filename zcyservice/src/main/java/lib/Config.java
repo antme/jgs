@@ -238,6 +238,17 @@ public class Config {
 		else
 			return (path.trim() + "/").replace("//", "/");
 	}
+	
+	public String separatePath(String path){
+		if(isWin()){
+				path = (path.trim() ).replace("\\\\", "\\");
+				path = (path.trim() ).replace("//", "\\");
+			}
+		else
+			path = (path.trim() ).replace("//", "/");
+		
+		return path;
+	}
 
 	public String execs(String execString) {
 		String ret = "";

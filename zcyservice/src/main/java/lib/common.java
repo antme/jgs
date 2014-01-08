@@ -18,13 +18,16 @@ import javax.servlet.http.HttpServletResponse;
 public class common extends Config {
 
 	public boolean validParams(String path, String doc, String page){
-		return !(	!doc.equals(basename(realpath(path))) ||
-				 	doc.length() > 255 ||
-				 	page.length() > 255 ||
-				 	(doc + page).indexOf("|") >= 0 ||
-				 	(doc + page).indexOf("\\") >= 0 ||
-				 	(doc + page).indexOf("/") >= 0
-				);
+		
+		return doc.contains(basename(realpath(path)));
+		
+//		return !(	!doc.equals(basename(realpath(path))) ||
+//				 	doc.length() > 255 ||
+//				 	page.length() > 255 ||
+//				 	(doc + page).indexOf("|") >= 0 ||
+//				 	(doc + page).indexOf("\\") >= 0 ||
+//				 	(doc + page).indexOf("/") >= 0
+//				);
 	} 
 
 	public String basename(String path){

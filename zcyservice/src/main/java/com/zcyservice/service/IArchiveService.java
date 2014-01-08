@@ -14,7 +14,7 @@ public interface IArchiveService {
 
 	public EntityResults<Archive> listArchives(SearchVo vo);
 
-	public List<ArvhiveTree> listArchiveFiles(SearchVo vo);
+	public List<ArvhiveTree> listArchiveFiles(Archive archive);
 	
 	
 }

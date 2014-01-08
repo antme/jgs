@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.zcy.annotation.LoginRequired;
 import com.zcy.annotation.Permission;
 import com.zcy.controller.AbstractController;
+import com.zcyservice.bean.Archive;
 import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.IArchiveService;
 import com.zcyservice.util.PermissionConstants;
@@ -33,8 +34,8 @@ public class ArchiveController extends AbstractController {
 	@RequestMapping("/files.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void listArchiveFiles(HttpServletRequest request, HttpServletResponse response) {
-		SearchVo vo = (SearchVo) parserJsonParameters(request, true, SearchVo.class);
-		responseWithListData(archiveService.listArchiveFiles(vo), request, response);
+		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
+		responseWithListData(archiveService.listArchiveFiles(archive), request, response);
 	}
 	
 

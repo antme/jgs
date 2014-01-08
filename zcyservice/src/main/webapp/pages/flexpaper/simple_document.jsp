@@ -100,7 +100,7 @@
 					 key : '<%= conf.getConfig("licensekey", "") %>',
 
 					 WMode : 'window',
-					 localeChain: 'en_US'
+					 localeChain: 'zh_CN'
 					 }
 			});
 		</script>

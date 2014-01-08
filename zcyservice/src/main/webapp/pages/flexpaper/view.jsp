@@ -1,6 +1,5 @@
 <%@ page import="lib.*,java.io.*" %>
 <%
-     out.println("............");
     out.clear();
     out = pageContext.pushBody();
     BufferedOutputStream outs = new BufferedOutputStream(response.getOutputStream());
@@ -28,11 +27,12 @@
 	String pngdoc 		= pdfdoc + "_" + pages + ".png";
 	String jpgcachedoc = pdfdoc + "_" + pages + "_res_" + resolution + ".jpg";
 	String messages 	= "";
-	String swfFilePath 	= conf.separate(conf.getConfig("path.swf", "")) + swfdoc;
-	String pdfFilePath 	= conf.separate(conf.getConfig("path.pdf", "")) + pdfdoc;
-	String pngFilePath 	= conf.separate(conf.getConfig("path.swf", "")) + pngdoc;
-	String jpgCachePath 	= conf.separate(conf.getConfig("path.swf", "")) + jpgcachedoc;
-	String jsonFilePath 	= conf.separate(conf.getConfig("path.swf", "")) + jsondoc;
+	String swfFilePath 	= conf.separatePath(conf.getConfig("path.swf", "") + swfdoc );
+	new File(swfFilePath).getParentFile().mkdirs();
+	String pdfFilePath 	= conf.separatePath(conf.getConfig("path.pdf", "") + pdfdoc) ;
+	String pngFilePath 	= conf.separatePath(conf.getConfig("path.swf", "") + pngdoc );
+	String jpgCachePath 	= conf.separatePath(conf.getConfig("path.swf", "") + jpgcachedoc );
+	String jsonFilePath 	= conf.separatePath(conf.getConfig("path.swf", "") + jsondoc );
 
 	boolean validatedConfig = true;
 	String error = "";

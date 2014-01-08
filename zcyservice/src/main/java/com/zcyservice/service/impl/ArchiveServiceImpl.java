@@ -66,7 +66,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		return this.dao.listByQueryWithPagnation(new DataBaseQueryBuilder(Archive.TABLE_NAME), Archive.class);
 	}
 
-	public List<ArvhiveTree> listArchiveFiles(SearchVo vo) {
+	public List<ArvhiveTree> listArchiveFiles(Archive archive) {
 
 		List<ArvhiveTree> trees = new ArrayList<ArvhiveTree>();
 		ArvhiveTree menuTree = new ArvhiveTree();
