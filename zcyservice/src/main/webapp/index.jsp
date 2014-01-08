@@ -36,6 +36,7 @@
               <a href="?p=web/archive/archivereport">首页</a>
            
            </li>
+           <li class="menu_cline"></li>
            <li>
               <a href="?p=web/archive/archivemanager">档案管理</a>
            
@@ -98,8 +99,7 @@
  	<script type="text/javascript">
 	    $(document).ready(function(){
 	    	loading_css();
-	    	initDataGridEvent();
-	    	 
+	    	initDataGridEvent(); 
 	    });
     </script>
 </body>
