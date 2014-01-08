@@ -14,6 +14,7 @@ import com.zcy.cfg.CFGManager;
 import com.zcy.dbhelper.DataBaseQueryBuilder;
 import com.zcyservice.bean.Archive;
 import com.zcyservice.bean.ArchiveFile;
+import com.zcyservice.bean.ArchiveFile.ArchiveType;
 import com.zcyservice.bean.vo.ArvhiveTree;
 import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.AbstractArchiveService;
@@ -28,8 +29,36 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 		String scanPath = CFGManager.getProperty(ZcyServiceConstants.DOCUMENT_SCAN_PATH);
 		logger.info("Scan " + scanPath);
-		scanDocumentFolder(scanPath, null);
 
+		File file = new File(scanPath);
+
+		if (file.exists() && file.isDirectory()) {
+
+			File subFiles[] = file.listFiles();
+			for (File subFile : subFiles) {
+
+				if (subFile.isDirectory()) {
+					Archive arc = new Archive();
+					arc.setArchiveCode(subFile.getName());
+					arc.setArchiveStatus("已归档");
+
+					arc.setArchiveName(subFile.getName());
+					this.dao.insert(arc);
+
+					scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中", arc, ArchiveType.FIRST);
+
+					scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中", arc, ArchiveType.SECOND);
+
+					scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中" + File.separator + "附件", arc, ArchiveType.FIRST_ATTACH);
+
+					scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中" + File.separator + "附件", arc, ArchiveType.SECOND_ATTACH);
+
+				}
+			}
+
+		} else {
+			logger.error("请创建好扫描目录: " + scanPath);
+		}
 	}
 
 	public EntityResults<Archive> listArchives(SearchVo vo) {
@@ -60,34 +89,27 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 	}
 
-	private void scanDocumentFolder(String path, Archive archive) {
+	private void scanMainDocumentFolder(String path, Archive archive, ArchiveType scanType) {
 
 		File file = new File(path);
 
 		if (file.exists()) {
 
-			if (file.isFile()) {
-
-				if (archive != null) {
-					ArchiveFile arfile = new ArchiveFile();
-					arfile.setArchiveFileName(file.getName());
-					arfile.setArchiveFileLastModifyDate(new Date(file.lastModified()));
-					arfile.setArchiveId(archive.getId());
-					this.dao.insert(arfile);
-				}
-
-			} else if (file.isDirectory()) {
+			if (file.isDirectory()) {
 
 				File subFiles[] = file.listFiles();
 				for (File subFile : subFiles) {
 
-					Archive arc = new Archive();
-					arc.setArchiveCode(generateCode("BH", Archive.TABLE_NAME));
-					arc.setArchiveStatus("已归档");
+					if (subFile.isFile()) {
+						ArchiveFile arfile = new ArchiveFile();
+						arfile.setArchiveFileName(subFile.getName());
+						arfile.setArchiveFileLastModifyDate(new Date(subFile.lastModified()));
+						arfile.setArchiveId(archive.getId());
+						arfile.setArchiveType(scanType);
 
-					arc.setArchiveName(subFile.getName());
-					this.dao.insert(arc);
-					scanDocumentFolder(subFile.getAbsolutePath(), arc);
+						this.dao.insert(arfile);
+					}
+
 				}
 			}
 
