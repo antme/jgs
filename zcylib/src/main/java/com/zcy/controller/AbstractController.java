@@ -108,9 +108,9 @@ public abstract class AbstractController {
 
 		if (parametersMap.get(ZcyConstants.CURRENT_PAGE) != null && parametersMap.get(ZcyConstants.PAGE_SIZE) != null) {
 			Pagination pagination = new Pagination();
-			pagination.setPage(EcUtil.getInteger(parametersMap.get(ZcyConstants.CURRENT_PAGE), 0));
+			pagination.setPage(EcUtil.getInteger(parametersMap.get(ZcyConstants.CURRENT_PAGE), 0, true));
 			// default is 10;
-			pagination.setRows(EcUtil.getInteger(parametersMap.get(ZcyConstants.PAGE_SIZE), 10));
+			pagination.setRows(EcUtil.getInteger(parametersMap.get(ZcyConstants.PAGE_SIZE), 10, true));
 			EcThreadLocal.set(ZcyConstants.PAGENATION, pagination);
 		}
 

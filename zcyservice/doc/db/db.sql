@@ -20,6 +20,7 @@ CREATE TABLE `ArchiveFile` (
   `archiveType` varchar(36) DEFAULT NULL,
   `archiveFileType` varchar(36) DEFAULT NULL,
   `archiveFileName` varchar(255) DEFAULT NULL,
+  `archiveFilePath` varchar(512) DEFAULT NULL,
   `archiveFileLastModifyDate` datetime DEFAULT NULL,
   `createdOn` datetime DEFAULT NULL,
   `updatedOn` datetime DEFAULT NULL,

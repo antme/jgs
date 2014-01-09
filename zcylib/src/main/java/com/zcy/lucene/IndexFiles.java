@@ -3,7 +3,6 @@ package com.zcy.lucene;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,14 +21,12 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
-import org.apache.pdfbox.pdfparser.PDFParser;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.util.PDFTextStripper;
 import org.apache.poi.hssf.extractor.ExcelExtractor;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.textmining.extraction.word.WordTextExtractorFactory;
 
 import com.zcy.cfg.CFGManager;
+import com.zcy.util.PdfUtil;
 
 public class IndexFiles {
 
@@ -128,7 +125,7 @@ public class IndexFiles {
 
 		if (fileName.endsWith(".pdf")) {
 
-			return PdfboxFileReader(fileName);
+			return PdfUtil.PdfboxFileReader(fileName);
 
 		} else if (fileName.endsWith(".doc") || fileName.endsWith(".docx")) {
 
@@ -139,33 +136,6 @@ public class IndexFiles {
 
 	}
 
-	public String PdfboxFileReader(String fileName) throws Exception {
-		PDFTextStripper ts = new PDFTextStripper();
-
-		return extractPdfText(fileName, ts);
-	}
-
-	private String extractPdfText(String fileName, PDFTextStripper ts) throws FileNotFoundException, IOException {
-		StringBuffer content = new StringBuffer("");// 文档内容
-		FileInputStream fis = new FileInputStream(fileName);
-		PDFParser p = new PDFParser(fis);
-		p.parse();
-		PDDocument pdDocument = p.getPDDocument();
-
-		content.append(ts.getText(pdDocument));
-		pdDocument.close();
-		fis.close();
-
-		return content.toString().trim();
-	}
-
-	public String PdfboxFileReader(String fileName, int startPage, int endPage) throws Exception {
-
-		PDFTextStripper ts = new PDFTextStripper();
-		ts.setStartPage(startPage);
-		ts.setEndPage(endPage);
-		return extractPdfText(fileName, ts);
-	}
 
 	/**
 	 * Excel表格提取数据

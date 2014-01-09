@@ -56,7 +56,7 @@ public class EcUtil {
 	}
 	
 
-	public static Integer getInteger(Object value, int defaultValue) {
+	public static Integer getInteger(Object value, int defaultValue, boolean log) {
 		Integer result = null;
 
 		if (isEmpty(value)) {
@@ -68,8 +68,10 @@ public class EcUtil {
 				try {
 					result = Integer.parseInt(String.valueOf(value));
 				} catch (NumberFormatException e1) {
-					logger.error(String.format("Integer parameter illegal [%s]", value), e);
-					throw new ResponseException("ILEGAL_PARAMTERS");
+					
+					if(log){
+						logger.error(String.format("Integer parameter illegal [%s]", value));
+					}
 				}
 			}
 
@@ -279,7 +281,7 @@ public class EcUtil {
 		for (Field field : fields) {
 			if (field.isAnnotationPresent(IntegerColumn.class)) {
 				if (params.get(field.getName()) != null) {
-					params.put(field.getName(), getInteger(params.get(field.getName()), 0));
+					params.put(field.getName(), getInteger(params.get(field.getName()), 0, true));
 				}
 			} else if (field.isAnnotationPresent(FloatColumn.class)) {
 				if (params.get(field.getName()) != null) {

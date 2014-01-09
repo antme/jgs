@@ -10,15 +10,21 @@ import com.zcy.bean.BaseEntity;
 
 @Table(name = ArchiveFile.TABLE_NAME)
 public class ArchiveFile extends BaseEntity {
+	public static final String ARCHIVE_ID = "archiveId";
+
 	public static final String TABLE_NAME = "ArchiveFile";
 
-	@Column(name = "archiveId")
+	@Column(name = ARCHIVE_ID)
 	@Expose
 	public String archiveId;
 
 	@Column(name = "archiveFileName")
 	@Expose
 	public String archiveFileName;
+	
+	@Column(name = "archiveFilePath")
+	@Expose
+	public String archiveFilePath;
 
 	@Column(name = "archiveFileType")
 	@Expose
@@ -71,6 +77,18 @@ public class ArchiveFile extends BaseEntity {
 	public void setArchiveType(ArchiveType archiveType) {
 		this.archiveType = archiveType;
 	}
+	
+	
+
+	public String getArchiveFilePath() {
+		return archiveFilePath;
+	}
+
+	public void setArchiveFilePath(String archiveFilePath) {
+		this.archiveFilePath = archiveFilePath;
+	}
+
+
 
 	public enum ArchiveType {
 		FIRST, SECOND, FIRST_ATTACH, SECOND_ATTACH
