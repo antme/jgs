@@ -298,9 +298,6 @@
   _line-height: 18px;
   vertical-align: baseline;
 }
-.datebox .combo-text{
-	*margin-left:-40px;
-}
 .combo-arrow {
   width: 18px;
   height: 20px;
