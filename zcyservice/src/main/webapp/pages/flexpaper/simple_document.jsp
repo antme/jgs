@@ -46,6 +46,7 @@
 			<ul class="easyui-tree" id="secondAttachTrees" data-options="animate:true, state:'closed'"></ul>
 		
 		</div>
+		<div class="watermark"></div>
 		<script type="text/javascript">
 			function getDocumentUrl(document){
 				console.log(document);
@@ -118,7 +119,7 @@
 			
 			 $(document).ready(function(){
 				 postAjaxRequest("/ecs/archive/files.do", {id:id}, function(data){
-					 
+					 console.log("test");
 					 var firstTrees = data.firstTrees;
 					 $('#firstTrees').tree('loadData', firstTrees);
 					 $('#firstAttachTrees').tree('loadData', data.firstAttachTrees);
@@ -150,13 +151,21 @@
 					 
 					 
 					 var archive = data.data;
-					 var startDocument = data.firstTrees[0].filePath;
+					 
+					 if( data.firstTrees[0]){
+						  var startDocument = data.firstTrees[0].filePath;
+					 }					 
 
 					 intPdfView(startDocument, startDocument, startPage);
 					 
 					 
 				 })
-				 
+				 var offsettop=$("#documentViewer").offset().top;
+				 var offsetleft=$("#documentViewer").offset().left;
+				 offsettop+=($("#documentViewer").height()/2-135);
+				 offsetleft+=($("#documentViewer").width()/2-175);
+				 $(".watermark").css("top",offsettop+"px");
+				 $(".watermark").css("left",offsetleft+"px");
 					
 			  }, false);
 

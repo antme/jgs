@@ -109,17 +109,24 @@
 		<form id="edituserform" action="" method="post">
 			<input type="hidden" name ="id" id="mfcId"/>
 			     <ul class="f-information">
-					<li class="passwd">
+					<li>
 						<div class="r-edit-label">用户名：</div>
 						<div class="r-edit-field cc">
-							<input name="mfcStoreName" id="mfcStoreName" class="r-textbox easyui-validatebox"
+							<input name="username" id="username" class="r-textbox easyui-validatebox"
 								type="text" missingMessage="请输入店铺名称"/> <label class="r-need">*</label>
 						</div>
 					</li>
+					<li class="passwd">
+                        <div class="r-edit-label">密码：</div>
+                        <div class="r-edit-field cc">
+                            <input name="password" id="password" class="r-textbox easyui-validatebox"
+                                type="text" missingMessage="请输入店铺名称"/> <label class="r-need">*</label>
+                        </div>
+                    </li>
 					<li>
 						<div class="r-edit-label">Email：</div>
 						<div class="r-edit-field">
-							<input id="mfcCompanyName" name="mfcCompanyName" class="r-textbox easyui-validatebox"
+							<input id="email" name="email" class="r-textbox easyui-validatebox"
 								required type="text" missingMessage="请输入公司名称" /> <label
 								class="r-need">*</label>
 						</div>
@@ -127,7 +134,7 @@
 					<li>
 						<div class="r-edit-label">联系手机：</div>
 						<div class="r-edit-field">
-							<input id="mfcContactMobilePhone" name="mfcContactMobilePhone" class="r-textbox easyui-validatebox"
+							<input id="ContactMobilePhone" name="ContactMobilePhone" class="r-textbox easyui-validatebox"
 								type="text" required missingMessage="请输入联系手机" validtype ="mobile" /> <label
 								class="r-need">*</label>
 						</div>
@@ -139,6 +146,7 @@
 	                        	<option value="NORMAL" selected>正常</option>
 	                        	<option value="LOCKED" >已冻结</option>
 	                        </select>
+	                        <input name="" />
 						</div>
 					</li>
 					<li>

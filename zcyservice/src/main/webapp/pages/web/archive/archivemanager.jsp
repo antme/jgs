@@ -28,7 +28,7 @@
 
     <%@ include file="/pages/web/archive/searcharchive.jsp"%>
     
-    <div style="margin-left:50px;">
+    <div style="margin-left:40px;">
         <button class="btn_add" onclick="openAddGroupWindow();">新增档案</button>
         <button class="btn_add" onclick="openAddGroupWindow();">编辑档案</button>
         <button class="btn_add" onclick="openAddGroupWindow();">销毁档案</button>

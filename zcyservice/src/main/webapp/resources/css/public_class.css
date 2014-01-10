@@ -228,3 +228,13 @@
 .width_103px{
 	width:106px;
 }
+.watermark{
+	position:absolute;
+	width:350px;
+	height:270px;
+	background:url("../images/back01.png") no-repeat;
+	filter:alpha(opacity=30);  
+    -moz-opacity:0.3;  
+    -khtml-opacity: 0.3;  
+    opacity: 0.3;
+}

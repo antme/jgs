@@ -139,8 +139,10 @@
 			outs.write(("Error:" + messages.substring(1,messages.length()-2)).getBytes());
 		}
 	}
-	if(error.length() > 0)
-		outs.write(error.getBytes());
+	if(error.length() > 0){
+	    System.out.println(error);
+	}
+		
 	outs.flush();
 	outs.close();
 	out.clear();
