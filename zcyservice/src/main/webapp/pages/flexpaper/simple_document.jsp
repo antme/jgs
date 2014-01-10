@@ -37,7 +37,7 @@
 		
     </head>
     <body>
-		<div id="documentViewer" class="flexpaper_viewer" style="position:absolute;width:770px;height:650px"></div>
+		<div id="documentViewer" class="flexpaper_viewer" style="position:absolute;width:770px;height:650px;z-index:2"></div>
 		<div id="documentFiles" style="width:170px;height:350px; float:right; margin-top:20px;">
 		
 		 	<ul class="easyui-tree" id="firstTrees" data-options="animate:true, state:'closed'"></ul>
@@ -111,7 +111,7 @@
 						 JSONDataType : 'jsonp',
 						 key : key,
 
-						 WMode : 'window',
+						 WMode : 'Opaque',
 						 localeChain: 'zh_CN'
 						}
 				}); 
@@ -159,16 +159,23 @@
 					 intPdfView(startDocument, startDocument, startPage);
 					 
 					 
-				 })
-				 var offsettop=$("#documentViewer").offset().top;
-				 var offsetleft=$("#documentViewer").offset().left;
-				 offsettop+=($("#documentViewer").height()/2-135);
-				 offsetleft+=($("#documentViewer").width()/2-175);
-				 $(".watermark").css("top",offsettop+"px");
-				 $(".watermark").css("left",offsetleft+"px");
-					
+				 });
+                 var offsettop=$("#documentViewer").offset().top;
+                 var offsetleft=$("#documentViewer").offset().left;
+                 offsettop+=($("#documentViewer").height()/2-135);
+                 offsetleft+=($("#documentViewer").width()/2-175);
+                 $(".watermark").css("top",offsettop+"px");
+                 $(".watermark").css("left",offsetleft+"px");
+                 
+                 var speed = 2000;
+                 function Marqueess() {
+                         $(".watermark").css({"position":"absolute","width":"350px","height":"270px","background":"url(/resources/images/back01.png) no-repeat","filter":"alpha(opacity=30)","-moz-opacity":"0.3","-khtml-opacity":"0.3","opacity":"0.3"});
+                         $(".watermark").css("top",offsettop+"px");
+                         $(".watermark").css("left",offsetleft+"px");
+                 }
+                 var MyMaryr = setInterval(Marqueess, speed);
 			  }, false);
-
+             
 			
 		</script>
    </body>

@@ -237,4 +237,5 @@
     -moz-opacity:0.3;  
     -khtml-opacity: 0.3;  
     opacity: 0.3;
+    z-index:99999;
 }
