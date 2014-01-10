@@ -26,6 +26,11 @@ public class Archive extends BaseEntity {
 	@Column(name = "archiveStatus")
 	@Expose
 	public String archiveStatus;
+	
+	
+	@Column(name = "archiveApplicant")
+	@Expose
+	public String archiveApplicant;
 
 	public String getArchiveCode() {
 		return archiveCode;
@@ -58,5 +63,15 @@ public class Archive extends BaseEntity {
 	public void setArchiveStatus(String archiveStatus) {
 		this.archiveStatus = archiveStatus;
 	}
+
+	public String getArchiveApplicant() {
+		return archiveApplicant;
+	}
+
+	public void setArchiveApplicant(String archiveApplicant) {
+		this.archiveApplicant = archiveApplicant;
+	}
+	
+	
 
 }

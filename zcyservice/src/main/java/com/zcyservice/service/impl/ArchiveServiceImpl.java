@@ -50,6 +50,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 					arc.setArchiveStatus("已归档");
 
 					arc.setArchiveName(subFile.getName());
+
 					this.dao.insert(arc);
 
 					scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中", arc, ArchiveType.FIRST);
@@ -273,10 +274,77 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 					arfile.setArchiveType(scanType);
 					arfile.setArchiveFilePath(subFile.getAbsolutePath());
 
+					if (scanType.equals(ArchiveType.FIRST) || scanType.equals(ArchiveType.SECOND)) {
+
+						if (EcUtil.isEmpty(archive.getArchiveApplicant())) {
+
+							getDocumentInfo(subFile.getAbsolutePath(), archive);
+
+						}
+					}
+
 					this.dao.insert(arfile);
 				}
 
 			}
+		}
+
+	}
+
+	private void getDocumentInfo(String absolutePath, Archive archive) {
+
+		List<String> lines = PdfUtil.getLines(absolutePath, 0, 1);
+		String code = null;
+		String reason = null;
+		String results = null;
+		String applicant = null;
+		String applicantBad = null;
+		String thirdApplicant = null;
+		String judgePerson = null;
+		String dateType = "";
+
+		for (String line : lines) {
+			line = line.replaceAll(" ", "").trim();
+
+			if (line.contains("年度第")) {
+				code = line;
+			} else if (line.startsWith("案由")) {
+				reason = line.replaceFirst("案由", "");
+			} else if (line.startsWith("处理结果")) {
+				reason = line.replaceFirst("处理结果", "");
+			} else if (line.startsWith("申请人")) {
+				applicant = line.replaceFirst("申请人", "");
+			} else if (line.startsWith("被申请人")) {
+				applicantBad = line.replaceFirst("被申请人", "");
+			} else if (line.startsWith("第三人")) {
+				thirdApplicant = line.replaceFirst("第三人", "");
+			} else if (line.startsWith("承办人")) {
+				judgePerson = line.replaceFirst("承办人", "");
+			} else if (line.startsWith("立案")) {
+				dateType = "立案";
+			} else if (line.startsWith("结案")) {
+				dateType = "结案";
+			} else if (line.startsWith("归档")) {
+				dateType = "归档";
+			} else if (line.startsWith("号数")) {
+				dateType = "号数";
+			} else if (line.contains("年") && line.contains("月") && line.contains("日")) {
+
+				if (dateType == "立案") {
+
+					System.out.println(line);
+				} else if (dateType == "结案") {
+					System.out.println(line);
+				} else if (dateType == "归档") {
+					System.out.println(line);
+				}
+
+				dateType = "";
+			} else if (dateType == "号数") {
+				System.out.println(line);
+				dateType = "";
+			}
+
 		}
 
 	}
