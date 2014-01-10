@@ -199,7 +199,6 @@ function fileDialogComplete3(numFilesSelected, numFilesQueued) {
 }
 
 function uploadProgress(file, bytesLoaded) {
-
 	try {
 		var percent = Math.ceil((bytesLoaded / file.size) * 100);
 		var progress = new FileProgress(file,  this.customSettings.upload_target);
@@ -216,11 +215,10 @@ function uploadProgress(file, bytesLoaded) {
 	}
 }
 function uploadProgress1(file, bytesLoaded) {
-
 	try {
 		var percent = Math.ceil((bytesLoaded / file.size) * 100);
 		var progress = new FileProgress1(file,  this.customSettings.upload_target);
-		progress.setProgress1(percent);
+		progress.setProgress(percent);
 		if (percent === 100) {
 			progress.setStatus("");//正在创建缩略图...
 			progress.toggleCancel(false, this);
@@ -233,12 +231,11 @@ function uploadProgress1(file, bytesLoaded) {
 	}
 }
 function uploadProgress2(file, bytesLoaded) {
-
 	try {
 		var percent = Math.ceil((bytesLoaded / file.size) * 100);
 
 		var progress = new FileProgress2(file,  this.customSettings.upload_target);
-		progress.setProgress2(percent);
+		progress.setProgress(percent);
 		if (percent === 100) {
 			progress.setStatus("");//正在创建缩略图...
 			progress.toggleCancel(false, this);
@@ -256,7 +253,7 @@ function uploadProgress3(file, bytesLoaded) {
 		var percent = Math.ceil((bytesLoaded / file.size) * 100);
 
 		var progress = new FileProgress3(file,  this.customSettings.upload_target);
-		progress.setProgress2(percent);
+		progress.setProgress(percent);
 		if (percent === 100) {
 			progress.setStatus("");//正在创建缩略图...
 			progress.toggleCancel(false, this);
@@ -527,8 +524,8 @@ function uploadComplete1(file) {
 		if (this.getStats().files_queued > 0) {
 			this.startUpload();
 		} else {
-			var progress = new FileProgress1(file,  this.customSettings.upload_target);
-			progress.setComplete1();
+			var progress = new FileProgress1(file,  "divFileProgressContainer1");
+			progress.setComplete();
 			progress.setStatus("<font color='red'>所有文件上传完毕!</b></font>");
 			progress.toggleCancel(false);
 		}
@@ -542,8 +539,8 @@ function uploadComplete2(file) {
 		if (this.getStats().files_queued > 0) {
 			this.startUpload();
 		} else {
-			var progress = new FileProgress2(file,  this.customSettings.upload_target);
-			progress.setComplete2();
+			var progress = new FileProgress2(file,  "divFileProgressContainer2");
+			progress.setComplete();
 			progress.setStatus("<font color='red'>所有文件上传完毕!</b></font>");
 			progress.toggleCancel(false);
 		}
@@ -558,7 +555,7 @@ function uploadComplete3(file) {
 			this.startUpload();
 		} else {
 			var progress = new FileProgress3(file,  this.customSettings.upload_target);
-			progress.setComplete3();
+			progress.setComplete();
 			progress.setStatus("<font color='red'>所有文件上传完毕!</b></font>");
 			progress.toggleCancel(false);
 		}
@@ -1120,17 +1117,17 @@ FileProgress.prototype.setProgress = function (percentage) {
 	this.fileProgressElement.childNodes[3].className = "progressBarInProgress";
 	this.fileProgressElement.childNodes[3].style.width = percentage + "%";
 };
-FileProgress.prototype.setProgress1 = function (percentage) {
+FileProgress1.prototype.setProgress = function (percentage) {
 	this.fileProgressElement.className = "progressContainer1 green";
 	this.fileProgressElement.childNodes[3].className = "progressBarInProgress1";
 	this.fileProgressElement.childNodes[3].style.width = percentage + "%";
 };
-FileProgress.prototype.setProgress2 = function (percentage) {
+FileProgress2.prototype.setProgress = function (percentage) {
 	this.fileProgressElement.className = "progressContainer2 green";
 	this.fileProgressElement.childNodes[3].className = "progressBarInProgress2";
 	this.fileProgressElement.childNodes[3].style.width = percentage + "%";
 };
-FileProgress.prototype.setProgress3 = function (percentage) {
+FileProgress3.prototype.setProgress = function (percentage) {
 	this.fileProgressElement.className = "progressContainer3 green";
 	this.fileProgressElement.childNodes[3].className = "progressBarInProgress3";
 	this.fileProgressElement.childNodes[3].style.width = percentage + "%";
@@ -1142,19 +1139,19 @@ FileProgress.prototype.setComplete = function () {
 	this.fileProgressElement.childNodes[3].style.width = "";
 
 };
-FileProgress.prototype.setComplete1 = function () {
+FileProgress1.prototype.setComplete = function () {
 	this.fileProgressElement.className = "progressContainer1 blue";
 	this.fileProgressElement.childNodes[3].className = "progressBarComplete1";
 	this.fileProgressElement.childNodes[3].style.width = "";
 
 };
-FileProgress.prototype.setComplete2 = function () {
+FileProgress2.prototype.setComplete = function () {
 	this.fileProgressElement.className = "progressContainer2 blue";
 	this.fileProgressElement.childNodes[3].className = "progressBarComplete2";
 	this.fileProgressElement.childNodes[3].style.width = "";
 
 };
-FileProgress.prototype.setComplete3 = function () {
+FileProgress3.prototype.setComplete = function () {
 	this.fileProgressElement.className = "progressContainer3 blue";
 	this.fileProgressElement.childNodes[3].className = "progressBarComplete3";
 	this.fileProgressElement.childNodes[3].style.width = "";
@@ -1166,21 +1163,105 @@ FileProgress.prototype.setError = function () {
 	this.fileProgressElement.childNodes[3].style.width = "";
 
 };
+FileProgress1.prototype.setError = function () {
+	this.fileProgressElement.className = "progressContainer1 red";
+	this.fileProgressElement.childNodes[3].className = "progressBarError1";
+	this.fileProgressElement.childNodes[3].style.width = "";
+
+};
+FileProgress2.prototype.setError = function () {
+	this.fileProgressElement.className = "progressContainer2 red";
+	this.fileProgressElement.childNodes[3].className = "progressBarError2";
+	this.fileProgressElement.childNodes[3].style.width = "";
+
+};
+FileProgress3.prototype.setError = function () {
+	this.fileProgressElement.className = "progressContainer3 red";
+	this.fileProgressElement.childNodes[3].className = "progressBarError3";
+	this.fileProgressElement.childNodes[3].style.width = "";
+
+};
+
+
 FileProgress.prototype.setCancelled = function () {
 	this.fileProgressElement.className = "progressContainer";
 	this.fileProgressElement.childNodes[3].className = "progressBarError";
 	this.fileProgressElement.childNodes[3].style.width = "";
 
 };
+FileProgress1.prototype.setCancelled = function () {
+	this.fileProgressElement.className = "progressContainer1";
+	this.fileProgressElement.childNodes[3].className = "progressBarError1";
+	this.fileProgressElement.childNodes[3].style.width = "";
+
+};
+FileProgress2.prototype.setCancelled = function () {
+	this.fileProgressElement.className = "progressContainer2";
+	this.fileProgressElement.childNodes[3].className = "progressBarError2";
+	this.fileProgressElement.childNodes[3].style.width = "";
+
+};
+FileProgress3.prototype.setCancelled = function () {
+	this.fileProgressElement.className = "progressContainer3";
+	this.fileProgressElement.childNodes[3].className = "progressBarError3";
+	this.fileProgressElement.childNodes[3].style.width = "";
+
+};
+
 FileProgress.prototype.setStatus = function (status) {
 	this.fileProgressElement.childNodes[2].innerHTML = status;
 };
+FileProgress1.prototype.setStatus = function (status) {
+	$(".progressBarStatus1").html(status);
+	//fileProgressElement.innerHTML = status;
+};
+FileProgress2.prototype.setStatus = function (status) {
+	$(".progressBarStatus2").html(status);
+};
+FileProgress3.prototype.setStatus = function (status) {
+	$(".progressBarStatus3").html(status);
+};
+
+
 
 FileProgress.prototype.toggleCancel = function (show, swfuploadInstance) {
 	this.fileProgressElement.childNodes[0].style.visibility = show ? "visible" : "hidden";
 	if (swfuploadInstance) {
 		var fileID = this.fileProgressID;
 		this.fileProgressElement.childNodes[0].onclick = function () {
+			swfuploadInstance.cancelUpload(fileID);
+			return false;
+		};
+	}
+};
+FileProgress1.prototype.toggleCancel = function (show, swfuploadInstance) {
+	var fileProgressElement=$(".progressContainer1");
+	fileProgressElement.childNodes[0].style.visibility = show ? "visible" : "hidden";
+	if (swfuploadInstance) {
+		var fileID = this.fileProgressID;
+		fileProgressElement.childNodes[0].onclick = function () {
+			swfuploadInstance.cancelUpload(fileID);
+			return false;
+		};
+	}
+};
+FileProgress2.prototype.toggleCancel = function (show, swfuploadInstance) {
+	var fileProgressElement=$(".progressContainer2");
+	fileProgressElement.childNodes[0].style.visibility = show ? "visible" : "hidden";
+	if (swfuploadInstance) {
+		var fileID = this.fileProgressID;
+		fileProgressElement.childNodes[0].onclick = function () {
+			swfuploadInstance.cancelUpload(fileID);
+			return false;
+		};
+	}
+};
+FileProgress3.prototype.toggleCancel = function (show, swfuploadInstance) {
+	var fileProgressElement=$(".progressContainer3");
+	fileProgressElement.childNodes[0].style.visibility = show ? "visible" : "hidden";
+	if (swfuploadInstance) {
+		var fileID = this.fileProgressID;
+		fileProgressElement.childNodes[0].onclick = function () {
 			swfuploadInstance.cancelUpload(fileID);
 			return false;
 		};

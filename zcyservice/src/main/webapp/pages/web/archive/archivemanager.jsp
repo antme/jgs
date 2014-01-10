@@ -106,8 +106,8 @@
                     </div>
                 </div>
                 <div class="ac_div">
-                    <span class="span_style span_right_border"><label class="ac_title2 width_103px">正卷宗</label></span>
-                    <span class="span_style">
+                    <span class="span_style"><label class="ac_title2 ">正卷宗</label></span>
+                    <span class="span_style span_left_border">
                               <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 5px; *+padding:2px; _padding:2px;">
                               <span id="spanButtonPlaceholder"></span>
                               <input id="btnUpload" type="button" value="上  传" style="width:60px;"
@@ -129,8 +129,8 @@
                     </span>
                 </div>
                 <div class="ac_div">
-                    <span class="span_style span_right_border"><label class="ac_title2 width_103px">正卷宗附件</label></span>
-                    <span class="span_style">
+                    <span class="span_style"><label class="ac_title2 ">正卷宗附件</label></span>
+                    <span class="span_style span_left_border">
                               <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 5px; *+padding:2px; _padding:2px;">
                               <span id="archiveattachment"></span>
                               <input id="btnUpload1" type="button" value="上  传" style="width:60px;"
@@ -152,8 +152,8 @@
                     </span>
                 </div>
                 <div class="ac_div">
-                    <span class="span_style span_right_border"><label class="ac_title2 width_103px">副卷宗</label></span>
-                    <span class="span_style">
+                    <span class="span_style "><label class="ac_title2 ">副卷宗</label></span>
+                    <span class="span_style span_left_border">
                               <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 5px; *+padding:2px; _padding:2px;">
                               <span id="archiveattachment2"></span>
                               <input id="btnUpload2" type="button" value="上  传" style="width:60px;"
@@ -175,8 +175,8 @@
                     </span>
                 </div>
                 <div class="ac_div">
-                    <span class="span_style span_right_border"><label class="ac_title2 width_103px">副卷宗附件</label></span>
-                    <span class="span_style">
+                    <span class="span_style "><label class="ac_title2 ">副卷宗附件</label></span>
+                    <span class="span_style span_left_border">
                               <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 5px; *+padding:2px; _padding:2px;">
                               <span id="archiveattachment3"></span>
                               <input id="btnUpload3" type="button" value="上  传" style="width:60px;"

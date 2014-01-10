@@ -12,8 +12,9 @@
     color: #000000;
     height: 30px;
     line-height: 29px;
-    margin-top: 0;
+    margin: 0;
     width: 128px;
+    *margin-left:-40px;
 }
 .span_style{
 	display: inline-block;
@@ -147,7 +148,7 @@
 	border-bottom:1px solid #cdcdcd;
 }
 .margintop10{
-    margin-top:10px;
+    padding-top:10px;
 }
 #addarchiveForm{
 	border:1px solid #cdcdcd;
@@ -216,8 +217,13 @@
 .overflow{
 	overflow:hidden;
 }
-.span_right_border{
-	border-right:1px solid #cdcdcd;
+.span_left_border{
+	border-left:1px solid #cdcdcd;
+	min-height:30px;
+	padding-top:5px;
+	padding-bottom:5px;
+	padding-left:10px;
+	display:inline-block;
 }
 .width_103px{
 	width:106px;
