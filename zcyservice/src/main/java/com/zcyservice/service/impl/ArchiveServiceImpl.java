@@ -205,7 +205,8 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		String scanPath = CFGManager.getProperty(ZcyServiceConstants.DOCUMENT_SCAN_PATH);
 
 		String filePath = file.getArchiveFilePath();
-		filePath = filePath.replaceAll(scanPath, "");
+//		filePath = filePath.replaceAll(scanPath, "");
+		filePath = filePath.substring(scanPath.length() +1);
 		return filePath;
 	}
 

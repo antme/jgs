@@ -125,7 +125,6 @@
 			
 			 $(document).ready(function(){
 				 postAjaxRequest("/ecs/archive/files.do", {id:id}, function(data){
-					 console.log("test");
 					 var firstTrees = data.firstTrees;
 					 $('#firstTrees').tree('loadData', firstTrees);
 					 $('#firstAttachTrees').tree('loadData', data.firstAttachTrees);

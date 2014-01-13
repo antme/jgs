@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import com.zcy.cfg.CFGManager;
 import com.zcy.dao.IQueryDao;
 import com.zcy.dao.QueryDaoImpl;
 import com.zcyservice.bean.Archive;
@@ -18,6 +19,7 @@ import com.zcyservice.service.IUserService;
 import com.zcyservice.service.impl.ArchiveServiceImpl;
 import com.zcyservice.service.impl.SystemServiceImpl;
 import com.zcyservice.service.impl.UserServiceImpl;
+import com.zcyservice.util.ZcyServiceConstants;
 
 public class BaseTestCase extends TestCase {
 	private static Logger logger = LogManager.getLogger(BaseTestCase.class);
@@ -56,7 +58,17 @@ public class BaseTestCase extends TestCase {
 	}
 
 	public void testEmpty() throws IOException, InterruptedException {
-		archiveService.scanArchines();
+		
+		String file = "E:\\zcy\\doc\\2013760\\副卷中\\demo.pdf";
+		
+		String scanPath = CFGManager.getProperty(ZcyServiceConstants.DOCUMENT_SCAN_PATH);
+
+		file = file.replaceAll(scanPath, "");
+		file = file.substring(scanPath.length() +1);
+		System.out.println(file);
+		
+		
+//		archiveService.scanArchines();
 		
 //		Archive archive = new Archive();
 //		archive.setId("53d4b469-c0e2-4a82-9abb-035736c52a78");
