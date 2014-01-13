@@ -16,7 +16,6 @@
     <%@ include file="/pages/web/archive/searcharchive.jsp"%>
        <div style="margin-left:50px;">
         <button class="btn_add" onclick="openAddGroupWindow();">新增借阅记录</button>
-        <button class="btn_add" onclick="openAddGroupWindow();">新增归还记录</button>
     </div>
     <div class="line_clear"></div>
     <div style="margin-left:40px;">
@@ -24,12 +23,13 @@
                 <thead>
                     <tr>
                         <th align="center"  field="archiveCode"  width="100"  sortable="false">档案编号</th>
-                        <th align="center"  field="archiveName"  width="100"  sortable="false">档案名称</th>
-                        <th align="center"  field="archiveStatus" width="100" sortable="false" >档案状态</th>
-                        <th align="center"  field="createdOn" width="120" sortable="false" >档案归档时间</th>
-                        <th align="center"  field="updatedOn" width="120" sortable="false" >档案修改时间</th>
+                        <th align="center"  field="archiveName"  width="150"  sortable="false">案由</th>
+                        <th align="center"  field="borrowingName" width="120" sortable="false" >调阅人</th>
+                        <th align="center"  field="borrowingOrganization" width="220" sortable="false" >调阅单位</th>
+                        <th align="center"  field="borrowingDate" width="120" sortable="false" >调阅日期</th>
                         
-                        <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="150">档案预览</th>
+                        
+                        <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="100">备注</th>
                     </tr>
                 </thead>
             </table>

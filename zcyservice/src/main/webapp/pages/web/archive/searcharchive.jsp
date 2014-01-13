@@ -19,9 +19,9 @@
             </span> 
           <div class="line_clear"></div>
             <span class="span_style_label"><label class="display_nones">档案归档时间：</label></span>
-            <span class="span_style"><input class="easyui-datebox" required missingMessage="请选择开始时间" style="width:150px" name="startDate" id="startDate"/></span>
+            <span class="span_style"><input class="easyui-datebox"  style="width:150px" name="startDate" id="startDate"/></span>
             <span class="span_style_label"><label class="display_nones">至：</label></span>
-            <span class="span_style"><input class="easyui-datebox" required missingMessage="请选择结束时间"  style="width:150px" name="endDate" id="endDate"/></span>
+            <span class="span_style"><input class="easyui-datebox"   style="width:150px" name="endDate" id="endDate"/></span>
             <span class="span_style_label"><label class="display_nones">档案关键字：</label></span>
             <span class="span_style"><input id="mfcKeyword" class="public_search_input_text display_nones" /></span>         
             <span class="span_style" style="margin-left:25px;"><button class="public_search_btn display_nones" onclick="mfcsearch()"></button></span>

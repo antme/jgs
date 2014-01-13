@@ -39,3 +39,22 @@ CREATE TABLE `ArchiveFile` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+
+drop table if exists `ArchiveBorrowing`;
+CREATE TABLE `ArchiveBorrowing` (
+  `id` varchar(36) NOT NULL,
+  `archiveId` varchar(36) DEFAULT NULL,
+  `borrowingName` varchar(255) DEFAULT NULL,
+  `borrowingOrganization` varchar(255) DEFAULT NULL,
+  `remark` text DEFAULT NULL,
+  `borrowingDate` datetime DEFAULT NULL,
+  `createdOn` datetime DEFAULT NULL,
+  `updatedOn` datetime DEFAULT NULL,
+  `creatorId` varchar(36) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+

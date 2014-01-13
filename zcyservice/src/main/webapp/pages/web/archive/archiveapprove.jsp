@@ -29,13 +29,11 @@
     <%@ include file="/pages/web/archive/searcharchive.jsp"%>
     
     <div style="margin-left:40px;">
-        <button class="btn_add" onclick="openAddGroupWindow();">新增档案</button>
-        <button class="btn_add" onclick="openAddGroupWindow();">编辑档案</button>
-        <button class="btn_add" onclick="openAddGroupWindow();">销毁档案</button>
+        <button class="btn_add" onclick="openAddGroupWindow();">审核</button>
     </div>
     <div class="line_clear"></div>
     <div style="margin-left:40px;">
-            <table id="newmfc"  class="easyui-datagrid_tf" url="/ecs/archive/listArchives.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
+            <table id="newmfc"  class="easyui-datagrid_tf" url="/ecs/archive/listNew.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
                 <thead>
                     <tr>
                         <th align="center"  field="archiveCode"  width="100"  sortable="false">档案编号</th>
