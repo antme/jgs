@@ -19,6 +19,7 @@ import com.zcy.exception.ResponseException;
 import com.zcy.util.EcUtil;
 import com.zcy.util.PdfUtil;
 import com.zcyservice.bean.Archive;
+import com.zcyservice.bean.ArchiveBorrowing;
 import com.zcyservice.bean.Archive.ArchiveStatus;
 import com.zcyservice.bean.Archive.ProcessStatus;
 import com.zcyservice.bean.ArchiveFile;
@@ -140,6 +141,11 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 	public void addArchive(Archive archive) {
 		archive.setArchiveStatus(ArchiveStatus.NEW);
 		archive.setAchiveProcessStatus(ProcessStatus.NEW);
+		this.dao.insert(archive);
+	}
+	
+	
+	public void addArchiveBorrowRecord(ArchiveBorrowing archive){
 		this.dao.insert(archive);
 	}
 

@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.zcy.bean.EntityResults;
 import com.zcyservice.bean.Archive;
+import com.zcyservice.bean.ArchiveBorrowing;
 import com.zcyservice.bean.vo.SearchVo;
 
 public interface IArchiveService {
@@ -22,6 +23,8 @@ public interface IArchiveService {
 	public void approveArchive(Archive archive);
 
 	public void rejectArchive(Archive archive);
+
+	public void addArchiveBorrowRecord(ArchiveBorrowing archive);
 	
 	
 }

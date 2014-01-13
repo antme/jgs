@@ -6,9 +6,10 @@ import javax.persistence.Column;
 import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
+import com.zcy.bean.BaseEntity;
 
 @Table(name = ArchiveBorrowing.TABLE_NAME)
-public class ArchiveBorrowing {
+public class ArchiveBorrowing extends BaseEntity {
 
 	public static final String TABLE_NAME = "ArchiveBorrowing";
 

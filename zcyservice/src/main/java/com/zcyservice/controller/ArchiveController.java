@@ -11,6 +11,7 @@ import com.zcy.annotation.LoginRequired;
 import com.zcy.annotation.Permission;
 import com.zcy.controller.AbstractController;
 import com.zcyservice.bean.Archive;
+import com.zcyservice.bean.ArchiveBorrowing;
 import com.zcyservice.bean.ArchiveFile;
 import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.IArchiveService;
@@ -54,6 +55,16 @@ public class ArchiveController extends AbstractController {
 		archiveService.addArchive(archive);
 		responseWithData(null, request, response);
 	}
+	
+	
+	@RequestMapping("/borrow/add.do")
+	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
+	public void addArchiveBorrowRecord(HttpServletRequest request, HttpServletResponse response) {
+		ArchiveBorrowing archive = (ArchiveBorrowing) parserJsonParameters(request, true, ArchiveBorrowing.class);
+		archiveService.addArchiveBorrowRecord(archive);
+		responseWithData(null, request, response);
+	}
+
 
 	
 	@RequestMapping("/approve.do")
