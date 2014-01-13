@@ -25,6 +25,8 @@ public interface IArchiveService {
 	public void rejectArchive(Archive archive);
 
 	public void addArchiveBorrowRecord(ArchiveBorrowing archive);
+
+	public Archive getArchive(Archive archive);
 	
 	
 }

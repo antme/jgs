@@ -148,6 +148,12 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 	public void addArchiveBorrowRecord(ArchiveBorrowing archive){
 		this.dao.insert(archive);
 	}
+	
+	
+	public Archive getArchive(Archive archive){
+		
+		return (Archive) this.dao.findById(archive.getId(), Archive.TABLE_NAME, Archive.class);
+	}
 
 	private void createAttachTree(List<ArchiveFile> fileList, List<ArchiveTree> firstTrees, String text, ArchiveFileProperty type) {
 		ArchiveTree attachTreeMenu = new ArchiveTree();
