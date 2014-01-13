@@ -11,6 +11,8 @@ import com.zcy.bean.BaseEntity;
 @Table(name = Archive.TABLE_NAME)
 public class Archive extends BaseEntity {
 
+	public static final String ACHIVE_PROCESS_STATUS = "achiveProcessStatus";
+
 	public static final String TABLE_NAME = "Archive";
 
 	// 案号
@@ -33,9 +35,9 @@ public class Archive extends BaseEntity {
 	public ArchiveStatus archiveStatus;
 	
 	// 审批状态
-	@Column(name = "processStatus")
+	@Column(name = ACHIVE_PROCESS_STATUS)
 	@Expose
-	public ProcessStatus processStatus;
+	public ProcessStatus achiveProcessStatus;
 
 	// 处理结果
 	@Column(name = "archiveResult")
@@ -187,12 +189,12 @@ public class Archive extends BaseEntity {
 	}
 	
 
-	public ProcessStatus getProcessStatus() {
-		return processStatus;
+	public ProcessStatus getAchiveProcessStatus() {
+		return achiveProcessStatus;
 	}
 
-	public void setProcessStatus(ProcessStatus processStatus) {
-		this.processStatus = processStatus;
+	public void setAchiveProcessStatus(ProcessStatus processStatus) {
+		this.achiveProcessStatus = processStatus;
 	}
 
 
@@ -202,7 +204,7 @@ public class Archive extends BaseEntity {
 	}
 
 	public enum ProcessStatus {
-		DRAFT, NEW, APPROVED
+		DRAFT, NEW, APPROVED, REJECTED;
 
 	}
 

@@ -75,6 +75,27 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		return this.dao.listByQueryWithPagnation(new DataBaseQueryBuilder(Archive.TABLE_NAME), Archive.class);
 	}
 
+	public EntityResults<Archive> listNewArchives(SearchVo vo) {
+		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		query.and(Archive.ACHIVE_PROCESS_STATUS, ProcessStatus.NEW);
+
+		return this.dao.listByQueryWithPagnation(query, Archive.class);
+
+	}
+
+	public void approveArchive(Archive archive) {
+
+		archive.setAchiveProcessStatus(ProcessStatus.APPROVED);
+		this.dao.updateById(archive);
+	}
+
+	public void rejectArchive(Archive archive) {
+
+		archive.setAchiveProcessStatus(ProcessStatus.REJECTED);
+		this.dao.updateById(archive);
+
+	}
+
 	public Map<String, Object> listArchiveFiles(Archive archive) {
 
 		if (archive.getId() == null) {
@@ -118,7 +139,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 	public void addArchive(Archive archive) {
 		archive.setArchiveStatus(ArchiveStatus.NEW);
-		archive.setProcessStatus(ProcessStatus.NEW);
+		archive.setAchiveProcessStatus(ProcessStatus.NEW);
 		this.dao.insert(archive);
 	}
 

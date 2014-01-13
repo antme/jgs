@@ -1,11 +1,9 @@
 package com.zcyservice.service;
 
-import java.util.List;
 import java.util.Map;
 
 import com.zcy.bean.EntityResults;
 import com.zcyservice.bean.Archive;
-import com.zcyservice.bean.vo.ArchiveTree;
 import com.zcyservice.bean.vo.SearchVo;
 
 public interface IArchiveService {
@@ -18,6 +16,12 @@ public interface IArchiveService {
 	public Map<String, Object> listArchiveFiles(Archive archive);
 
 	public void addArchive(Archive archive);
+
+	public EntityResults<Archive> listNewArchives(SearchVo vo);
+
+	public void approveArchive(Archive archive);
+
+	public void rejectArchive(Archive archive);
 	
 	
 }

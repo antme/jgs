@@ -31,6 +31,14 @@ public class ArchiveController extends AbstractController {
 		SearchVo vo = (SearchVo) parserJsonParameters(request, true, SearchVo.class);
 		responseWithDataPagnation(archiveService.listArchives(vo), request, response);
 	}
+	
+	
+	@RequestMapping("/listNew.do")
+	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
+	public void listNewArchives(HttpServletRequest request, HttpServletResponse response) {
+		SearchVo vo = (SearchVo) parserJsonParameters(request, true, SearchVo.class);
+		responseWithDataPagnation(archiveService.listNewArchives(vo), request, response);
+	}
 
 	@RequestMapping("/files.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
@@ -47,6 +55,27 @@ public class ArchiveController extends AbstractController {
 		responseWithData(null, request, response);
 	}
 
+	
+	@RequestMapping("/approve.do")
+	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
+	public void approveArchive(HttpServletRequest request, HttpServletResponse response) {
+		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
+		archiveService.approveArchive(archive);
+		responseWithData(null, request, response);
+	}
+	
+	
+	
+	@RequestMapping("/reject.do")
+	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
+	public void rejectArchive(HttpServletRequest request, HttpServletResponse response) {
+		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
+		archiveService.rejectArchive(archive);
+		responseWithData(null, request, response);
+	}
+	
+	
+	
 	@RequestMapping("/upload.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void uploadArchiveFile(HttpServletRequest request, HttpServletResponse response) {
