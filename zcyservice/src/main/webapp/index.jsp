@@ -42,19 +42,26 @@
            
            </li>
            <li class="menu_cline"></li>
+           <li>
+              <a href="?p=web/archive/archiveapprove">档案审核</a>          
+           </li>
+           
+           <li class="menu_cline"></li>
       
            <li>
-              <a href="?p=web/archive/archiveborrow">借阅管理</a>
-          
+              <a href="?p=web/archive/archiveborrow">借阅管理</a>         
            </li>
            <li class="menu_cline"></li>
            <li>
-              <a href="#">查询统计</a>
-              <ul class="ul_display">
-                 <li><a href="?p=web/archive/archivelist">档案查询</a></li>
-                 <li><a href="?p=web/archive/archivereport">数据统计</a></li>
-              </ul>
+              <a href="?p=web/archive/archivelist">档案查询</a>         
            </li>
+           <li class="menu_cline"></li>
+           <li>
+              <a href="?p=web/archive/archivereport">数据统计</a>         
+           </li>    
+           
+           
+           
            <li class="menu_cline"></li>
           
            <li>

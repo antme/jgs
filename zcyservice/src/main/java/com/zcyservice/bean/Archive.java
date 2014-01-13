@@ -30,7 +30,12 @@ public class Archive extends BaseEntity {
 	// 归档状态
 	@Column(name = "archiveStatus")
 	@Expose
-	public String archiveStatus;
+	public ArchiveStatus archiveStatus;
+	
+	// 审批状态
+	@Column(name = "processStatus")
+	@Expose
+	public ProcessStatus processStatus;
 
 	// 处理结果
 	@Column(name = "archiveResult")
@@ -101,11 +106,11 @@ public class Archive extends BaseEntity {
 		this.archiveDescription = archiveDescription;
 	}
 
-	public String getArchiveStatus() {
+	public ArchiveStatus getArchiveStatus() {
 		return archiveStatus;
 	}
 
-	public void setArchiveStatus(String archiveStatus) {
+	public void setArchiveStatus(ArchiveStatus archiveStatus) {
 		this.archiveStatus = archiveStatus;
 	}
 
@@ -181,6 +186,24 @@ public class Archive extends BaseEntity {
 		this.archiveSerialNumber = archiveSerialNumber;
 	}
 	
-	
+
+	public ProcessStatus getProcessStatus() {
+		return processStatus;
+	}
+
+	public void setProcessStatus(ProcessStatus processStatus) {
+		this.processStatus = processStatus;
+	}
+
+
+	public enum ArchiveStatus {
+		NEW, ARVHIVED
+
+	}
+
+	public enum ProcessStatus {
+		DRAFT, NEW, APPROVED
+
+	}
 
 }

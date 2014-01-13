@@ -17,7 +17,7 @@ drop table if exists `ArchiveFile`;
 CREATE TABLE `ArchiveFile` (
   `id` varchar(36) NOT NULL,
   `archiveId` varchar(36) DEFAULT NULL,
-  `archiveType` varchar(36) DEFAULT NULL,
+  `archiveFileProperty` varchar(36) DEFAULT NULL,
   `archiveFileType` varchar(36) DEFAULT NULL,
   `archiveFileName` varchar(255) DEFAULT NULL,
   `archiveFilePath` varchar(512) DEFAULT NULL,

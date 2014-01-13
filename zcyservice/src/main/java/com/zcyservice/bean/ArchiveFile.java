@@ -30,9 +30,9 @@ public class ArchiveFile extends BaseEntity {
 	@Expose
 	public String archiveFileType;
 
-	@Column(name = "archiveType")
+	@Column(name = "archiveFileProperty")
 	@Expose
-	public ArchiveType archiveType;
+	public ArchiveFileProperty archiveFileProperty;
 
 	@Column(name = "archiveFileLastModifyDate")
 	@Expose
@@ -75,12 +75,12 @@ public class ArchiveFile extends BaseEntity {
 		this.archiveFileType = archiveFileType;
 	}
 
-	public ArchiveType getArchiveType() {
-		return archiveType;
+	public ArchiveFileProperty getArchiveFileProperty() {
+		return archiveFileProperty;
 	}
 
-	public void setArchiveType(ArchiveType archiveType) {
-		this.archiveType = archiveType;
+	public void setArchiveFileProperty(ArchiveFileProperty archiveType) {
+		this.archiveFileProperty = archiveType;
 	}
 	
 	
@@ -109,7 +109,7 @@ public class ArchiveFile extends BaseEntity {
 
 
 
-	public enum ArchiveType {
+	public enum ArchiveFileProperty {
 		FIRST, SECOND, FIRST_ATTACH, SECOND_ATTACH
 	}
 

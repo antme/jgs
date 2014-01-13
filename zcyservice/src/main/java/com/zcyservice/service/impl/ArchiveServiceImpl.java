@@ -10,7 +10,6 @@ import java.util.UUID;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.pdmodel.common.function.PDFunction;
 import org.springframework.stereotype.Service;
 
 import com.zcy.bean.EntityResults;
@@ -20,8 +19,10 @@ import com.zcy.exception.ResponseException;
 import com.zcy.util.EcUtil;
 import com.zcy.util.PdfUtil;
 import com.zcyservice.bean.Archive;
+import com.zcyservice.bean.Archive.ArchiveStatus;
+import com.zcyservice.bean.Archive.ProcessStatus;
 import com.zcyservice.bean.ArchiveFile;
-import com.zcyservice.bean.ArchiveFile.ArchiveType;
+import com.zcyservice.bean.ArchiveFile.ArchiveFileProperty;
 import com.zcyservice.bean.vo.ArchiveTree;
 import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.AbstractArchiveService;
@@ -47,19 +48,19 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 				if (subFile.isDirectory()) {
 					Archive arc = new Archive();
 					arc.setArchiveCode(subFile.getName());
-					arc.setArchiveStatus("已归档");
+					arc.setArchiveStatus(ArchiveStatus.ARVHIVED);
 
 					arc.setArchiveName(subFile.getName());
 
 					this.dao.insert(arc);
 
-					scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中", arc, ArchiveType.FIRST);
+					scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中", arc, ArchiveFileProperty.FIRST);
 
-					scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中", arc, ArchiveType.SECOND);
+					scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中", arc, ArchiveFileProperty.SECOND);
 
-					scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中" + File.separator + "附件", arc, ArchiveType.FIRST_ATTACH);
+					scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中" + File.separator + "附件", arc, ArchiveFileProperty.FIRST_ATTACH);
 
-					scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中" + File.separator + "附件", arc, ArchiveType.SECOND_ATTACH);
+					scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中" + File.separator + "附件", arc, ArchiveFileProperty.SECOND_ATTACH);
 
 				}
 			}
@@ -95,11 +96,11 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 		List<ArchiveTree> secondAttachTrees = new ArrayList<ArchiveTree>();
 
-		createFirstMenuTree(fileList, firstTrees, "正卷中目录", ArchiveType.FIRST);
-		createFirstMenuTree(fileList, secondTrees, "副卷中目录", ArchiveType.SECOND);
+		createFirstMenuTree(fileList, firstTrees, "正卷中目录", ArchiveFileProperty.FIRST);
+		createFirstMenuTree(fileList, secondTrees, "副卷中目录", ArchiveFileProperty.SECOND);
 
-		createAttachTree(fileList, firstAttachTrees, "正卷中附件", ArchiveType.FIRST_ATTACH);
-		createAttachTree(fileList, secondAttachTrees, "副卷中附件", ArchiveType.SECOND_ATTACH);
+		createAttachTree(fileList, firstAttachTrees, "正卷中附件", ArchiveFileProperty.FIRST_ATTACH);
+		createAttachTree(fileList, secondAttachTrees, "副卷中附件", ArchiveFileProperty.SECOND_ATTACH);
 
 		Map<String, Object> results = new HashMap<String, Object>();
 
@@ -116,10 +117,12 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 	}
 
 	public void addArchive(Archive archive) {
+		archive.setArchiveStatus(ArchiveStatus.NEW);
+		archive.setProcessStatus(ProcessStatus.NEW);
 		this.dao.insert(archive);
 	}
 
-	private void createAttachTree(List<ArchiveFile> fileList, List<ArchiveTree> firstTrees, String text, ArchiveType type) {
+	private void createAttachTree(List<ArchiveFile> fileList, List<ArchiveTree> firstTrees, String text, ArchiveFileProperty type) {
 		ArchiveTree attachTreeMenu = new ArchiveTree();
 		attachTreeMenu.setText(text);
 
@@ -127,7 +130,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 		if (fileList != null) {
 			for (ArchiveFile file : fileList) {
-				if (file.getArchiveType().equals(type)) {
+				if (file.getArchiveFileProperty().equals(type)) {
 					ArchiveTree menuTreeChild1 = new ArchiveTree();
 					menuTreeChild1.setText(file.getArchiveFileName());
 					menuTreeChild1.setId(UUID.randomUUID().toString());
@@ -140,7 +143,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		firstTrees.add(attachTreeMenu);
 	}
 
-	private void createFirstMenuTree(List<ArchiveFile> fileList, List<ArchiveTree> firstTrees, String text, ArchiveType type) {
+	private void createFirstMenuTree(List<ArchiveFile> fileList, List<ArchiveTree> firstTrees, String text, ArchiveFileProperty type) {
 		ArchiveTree firstMenuTree = new ArchiveTree();
 		firstMenuTree.setText(text);
 
@@ -148,7 +151,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 			for (ArchiveFile file : fileList) {
 
-				if (file.getArchiveType().equals(type)) {
+				if (file.getArchiveFileProperty().equals(type)) {
 
 					List<ArchiveTree> menuTreeChildren = loadDocMenu(file);
 					String filePath = replaceScanPath(file);
@@ -259,7 +262,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		return page;
 	}
 
-	private void scanMainDocumentFolder(String path, Archive archive, ArchiveType scanType) {
+	private void scanMainDocumentFolder(String path, Archive archive, ArchiveFileProperty scanType) {
 
 		String ignoreFile = ".DS_Store";
 
@@ -275,10 +278,10 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 					arfile.setArchiveFileName(subFile.getName());
 					arfile.setArchiveFileLastModifyDate(new Date(subFile.lastModified()));
 					arfile.setArchiveId(archive.getId());
-					arfile.setArchiveType(scanType);
+					arfile.setArchiveFileProperty(scanType);
 					arfile.setArchiveFilePath(subFile.getAbsolutePath());
 
-					if (scanType.equals(ArchiveType.FIRST) || scanType.equals(ArchiveType.SECOND)) {
+					if (scanType.equals(ArchiveFileProperty.FIRST) || scanType.equals(ArchiveFileProperty.SECOND)) {
 
 						if (EcUtil.isEmpty(archive.getArchiveApplicant())) {
 
