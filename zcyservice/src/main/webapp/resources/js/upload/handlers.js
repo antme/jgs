@@ -1,3 +1,5 @@
+var mainFilkeAttach="";
+var secondFileAttach="";
 function fileQueueError(file, errorCode, message) {
 	try {
 		var imageName = "<font color='red'>文件上传错误</font>";
@@ -271,6 +273,9 @@ function uploadSuccess(file, serverData) {
 	try {
 		var progress = new FileProgress(file,  this.customSettings.upload_target);
 		addFileInfo(file.id,"文件上传完成");
+		var obj = serverData;
+        obj = JSON.parse(obj);
+        $("#mainFile").val(obj.data);
 	} catch (ex) {
 		this.debug(ex);
 	}
@@ -279,6 +284,10 @@ function uploadSuccess1(file, serverData) {
 	try {
 		var progress = new FileProgress1(file,  this.customSettings.upload_target);
 		addFileInfo1(file.id,"文件上传完成");
+		var obj = serverData;
+        obj = JSON.parse(obj);
+        mainFilkeAttach+=obj.data+","
+        $("#mainFilkeAttach").val(mainFilkeAttach);
 	} catch (ex) {
 		this.debug(ex);
 	}
@@ -287,6 +296,9 @@ function uploadSuccess2(file, serverData) {
 	try {
 		var progress = new FileProgress2(file,  this.customSettings.upload_target);
 		addFileInfo2(file.id,"文件上传完成");
+		var obj = serverData;
+        obj = JSON.parse(obj);
+        $("#secondFile").val(obj.data);
 	} catch (ex) {
 		this.debug(ex);
 	}
@@ -295,6 +307,10 @@ function uploadSuccess3(file, serverData) {
 	try {
 		var progress = new FileProgress3(file,  this.customSettings.upload_target);
 		addFileInfo3(file.id,"文件上传完成");
+		var obj = serverData;
+        obj = JSON.parse(obj);
+        secondFileAttach+=obj.data+","
+        $("#secondFileAttach").val(secondFileAttach);
 	} catch (ex) {
 		this.debug(ex);
 	}

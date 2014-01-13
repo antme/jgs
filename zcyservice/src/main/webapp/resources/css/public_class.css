@@ -154,6 +154,7 @@
 }
 #addarchiveForm{
 	border:1px solid #cdcdcd;
+	border-bottom:none;
 }
 .ac_title{
 	width:200px;
@@ -240,4 +241,9 @@
     -khtml-opacity: 0.3;  
     opacity: 0.3;
     z-index:99999;
+}
+
+#addrecordForm{
+	border:1px solid #cdcdcd;
+	border-bottom:none;
 }

@@ -51,15 +51,15 @@
                 <div class="width100 font24 fontweight margintop20">仲 裁 卷 宗</div>
                 <div class="ac_div">
                     <span class="span_style"><label class="ac_title">卷宗编号</label></span>
-                    <span class="span_style border-left"><input class="ac_input" type="text" name="" /></span>
+                    <span class="span_style border-left"><input class="ac_input easyui-validatebox" type="text" name="archiveCode" required missingMessage="请输入卷宗编号"/></span>
                 </div>  
                 <div class="ac_div">
                     <span class="span_style"><label class="ac_title">案&nbsp;&nbsp;&nbsp;&nbsp;由</label></span>
-                    <span class="span_style border-left"><input class="ac_input" type="text" name="" /></span>
+                    <span class="span_style border-left"><input class="ac_input easyui-validatebox" type="text" name="archiveName" required missingMessage="请输入卷案由"/></span>
                 </div>
                 <div class="ac_div">
                     <span class="span_style"><label class="ac_title">处理结果</label></span>
-                    <span class="span_style border-left"><input class="ac_input" type="text" name="" /></span>
+                    <span class="span_style border-left"><input class="ac_input easyui-validatebox" type="text" name="archiveResult" required missingMessage="请输入处理结果"/></span>
                 </div> 
                 <div class="ac_div overflow">
                    <label class="ac_title2 width_101px font16">
@@ -70,39 +70,42 @@
                     <div class="ac_div2">
                        <div class="ac_div width_500px">
                            <span class="span_style"><label class="ac_title2">申请人</label></span>
-                           <span class="span_style border-left"><input class="ac_input " type="text" name="" /></span>
+                           <span class="span_style border-left"><input class="ac_input easyui-validatebox" type="text" name="archiveApplicant" required missingMessage="请输入申请人"/></span>
                        </div>
                        <div class="ac_div width_500px">
                             <span class="span_style"><label class="ac_title2">被申请人</label></span>
-                            <span class="span_style border-left"><input class="ac_input " type="text" name="" /></span>
+                            <span class="span_style border-left"><input class="ac_input easyui-validatebox" type="text" name="archiveOppositeApplicant" required missingMessage="请输入被申请人"/></span>
                        </div>
                        <div class="width_500px">
                             <span class="span_style"><label class="ac_title2">第三人</label></span>
-                            <span class="span_style border-left"><input class="ac_input" type="text" name="" /></span>
+                            <span class="span_style border-left"><input class="ac_input" type="text" name="archiveThirdPerson" /></span>
                        </div>
                     </div>
                 </div>
                 <div class="ac_div">
                     <span class="span_style"><label class="ac_title">承办人</label></span>
-                    <span class="span_style border-left"><input class="ac_input" type="text" name="" /></span>
+                    <span class="span_style border-left"><input class="ac_input easyui-validatebox" type="text" name="archiveJudge" required missingMessage="请输入承办人"/></span>
                 </div>
                 <div class="ac_div">
                     <div class="ac_div">
                          <span class="span_style"><label class="ac_title2">立案日期</label></span>
-                         <span class="span_style border-left-right span_width"><input class="ac_input2 easyui-datebox" type="text" name="" /></span>
+                         <span class="span_style border-left-right span_width"><input id="archiveOpenDate" class="ac_input2 easyui-datebox " type="text" name="archiveOpenDate" required missingMessage="请输选择立案日期"/></span>
                          <span class="span_style"><label class="ac_title2">结案日期</label></span>
-                         <span class="span_style border-left span_width"><input class="ac_input2 easyui-datebox" type="text" name="" /></span>
+                         <span class="span_style border-left span_width"><input id="archiveCloseDate" class="ac_input2 easyui-datebox " type="text" name="archiveCloseDate" required missingMessage="请输选择结案日期"/></span>
                     </div>
                     <div>
                          <span class="span_style"><label class="ac_title2">归档日期</label></span>
-                         <span class="span_style border-left-right span_width"><input class=" easyui-datebox" type="text" name="" /></span>
+                         <span class="span_style border-left-right span_width"><input class="easyui-datebox" type="text" name="archiveDate" /></span>
                          <span class="span_style"><label class="ac_title2">归档号数</label></span>
-                         <span class="span_style border-left span_width"><input class="ac_input2" type="text" name="" /></span>
+                         <span class="span_style border-left span_width"><input class="ac_input2" type="text" name="archiveSerialNumber" /></span>
                     </div>
                 </div>
+                <input id="mainFile" type="hidden" name="mainFile"/>
+                <input id="mainFilkeAttach" type="hidden" name="mainFilkeAttach"/>
+                <input id="secondFile" type="hidden" name="secondFile"/>
+                <input id="secondFileAttach" type="hidden" name="secondFileAttach"/>
              </form>
-             <form >
-                <div class="ac_div">
+                <div class="ac_div border-left-right">
                     <span class="span_style"><label class="ac_title2 ">正卷宗</label></span>
                     <span class="span_style span_left_border">
                               <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 5px; *+padding:2px; _padding:2px;">
@@ -125,8 +128,7 @@
                              </div>
                     </span>
                 </div>
-              </form>
-                <div class="ac_div">
+                <div class="ac_div border-left-right">
                     <span class="span_style"><label class="ac_title2 ">正卷宗附件</label></span>
                     <span class="span_style span_left_border">
                               <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 5px; *+padding:2px; _padding:2px;">
@@ -149,7 +151,7 @@
                              </div>
                     </span>
                 </div>
-                <div class="ac_div">
+                <div class="ac_div border-left-right">
                     <span class="span_style "><label class="ac_title2 ">副卷宗</label></span>
                     <span class="span_style span_left_border">
                               <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 5px; *+padding:2px; _padding:2px;">
@@ -172,7 +174,7 @@
                              </div>
                     </span>
                 </div>
-                <div class="ac_div">
+                <div class="ac_div border-left-right">
                     <span class="span_style "><label class="ac_title2 ">副卷宗附件</label></span>
                     <span class="span_style span_left_border">
                               <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 5px; *+padding:2px; _padding:2px;">
@@ -197,23 +199,11 @@
                 </div>
             
                 <div style="text-align:center;padding:5px;">
-                     <button class="btn_add">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                     <button class="btn_add">取消</button>
+                     <button id="submited" class="btn_add">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     <button id="closed" class="btn_add">取消</button>
                 </div>
            
     </div>
   </div>
-    <script type="text/javascript">
-
-  $(document).ready(function(){
-     
-    
-  });
-  function openAddGroupWindow(){
-	  $('#addarchive').window('setTitle', "新增卷宗");
-      openDialog("addarchive");
-  }
-  
-  </script>
 </body>
 </html>
