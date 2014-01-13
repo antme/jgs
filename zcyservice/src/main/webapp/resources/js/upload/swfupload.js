@@ -3,7 +3,7 @@
  *
  * mmSWFUpload 1.0: Flash upload dialog - http://profandesign.se/swfupload/,  http://www.vinterwebb.se/
  *
- * SWFUpload is (c) 2006-2007 Lars Huring, Olov Nilzén and Mammon Media and is released under the MIT License:
+ * SWFUpload is (c) 2006-2007 Lars Huring, Olov Nilzï¿½n and Mammon Media and is released under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  *
  * SWFUpload 2 is (c) 2007-2008 Jake Roberts and is released under the MIT License:
@@ -488,6 +488,7 @@ SWFUpload.prototype.selectFiles = function () {
 // the optional parameter 'fileID' specifies the ID 
 SWFUpload.prototype.startUpload = function (fileID) {
 	this.callFlash("StartUpload", [fileID]);
+	console.log([fileID]);
 };
 
 // Public: cancelUpload cancels any queued file.  The fileID parameter may be the file ID or index.
@@ -895,12 +896,14 @@ SWFUpload.prototype.uploadError = function (file, errorCode, message) {
 };
 
 SWFUpload.prototype.uploadSuccess = function (file, serverData, responseReceived) {
+	console.log(file+"/"+serverData+"/"+responseReceived);
 	file = this.unescapeFilePostParams(file);
 	this.queueEvent("upload_success_handler", [file, serverData, responseReceived]);
 };
 
 SWFUpload.prototype.uploadComplete = function (file) {
 	file = this.unescapeFilePostParams(file);
+	console.log(file);
 	this.queueEvent("upload_complete_handler", file);
 };
 

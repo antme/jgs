@@ -1,15 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://"
-            + request.getServerName() + ":" + request.getServerPort() + path + "/";
-
-    StringBuffer uploadUrl = new StringBuffer("http://");
-    uploadUrl.append(request.getHeader("Host"));
-    uploadUrl.append(request.getContextPath());
-    uploadUrl.append("/FileUploadServlet.htm");
-%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,7 +15,12 @@
 <script type="text/javascript" src="/resources/js/upload/swfus.js"></script>
 </head>
 <body>
-
+    <div class="line_clear"></div>
+           <div class="public_title">
+              <div class="public_title_icon">​</div>​
+              <label class="public_title_text">档案管理</label>
+          </div>
+        <div class="line_clear"></div>
     <%@ include file="/pages/web/archive/searcharchive.jsp"%>
     
     <div style="margin-left:40px;">
@@ -105,6 +100,8 @@
                          <span class="span_style border-left span_width"><input class="ac_input2" type="text" name="" /></span>
                     </div>
                 </div>
+             </form>
+             <form >
                 <div class="ac_div">
                     <span class="span_style"><label class="ac_title2 ">正卷宗</label></span>
                     <span class="span_style span_left_border">
@@ -128,6 +125,7 @@
                              </div>
                     </span>
                 </div>
+              </form>
                 <div class="ac_div">
                     <span class="span_style"><label class="ac_title2 ">正卷宗附件</label></span>
                     <span class="span_style span_left_border">
@@ -197,11 +195,12 @@
                              </div>
                     </span>
                 </div>
+            
                 <div style="text-align:center;padding:5px;">
                      <button class="btn_add">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                      <button class="btn_add">取消</button>
                 </div>
-            </form>
+           
     </div>
   </div>
     <script type="text/javascript">

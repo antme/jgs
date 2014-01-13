@@ -1,8 +1,8 @@
 var swfu,swfu1,swfu2,swf3;
             window.onload = function () {
                 swfu = new SWFUpload({
-                    upload_url: "<%=uploadUrl.toString()%>",
-                    post_params: {"name" : "huliang"},
+                    upload_url: "/ecs/archive/upload.do",
+                    post_params: {"archiveUploadKey" : "archiveUploadKey"},
                     
                     // File Upload Settings
                     file_size_limit : "10 MB",  // 1000MB
@@ -41,8 +41,8 @@ var swfu,swfu1,swfu2,swf3;
                     debug: false  //是否显示调试窗口
                 });
                 swfu1 = new SWFUpload({
-                    upload_url: "<%=uploadUrl.toString()%>",
-                    post_params: {"name" : "huliang"},
+                	upload_url: "/ecs/archive/upload.do",
+                    post_params: {"archiveUploadKey" : "archiveUploadKey"},
                     
                     // File Upload Settings
                     file_size_limit : "10 MB",  // 1000MB
@@ -81,8 +81,8 @@ var swfu,swfu1,swfu2,swf3;
                     debug: false  //是否显示调试窗口
                 });
                 swfu2 = new SWFUpload({
-                    upload_url: "<%=uploadUrl.toString()%>",
-                    post_params: {"name" : "huliang"},
+                	upload_url: "/ecs/archive/upload.do",
+                    post_params: {"archiveUploadKey" : "archiveUploadKey"},
                     
                     // File Upload Settings
                     file_size_limit : "10 MB",  // 1000MB
@@ -121,8 +121,8 @@ var swfu,swfu1,swfu2,swf3;
                     debug: false  //是否显示调试窗口
                 });
                 swfu3 = new SWFUpload({
-                    upload_url: "<%=uploadUrl.toString()%>",
-                    post_params: {"name" : "huliang"},
+                	upload_url: "/ecs/archive/upload.do",
+                    post_params: {"archiveUploadKey" : "archiveUploadKey"},
                     
                     // File Upload Settings
                     file_size_limit : "10 MB",  // 1000MB

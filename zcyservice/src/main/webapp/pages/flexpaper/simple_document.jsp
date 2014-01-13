@@ -37,6 +37,12 @@
 		
     </head>
     <body>
+        <div class="line_clear"></div>
+           <div class="public_title">
+              <div class="public_title_icon">​</div>​
+              <label class="public_title_text">档案预览</label>
+          </div>
+        <div class="line_clear"></div>
 		<div id="documentViewer" class="flexpaper_viewer" style="position:absolute;width:770px;height:650px;z-index:2"></div>
 		<div id="documentFiles" style="width:170px;height:350px; float:right; margin-top:20px;">
 		

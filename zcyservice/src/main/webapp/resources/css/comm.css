@@ -78,7 +78,7 @@ ol, ul {
 	display:none;
 	*+top:50px;
 	*+left:0px;
-	z-index:99999;
+	z-index:9999;
 }
 .index_menu .ul_display a{
 	margin:0;
