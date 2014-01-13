@@ -115,6 +115,10 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 	}
 
+	public void addArchive(Archive archive) {
+		this.dao.insert(archive);
+	}
+
 	private void createAttachTree(List<ArchiveFile> fileList, List<ArchiveTree> firstTrees, String text, ArchiveType type) {
 		ArchiveTree attachTreeMenu = new ArchiveTree();
 		attachTreeMenu.setText(text);

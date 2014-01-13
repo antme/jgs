@@ -16,6 +16,8 @@ public interface IArchiveService {
 	public EntityResults<Archive> listArchives(SearchVo vo);
 
 	public Map<String, Object> listArchiveFiles(Archive archive);
+
+	public void addArchive(Archive archive);
 	
 	
 }

@@ -1,12 +1,19 @@
 package com.zcy.controller;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.google.gson.JsonSyntaxException;
 import com.zcy.bean.BaseEntity;
@@ -40,7 +49,7 @@ public abstract class AbstractController {
 		return EcUtil.toEntity(parametersMap, claszz);
 
 	}
-	
+
 	protected <T extends BaseEntity> List<T> parserListJsonParameters(HttpServletRequest request, boolean emptyParameter, Class<T> claszz) {
 		Map<String, Object> params = this.parserJsonParameters(request, false);
 		List<T> list = EcUtil.toJsonList(params, claszz);
@@ -120,7 +129,7 @@ public abstract class AbstractController {
 			OrderBy order = new OrderBy();
 			order.setOrder(parametersMap.get("order").toString());
 			order.setSort(parametersMap.get("sort").toString());
-			
+
 			EcThreadLocal.set(ZcyConstants.DB_QUERY_ORDER_BY, order);
 
 		}
@@ -130,7 +139,7 @@ public abstract class AbstractController {
 		parametersMap.remove(ZcyConstants.JSON_PARAMETERS_LABEL);
 		return parametersMap;
 	}
-	
+
 	protected void responseWithEntity(BaseEntity data, HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("data", data);
@@ -151,11 +160,10 @@ public abstract class AbstractController {
 			responseMsg(null, ResponseStatus.SUCCESS, request, response, null);
 		}
 	}
-	
 
 	protected <T extends BaseEntity> void responseWithDataPagnation(EntityResults<T> listBean, Map<String, Object> results, HttpServletRequest request, HttpServletResponse response) {
-		if(results == null){
-			results =  new HashMap<String, Object>();
+		if (results == null) {
+			results = new HashMap<String, Object>();
 		}
 		if (listBean != null) {
 			results.put("total", listBean.getPagnation().getTotal());
@@ -165,7 +173,7 @@ public abstract class AbstractController {
 			responseMsg(null, ResponseStatus.SUCCESS, request, response, null);
 		}
 	}
-	
+
 	protected <T extends BaseEntity> void responseWithListData(List<T> listBean, HttpServletRequest request, HttpServletResponse response) {
 		if (listBean != null) {
 			Map<String, Object> list = new HashMap<String, Object>();
@@ -221,7 +229,6 @@ public abstract class AbstractController {
 		String jsonReturn = EcUtil.toJson(data);
 		String callback = request.getParameter("callback");
 
-
 		if (callback != null) {
 			if (data != null && data instanceof Map) {
 				jsonReturn = callback + "(" + jsonReturn + ");";
@@ -268,8 +275,8 @@ public abstract class AbstractController {
 	}
 
 	protected void removeSessionInfo(HttpServletRequest request) {
-	
-		Enumeration<String> e =  request.getSession().getAttributeNames();
+
+		Enumeration<String> e = request.getSession().getAttributeNames();
 		while (e.hasMoreElements()) {
 			String nextElement = e.nextElement();
 			if (!nextElement.endsWith("_User")) {
@@ -278,54 +285,111 @@ public abstract class AbstractController {
 			}
 		}
 	}
-	
 
 	protected void setLoginSessionInfo(HttpServletRequest request, HttpServletResponse response, User user) {
 		removeSessionInfo(request);
 
-	    setSessionValue(request, User.USER_NAME, user.getUserName());
+		setSessionValue(request, User.USER_NAME, user.getUserName());
 		setSessionValue(request, User.ID, user.getId());
 		setSessionValue(request, User.ROLE_NAME, user.getRoleName());
 		if (user.getIndexPage() != null) {
 			setSessionValue(request, User.INDEX_PAGE, user.getIndexPage());
 		}
 		String path = EcUtil.isEmpty(request.getContextPath()) ? "/" : request.getContextPath();
-		if(request.getParameter("remember") != null || request.getAttribute("remember") != null){
-			Cookie account = new Cookie("account",null);
-            try {
-	            account.setValue(URLEncoder.encode(user.getUserName(), "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-	            e.printStackTrace();
-            }
-			account.setMaxAge(3600*24*30);
+		if (request.getParameter("remember") != null || request.getAttribute("remember") != null) {
+			Cookie account = new Cookie("account", null);
+			try {
+				account.setValue(URLEncoder.encode(user.getUserName(), "UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			account.setMaxAge(3600 * 24 * 30);
 			account.setPath(path);
-			
+
 			Cookie ssid = new Cookie("ssid", DataEncrypt.generatePassword(user.getUserName() + user.getPassword()));
-			ssid.setMaxAge(3600*24*30);
+			ssid.setMaxAge(3600 * 24 * 30);
 			ssid.setPath(path);
-			
+
 			response.addCookie(account);
 			response.addCookie(ssid);
 		}
-    }
+	}
 
-	protected void clearLoginSession(HttpServletRequest request, HttpServletResponse response){
+	protected void clearLoginSession(HttpServletRequest request, HttpServletResponse response) {
 		removeSessionInfo(request);
 
 		String path = EcUtil.isEmpty(request.getContextPath()) ? "/" : request.getContextPath();
 		Cookie account = new Cookie("account", null);
 		account.setMaxAge(0);
 		account.setPath(path);
-		
+
 		Cookie ssid = new Cookie("ssid", null);
 		ssid.setMaxAge(0);
 		ssid.setPath(path);
-		
+
 		response.addCookie(account);
 		response.addCookie(ssid);
 	}
-	
 
+	public String uploadFile(HttpServletRequest request, String parameterName) {
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		MultipartFile uploadFile = multipartRequest.getFile(parameterName);
+		String imgFileName = uploadFile.getOriginalFilename().toLowerCase().trim().replaceAll(" ", "");
+
+		InputStream inputStream = null;
+		try {
+			inputStream = uploadFile.getInputStream();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String webPath = request.getSession().getServletContext().getRealPath("/");
+
+		BufferedInputStream bis = null;
+		FileOutputStream fos = null;
+		String relativeFilePath = genRandomRelativePath(imgFileName);
+		try {
+			bis = new BufferedInputStream(inputStream);
+
+			File file = new File(webPath + relativeFilePath);
+			File folder = file.getParentFile();
+			if (!folder.exists()) {
+				folder.mkdirs();
+			}
+			fos = new FileOutputStream(file);
+
+			byte[] buf = new byte[1024];
+			int size = 0;
+
+			while ((size = bis.read(buf)) != -1) {
+				fos.write(buf, 0, size);
+			}
+
+			if (bis != null)
+				bis.close();
+
+			if (fos != null)
+				fos.close();
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return relativeFilePath;
+	}
+
+	public String genRandomRelativePath(String fileName) {
+		Random r = new Random();
+		int n = r.nextInt(101);
+		String ms = Long.toString(new Date().getTime());
+		StringBuffer sb = new StringBuffer("/");
+		sb.append("upload/").append(n).append("/").append(ms).append("/").append(fileName);
+		return sb.toString();
+	}
 
 	public enum ResponseStatus {
 
