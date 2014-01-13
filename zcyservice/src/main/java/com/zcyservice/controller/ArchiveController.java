@@ -11,6 +11,7 @@ import com.zcy.annotation.LoginRequired;
 import com.zcy.annotation.Permission;
 import com.zcy.controller.AbstractController;
 import com.zcyservice.bean.Archive;
+import com.zcyservice.bean.ArchiveFile;
 import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.IArchiveService;
 import com.zcyservice.util.PermissionConstants;
@@ -30,14 +31,14 @@ public class ArchiveController extends AbstractController {
 		SearchVo vo = (SearchVo) parserJsonParameters(request, true, SearchVo.class);
 		responseWithDataPagnation(archiveService.listArchives(vo), request, response);
 	}
-	
+
 	@RequestMapping("/files.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void listArchiveFiles(HttpServletRequest request, HttpServletResponse response) {
 		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
 		responseWithData(archiveService.listArchiveFiles(archive), request, response);
 	}
-	
+
 	@RequestMapping("/add.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void addArchive(HttpServletRequest request, HttpServletResponse response) {
@@ -45,6 +46,13 @@ public class ArchiveController extends AbstractController {
 		archiveService.addArchive(archive);
 		responseWithData(null, request, response);
 	}
-	
+
+	@RequestMapping("/upload.do")
+	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
+	public void uploadArchiveFile(HttpServletRequest request, HttpServletResponse response) {
+		ArchiveFile archiveFile = (ArchiveFile) parserJsonParameters(request, true, ArchiveFile.class);
+		String path = uploadFile(request, archiveFile.getArchiveUploadKey());
+		responseWithKeyValue("data", path, request, response);
+	}
 
 }
