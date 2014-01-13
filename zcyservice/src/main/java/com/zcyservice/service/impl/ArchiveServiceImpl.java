@@ -48,7 +48,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 				if (subFile.isDirectory()) {
 					Archive arc = new Archive();
 					arc.setArchiveCode(subFile.getName());
-					arc.setArchiveStatus(ArchiveStatus.ARVHIVED);
+					arc.setArchiveStatus(ArchiveStatus.ARCHIVED);
 
 					arc.setArchiveName(subFile.getName());
 

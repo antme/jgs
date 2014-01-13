@@ -199,7 +199,7 @@ public class Archive extends BaseEntity {
 
 
 	public enum ArchiveStatus {
-		NEW, ARVHIVED
+		NEW, ARCHIVED
 
 	}
 
