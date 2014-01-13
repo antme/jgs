@@ -67,7 +67,7 @@
            <li>
               <a href="#">用户管理</a>
               <ul class="ul_display">
-                 <li><a href="?p=admin/user/role">科室管理</a></li>
+                 <li><a href="?p=admin/user/role">权限管理</a></li>
                  <li><a href="?p=admin/user/manage">用户账号管理</a></li>
               </ul>
            </li>

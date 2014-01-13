@@ -333,7 +333,7 @@ public abstract class AbstractController {
 
 	public String uploadFile(HttpServletRequest request, String parameterName) {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-		MultipartFile uploadFile = multipartRequest.getFile(parameterName);
+		MultipartFile uploadFile = multipartRequest.getFile("Filedata");
 		String imgFileName = uploadFile.getOriginalFilename().toLowerCase().trim().replaceAll(" ", "");
 
 		InputStream inputStream = null;
