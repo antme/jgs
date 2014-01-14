@@ -114,7 +114,10 @@ ol, ul {
 }
 .context{
 	width:980px;
-	height:700px;
+	min-height:700px;
+	_height:700px;
+	_overflow:hidden;
+	padding-bottom:20px;
 	margin:10px auto;
 	background-color:#fff;
 }

@@ -40,7 +40,10 @@
             <form action="" id="addrecordForm" method="post" novalidate>
                 <div class="ac_div" >
                     <span class="span_style"><label class="ac_title">卷宗编号</label></span>
-                    <span class="span_style border-left" style="padding:5px;"><input id="archiveId" class="easyui-combobox" type="text" name="archiveId" data-options="loader: myloader,mode: 'remote',valueField: 'id',textField: 'name',width:128"/></span>
+                    <span class="span_style border-left" style="padding:5px;">
+                    <input id="archiveId" class="easyui-combobox" type="text"  data-options="loader: myloader,mode: 'remote',valueField: 'id',textField: 'name',width:128"/>
+                    <input name="archiveId" type="hidden"/>
+                    </span>
                 </div>  
                 <div class="ac_div">
                     <span class="span_style"><label class="ac_title">调阅人</label></span>

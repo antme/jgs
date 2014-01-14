@@ -4,7 +4,7 @@ function formatterArchiveView(val, row, rowindex) {
 }
 
 function formatterArchiveEidt(val, row, rowindex){
-	return '<button class="table_eidt" onclick=getarchiveWindow("'+ row.id+'");>&nbsp;</button>';
+	return '<span class="span_style"><button class="table_eidt" onclick=getarchiveWindow("'+ row.id+'");></button></span><span class="span_style" style="margin-left:20px;"><button class="table_delect" onclick=deletarchiveWindow("'+ row.id+'");>&nbsp;</button></span>';
 }
 function formatterRecordEidt(val, row, rowindex){
 	return '<button class="table_eidt" onclick=getrecordWindow("'+ row.id+'");>&nbsp;</button>';
@@ -20,6 +20,7 @@ $(document).ready(function(){
 	      success : function(data) {
 	          $.messager.alert("添加档案","添加档案成功！");
 	          $('#addarchive').window('close');
+	          $("#newmfc").datagrid('reload');
 	      }
 	});
 	$("#submited").click(function(){
@@ -49,21 +50,39 @@ $(document).ready(function(){
 	$("#addrecordForm").form({
 		   url : '/ecs/archive/borrow/add.do',
 		   onSubmit : function() {
-			   $(this)[0].archiveId.value= $("#archiveId").combobox('getText');
 		       return $(this).form('validate');
 		   },
 		   success : function(data) {
-		       $.messager.alert("添加档案","新增借阅记录成功！");
+			   if($("#sid").val()==undefined){
+				   $.messager.alert("添加","新增借阅记录成功！");
+			   }else{
+				   $.messager.alert("编辑","编辑借阅记录成功！");
+			   }
+			   
+			   $("#newmfc").datagrid('reload');
 		       $('#addrecord').window('close');
 		   }
 	});
 	
 	$("#submitrecord").click(function(){
+		   $("input[name=archiveId]").val($("#archiveId").combobox('getText'));
 		   $("#borrowingDate").val($('#borrowingDate').datebox('getValue'));
 		   if($("#borrowingDate").val()=="" || $("#borrowingDate").val()==null){
 		     $.messager.alert("添加失败","请选择调阅日期！");
 		   }else{
 		     $("#addrecordForm").submit();
+		   }
+	});
+	
+	$("#delerecordForm").form({
+		url : '/ecs/archive/destroy.do',
+		   onSubmit : function() {
+		       return $(this).form('validate');
+		   },
+		   success : function(data) {
+			   $.messager.alert("信息","销毁档案成功！");
+		       $('#delerecord').window('close');
+		       $("#newmfc").datagrid('reload');
 		   }
 	});
 });
@@ -73,32 +92,36 @@ function openAddGroupWindow(){
     $('#addarchive').window('setTitle', "新增卷宗");
     openDialog("addarchive");
     $("#addarchiveForm").form("clear");
+    $("#sid").remove();
 }
 function getarchiveWindow(id){
     	$('#addarchive').window('setTitle', "编辑借阅记录");
         openDialog("addarchive");
-        $.ajax({
-            url: '/ecs/archive/get.do',
-            dataType: 'json',
-            data: {
-                id: id
-            },
-            success: function(data){
-                $("#addarchiveForm").form("clear");
-                $("input[name='archiveCode']").val(data.data.archiveCode);
-                $("input[name='archiveName']").val(data.data.archiveName);
-                $("input[name='archiveResult']").val(data.data.archiveResult);
-                $("input[name='archiveApplicant']").val(data.data.archiveApplicant);
-                $("input[name='archiveOppositeApplicant']").val(data.data.archiveOppositeApplicant);
-                $("input[name='archiveThirdPerson']").val(data.data.archiveThirdPerson);
-                $("input[name='archiveJudge']").val(data.data.archiveJudge);
-                $("#archiveOpenDate").datebox('setValue', data.data.archiveOpenDate);  
-                $("#archiveCloseDate").datebox('setValue', data.data.archiveCloseDate);
-                $("#archiveDate").datebox('setValue', data.data.archiveDate);
-                $("input[name='archiveSerialNumber']").val(data.data.archiveSerialNumber);
-            }
+        postAjaxRequest("/ecs/archive/get.do", {id:id}, function(data){
+     	   $("#addarchiveForm").form("clear");
+     	   $("#addarchiveForm").form("load",data.data);
+     	   $("#addarchiveForm").append("<input id='sid' name='id' type='hidden' value='"+id+"' />");
         });
+        
 }
+
+function deletarchiveWindow(id){
+	$('#delerecord').window('setTitle', "销毁卷宗");
+    openDialog("delerecord");
+    $("#delerecordForm").form("clear");
+    $("#did").val(id);
+}
+
+function deletarchive(){
+	if($("#destroyComments").val()=="" || $("#destroyComments").val()==null){
+		$.messager.alert("销毁失败","请选择填写销毁原因！");
+	}else{
+		$("#delerecordForm").submit();
+	}
+}
+
+
+
 
 
 // 借阅管理 事件
@@ -129,6 +152,7 @@ function openAddrecordWindow(){
     $('#addrecord').window('setTitle', "新增借阅记录");
        openDialog("addrecord");
        $("#addrecordForm").form("clear");
+       $("#sid").remove();
 }
 
 function closedwindows(obj){
@@ -138,21 +162,14 @@ function closedwindows(obj){
 function getrecordWindow(id){
    $('#addrecord').window('setTitle', "编辑借阅记录");
    openDialog("addrecord");
-	   $.ajax({
-           url: '/ecs/archive/borrow/get.do',
-           dataType: 'json',
-           data: {
-        	   id: id
-           },
-           success: function(data){
-        	   $("#addrecordForm").form("clear");
-        	   $("#archiveId").combobox("setValue",data.data.archiveId);
-        	   $("input[name='borrowingName']").val(data.data.borrowingName);
-        	   $("input[name='borrowingOrganization']").val(data.data.borrowingOrganization);
-        	   $("#borrowingDate").datebox('setValue', data.data.borrowingDate);
-        	   $("#remark").val(data.data.remark);
-           }
-       });
+   postAjaxRequest("/ecs/archive/borrow/get.do", {id:id}, function(data){
+	   $("#addrecordForm").form("clear");
+	   $("#addrecordForm").form("load",data.data);
+   });
+   $("#addrecordForm").append("<input id='sid' name='id' type='hidden' value='"+id+"' />");
+	  
 }
+
+
 
 

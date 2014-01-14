@@ -246,7 +246,7 @@
     z-index:99999;
 }
 
-#addrecordForm{
+#addrecordForm,#delerecordForm{
 	border:1px solid #cdcdcd;
 	border-bottom:none;
 }
@@ -257,4 +257,12 @@
 	background:url("../images/table_edit.png") no-repeat;
 	display:inline-block;
 	cursor:pointer;
+}
+.table_delect{
+    width:34px;
+    height:34px;
+    border:none;
+    background:url("../images/delect_btn.jpg") no-repeat;
+    display:inline-block;
+    cursor:pointer;
 }

@@ -25,7 +25,6 @@
     
     <div style="margin-left:40px;">
         <button class="btn_add" onclick="openAddGroupWindow();">新增档案</button>
-        <button class="btn_add" onclick="openAddGroupWindow();">销毁档案</button>
     </div>
     <div class="line_clear"></div>
     <div style="margin-left:40px;">
@@ -40,7 +39,7 @@
                         <th align="center"  field="createdOn" width="120" sortable="false" >档案归档时间</th>
                         <th align="center"  field="updatedOn" width="120" sortable="false" >档案修改时间</th>
                         <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="100">档案预览</th>
-                        <th align="center" data-options="field:'eidt'" formatter="formatterArchiveEidt"  width="100">操作</th>
+                        <th align="center" data-options="field:'eidt'" formatter="formatterArchiveEidt"  width="130">操作</th>
                     </tr>
                 </thead>
             </table>
@@ -206,6 +205,21 @@
             <script type="text/javascript">
             
             </script>
+    </div>
+    <div id="delerecord" class="easyui-window" title="编辑科室信息" data-options="modal:true,closed:true,maximizable:false,minimizable:false,collapsible:false,iconCls:'icon-save'" style="width:800px;height:auto;padding:10px;">
+            <form action="" id="delerecordForm" method="post" novalidate>
+                <input id="did" type="hidden" name="id" />
+                <div class="ac_div">
+                    <span class="span_style"><label class="ac_title">销毁原因</label></span>
+                    <span class="span_style border-left" style="padding:5px;">
+                       <textarea id="destroyComments" name="destroyComments" rows="10" cols="59" ></textarea>
+                    </span>
+                </div>
+             </form>
+             <div style="text-align:center;padding:5px;">
+                     <button class="btn_add" onclick="deletarchive()">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     <button class="btn_add" onclick="closedwindows('delerecord')">取消</button>
+             </div>
     </div>
   </div>
 </body>
