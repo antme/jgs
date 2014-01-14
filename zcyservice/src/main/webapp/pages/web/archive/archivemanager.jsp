@@ -25,7 +25,6 @@
     
     <div style="margin-left:40px;">
         <button class="btn_add" onclick="openAddGroupWindow();">新增档案</button>
-        <button class="btn_add" onclick="getrecordWindow();">编辑档案</button>
         <button class="btn_add" onclick="openAddGroupWindow();">销毁档案</button>
     </div>
     <div class="line_clear"></div>
@@ -38,8 +37,8 @@
                         <th align="center"  field="archiveStatus" width="100" sortable="false" >档案状态</th>
                         <th align="center"  field="createdOn" width="120" sortable="false" >档案归档时间</th>
                         <th align="center"  field="updatedOn" width="120" sortable="false" >档案修改时间</th>
-                        
-                         <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="150">档案预览</th>
+                        <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="100">档案预览</th>
+                        <th align="center" data-options="field:'eidt'" formatter="formatterArchiveEidt"  width="100">操作</th>
                     </tr>
                 </thead>
             </table>
@@ -203,74 +202,7 @@
                      <button id="closed" class="btn_add">取消</button>
                 </div>
             <script type="text/javascript">
-            function openAddGroupWindow(){
-                $('#addarchive').window('setTitle', "新增卷宗");
-                openDialog("addarchive");
-            }
-
-            $("#addarchiveForm").form({
-                  url : '/ecs/archive/add.do',
-                  onSubmit : function() {
-                      return $(this).form('validate');
-                  },
-                  success : function(data) {
-                      $.messager.alert("添加档案","添加档案成功！");
-                      $('#addarchive').window('close');
-                  }
-            });
-            $("#submited").click(function(){
-                  $("#archiveOpenDate").val($('#archiveOpenDate').datebox('getValue'));
-                  $("#archiveCloseDate").val($('#archiveCloseDate').datebox('getValue'));
-                  if($("#archiveOpenDate").val()=="" || $("#archiveOpenDate").val()==null){
-                      $.messager.alert("添加失败","请选择立案日期！");
-                  }else if($("#archiveCloseDate").val()=="" || $("#archiveCloseDate").val()==null){
-                      $.messager.alert("添加失败","请选择结案日期！");
-                  }else if($("#mainFile").val()=="" || $("#mainFile").val()==null){
-                      $.messager.alert("添加失败","请上传正卷宗！");
-                  }else if($("#mainFilkeAttach").val()=="" || $("#mainFilkeAttach").val()==null){
-                      $.messager.alert("添加失败","请上传正卷宗附件！");
-                  }else if($("#secondFile").val()=="" || $("#secondFile").val()==null){
-                      $.messager.alert("添加失败","请上传副卷宗！");
-                  }else if($("#secondFileAttach").val()=="" || $("#secondFileAttach").val()==null){
-                      $.messager.alert("添加失败","请上传副卷宗附件！");
-                  }else{
-                      $("#addarchiveForm").submit();
-                  }
-                  
-            });
-            $("#closed").click(function(){
-                  $('#addarchive').window('close');
-            });
-            function getrecordWindow(){
-                var row = $('#newmfc').datagrid('getSelected');
-                if(row==null || row==""){
-                    $.messager.alert("编辑失败","请选择一条待编辑的行！");
-                }else{
-                	$('#addarchive').window('setTitle', "编辑借阅记录");
-                    openDialog("addarchive");
-                    $.ajax({
-                        url: '/ecs/archive/get.do',
-                        dataType: 'json',
-                        data: {
-                            id: row.id
-                        },
-                        success: function(data){
-                            $("#addarchiveForm").form("clear");
-                            $("input[name='archiveCode']").val(data.data.archiveCode);
-                            $("input[name='archiveName']").val(data.data.archiveName);
-                            $("input[name='archiveResult']").val(data.data.archiveResult);
-                            $("input[name='archiveApplicant']").val(data.data.archiveApplicant);
-                            $("input[name='archiveOppositeApplicant']").val(data.data.archiveOppositeApplicant);
-                            $("input[name='archiveThirdPerson']").val(data.data.archiveThirdPerson);
-                            $("input[name='archiveJudge']").val(data.data.archiveJudge);
-                            $("#archiveOpenDate").datebox('setValue', data.data.archiveOpenDate);  
-                            $("#archiveCloseDate").datebox('setValue', data.data.archiveCloseDate);
-                            $("#archiveDate").datebox('setValue', data.data.archiveDate);
-                            $("input[name='archiveSerialNumber']").val(data.data.archiveSerialNumber);
-                        },
-                    });
-                }
-            }
+            
             </script>
     </div>
   </div>

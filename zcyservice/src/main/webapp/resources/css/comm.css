@@ -72,11 +72,13 @@ ol, ul {
 }
 .menu_cline{
 	margin-top:7px;
+	_margin-top:14px;
 	width: 6px;
+	_width:2px;
     height: 30px;
     background: url(../images/index_icons.png) no-repeat 1px -380px;
     _background-image: none;
-    _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="resources/images/logo.png",sizingMethod='scale');
+    _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="resources/images/menu_back.png",sizingMethod='scale');
 }
 .ul_display{
 	position:absolute;

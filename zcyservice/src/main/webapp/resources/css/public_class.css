@@ -8,6 +8,7 @@
 }
 .public_search_input_text{
 	background: url("../images/public_select.png") no-repeat;
+	_background: url("../images/public_select2.jpg") no-repeat;
     border: medium none;
     color: #000000;
     height: 30px;
@@ -47,6 +48,8 @@
 	width:900px;
 	height:41px;
 	background: url("../images/public_tip.png") no-repeat;
+	_background-image: none;
+    _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="resources/images/public_tip.png",sizingMethod='scale');
 }
 .public_title_icon{
 	float: left;
@@ -246,4 +249,12 @@
 #addrecordForm{
 	border:1px solid #cdcdcd;
 	border-bottom:none;
+}
+.table_eidt{
+	width:34px;
+	height:34px;
+	border:none;
+	background:url("../images/table_edit.png") no-repeat;
+	display:inline-block;
+	cursor:pointer;
 }
