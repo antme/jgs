@@ -82,8 +82,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		query.or(Archive.ACHIVE_PROCESS_STATUS, ProcessStatus.NEW);
 
 		query.or(Archive.ACHIVE_PROCESS_STATUS, ProcessStatus.DESTROYING);
-		
-		
+
 		return this.dao.listByQueryWithPagnation(query, Archive.class);
 
 	}
@@ -143,13 +142,22 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 	}
 
 	public void addArchive(Archive archive) {
-		archive.setArchiveStatus(ArchiveStatus.NEW);
-		archive.setArchiveProcessStatus(ProcessStatus.NEW);
-		this.dao.insert(archive);
+
+		if (EcUtil.isValid(archive.getId())) {
+			this.dao.updateById(archive);
+		} else {
+			archive.setArchiveStatus(ArchiveStatus.NEW);
+			archive.setArchiveProcessStatus(ProcessStatus.NEW);
+			this.dao.insert(archive);
+		}
 	}
 
 	public void addArchiveBorrowRecord(ArchiveBorrowing archive) {
-		this.dao.insert(archive);
+		if (EcUtil.isValid(archive.getId())) {
+			this.dao.updateById(archive);
+		} else {
+			this.dao.insert(archive);
+		}
 	}
 
 	public Archive getArchive(Archive archive) {
