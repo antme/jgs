@@ -15,7 +15,7 @@
         <label class="public_title_text">权限管理</label>
     </div>
     <div class="line_clear"></div>
-	<div id="groupTab" class="public_search_div" style="width:900px;">
+	
 		<div title="权限设置" style="padding: 10px">
 			<button class="btn_add" onclick="openAddGroupWindow();">新增权限</button>
 			<div class="line_clear"></div>
@@ -36,27 +36,7 @@
                 </tbody>
 	       </table>
 		</div>
-		<div title="用户权限设置" style="padding: 10px">
-			<table class="" id="userList"  url="/ecs/sys/cfg/role/bakend/user/list.do" 
-		         iconCls="icon-save" sortOrder="asc"  pagination="true"  singleSelect="true"  data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true">
-		        <thead>
-		            <tr>
-		                <th align="center"  field="userName" width='200' align="center" sortable="false" resizable="true">用户名</th>
-		                <th align="center"  field="groupName" width='200' align="center" sortable="false">权限组</th>
-		                <th data-options="field:'id'" width='200' align="center">操作</th>
-		                
-		            </tr>
-		        </thead>
-		        <tbody>
-		            <tr>
-		               <td>张三</td>
-		               <td>管理员</td>
-		               <td><button>编辑</button></td>
-		            </tr>
-		        </tbody>
-		       </table>
-		</div>
-	</div>
+
 
 <div style="display:none;">
 	<div id="addRoleGroup" class="easyui-window" title="编辑权限信息" data-options="modal:true,closed:true,maximizable:false,minimizable:false,collapsible:false,iconCls:'icon-save'" style="width:650px;height:auto;padding:10px;">
@@ -126,35 +106,8 @@
 		$('#addRoleGroup').window('setTitle', "新增权限组");
 	      openDialog("addRoleGroup");
 	}
-	 $('#groupTab').tabs({
- 	    border:false,
- 	    onSelect:function(title){
- 	    	if(title=="权限设置"){
- 	    	     $('#groupList').datagrid({
- 	    	         url:'/ecs/sys/cfg/role/group/select.do'
- 	    	     });
- 	
- 	    	}else if(title =="用户权限设置"){
- 	    		 $('#userList').datagrid({
-                     url:'/ecs/sys/cfg/role/bakend/user/list.do'
-               });  
- 	    	}
- 	    }
- 	});
 	 
-	  $("#editUserRoleGroupForm").form({
-	        url : '/ecs/sys/cfg/user/group/update.do',
-	        onSubmit : function() {
-	            $("#groupId").val($('#groupIdSel').combobox('getValues'));
-	            return $(this).form('validate');
-	        },
-	        success : function(data) {
-	            dealMessageWithCallBack(data, "编辑用户权限组", function(){
-	                $('#editUserRoleGroup').window('close');
-	                $("#userList").datagrid("reload");
-	            });
-	        }
-	    });
+	 
 	  
 	   $("#addRoleGroupForm").form({
 	        url : '/ecs/sys/cfg/role/group/add.do',
