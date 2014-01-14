@@ -77,23 +77,26 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		return this.dao.listByQueryWithPagnation(new DataBaseQueryBuilder(Archive.TABLE_NAME), Archive.class);
 	}
 
-	public EntityResults<Archive> listNewArchives(SearchVo vo) {
+	public EntityResults<Archive> listNeddApproveArchives(SearchVo vo) {
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
-		query.and(Archive.ACHIVE_PROCESS_STATUS, ProcessStatus.NEW);
+		query.or(Archive.ACHIVE_PROCESS_STATUS, ProcessStatus.NEW);
 
+		query.or(Archive.ACHIVE_PROCESS_STATUS, ProcessStatus.DESTROYING);
+		
+		
 		return this.dao.listByQueryWithPagnation(query, Archive.class);
 
 	}
 
 	public void approveArchive(Archive archive) {
 
-		archive.setAchiveProcessStatus(ProcessStatus.APPROVED);
+		archive.setArchiveProcessStatus(ProcessStatus.APPROVED);
 		this.dao.updateById(archive);
 	}
 
 	public void rejectArchive(Archive archive) {
 
-		archive.setAchiveProcessStatus(ProcessStatus.REJECTED);
+		archive.setArchiveProcessStatus(ProcessStatus.REJECTED);
 		this.dao.updateById(archive);
 
 	}
@@ -141,7 +144,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 	public void addArchive(Archive archive) {
 		archive.setArchiveStatus(ArchiveStatus.NEW);
-		archive.setAchiveProcessStatus(ProcessStatus.NEW);
+		archive.setArchiveProcessStatus(ProcessStatus.NEW);
 		this.dao.insert(archive);
 	}
 
@@ -162,6 +165,14 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 	public BaseEntity getArchiveBorrowRecord(ArchiveBorrowing archive) {
 
 		return this.dao.findById(archive.getId(), ArchiveBorrowing.TABLE_NAME, ArchiveBorrowing.class);
+	}
+
+	public void destroyArchive(Archive archive) {
+
+		archive.setArchiveProcessStatus(ProcessStatus.DESTROYING);
+
+		this.dao.updateById(archive);
+
 	}
 
 	private void createAttachTree(List<ArchiveFile> fileList, List<ArchiveTree> firstTrees, String text, ArchiveFileProperty type) {

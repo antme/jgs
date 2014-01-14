@@ -36,9 +36,9 @@ public class ArchiveController extends AbstractController {
 	
 	@RequestMapping("/listNew.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
-	public void listNewArchives(HttpServletRequest request, HttpServletResponse response) {
+	public void listNeddApproveArchives(HttpServletRequest request, HttpServletResponse response) {
 		SearchVo vo = (SearchVo) parserJsonParameters(request, true, SearchVo.class);
-		responseWithDataPagnation(archiveService.listNewArchives(vo), request, response);
+		responseWithDataPagnation(archiveService.listNeddApproveArchives(vo), request, response);
 	}
 
 	@RequestMapping("/files.do")
@@ -62,6 +62,15 @@ public class ArchiveController extends AbstractController {
 	public void getArchive(HttpServletRequest request, HttpServletResponse response) {
 		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
 		responseWithEntity(archiveService.getArchive(archive), request, response);
+	}
+	
+	@RequestMapping("/destroy.do")
+	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
+	public void destroyArchive(HttpServletRequest request, HttpServletResponse response) {
+		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
+		archiveService.destroyArchive(archive);
+		responseWithData(null, request, response);
+
 	}
 	
 	
