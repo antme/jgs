@@ -84,6 +84,11 @@ public class Archive extends BaseEntity {
 	@Expose
 	public String archiveSerialNumber;
 
+	// 归档号数
+	@Column(name = "destroyComments")
+	@Expose
+	public String destroyComments;
+
 	public String getArchiveCode() {
 		return archiveCode;
 	}
@@ -195,6 +200,18 @@ public class Archive extends BaseEntity {
 	public void setArchiveProcessStatus(ProcessStatus processStatus) {
 		this.archiveProcessStatus = processStatus;
 	}
+	
+	
+
+	public String getDestroyComments() {
+		return destroyComments;
+	}
+
+	public void setDestroyComments(String destroyComments) {
+		this.destroyComments = destroyComments;
+	}
+
+
 
 	public enum ArchiveStatus {
 		NEW, ARCHIVED
@@ -205,5 +222,7 @@ public class Archive extends BaseEntity {
 		DRAFT, NEW, APPROVED, REJECTED, DESTROYING, DESTROYED;
 
 	}
+	
+	
 
 }

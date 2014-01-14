@@ -16,6 +16,7 @@ CREATE TABLE `Archive` (
   `archiveDate` datetime DEFAULT NULL,
   `archiveSerialNumber` varchar(255) DEFAULT NULL,
   `archiveDescription` text DEFAULT NULL,
+  `destroyComments` text DEFAULT NULL,
   `createdOn` datetime DEFAULT NULL,
   `updatedOn` datetime DEFAULT NULL,
   `creatorId` varchar(36) DEFAULT NULL,
