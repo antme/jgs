@@ -74,6 +74,14 @@ public class ArchiveController extends AbstractController {
 	}
 	
 	
+	@RequestMapping("/borrow/get.do")
+	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
+	public void getArchiveBorrowRecord(HttpServletRequest request, HttpServletResponse response) {
+		ArchiveBorrowing archive = (ArchiveBorrowing) parserJsonParameters(request, true, ArchiveBorrowing.class);
+		
+		responseWithEntity(archiveService.getArchiveBorrowRecord(archive), request, response);
+	}
+	
 	@RequestMapping("/borrow/list.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void listArchiveBorrowRecord(HttpServletRequest request, HttpServletResponse response) {

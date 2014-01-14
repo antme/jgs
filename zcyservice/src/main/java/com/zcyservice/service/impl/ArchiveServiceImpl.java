@@ -12,6 +12,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import com.zcy.bean.BaseEntity;
 import com.zcy.bean.EntityResults;
 import com.zcy.cfg.CFGManager;
 import com.zcy.dbhelper.DataBaseQueryBuilder;
@@ -156,6 +157,11 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 	public EntityResults<ArchiveBorrowing> listArchiveBorrowRecord(SearchVo vo) {
 
 		return this.dao.listByQueryWithPagnation(new DataBaseQueryBuilder(ArchiveBorrowing.TABLE_NAME), ArchiveBorrowing.class);
+	}
+
+	public BaseEntity getArchiveBorrowRecord(ArchiveBorrowing archive) {
+
+		return this.dao.findById(archive.getId(), ArchiveBorrowing.TABLE_NAME, ArchiveBorrowing.class);
 	}
 
 	private void createAttachTree(List<ArchiveFile> fileList, List<ArchiveTree> firstTrees, String text, ArchiveFileProperty type) {
