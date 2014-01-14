@@ -27,6 +27,8 @@ public interface IArchiveService {
 	public void addArchiveBorrowRecord(ArchiveBorrowing archive);
 
 	public Archive getArchive(Archive archive);
+
+	public EntityResults<ArchiveBorrowing> listArchiveBorrowRecord(SearchVo vo);
 	
 	
 }

@@ -143,16 +143,19 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		archive.setAchiveProcessStatus(ProcessStatus.NEW);
 		this.dao.insert(archive);
 	}
-	
-	
-	public void addArchiveBorrowRecord(ArchiveBorrowing archive){
+
+	public void addArchiveBorrowRecord(ArchiveBorrowing archive) {
 		this.dao.insert(archive);
 	}
-	
-	
-	public Archive getArchive(Archive archive){
-		
+
+	public Archive getArchive(Archive archive) {
+
 		return (Archive) this.dao.findById(archive.getId(), Archive.TABLE_NAME, Archive.class);
+	}
+
+	public EntityResults<ArchiveBorrowing> listArchiveBorrowRecord(SearchVo vo) {
+
+		return this.dao.listByQueryWithPagnation(new DataBaseQueryBuilder(ArchiveBorrowing.TABLE_NAME), ArchiveBorrowing.class);
 	}
 
 	private void createAttachTree(List<ArchiveFile> fileList, List<ArchiveTree> firstTrees, String text, ArchiveFileProperty type) {
@@ -205,8 +208,8 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		String scanPath = CFGManager.getProperty(ZcyServiceConstants.DOCUMENT_SCAN_PATH);
 
 		String filePath = file.getArchiveFilePath();
-//		filePath = filePath.replaceAll(scanPath, "");
-		filePath = filePath.substring(scanPath.length() +1);
+		// filePath = filePath.replaceAll(scanPath, "");
+		filePath = filePath.substring(scanPath.length() + 1);
 		return filePath;
 	}
 
