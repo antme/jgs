@@ -18,7 +18,12 @@ $(document).ready(function(){
 	          return $(this).form('validate');
 	      },
 	      success : function(data) {
-	          $.messager.alert("添加档案","添加档案成功！");
+	    	  if($("#sid").val()==undefined){
+	    		  $.messager.alert("添加档案","添加档案成功！");
+			   }else{
+				   $.messager.alert("编辑档案","编辑档案成功！");
+			   }
+	          
 	          $('#addarchive').window('close');
 	          $("#newmfc").datagrid('reload');
 	      }

@@ -266,3 +266,9 @@
     display:inline-block;
     cursor:pointer;
 }
+.display_input{
+	width:128px;
+	height:30px;
+	line-height:30px;
+	display:inline-block;
+}

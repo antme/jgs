@@ -43,6 +43,26 @@
               <label class="public_title_text">档案预览</label>
           </div>
         <div class="line_clear"></div>
+        <div style="margin-left:40px;">
+            <span class="span_style_label"><label class="display_nones">档案编号：</label></span>
+            <span class="span_style"><div id="archiveCode" class="display_input"></div></span>
+            
+            <span class="span_style_label"><label class="display_nones">案由：</label></span>
+            <span class="span_style"><div id="archiveName" class="display_input"></div></span>
+            
+            <span class="span_style_label"><label class="display_nones">处理结果：</label></span>
+            <span class="span_style"><div id="archiveStatus" class="display_input"></div></span>
+            <br/>
+
+            
+            <span class="span_style_label"><label class="display_nones">立案日期：</label></span>
+            <span class="span_style"><div id="createdOn" class="display_input"></div></span>
+            
+            <span class="span_style_label"><label class="display_nones">修改日期：</label></span>
+            <span class="span_style"><div id="updatedOn" class="display_input"></div></span>
+            <br/>
+            <br/>
+        </div>
 		<div id="documentViewer" class="flexpaper_viewer" style="position:absolute;width:770px;height:650px;z-index:2"></div>
 		<div id="documentFiles" style="width:170px;height:350px; float:right; margin-top:20px;">
 		
@@ -130,6 +150,12 @@
 					 $('#firstAttachTrees').tree('loadData', data.firstAttachTrees);
 			/* 		 $('#secondTrees').tree('loadData', data.secondTrees);
 					 $('#secondAttachTrees').tree('loadData', data.secondAttachTrees); */
+					 console.log(data.data);
+					 $("#archiveCode").text(data.data.archiveCode);
+					 $("#archiveName").text(data.data.archiveName);
+					 $("#archiveStatus").text(data.data.archiveStatus);
+					 $("#createdOn").text(data.data.createdOn);
+					 $("#updatedOn").text(data.data.updatedOn);
 					 
 					 $('#firstTrees').tree({
 						    state: "closed",
