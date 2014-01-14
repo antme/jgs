@@ -1,13 +1,37 @@
 [  {
 	"text" : "用户管理",
 	"id" : "adm_user_manage",
-	"indexPage" : "admin/user/manage"
-}, {
+	"indexPage" : "web/archive/archivereport"
+},{
+	"text" : "系统设置",
+	"id" : "adm_sys_settings",
+	"indexPage" : "web/archive/archivereport"
+},{
+	"text" : "系统监控",
+	"id" : "adm_sys_monitor",
+	"indexPage" : "web/archive/archivereport"
+},{
+	"text" : "权限管理",
+	"id" : "adm_role_manage",
+	"indexPage" : "web/archive/archivereport"
+},{
 	"text" : "档案管理",
-	"id" : "adm_order_manage",
-	"indexPage" : "admin/order/sysreject"
-}, {
+	"id" : "adm_archive_manage",
+	"indexPage" : "web/archive/archivereport"
+},{
+	"text" : "档案审核",
+	"id" : "adm_archive_approve",
+	"indexPage" : "web/archive/archivereport"
+},{
+	"text" : "调阅管理",
+	"id" : "adm_archive_borrow_manager",
+	"indexPage" : "web/archive/archivereport"
+},{
 	"text" : "档案查询",
-	"id" : "adm_order_query",
-	"indexPage" : "admin/order/list"
+	"id" : "adm_achive_query",
+	"indexPage" : "web/archive/archivereport"
+},{
+	"text" : "报表统计",
+	"id" : "adm_archive_report",
+	"indexPage" : "web/archive/archivereport"
 }]

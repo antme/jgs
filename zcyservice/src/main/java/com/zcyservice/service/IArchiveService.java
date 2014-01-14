@@ -2,6 +2,7 @@ package com.zcyservice.service;
 
 import java.util.Map;
 
+import com.zcy.bean.BaseEntity;
 import com.zcy.bean.EntityResults;
 import com.zcyservice.bean.Archive;
 import com.zcyservice.bean.ArchiveBorrowing;
@@ -18,7 +19,7 @@ public interface IArchiveService {
 
 	public void addArchive(Archive archive);
 
-	public EntityResults<Archive> listNewArchives(SearchVo vo);
+	public EntityResults<Archive> listNeddApproveArchives(SearchVo vo);
 
 	public void approveArchive(Archive archive);
 
@@ -29,6 +30,10 @@ public interface IArchiveService {
 	public Archive getArchive(Archive archive);
 
 	public EntityResults<ArchiveBorrowing> listArchiveBorrowRecord(SearchVo vo);
+
+	public BaseEntity getArchiveBorrowRecord(ArchiveBorrowing archive);
+
+	public void destroyArchive(Archive archive);
 	
 	
 }

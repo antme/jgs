@@ -5,7 +5,7 @@ CREATE TABLE `Archive` (
   `archiveCode` varchar(255) DEFAULT NULL,
   `archiveName` varchar(255) DEFAULT NULL,
   `archiveStatus` varchar(255) DEFAULT NULL,
-  `achiveProcessStatus` varchar(255) DEFAULT NULL,
+  `archiveProcessStatus` varchar(255) DEFAULT NULL,
   `archiveResult` varchar(255) DEFAULT NULL,
   `archiveApplicant` varchar(255) DEFAULT NULL,
   `archiveThirdPerson` varchar(255) DEFAULT NULL,

@@ -36,9 +36,9 @@ public class ArchiveController extends AbstractController {
 	
 	@RequestMapping("/listNew.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
-	public void listNewArchives(HttpServletRequest request, HttpServletResponse response) {
+	public void listNeddApproveArchives(HttpServletRequest request, HttpServletResponse response) {
 		SearchVo vo = (SearchVo) parserJsonParameters(request, true, SearchVo.class);
-		responseWithDataPagnation(archiveService.listNewArchives(vo), request, response);
+		responseWithDataPagnation(archiveService.listNeddApproveArchives(vo), request, response);
 	}
 
 	@RequestMapping("/files.do")
@@ -64,6 +64,15 @@ public class ArchiveController extends AbstractController {
 		responseWithEntity(archiveService.getArchive(archive), request, response);
 	}
 	
+	@RequestMapping("/destroy.do")
+	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
+	public void destroyArchive(HttpServletRequest request, HttpServletResponse response) {
+		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
+		archiveService.destroyArchive(archive);
+		responseWithData(null, request, response);
+
+	}
+	
 	
 	@RequestMapping("/borrow/add.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
@@ -73,6 +82,14 @@ public class ArchiveController extends AbstractController {
 		responseWithData(null, request, response);
 	}
 	
+	
+	@RequestMapping("/borrow/get.do")
+	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
+	public void getArchiveBorrowRecord(HttpServletRequest request, HttpServletResponse response) {
+		ArchiveBorrowing archive = (ArchiveBorrowing) parserJsonParameters(request, true, ArchiveBorrowing.class);
+		
+		responseWithEntity(archiveService.getArchiveBorrowRecord(archive), request, response);
+	}
 	
 	@RequestMapping("/borrow/list.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
