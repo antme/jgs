@@ -18,8 +18,17 @@ ol, ul {
 	width:980px;
 	height:80px;
 	margin:0px auto;
-	background:url(../images/logo.png) no-repeat 0px 0px;
 	position:relative;
+}
+.head_logo{
+	position:absolute;
+	left:0px;
+	top:0px;
+	width:300px;
+	height:80px;
+	background:url(../images/logo.png) no-repeat 0px 0px;
+	_background-image: none;
+    _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="resources/images/logo.png",sizingMethod='scale');
 }
 .user_name{
     position:absolute;
@@ -66,6 +75,8 @@ ol, ul {
 	width: 6px;
     height: 30px;
     background: url(../images/index_icons.png) no-repeat 1px -380px;
+    _background-image: none;
+    _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="resources/images/logo.png",sizingMethod='scale');
 }
 .ul_display{
 	position:absolute;

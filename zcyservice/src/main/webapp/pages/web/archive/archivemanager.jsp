@@ -9,7 +9,7 @@
 <script type="text/javascript" src="/resources/js/jquery.easyui.min.js"></script>
 <link href="/resources/css/easyui.css" rel="stylesheet"/>
 <link rel="stylesheet" href="/resources/css/upload/button.css" type="text/css" />
-<script type="text/javascript" src="resources/js/archive.js"></script>
+<script type="text/javascript" src="/resources/js/archive.js"></script>
 <script type="text/javascript" src="/resources/js/upload/swfupload.js"></script>
 <script type="text/javascript" src="/resources/js/upload/handlers.js"></script>
 <script type="text/javascript" src="/resources/js/upload/swfus.js"></script>
@@ -25,7 +25,7 @@
     
     <div style="margin-left:40px;">
         <button class="btn_add" onclick="openAddGroupWindow();">新增档案</button>
-        <button class="btn_add" onclick="openAddGroupWindow();">编辑档案</button>
+        <button class="btn_add" onclick="getrecordWindow();">编辑档案</button>
         <button class="btn_add" onclick="openAddGroupWindow();">销毁档案</button>
     </div>
     <div class="line_clear"></div>
@@ -95,7 +95,7 @@
                     </div>
                     <div>
                          <span class="span_style"><label class="ac_title2">归档日期</label></span>
-                         <span class="span_style border-left-right span_width"><input class="easyui-datebox" type="text" name="archiveDate" /></span>
+                         <span class="span_style border-left-right span_width"><input id="archiveDate" class="easyui-datebox" type="text" name="archiveDate" /></span>
                          <span class="span_style"><label class="ac_title2">归档号数</label></span>
                          <span class="span_style border-left span_width"><input class="ac_input2" type="text" name="archiveSerialNumber" /></span>
                     </div>
@@ -105,7 +105,7 @@
                 <input id="secondFile" type="hidden" name="secondFile"/>
                 <input id="secondFileAttach" type="hidden" name="secondFileAttach"/>
              </form>
-                <div class="ac_div border-left-right">
+                <div class="ac_div">
                     <span class="span_style"><label class="ac_title2 ">正卷宗</label></span>
                     <span class="span_style span_left_border">
                               <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 5px; *+padding:2px; _padding:2px;">
@@ -128,7 +128,7 @@
                              </div>
                     </span>
                 </div>
-                <div class="ac_div border-left-right">
+                <div class="ac_div">
                     <span class="span_style"><label class="ac_title2 ">正卷宗附件</label></span>
                     <span class="span_style span_left_border">
                               <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 5px; *+padding:2px; _padding:2px;">
@@ -151,7 +151,7 @@
                              </div>
                     </span>
                 </div>
-                <div class="ac_div border-left-right">
+                <div class="ac_div">
                     <span class="span_style "><label class="ac_title2 ">副卷宗</label></span>
                     <span class="span_style span_left_border">
                               <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 5px; *+padding:2px; _padding:2px;">
@@ -174,7 +174,7 @@
                              </div>
                     </span>
                 </div>
-                <div class="ac_div border-left-right">
+                <div class="ac_div">
                     <span class="span_style "><label class="ac_title2 ">副卷宗附件</label></span>
                     <span class="span_style span_left_border">
                               <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 5px; *+padding:2px; _padding:2px;">
@@ -202,7 +202,76 @@
                      <button id="submited" class="btn_add">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                      <button id="closed" class="btn_add">取消</button>
                 </div>
-           
+            <script type="text/javascript">
+            function openAddGroupWindow(){
+                $('#addarchive').window('setTitle', "新增卷宗");
+                openDialog("addarchive");
+            }
+
+            $("#addarchiveForm").form({
+                  url : '/ecs/archive/add.do',
+                  onSubmit : function() {
+                      return $(this).form('validate');
+                  },
+                  success : function(data) {
+                      $.messager.alert("添加档案","添加档案成功！");
+                      $('#addarchive').window('close');
+                  }
+            });
+            $("#submited").click(function(){
+                  $("#archiveOpenDate").val($('#archiveOpenDate').datebox('getValue'));
+                  $("#archiveCloseDate").val($('#archiveCloseDate').datebox('getValue'));
+                  if($("#archiveOpenDate").val()=="" || $("#archiveOpenDate").val()==null){
+                      $.messager.alert("添加失败","请选择立案日期！");
+                  }else if($("#archiveCloseDate").val()=="" || $("#archiveCloseDate").val()==null){
+                      $.messager.alert("添加失败","请选择结案日期！");
+                  }else if($("#mainFile").val()=="" || $("#mainFile").val()==null){
+                      $.messager.alert("添加失败","请上传正卷宗！");
+                  }else if($("#mainFilkeAttach").val()=="" || $("#mainFilkeAttach").val()==null){
+                      $.messager.alert("添加失败","请上传正卷宗附件！");
+                  }else if($("#secondFile").val()=="" || $("#secondFile").val()==null){
+                      $.messager.alert("添加失败","请上传副卷宗！");
+                  }else if($("#secondFileAttach").val()=="" || $("#secondFileAttach").val()==null){
+                      $.messager.alert("添加失败","请上传副卷宗附件！");
+                  }else{
+                      $("#addarchiveForm").submit();
+                  }
+                  
+            });
+            $("#closed").click(function(){
+                  $('#addarchive').window('close');
+            });
+            function getrecordWindow(){
+                var row = $('#newmfc').datagrid('getSelected');
+                if(row==null || row==""){
+                    $.messager.alert("编辑失败","请选择一条待编辑的行！");
+                }else{
+                	$('#addarchive').window('setTitle', "编辑借阅记录");
+                    openDialog("addarchive");
+                    $.ajax({
+                        url: '/ecs/archive/get.do',
+                        dataType: 'json',
+                        data: {
+                            id: row.id
+                        },
+                        success: function(data){
+                            $("#addarchiveForm").form("clear");
+                            $("input[name='archiveCode']").val(data.data.archiveCode);
+                            $("input[name='archiveName']").val(data.data.archiveName);
+                            $("input[name='archiveResult']").val(data.data.archiveResult);
+                            $("input[name='archiveApplicant']").val(data.data.archiveApplicant);
+                            $("input[name='archiveOppositeApplicant']").val(data.data.archiveOppositeApplicant);
+                            $("input[name='archiveThirdPerson']").val(data.data.archiveThirdPerson);
+                            $("input[name='archiveJudge']").val(data.data.archiveJudge);
+                            $("#archiveOpenDate").datebox('setValue', data.data.archiveOpenDate);  
+                            $("#archiveCloseDate").datebox('setValue', data.data.archiveCloseDate);
+                            $("#archiveDate").datebox('setValue', data.data.archiveDate);
+                            $("input[name='archiveSerialNumber']").val(data.data.archiveSerialNumber);
+                        },
+                    });
+                }
+            }
+            </script>
     </div>
   </div>
 </body>

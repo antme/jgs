@@ -12,6 +12,7 @@
 </head>
 <body>
     <div class="head">
+       <div class="head_logo"></div>
        <div class="user_name">
            <div>
                <label>欢迎xx进入电子信息管理系统</label>
