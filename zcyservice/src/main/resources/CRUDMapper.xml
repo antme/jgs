@@ -54,6 +54,9 @@
 			order by ${orderBy}
 		</if>
 
+		<if test="groupBy!=null">
+			group by ${groupBy}
+		</if>
 
 	</select>
 	

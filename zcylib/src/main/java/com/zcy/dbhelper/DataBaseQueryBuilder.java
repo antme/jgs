@@ -8,26 +8,26 @@ import com.zcy.util.EcUtil;
 public class DataBaseQueryBuilder {
 
 	private String queryStr = null;
-	
+
 	private int lastOpType = -1;
 
 	private String table;
 
 	private String limitColumns = null;
-	
+
 	private String joinColumns = null;
 
 	private Integer limitStart = null;
 
 	private Integer limitRows = null;
-	
-	private String orderBy  = null;
+
+	private String orderBy = null;
 
 	private String onQuery = null;
 	
+	private String groupBy = null;
+
 	private String distinctColumn = null;
-	
-	
 
 	public Integer getLimitStart() {
 		return limitStart;
@@ -52,8 +52,6 @@ public class DataBaseQueryBuilder {
 	public void setLimitColumns(String limitColumns) {
 		this.limitColumns = limitColumns;
 	}
-	
-	
 
 	public String getOrderBy() {
 		return orderBy;
@@ -81,7 +79,7 @@ public class DataBaseQueryBuilder {
 	public DataBaseQueryBuilder or(String key, Object value) {
 		return or(DataBaseQueryOpertion.EQUAILS, key, value);
 	}
-	
+
 	public DataBaseQueryBuilder and(DataBaseQueryOpertion op, String key) {
 		return and(op, key, null);
 	}
@@ -91,8 +89,8 @@ public class DataBaseQueryBuilder {
 	}
 
 	public DataBaseQueryBuilder and(DataBaseQueryOpertion op, String key, Object value) {
-		
-		if(this.onQuery !=null && !key.contains(".")){
+
+		if (this.onQuery != null && !key.contains(".")) {
 			key = this.table + "." + key;
 		}
 		DataBaseQuery query = new DataBaseQuery(op, key, value);
@@ -118,7 +116,7 @@ public class DataBaseQueryBuilder {
 	}
 
 	public DataBaseQueryBuilder or(DataBaseQueryOpertion op, String key, Object value) {
-		if(this.onQuery !=null && !key.contains(".")){
+		if (this.onQuery != null && !key.contains(".")) {
 			key = this.table + "." + key;
 		}
 		DataBaseQuery query = new DataBaseQuery(op, key, value);
@@ -144,14 +142,14 @@ public class DataBaseQueryBuilder {
 	}
 
 	public DataBaseQueryBuilder join(String leftTable, String rightTable, String leftKey, String rightKey) {
-	
+
 		if (this.queryStr != null) {
 			throw new RuntimeException("Must set join table first before set query operation");
 		}
 		if (this.onQuery == null) {
-			this.onQuery = " left join " + rightTable + " as " + rightTable + " on "  +  leftTable + "." + leftKey + "=" + rightTable + "." + rightKey;
-		}else{
-			this.onQuery = this.onQuery + " left join " + rightTable + " as " + rightTable  + " on "  +  leftTable + "." + leftKey + "=" + rightTable + "." + rightKey;
+			this.onQuery = " left join " + rightTable + " as " + rightTable + " on " + leftTable + "." + leftKey + "=" + rightTable + "." + rightKey;
+		} else {
+			this.onQuery = this.onQuery + " left join " + rightTable + " as " + rightTable + " on " + leftTable + "." + leftKey + "=" + rightTable + "." + rightKey;
 		}
 		return this;
 	}
@@ -161,7 +159,7 @@ public class DataBaseQueryBuilder {
 		if (this.queryStr != null) {
 			throw new RuntimeException("Must set join table first before set query");
 		}
-		
+
 		if (this.onQuery == null) {
 			throw new RuntimeException("Must set join table first before set on query ");
 		}
@@ -170,29 +168,27 @@ public class DataBaseQueryBuilder {
 
 		return this;
 	}
-	
-	
 
 	public DataBaseQueryBuilder joinColumns(String tableAlias, String[] joinColumns) {
 
 		if (this.queryStr != null) {
 			throw new RuntimeException("Must set join columns first before set query");
 		}
-		
+
 		if (this.onQuery == null) {
 			throw new RuntimeException("Must set join table first before set join columns ");
 		}
-		
+
 		if (joinColumns != null && joinColumns.length > 0) {
 
 			for (String column : joinColumns) {
 
 				String[] splitColumns = column.split(",");
-				if(splitColumns.length > 1){
-					column = splitColumns[0] + " as " + splitColumns[1] + " "; 
+				if (splitColumns.length > 1) {
+					column = splitColumns[0] + " as " + splitColumns[1] + " ";
 				}
 				if (this.limitColumns == null) {
-					this.limitColumns = tableAlias+ "." + column;
+					this.limitColumns = tableAlias + "." + column;
 				} else {
 					this.limitColumns = this.limitColumns + "," + tableAlias + "." + column;
 
@@ -202,29 +198,27 @@ public class DataBaseQueryBuilder {
 		return this;
 
 	}
-	
-	
 
 	public DataBaseQueryBuilder joinColumns(String tableAlias, List<String> joinColumns) {
 
 		if (this.queryStr != null) {
 			throw new RuntimeException("Must set join columns first before set query");
 		}
-		
+
 		if (this.onQuery == null) {
 			throw new RuntimeException("Must set join table first before set join columns ");
 		}
-		
+
 		if (joinColumns != null && joinColumns.size() > 0) {
 
 			for (String column : joinColumns) {
 
 				String[] splitColumns = column.split(",");
-				if(splitColumns.length > 1){
-					column = splitColumns[0] + " as " + splitColumns[1] + " "; 
+				if (splitColumns.length > 1) {
+					column = splitColumns[0] + " as " + splitColumns[1] + " ";
 				}
 				if (this.limitColumns == null) {
-					this.limitColumns = tableAlias+ "." + column;
+					this.limitColumns = tableAlias + "." + column;
 				} else {
 					this.limitColumns = this.limitColumns + "," + tableAlias + "." + column;
 
@@ -234,7 +228,7 @@ public class DataBaseQueryBuilder {
 		return this;
 
 	}
-	
+
 	public DataBaseQueryBuilder and(DataBaseQueryBuilder builder) {
 
 		if (!EcUtil.isEmpty(builder.getQueryStr())) {
@@ -290,7 +284,7 @@ public class DataBaseQueryBuilder {
 		}
 		return this;
 	}
-	
+
 	public DataBaseQueryBuilder limitColumns(List<String> columns) {
 
 		if (columns != null && columns.size() > 0) {
@@ -305,23 +299,21 @@ public class DataBaseQueryBuilder {
 
 	private void appednLimitColumn(String column) {
 
-	    
-	    String[] splitColumns = column.split(",");
-		if(splitColumns.length > 1){
-			column = splitColumns[0] + " as " + splitColumns[1] + " "; 
+		String[] splitColumns = column.split(",");
+		if (splitColumns.length > 1) {
+			column = splitColumns[0] + " as " + splitColumns[1] + " ";
 		}
 		if (this.limitColumns == null) {
-			this.limitColumns = this.table+ "." + column;
+			this.limitColumns = this.table + "." + column;
 		} else {
 			this.limitColumns = this.limitColumns + "," + this.table + "." + column;
 
 		}
-    }
-
+	}
 
 	public DataBaseQueryBuilder orderBy(String column, boolean asc) {
-		
-		if(this.onQuery !=null){
+
+		if (this.onQuery != null) {
 			column = this.table + "." + column;
 		}
 		if (asc) {
@@ -340,10 +332,39 @@ public class DataBaseQueryBuilder {
 		}
 		return this;
 	}
-	
-public DataBaseQueryBuilder orderBy(String table, String column, boolean asc) {
-		
-		if(this.onQuery !=null){
+
+	public DataBaseQueryBuilder groupBy(String column, boolean asc) {
+
+		if (this.onQuery != null) {
+			column = this.table + "." + column;
+		}
+		if (asc) {
+			if (this.groupBy == null) {
+				this.groupBy = "  " + column + " ASC ";
+			} else {
+				this.groupBy = this.groupBy + " ,  " + column + " ASC ";
+			}
+
+		} else {
+			if (this.groupBy == null) {
+				this.groupBy = "  " + column + " DESC ";
+			} else {
+				this.groupBy = this.groupBy + " ,  " + column + " DESC ";
+			}
+		}
+
+		if (this.limitColumns == null) {
+			this.limitColumns = "count(*) as count";
+		} else {
+			this.limitColumns = this.limitColumns + "," + "count(*) as count";
+		}
+
+		return this;
+	}
+
+	public DataBaseQueryBuilder orderBy(String table, String column, boolean asc) {
+
+		if (this.onQuery != null) {
 			column = table + "." + column;
 		}
 		if (asc) {
@@ -377,11 +398,10 @@ public DataBaseQueryBuilder orderBy(String table, String column, boolean asc) {
 
 		return this;
 	}
-	
+
 	public DataBaseQueryBuilder distinct(String columnName) {
 
-		
-		if(columnName !=null && this.limitColumns !=null){
+		if (columnName != null && this.limitColumns != null) {
 			throw new RuntimeException("distinctColumn and limitColumns can not exists at same time");
 		}
 		this.distinctColumn = columnName;
@@ -411,30 +431,29 @@ public DataBaseQueryBuilder orderBy(String table, String column, boolean asc) {
 		this.table = table;
 	}
 
-
 	public int getLastOpType() {
-    	return lastOpType;
-    }
+		return lastOpType;
+	}
 
 	public void setLastOpType(int lastOpType) {
-    	this.lastOpType = lastOpType;
-    }
+		this.lastOpType = lastOpType;
+	}
 
 	public String getJoinColumns() {
-    	return joinColumns;
-    }
+		return joinColumns;
+	}
 
 	public void setJoinColumns(String joinColumns) {
-    	this.joinColumns = joinColumns;
-    }
+		this.joinColumns = joinColumns;
+	}
 
 	public String getOnQuery() {
-    	return onQuery;
-    }
+		return onQuery;
+	}
 
 	public void setOnQuery(String onQuery) {
-    	this.onQuery = onQuery;
-    }
+		this.onQuery = onQuery;
+	}
 
 	public String getDistinctColumn() {
 		return distinctColumn;
@@ -443,6 +462,5 @@ public DataBaseQueryBuilder orderBy(String table, String column, boolean asc) {
 	public void setDistinctColumn(String distinctColumn) {
 		this.distinctColumn = distinctColumn;
 	}
-
 
 }

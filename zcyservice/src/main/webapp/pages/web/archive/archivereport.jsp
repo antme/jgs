@@ -23,8 +23,16 @@
 </head>
 <body>
 
-      <div class="page_tip">说明： 鼠标移到图标上可以看详细信息.</div>
-      <div class="p_height_div"></div>
+	<div style="margin-top:20px; margin-left:30px;padding-top: 30px;">
+		<select onchange="loadReport();">
+			<option value="years">按年度统计</option>
+			<option value="applicant">按申请人统计</option>
+			<option value="oppositeApplicant">按被申请人统计</option>
+		</select>
+	</div>
+	
+	
+   <div class="p_height_div"></div>
 
     <div id="sp-chart"></div>
     
