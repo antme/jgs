@@ -10,16 +10,7 @@
 <script type="text/javascript" src="/resources/js/jquery.easyui.min.js"></script>
 <link href="/resources/css/easyui.css" rel="stylesheet"/>
 <script type="text/javascript">
- function mfcAndSpstatusformatter(val, row, rowindex){
-	   var status = row.userStatus;
-	   if (status == 'NORMAL'){
-		   return "正常";
-	   }else if (status == 'LOCKED'){
-		   return "已冻结";
-	   }else{
-		   return "";
-	   }
-	} 
+
  function userstatusformatter(val, row, rowindex){
 	   var status = row.status;
 	   if (status == 'NORMAL'){
@@ -30,14 +21,7 @@
 		   return "";
 	   }
 	} 
- /* function workerstatusformatter(val, row, rowindex){
-	   var status = row.isActive;
-	   if (status){
-		   return "正常";
-	   }else{
-		   return "已冻结";
-	   }
-	} */ 
+
  function genderformatter(val, row, rowindex){
 	   var gender = row.sex;
 	   if (gender == 'male'){
@@ -79,29 +63,17 @@
 		<div class="line_clear"></div>
 	</div>
 	<div style="margin-left:40px;">
-			<table id="newmfc"  class="easyui-datagrid_tab" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
+			<table id="newmfc"  class="easyui-datagrid_tf" iconCls="icon-save" url="/ecs/user/manage.do" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
 				<thead>
 					<tr>
-                        <th align="center"  field="mfcCode"  width="100"  sortable="false">系统编号</th>
-                        <th align="center"  field="mfcStoreName"  width="100"  sortable="false">用户名</th>
-                        <th align="center"  field="mfcCompanyName" width="100" sortable="false" >联系手机</th>
-                        <th align="center"  field="mfcLocation" width="120" sortable="false" >Email</th>
-                        <th align="center"  field="createdOn" width="80" data-options="formatter:showEstDateFormatter">创建日期</th>
-                        <th align="center"  field="userStatus"  data-options="formatter:mfcAndSpstatusformatter" width="60">状态</th>
+                        <th align="center"  field="userName"  width="100"  sortable="false">用户名</th>
+                        <th align="center"  field="mobileNumber" width="100" sortable="false" >联系手机</th>
+                        <th align="center"  field="email" width="120" sortable="false" >Email</th>
+                        <th align="center"  field="createdOn" width="80" >创建日期</th>
+                        <th align="center"  field="userStatus"  data-options="formatter:userstatusformatter" width="60">状态</th>
                         <th align="center" data-options="field:'id'" width="150">操作</th>
                     </tr>
-				</thead>
-				<tbody>
-                    <tr>
-                       <td>JG20223448112</td>
-                       <td>sea.king</td>
-                       <td>18221757291</td>
-                       <td>11921209@qq.com</td>
-                       <td>2013-12-25</td>
-                       <td>正常</td>
-                       <td><button onclick="eidtuser();">编辑</button></td>
-                    </tr>
-                </tbody>
+				</thead>				
 			</table>
 			</div>
 	<div id="manage_form" style="display:none;">
@@ -165,8 +137,6 @@
 	<script type="text/javascript">
 
   $(document).ready(function(){
-	  loading_css();
-	$(".display_nones").removeClass("display_nones");
 	   $.extend($.fn.validatebox.defaults.rules, {
 		        pwdEquals: {
 		                    validator: function(value,param){
@@ -175,7 +145,6 @@
                 message: '密码不匹配'
         }
     });
-	$('#newmfc').datagrid({url:'/ecs/mfc/manage.do'});
   });
   $(".public_title_btn").click(function(){
 	  $('#edituser').window('setTitle', "添加用户");
@@ -184,9 +153,6 @@
   function eidtuser(){
 	  $('#edituser').window('setTitle', "编辑用户");
       openDialog("edituser");
-      $("#mfcStoreName").val("sea.king");
-      $("#mfcCompanyName").val("11921209@qq.com");
-      $("#mfcContactMobilePhone").val("18221757291");
   }
   </script>
 </body>

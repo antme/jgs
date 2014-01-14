@@ -32,7 +32,7 @@ import com.zcyservice.util.PermissionConstants;
 @RequestMapping("/ecs/user")
 @Permission()
 @LoginRequired()
-public class EcommerceUserController extends AbstractController {
+public class ZcyUserController extends AbstractController {
 
 	//_User used in AbstractController.removeSessionInfo
 	public static final String IMG_CODE = "imgCode_User";
@@ -44,7 +44,7 @@ public class EcommerceUserController extends AbstractController {
 	@Autowired
 	private IUserService userService;
 
-	private static Logger logger = LogManager.getLogger(EcommerceUserController.class);
+	private static Logger logger = LogManager.getLogger(ZcyUserController.class);
 
 	@RequestMapping("/login.do")
 	@LoginRequired(required = false)

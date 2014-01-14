@@ -24,7 +24,7 @@
 	            <tr>
 	                <th align="center"  field="groupName"  sortable="false" width='200' align="center" resizable="true">权限名称</th>
 	                <th align="center"  field="description"  sortable="false" width='200' align="center" resizable="true">描述</th>
-	                <th data-options="field:'id'" width='200' align="center" resizable="true">操作</th>
+	                <th data-options="field:'id',formatter:formatterGroupOperation" width='200' align="center" resizable="true">操作</th>
 	            </tr>
 	        </thead>
 	         <tbody>
@@ -107,7 +107,29 @@
 	      openDialog("addRoleGroup");
 	}
 	 
-	 
+	function formatterGroupOperation(val, row){
+		return '<button onclick=editRoleGroups("' + row.id + '");>编辑</button>';
+	}
+	
+	function editRoleGroups(id){
+		var rows = $("#groupList").datagrid('getRows');
+		$("#addRoleGroupForm").form("clear");
+		for(var i=0;i<rows.length;i++){
+	    	if(rows[i].id==id){
+	    		$("#addRoleGroupForm").form('load', rows[i]);
+	    		var arr = rows[i].permissions.split(",");
+
+	    		$('#permissionsel').combotree('setValues',arr);
+
+	    		break;
+	    	}
+	    }
+		
+		//$('#addRoleGroup').window('open');
+		openDialog("addRoleGroup");
+		
+	}
+
 	  
 	   $("#addRoleGroupForm").form({
 	        url : '/ecs/sys/cfg/role/group/add.do',

@@ -59,13 +59,29 @@ public class BaseTestCase extends TestCase {
 
 	public void testEmpty() throws IOException, InterruptedException {
 		
-		String file = "E:\\zcy\\doc\\2013760\\副卷中\\demo.pdf";
+//		String file = "E:\\zcy\\doc\\2013760\\副卷中\\demo.pdf";
+//		
+//		String scanPath = CFGManager.getProperty(ZcyServiceConstants.DOCUMENT_SCAN_PATH);
+//
+//		file = file.replaceAll(scanPath, "");
+//		file = file.substring(scanPath.length() +1);
+//		System.out.println(file);
 		
-		String scanPath = CFGManager.getProperty(ZcyServiceConstants.DOCUMENT_SCAN_PATH);
-
-		file = file.replaceAll(scanPath, "");
-		file = file.substring(scanPath.length() +1);
-		System.out.println(file);
+		
+		for(int i =0; i< 100; i++){
+			
+			String result = "";
+			int total = 0; 
+			for(int j=0; j<3; j++){
+			
+				int random  = 1+ new java.util.Random().nextInt(6);
+				total = total + random;
+				result = result + random + ",";
+			}
+			
+			System.out.println(result + " ======= " + total);
+		}
+		
 		
 		
 //		archiveService.scanArchines();
