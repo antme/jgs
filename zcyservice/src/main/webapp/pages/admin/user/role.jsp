@@ -16,7 +16,7 @@
     </div>
     <div class="line_clear"></div>
 	
-		<div title="权限设置" style="padding: 10px">
+		<div title="权限设置" style="padding: 10px;margin-left:30px;">
 			<button class="btn_add" onclick="openAddGroupWindow();">新增权限</button>
 			<div class="line_clear"></div>
 			<table class="easyui-datagrid_tf" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true" id="groupList"  url="/ecs/sys/cfg/role/group/list.do" iconCls="icon-save" sortOrder="asc"  pagination="true"  singleSelect="true" data-options="onClickRow: onGroupPermissionClickRow">

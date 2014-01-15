@@ -36,14 +36,18 @@
 		<script type="text/javascript" src="/resources/js/jquery.easyui.min.js"></script>
 		
     </head>
-    <body>
+    <body id="b_height">
         <div class="line_clear"></div>
            <div class="public_title">
               <div class="public_title_icon">​</div>​
               <label class="public_title_text">档案预览</label>
           </div>
         <div class="line_clear"></div>
-        <div style="margin-left:40px;">
+        <div id="archive_info" style="margin:0px 40px;">
+            <div class="width100 font18 margintop10">上 海 市 虹 口 区 劳 动 人 事 争 议 仲 裁 委 员 会 </div>
+            <div class="width100 font24 fontweight margintop20">仲 裁 卷 宗</div>
+            <br/>
+            
             <span class="span_style_label"><label class="display_nones">档案编号：</label></span>
             <span class="span_style"><div id="archiveCode" class="display_input"></div></span>
             
@@ -53,10 +57,36 @@
             <span class="span_style_label"><label class="display_nones">处理结果：</label></span>
             <span class="span_style"><div id="archiveStatus" class="display_input"></div></span>
             <br/>
-
+            
+            <span class="span_style_label"><label class="display_nones">申请人：</label></span>
+            <span class="span_style"><div id="archiveApplicant" class="display_input"></div></span>
+            
+            <span class="span_style_label"><label class="display_nones">被申请人：</label></span>
+            <span class="span_style"><div id="archiveOppositeApplicant" class="display_input"></div></span>
+            
+            <span class="span_style_label"><label class="display_nones">第三人：</label></span>
+            <span class="span_style"><div id="archiveThirdPerson" class="display_input"></div></span>
+            <br/>
+            
+            <span class="span_style_label"><label class="display_nones">承办人：</label></span>
+            <span class="span_style"><div id="archiveJudge" class="display_input"></div></span>
             
             <span class="span_style_label"><label class="display_nones">立案日期：</label></span>
+            <span class="span_style"><div id="archiveOpenDate" class="display_input"></div></span>
+            
+            <span class="span_style_label"><label class="display_nones">结案日期：</label></span>
+            <span class="span_style"><div id="archiveCloseDate" class="display_input"></div></span>
+            <br>
+            
+            <span class="span_style_label"><label class="display_nones">归档日期：</label></span>
+            <span class="span_style"><div id="archiveDate" class="display_input"></div></span>
+            
+            <span class="span_style_label"><label class="display_nones">归档号数：</label></span>
+            <span class="span_style"><div id="archiveSerialNumber" class="display_input"></div></span>
+            
+            <span class="span_style_label"><label class="display_nones">创建日期：</label></span>
             <span class="span_style"><div id="createdOn" class="display_input"></div></span>
+            <br>
             
             <span class="span_style_label"><label class="display_nones">修改日期：</label></span>
             <span class="span_style"><div id="updatedOn" class="display_input"></div></span>
@@ -144,18 +174,30 @@
 			}
 			
 			 $(document).ready(function(){
+				 var h_height=$("#archive_info").height()+650+$(".public_title").height()+100;
+				 $(".context").css("height",h_height+"px");
 				 postAjaxRequest("/ecs/archive/files.do", {id:id}, function(data){
 					 var firstTrees = data.firstTrees;
 					 $('#firstTrees').tree('loadData', firstTrees);
 					 $('#firstAttachTrees').tree('loadData', data.firstAttachTrees);
 			/* 		 $('#secondTrees').tree('loadData', data.secondTrees);
 					 $('#secondAttachTrees').tree('loadData', data.secondAttachTrees); */
-					 console.log(data.data);
+					// console.log(data.data);
 					 $("#archiveCode").text(data.data.archiveCode);
 					 $("#archiveName").text(data.data.archiveName);
 					 $("#archiveStatus").text(data.data.archiveStatus);
 					 $("#createdOn").text(data.data.createdOn);
 					 $("#updatedOn").text(data.data.updatedOn);
+					 $("#archiveApplicant").text(data.data.archiveApplicant);
+					 $("#archiveOppositeApplicant").text(data.data.archiveOppositeApplicant);
+					 $("#archiveThirdPerson").text(data.data.archiveThirdPerson);
+					 $("#archiveJudge").text(data.data.archiveJudge);
+					 $("#archiveOpenDate").text(data.data.archiveOpenDate);
+					 $("#archiveCloseDate").text(data.data.archiveCloseDate);
+					 $("#archiveDate").text(data.data.archiveDate);
+					 $("#archiveSerialNumber").text(data.data.archiveSerialNumber);
+					 
+					 
 					 
 					 $('#firstTrees').tree({
 						    state: "closed",

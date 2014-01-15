@@ -27,15 +27,15 @@
                 <span class="cal_cen_login_form">
                     <p>
                        <label class="cal_cen_login_lab">用户名：</label>
-                       <input type="text" class="input_middel cal_cen_login_pwd easyui-validatebox"  required missingMessage="请输入用户名"/>
+                       <input type="text" name="userName" class="input_middel cal_cen_login_pwd easyui-validatebox"  required missingMessage="请输入用户名"/>
                     </p>
                     <p>
                        <label class="cal_cen_login_lab">密&nbsp;&nbsp;码：</label>
-                       <input type="password" class="input_middel cal_cen_login_pwd easyui-validatebox"  required missingMessage="请输入密码"/>
+                       <input type="password" name="password" class="input_middel cal_cen_login_pwd easyui-validatebox"  required missingMessage="请输入密码"/>
                     </p>
                     <p>
                        <label class="cal_cen_login_lab">验证码：</label>
-                       <input type="text" class="input_middel cal_cen_login_yzm easyui-validatebox"  deltaX="70" required missingMessage="请输入验证码"/>
+                       <input type="text" name="imgCode" class="input_middel cal_cen_login_yzm easyui-validatebox"  deltaX="70" required missingMessage="请输入验证码"/>
                        <img  src="/ecs/user/img.do" id="randomcode" onclick="changeImage();" class="input_middel cal_cen_login_yzimg"/>
                     </p>
                     <script type="text/javascript">
@@ -47,7 +47,7 @@
                        }
                     </script>
                     <p class="cal_cen_tip"><label class="cal_cen_lab_c" id="tsMsg"></label></p>
-                    <span class="cal_cen_login_btn_bg"></span>
+                    <span class="cal_cen_login_btn_bg" onclick="login()"></span>
                 </span>
                 </form>
             </div>
@@ -56,5 +56,24 @@
         </div>
          <div class="cal_cen_login_footer"></div>
         </div>
+        <script type="text/javascript">
+             function login(){
+            	 $("#bd").submit();
+             }
+             $("#bd").form({
+            	 url : '/ecs/user/login.do',
+                 onSubmit : function() {
+                     return $(this).form('validate');
+                 },
+                 success : function(data) {
+                	 var info = JSON.parse(data);
+                	 if(info.code!="200"){
+                		 $.messager.alert("登录失败",info.msg);
+                	 }else{
+                		 window.location.href="index.jsp";
+                	 }
+                 }
+             });
+        </script>
 </body>
 </html>

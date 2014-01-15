@@ -120,5 +120,6 @@ ol, ul {
 	padding-bottom:20px;
 	margin:10px auto;
 	background-color:#fff;
+	overflow:hidden;
 }
 

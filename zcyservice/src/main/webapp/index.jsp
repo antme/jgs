@@ -118,7 +118,9 @@
 	    });
 	    
 	    function logout(){
-	    	
+	    	postAjaxRequest("/ecs/user/logout.do", {}, function(data){
+	    		window.location.href="login.jsp";
+	         });
 	    }
 	    
     </script>
