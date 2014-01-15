@@ -62,20 +62,7 @@ public class CFGManager {
 		return properties.getProperty(key);
 	}
 
-	public static String getTipMessage(String key) {
-
-		if (properties.getProperty(key) != null) {
-			try {
-				return new String(properties.getProperty(key).getBytes("ISO-8859-1"), "UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				// do nothing
-			}
-		} else {
-			return String.format("please configure the error message [%s] in applicationResources.properties", key);
-		}
-		return null;
-	}
-
+	
 	public static void setProperties(String key, String value) {
 		properties.setProperty(key, value);
 	}

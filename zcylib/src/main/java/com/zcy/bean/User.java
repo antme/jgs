@@ -9,25 +9,16 @@ import com.zcy.bean.BaseEntity;
 @Table(name = User.TABLE_NAME)
 public class User extends BaseEntity {
 
+	public static final String EMAIL = "email";
 	public static final String GROUP_ID = "groupId";
 	public static final String TABLE_NAME = "User";
 	public static final String ROLE_NAME = "roleName";
 	public static final String PASSWORD = "password";
 	public static final String ADDRESSES = "addresses";
-	public static final String DEFAULT_ADDRESS = "defaultAddress";
-	public static final String PHONE = "phone";
 	public static final String MOBILE_NUMBER = "mobileNumber";
 	public static final String USER_NAME = "userName";
 	public static final String STATUS = "status";
-	public static final String INDEX_PAGE = "indexPage";
 	
-	public static final String USER_LOCATION_PID = "userLocationProvinceId";
-	public static final String USER_LOCATION_CID = "userLocationCityId";
-	public static final String USER_LOCATION_AID = "userLocationAreaId";
-	public static final String USER_LOCATION = "userLocation";
-	public static final String USER_EXT_PHONE = "userExtPhone";
-	public static final String USER_CODE = "userCode";
-	public static final String USER_QQ = "userQQ";
 
 
 	@Column(name = USER_NAME, unique = true)
@@ -38,17 +29,11 @@ public class User extends BaseEntity {
 	@Expose
 	public String mobileNumber;
 
-	@Column(name = PHONE)
-	@Expose
-	public String phone;
+	
 
 	@Column(name = "name")
 	@Expose
 	public String name;
-
-	@Column(name = DEFAULT_ADDRESS)
-	@Expose
-	public String defaultAddress;
 
 	@Column(name = ADDRESSES)
 	@Expose
@@ -58,9 +43,12 @@ public class User extends BaseEntity {
 	@Expose
 	public String password;
 
-	@Column(name = "sex")
+	
+	@Column(name = EMAIL)
 	@Expose
-	public String sex;
+	public String email;
+	
+	
 
 	@Column(name = ROLE_NAME)
 	@Expose
@@ -74,33 +62,7 @@ public class User extends BaseEntity {
 	@Expose
 	public String groupId;
 
-	@Column(name = USER_LOCATION_PID)
-	@Expose
-	public String userLocationProvinceId;
 
-	@Column(name = USER_LOCATION_CID)
-	@Expose
-	public String userLocationCityId;
-
-	@Column(name = USER_LOCATION_AID)
-	@Expose
-	public String userLocationAreaId;
-
-	@Column(name = USER_LOCATION)
-	@Expose
-	public String userLocation;
-
-	@Column(name = USER_EXT_PHONE)
-	@Expose
-	public String userExtPhone;
-
-	@Column(name = USER_CODE)
-	@Expose
-	public String userCode;
-
-	@Column(name = USER_QQ)
-	@Expose
-	public String userQQ;
 
 	// 图片验证码, 不存数据库
 	@Expose
@@ -159,22 +121,7 @@ public class User extends BaseEntity {
 		this.mobileNumber = mobileNumber;
 	}
 
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getDefaultAddress() {
-		return defaultAddress;
-	}
-
-	public void setDefaultAddress(String defaultAddress) {
-		this.defaultAddress = defaultAddress;
-	}
-
+	
 	public String getAddresses() {
 		return addresses;
 	}
@@ -215,13 +162,7 @@ public class User extends BaseEntity {
 		this.newPwd = newPwd;
 	}
 
-	public String getSex() {
-		return sex;
-	}
 
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
 
 	public String getName() {
 		return name;
@@ -255,61 +196,6 @@ public class User extends BaseEntity {
     	this.indexPage = indexPage;
     }
 
-	public String getUserLocationProvinceId() {
-		return userLocationProvinceId;
-	}
-
-	public void setUserLocationProvinceId(String userLocationProvinceId) {
-		this.userLocationProvinceId = userLocationProvinceId;
-	}
-
-	public String getUserLocationCityId() {
-		return userLocationCityId;
-	}
-
-	public void setUserLocationCityId(String userLocationCityId) {
-		this.userLocationCityId = userLocationCityId;
-	}
-
-	public String getUserLocationAreaId() {
-		return userLocationAreaId;
-	}
-
-	public void setUserLocationAreaId(String userLocationAreaId) {
-		this.userLocationAreaId = userLocationAreaId;
-	}
-
-	public String getUserExtPhone() {
-		return userExtPhone;
-	}
-
-	public void setUserExtPhone(String userExtPhone) {
-		this.userExtPhone = userExtPhone;
-	}
-
-	public String getUserCode() {
-		return userCode;
-	}
-
-	public void setUserCode(String userCode) {
-		this.userCode = userCode;
-	}
-
-	public String getUserQQ() {
-		return userQQ;
-	}
-
-	public void setUserQQ(String userQQ) {
-		this.userQQ = userQQ;
-	}
-
-	public String getUserLocation() {
-		return userLocation;
-	}
-
-	public void setUserLocation(String userLocation) {
-		this.userLocation = userLocation;
-	}
 
 	public String getGroupName() {
 		return groupName;
