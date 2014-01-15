@@ -160,7 +160,7 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 			builder2.or(DataBaseQueryOpertion.LIKE, User.USER_NAME, keyword);
 			builder2.or(DataBaseQueryOpertion.LIKE, "name", keyword);
 			builder2.or(DataBaseQueryOpertion.LIKE, User.MOBILE_NUMBER, keyword);
-		
+
 			builder.and(builder2);
 		}
 
@@ -183,7 +183,10 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 
 	public User loadUserInfo(User user) {
 
-		return (User) this.dao.findById(user.getId(), User.TABLE_NAME, User.class);
+		DataBaseQueryBuilder query = new DataBaseQueryBuilder(User.TABLE_NAME);
+		query.and(User.ID, user.getId());
+		query.limitColumns(new String[] { User.USER_NAME, User.ADDRESSES, User.EMAIL, User.MOBILE_NUMBER });
+		return (User) this.dao.findOneByQuery(query, User.class);
 	}
 
 	@Override
@@ -212,7 +215,6 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 
 			this.regUser(user);
 		} else {
-
 
 			if (EcUtil.isValid(user.getPassword())) {
 				user.setPassword(DataEncrypt.generatePassword(user.getPassword()));
@@ -258,8 +260,6 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 
 	public Map<String, Object> getTodoListInfo() {
 		Map<String, Object> result = new HashMap<String, Object>();
-
-
 
 		return result;
 	}
