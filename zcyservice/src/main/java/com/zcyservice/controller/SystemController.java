@@ -113,13 +113,7 @@ public class SystemController extends AbstractController {
 
 	}
 	
-	
-	@RequestMapping("/data/clear.do")
-	public void clearData(HttpServletRequest request, HttpServletResponse response) {
-		sys.clearData();
-		responseWithDataPagnation(null, request, response);
-	}
-	
+
 	@RequestMapping("/log/listlog.do")
 	public void listLogs(HttpServletRequest request, HttpServletResponse response) {
 		SearchVo search = (SearchVo)parserJsonParameters(request, true, SearchVo.class);
@@ -129,79 +123,9 @@ public class SystemController extends AbstractController {
 	}
 	
 	
-	
-	//报表想逛
-	@RequestMapping("/report/userlist.do")
-	public void listUserReport(HttpServletRequest request, HttpServletResponse response) {
-		SearchVo search = (SearchVo)parserJsonParameters(request, true, SearchVo.class);
-
-		responseWithData(sys.listUserReport(search), request, response);
 
 
-	}
-	
-	//报表想逛
-	@RequestMapping("/report/location/mfc.do")
-	public void listMfcLocationReport(HttpServletRequest request, HttpServletResponse response) {
-		SearchVo search = (SearchVo)parserJsonParameters(request, true, SearchVo.class);
 
-		responseWithData(sys.listMfcLocationReport(search), request, response);
-
-
-	}
-	
-	@RequestMapping("/report/effective/order.do")
-	public void getOrderEffectiveReport(HttpServletRequest request, HttpServletResponse response) {
-		SearchVo search = (SearchVo)parserJsonParameters(request, true, SearchVo.class);
-
-		responseWithData(sys.getOrderEffectiveReport(search), request, response);
-
-
-	}
-	
-	@RequestMapping("/report/location/sp.do")
-	public void listSpLocationReport(HttpServletRequest request, HttpServletResponse response) {
-		SearchVo search = (SearchVo)parserJsonParameters(request, true, SearchVo.class);
-
-		responseWithData(sys.listSpLocationReport(search), request, response);
-
-
-	}
-
-
-	@RequestMapping("/report/order.do")
-	public void getMfcOrderStats(HttpServletRequest request, HttpServletResponse response) {
-		SearchVo svo = (SearchVo)parserJsonParameters(request, false, SearchVo.class);
-		responseWithData(sys.getOrderStats(svo), request, response);
-
-	}
-	
-	@RequestMapping("/report/effective/user.do")
-	public void getUserEffectiveReport(HttpServletRequest request, HttpServletResponse response) {
-		SearchVo svo = (SearchVo)parserJsonParameters(request, false, SearchVo.class);
-		responseWithData(sys.getUserEffectiveReport(svo), request, response);
-
-	}
-	
-	@RequestMapping("/report/effective/sp.do")
-	public void getSpEffectiveReport(HttpServletRequest request, HttpServletResponse response) {
-		SearchVo svo = (SearchVo)parserJsonParameters(request, false, SearchVo.class);
-		responseWithData(sys.getSpEffectiveReport(svo), request, response);
-
-	}
-	
-	@RequestMapping("/report/effective/kf.do")
-	public void getKfEffectiveReport(HttpServletRequest request, HttpServletResponse response) {
-		SearchVo svo = (SearchVo)parserJsonParameters(request, false, SearchVo.class);
-		responseWithData(sys.getKfEffectiveReport(svo), request, response);
-
-	}
-	
-	@RequestMapping("/report/workerlist.do")
-	public void getWorkerReport(HttpServletRequest request, HttpServletResponse response) {
-		SearchVo svo = (SearchVo)parserJsonParameters(request, false, SearchVo.class);
-
-	}
 	
 
 }

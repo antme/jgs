@@ -32,25 +32,10 @@ public interface ISystemService {
 
 	public Menu loadMenuGroup(Menu menu);
 
-	public void clearData();
 
 	public EntityResults<Log> listLogs(SearchVo search);
 
-	public Map<String, Object> listUserReport(SearchVo search);
 
-	public Map<String, Object> listMfcLocationReport(SearchVo search);
-	
-	public Map<String, Object> listSpLocationReport(SearchVo search);
-
-	public Map<String, Object> getOrderStats(SearchVo svo);
-
-	public Map<String, Object> getUserEffectiveReport(SearchVo svo);
-
-	public Map<String, Object> getSpEffectiveReport(SearchVo svo);
-
-	public Map<String, Object> getKfEffectiveReport(SearchVo svo);
-
-	public Map<String, Object> getOrderEffectiveReport(SearchVo search);
 
 
 

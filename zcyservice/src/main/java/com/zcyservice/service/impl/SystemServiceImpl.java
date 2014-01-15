@@ -134,17 +134,9 @@ public class SystemServiceImpl extends AbstractArchiveService implements ISystem
 	}
 
 
-	public Map<String, Object> getOrderStats(SearchVo svo){
-		return null;
-	
-		
-	}
 
-	@Override
-    public void clearData() {
-	    // TODO Auto-generated method stub
-	    
-    }
+
+
 
 	@Override
     public EntityResults<Log> listLogs(SearchVo search) {
@@ -152,47 +144,6 @@ public class SystemServiceImpl extends AbstractArchiveService implements ISystem
 	    return null;
     }
 
-	@Override
-    public Map<String, Object> listUserReport(SearchVo search) {
-	    // TODO Auto-generated method stub
-	    return null;
-    }
-
-	@Override
-    public Map<String, Object> listMfcLocationReport(SearchVo search) {
-	    // TODO Auto-generated method stub
-	    return null;
-    }
-
-	@Override
-    public Map<String, Object> listSpLocationReport(SearchVo search) {
-	    // TODO Auto-generated method stub
-	    return null;
-    }
-
-	@Override
-    public Map<String, Object> getUserEffectiveReport(SearchVo svo) {
-	    // TODO Auto-generated method stub
-	    return null;
-    }
-
-	@Override
-    public Map<String, Object> getSpEffectiveReport(SearchVo svo) {
-	    // TODO Auto-generated method stub
-	    return null;
-    }
-
-	@Override
-    public Map<String, Object> getKfEffectiveReport(SearchVo svo) {
-	    // TODO Auto-generated method stub
-	    return null;
-    }
-
-	@Override
-    public Map<String, Object> getOrderEffectiveReport(SearchVo search) {
-	    // TODO Auto-generated method stub
-	    return null;
-    }
 	
 
 }
