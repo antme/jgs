@@ -67,7 +67,6 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 		} else {
 			user.setPassword(DataEncrypt.generatePassword(user.getPassword()));
 		}
-		ValidatorUtil.validate(user, "user", "userReg", PermissionConstants.validateFiles);
 		DataBaseQueryBuilder builder = new DataBaseQueryBuilder(User.TABLE_NAME);
 		builder.and(User.USER_NAME, user.getUserName());
 		if (dao.exists(builder)) {
@@ -95,7 +94,6 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 	}
 
 	public User login(User user) {
-		ValidatorUtil.validate(user, "user", "login", PermissionConstants.validateFiles);
 		DataBaseQueryBuilder builder = new DataBaseQueryBuilder(User.TABLE_NAME);
 		builder.and(User.PASSWORD, DataEncrypt.generatePassword(user.getPassword()));
 
