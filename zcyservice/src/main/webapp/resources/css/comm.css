@@ -122,4 +122,8 @@ ol, ul {
 	background-color:#fff;
 	overflow:hidden;
 }
-
+.userinfo{
+	color:#ff6600;
+	text-decoration:underline;
+	cursor:pointer;
+}

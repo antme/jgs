@@ -9,6 +9,7 @@
 <script type="text/javascript" src="/resources/js/jquery.min.js"></script>
 <script type="text/javascript" src="/resources/js/public_css.js"></script>
 <script type="text/javascript" src="/resources/js/ecommerce.js"></script>
+<script type="text/javascript" src="/resources/js/jquery.easyui.min.js"></script>
 </head>
 <%
 	if (session.getValue("userName") == null) {
@@ -22,7 +23,7 @@
        <div class="head_logo"></div>
        <div class="user_name">
            <div>
-               <label>欢迎<% out.print(session.getAttribute("userName")); %>进入电子信息管理系统</label>
+               <label>欢迎<a class="userinfo" onclick="updateUserInfo()"><% out.print(session.getAttribute("userName")); %></a>进入电子信息管理系统</label>
                <a class="end_btn" href="#" onclick="logout();">退出</a>
            </div>
            <div class="time">
@@ -110,7 +111,60 @@
          <div id="remotePage"  class="remotePage" style="display:none;"></div>
          <div id="remotePageWindow"  style="display:none; overflow-y: scroll;"></div>
     </div>
-    
+ <div id="user_form" style="display:none;">
+    <div id="updateuser" class="easyui-window" data-options="modal:true,closed:true,minimizable:false,maximizable:false,collapsible:false,iconCls:'icon-save',top:50" style="width:550px;height:auto;padding:10px; top:50px;">
+        <form id="updateuserform" action="" method="post">
+                 <ul class="f-information">
+                    <li>
+                        <div class="r-edit-label">用户名：</div>
+                        <div class="r-edit-field cc">
+                            <input name="userName" id="userName" class="r-textbox easyui-validatebox"
+                                type="text" missingMessage="请输入店铺名称" disable/> <label class="r-need">*</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="r-edit-label">原密码：</div>
+                        <div class="r-edit-field">
+                            <input id="password" name="password" class="r-textbox easyui-validatebox"
+                                type="password"  /> <label
+                                class="r-need">*</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="r-edit-label">新密码：</div>
+                        <div class="r-edit-field">
+                            <input id="newPwd" name="newPwd" class="r-textbox easyui-validatebox"
+                                type="password"  /> <label
+                                class="r-need">*</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="r-edit-label">联系手机：</div>
+                        <div class="r-edit-field">
+                            <input id="mobileNumber" name="mobileNumber" class="r-textbox easyui-validatebox"
+                                type="text" required missingMessage="请输入联系手机"  /> <label
+                                class="r-need">*</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="r-edit-label">Email：</div>
+                        <div class="r-edit-field">
+                            <input id="email" name="email" class="r-textbox easyui-validatebox"
+                                required type="text" missingMessage="请输入公司名称" /> <label
+                                class="r-need">*</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="r-edit-label"></div>
+                        <div class="r-edit-field">
+                            
+                            <input id="mfc_info_sum" class="r-submit fw"  type="submit" value="提交" />
+                        </div>
+                    </li>
+                </ul>
+        </form>
+    </div>
+    </div>
  	<script type="text/javascript">
 	    $(document).ready(function(){
 	    	loading_css();
@@ -123,6 +177,30 @@
 	         });
 	    }
 	    
+	    function updateUserInfo(){
+	    	postAjaxRequest("/ecs/user/info.do", {}, function(data){
+	    		$("#updateuserform").form('clear');
+                $("#updateuserform").form('load',data.data);
+                $('#updateuser').window('setTitle', "修改信息");
+                openDialog("updateuser");
+             });
+	    }
+	    
+	    $("#updateuserform").form({
+	        url : '/ecs/user/update.do',
+	        onSubmit : function() {
+	            return $(this).form('validate');
+	        },
+	        success : function(data) {
+	        	var info = eval('(' + data + ')');
+	                 if(info.code!="200"){
+	                     $.messager.alert("修改失败",info.msg);
+	                 }else{
+	                     $.messager.alert("修改信息","修改信息成功！");
+	                 }
+	            $('#updateuser').window('close');
+	        }
+	    });
     </script>
 </body>
 </html>

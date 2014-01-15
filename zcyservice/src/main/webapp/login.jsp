@@ -66,7 +66,7 @@
                      return $(this).form('validate');
                  },
                  success : function(data) {
-                	 var info = JSON.parse(data);
+                	 var info = eval('(' + data + ')');
                 	 if(info.code!="200"){
                 		 $.messager.alert("登录失败",info.msg);
                 	 }else{

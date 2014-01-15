@@ -84,14 +84,14 @@
 						<div class="r-edit-label">用户名：</div>
 						<div class="r-edit-field cc">
 							<input name="userName" id="userName" class="r-textbox easyui-validatebox"
-								type="text" missingMessage="请输入店铺名称"/> <label class="r-need">*</label>
+								type="text" missingMessage="请输入用户名"/> <label class="r-need">*</label>
 						</div>
 					</li>
 					<li>
                         <div class="r-edit-label">密码：</div>
                         <div class="r-edit-field">
                             <input id="password" name="password" class="r-textbox easyui-validatebox"
-                                type="password" required missingMessage="请输入联系手机" validtype ="mobile" /> <label
+                                type="password"  /> <label
                                 class="r-need">*</label>
                         </div>
                     </li>
@@ -99,7 +99,7 @@
 						<div class="r-edit-label">联系手机：</div>
 						<div class="r-edit-field">
 							<input id="mobileNumber" name="mobileNumber" class="r-textbox easyui-validatebox"
-								type="text" required missingMessage="请输入联系手机" validtype ="mobile" /> <label
+								type="text" required missingMessage="请输入联系手机"  /> <label
 								class="r-need">*</label>
 						</div>
 					</li>
@@ -107,7 +107,7 @@
                         <div class="r-edit-label">Email：</div>
                         <div class="r-edit-field">
                             <input id="email" name="email" class="r-textbox easyui-validatebox"
-                                required type="text" missingMessage="请输入公司名称" /> <label
+                                required type="text" missingMessage="请输入Email" /> <label
                                 class="r-need">*</label>
                         </div>
                     </li>
@@ -131,8 +131,6 @@
 				</ul>
 		</form>
 	</div>
-	
-	
 	</div>
 	<script type="text/javascript">
 
@@ -183,7 +181,7 @@
           return $(this).form('validate');
       },
       success : function(data) {
-    	  var info = JSON.parse(data);
+    	  var info = eval('(' + data + ')');
           if($("#sid").val()==undefined){
         	  if(info.code!="200"){
         		  $.messager.alert("登录失败",info.msg);
