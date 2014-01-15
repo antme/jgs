@@ -36,11 +36,13 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 
 	private static Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
-	
-
 	@Override
 	public void updateUser(User user) {
 		user.setId(EcThreadLocal.getCurrentUserId());
+
+		if (EcUtil.isValid(user.getPassword())) {
+			user.setPassword(DataEncrypt.generatePassword(user.getPassword()));
+		}
 		this.dao.updateById(user);
 
 	}
@@ -77,9 +79,9 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 		if (EcUtil.isEmpty(user.getStatus())) {
 			user.setStatus(UserStatus.NORMAL.toString());
 		}
-		
+
 		checkUserName(user.getUserName());
-		
+
 		user = (User) dao.insert(user);
 		return user;
 	}
@@ -167,10 +169,6 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 
 		return dao.listByQueryWithPagnation(builder, User.class);
 	}
-
-
-
-
 
 	public void resetPwd(User user) {
 		DataBaseQueryBuilder builder = new DataBaseQueryBuilder(User.TABLE_NAME);
@@ -260,8 +258,6 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 	public Map<String, Object> getTodoListInfo() {
 		Map<String, Object> result = new HashMap<String, Object>();
 
-
-	
 		SearchVo vo = new SearchVo();
 		vo.setOrderNoticType(0);
 
@@ -276,62 +272,53 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 			result.put(SystemConfig.SMS_ACCOUNT_ID_ERROR, CFGManager.getProperty(SystemConfig.SMS_ACCOUNT_ID_ERROR));
 
 		}
-		
+
 		return result;
 	}
 
+	public boolean inRole(String groupIds, String roleId) {
 
-	public boolean inRole(String groupIds, String roleId){
-		
 		DataBaseQueryBuilder roleQuery = new DataBaseQueryBuilder(RoleGroup.TABLE_NAME);
 		roleQuery.and(DataBaseQueryOpertion.LIKE, RoleGroup.PERMISSIONS, roleId);
 		List<RoleGroup> groupList = this.dao.listByQuery(roleQuery, RoleGroup.class);
-		
-		for(RoleGroup group: groupList){
-			
-			if(groupIds.contains(group.getId())){
+
+		for (RoleGroup group : groupList) {
+
+			if (groupIds.contains(group.getId())) {
 				return true;
 			}
 		}
-		
+
 		return false;
-		
 
 	}
-	
-	public boolean inRole(String roleId){
+
+	public boolean inRole(String roleId) {
 		DataBaseQueryBuilder userQuery = new DataBaseQueryBuilder(User.TABLE_NAME);
-		userQuery.limitColumns(new String[]{User.GROUP_ID});
+		userQuery.limitColumns(new String[] { User.GROUP_ID });
 		User user = (User) this.dao.findById(EcThreadLocal.getCurrentUserId(), User.TABLE_NAME, User.class);
 		String groupIds = user.getGroupId();
 		DataBaseQueryBuilder roleQuery = new DataBaseQueryBuilder(RoleGroup.TABLE_NAME);
 		roleQuery.and(DataBaseQueryOpertion.LIKE, RoleGroup.PERMISSIONS, roleId);
 		List<RoleGroup> groupList = this.dao.listByQuery(roleQuery, RoleGroup.class);
-		
-		for(RoleGroup group: groupList){
-			
+
+		for (RoleGroup group : groupList) {
+
 			if (groupIds != null && group != null && groupIds.contains(group.getId())) {
 				return true;
 			}
 		}
-		
+
 		return false;
-		
 
 	}
-	
-	
 
-	
-	public void checkUserName(String userName){
-		DataBaseQueryBuilder builder  = new DataBaseQueryBuilder(User.TABLE_NAME);
+	public void checkUserName(String userName) {
+		DataBaseQueryBuilder builder = new DataBaseQueryBuilder(User.TABLE_NAME);
 		builder.and(User.USER_NAME, userName);
 		if (dao.exists(builder)) {
 			throw new ResponseException("此用户已经注册");
 		}
 	}
-
-
-
 
 }

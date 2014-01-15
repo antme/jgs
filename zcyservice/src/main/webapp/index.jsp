@@ -10,13 +10,20 @@
 <script type="text/javascript" src="/resources/js/public_css.js"></script>
 <script type="text/javascript" src="/resources/js/ecommerce.js"></script>
 </head>
+<%
+	if (session.getValue("userName") == null) {
+		String url = request.getServerName();
+		response.sendRedirect("http://" + url + "/login.jsp");
+	}
+%>
+
 <body>
     <div class="head">
        <div class="head_logo"></div>
        <div class="user_name">
            <div>
-               <label>欢迎xx进入电子信息管理系统</label>
-               <a class="end_btn" href="login.jsp">退出</a>
+               <label>欢迎<% out.print(session.getAttribute("userName")); %>进入电子信息管理系统</label>
+               <a class="end_btn" href="#" onclick="logout();">退出</a>
            </div>
            <div class="time">
                <label id="time"></label>
@@ -109,6 +116,11 @@
 	    	loading_css();
 	    	initDataGridEvent(); 
 	    });
+	    
+	    function logout(){
+	    	
+	    }
+	    
     </script>
 </body>
 </html>
