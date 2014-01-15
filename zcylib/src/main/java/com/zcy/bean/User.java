@@ -204,6 +204,14 @@ public class User extends BaseEntity {
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	
 	
 	
