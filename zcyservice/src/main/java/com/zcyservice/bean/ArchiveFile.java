@@ -21,7 +21,7 @@ public class ArchiveFile extends BaseEntity {
 	@Column(name = "archiveFileName")
 	@Expose
 	public String archiveFileName;
-	
+
 	@Column(name = "archiveFilePath")
 	@Expose
 	public String archiveFilePath;
@@ -37,11 +37,9 @@ public class ArchiveFile extends BaseEntity {
 	@Column(name = "archiveFileLastModifyDate")
 	@Expose
 	public Date archiveFileLastModifyDate;
-	
-	
+
 	@Expose
 	public String archiveUploadKey;
-	
 
 	public String getArchiveId() {
 		return archiveId;
@@ -82,8 +80,6 @@ public class ArchiveFile extends BaseEntity {
 	public void setArchiveFileProperty(ArchiveFileProperty archiveType) {
 		this.archiveFileProperty = archiveType;
 	}
-	
-	
 
 	public String getArchiveFilePath() {
 		return archiveFilePath;
@@ -93,10 +89,6 @@ public class ArchiveFile extends BaseEntity {
 		this.archiveFilePath = archiveFilePath;
 	}
 
-	
-	
-
-
 	public String getArchiveUploadKey() {
 		return archiveUploadKey;
 	}
@@ -104,10 +96,6 @@ public class ArchiveFile extends BaseEntity {
 	public void setArchiveUploadKey(String archiveUploadKey) {
 		this.archiveUploadKey = archiveUploadKey;
 	}
-
-
-
-
 
 	public enum ArchiveFileProperty {
 		FIRST, SECOND, FIRST_ATTACH, SECOND_ATTACH

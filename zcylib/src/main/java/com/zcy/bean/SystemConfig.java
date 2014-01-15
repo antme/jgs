@@ -10,16 +10,6 @@ import com.zcy.bean.BaseEntity;
 public class SystemConfig extends BaseEntity {
 
 
-	public static final String ORDER_IMPORT_IGNORE_KEYWORD = "order_import_ignore_keyword";
-	public static final String ORDER_TO_SP_AFTER_CONFIRMED_HOURS = "orderToSpAfterConfirmedHours";
-	public static final String ORDER_EVALUATION_DEFAULT_DAYS = "orderEvaluationDefaultDays";
-	
-	public static final String BAIDU_MAP_KEY = "baidu_map_key";
-	public static final String BAIDU_MAP_KEY_ERROR = "baidu_map_key_error";
-	public static final String SMS_ACCOUNT_ID_ERROR = "sms_account_userid_error";
-	public static final String SMS_ACCOUNT_ID = "sms_account_userid";
-	public static final String SMS_ACCOUNT_NAME = "sms_account_name";
-	public static final String SMS_ACCOUNT_PASSWORD = "sms_account_password";
 	
 	public static final String CONFIG_VALUE = "cfgValue";
 

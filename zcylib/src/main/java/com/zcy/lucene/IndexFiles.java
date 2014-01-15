@@ -30,12 +30,15 @@ import com.zcy.util.PdfUtil;
 
 public class IndexFiles {
 
+	public static final String DOCUMENT_SCAN_DIR = "document_scan_dir";
+	public static final String LUCENE_INDEX_DIR = "lucene_index_dir";
+
 	// -index F:\Lucene_index -docs F:\Lucene_data
 	public void runIndex() {
 		String usage = "java org.apache.lucene.demo.IndexFiles [-index INDEX_PATH] [-docs DOCS_PATH] [-update]\n\nThis indexes the documents in DOCS_PATH, creating a Lucene indexin INDEX_PATH that can be searched with SearchFiles";
 
-		String indexPath = CFGManager.getProperty("lucene_index_dir"); // 索引存放的路径
-		String docsPath = CFGManager.getProperty("document_scan_dir"); // 需要给哪些文件建立索引（即资源库的地址）
+		String indexPath = CFGManager.getProperty(LUCENE_INDEX_DIR); // 索引存放的路径
+		String docsPath = CFGManager.getProperty(DOCUMENT_SCAN_DIR); // 需要给哪些文件建立索引（即资源库的地址）
 		boolean create = true; // 是否新建索引
 
 		if (docsPath == null) {

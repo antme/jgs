@@ -258,20 +258,7 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 	public Map<String, Object> getTodoListInfo() {
 		Map<String, Object> result = new HashMap<String, Object>();
 
-		SearchVo vo = new SearchVo();
-		vo.setOrderNoticType(0);
 
-		vo.setOrderNoticType(1);
-
-		if (CFGManager.getProperty(SystemConfig.BAIDU_MAP_KEY_ERROR) != null) {
-			result.put(SystemConfig.BAIDU_MAP_KEY_ERROR, CFGManager.getProperty(SystemConfig.BAIDU_MAP_KEY_ERROR));
-
-		}
-
-		if (CFGManager.getProperty(SystemConfig.SMS_ACCOUNT_ID_ERROR) != null) {
-			result.put(SystemConfig.SMS_ACCOUNT_ID_ERROR, CFGManager.getProperty(SystemConfig.SMS_ACCOUNT_ID_ERROR));
-
-		}
 
 		return result;
 	}

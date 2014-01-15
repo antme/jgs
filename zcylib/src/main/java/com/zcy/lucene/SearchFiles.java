@@ -27,7 +27,7 @@ public class SearchFiles {
 	public void search(String queryString, boolean raw) throws Exception {
 		// 对参数的一些处理
 
-		String indexPath = CFGManager.getProperty("lucene_index_dir"); // 索引存放的路径
+		String indexPath = CFGManager.getProperty(IndexFiles.LUCENE_INDEX_DIR); // 索引存放的路径
 
 		String index = indexPath;
 		String field = "contents";

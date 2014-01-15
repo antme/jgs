@@ -32,8 +32,7 @@ public class ArchiveController extends AbstractController {
 		SearchVo vo = (SearchVo) parserJsonParameters(request, true, SearchVo.class);
 		responseWithDataPagnation(archiveService.listArchives(vo), request, response);
 	}
-	
-	
+
 	@RequestMapping("/listNew.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void listNeddApproveArchives(HttpServletRequest request, HttpServletResponse response) {
@@ -55,15 +54,14 @@ public class ArchiveController extends AbstractController {
 		archiveService.addArchive(archive);
 		responseWithData(null, request, response);
 	}
-	
-	
+
 	@RequestMapping("/get.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void getArchive(HttpServletRequest request, HttpServletResponse response) {
 		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
 		responseWithEntity(archiveService.getArchive(archive), request, response);
 	}
-	
+
 	@RequestMapping("/destroy.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void destroyArchive(HttpServletRequest request, HttpServletResponse response) {
@@ -72,8 +70,7 @@ public class ArchiveController extends AbstractController {
 		responseWithData(null, request, response);
 
 	}
-	
-	
+
 	@RequestMapping("/borrow/add.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void addArchiveBorrowRecord(HttpServletRequest request, HttpServletResponse response) {
@@ -81,16 +78,15 @@ public class ArchiveController extends AbstractController {
 		archiveService.addArchiveBorrowRecord(archive);
 		responseWithData(null, request, response);
 	}
-	
-	
+
 	@RequestMapping("/borrow/get.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void getArchiveBorrowRecord(HttpServletRequest request, HttpServletResponse response) {
 		ArchiveBorrowing archive = (ArchiveBorrowing) parserJsonParameters(request, true, ArchiveBorrowing.class);
-		
+
 		responseWithEntity(archiveService.getArchiveBorrowRecord(archive), request, response);
 	}
-	
+
 	@RequestMapping("/borrow/list.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void listArchiveBorrowRecord(HttpServletRequest request, HttpServletResponse response) {
@@ -98,8 +94,6 @@ public class ArchiveController extends AbstractController {
 		responseWithDataPagnation(archiveService.listArchiveBorrowRecord(vo), request, response);
 	}
 
-
-	
 	@RequestMapping("/approve.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void approveArchive(HttpServletRequest request, HttpServletResponse response) {
@@ -107,9 +101,7 @@ public class ArchiveController extends AbstractController {
 		archiveService.approveArchive(archive);
 		responseWithData(null, request, response);
 	}
-	
-	
-	
+
 	@RequestMapping("/reject.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void rejectArchive(HttpServletRequest request, HttpServletResponse response) {
@@ -117,15 +109,18 @@ public class ArchiveController extends AbstractController {
 		archiveService.rejectArchive(archive);
 		responseWithData(null, request, response);
 	}
-	
-	
-	
+
 	@RequestMapping("/upload.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void uploadArchiveFile(HttpServletRequest request, HttpServletResponse response) {
 		ArchiveFile archiveFile = (ArchiveFile) parserJsonParameters(request, true, ArchiveFile.class);
-		String path = uploadFile(request, archiveFile.getArchiveUploadKey());
+		String path = uploadArchiveFile(request, archiveFile.getArchiveUploadKey());
 		responseWithKeyValue("data", path, request, response);
+	}
+
+	private String getUploadPath(ArchiveFile afile) {
+
+		return null;
 	}
 
 }

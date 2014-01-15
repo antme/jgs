@@ -331,10 +331,10 @@ public abstract class AbstractController {
 		response.addCookie(ssid);
 	}
 
-	public String uploadFile(HttpServletRequest request, String parameterName) {
+	public String uploadArchiveFile(HttpServletRequest request, String path) {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile uploadFile = multipartRequest.getFile("Filedata");
-		String imgFileName = uploadFile.getOriginalFilename().toLowerCase().trim().replaceAll(" ", "");
+		String fileName = uploadFile.getOriginalFilename().toLowerCase().trim().replaceAll(" ", "");
 
 		InputStream inputStream = null;
 		try {
@@ -344,15 +344,15 @@ public abstract class AbstractController {
 			e.printStackTrace();
 		}
 
-		String webPath = request.getSession().getServletContext().getRealPath("/");
 
 		BufferedInputStream bis = null;
 		FileOutputStream fos = null;
-		String relativeFilePath = genRandomRelativePath(imgFileName);
+		String attachFile = path + File.separator +  fileName;
+
 		try {
 			bis = new BufferedInputStream(inputStream);
 
-			File file = new File(webPath + relativeFilePath);
+			File file = new File(attachFile);
 			File folder = file.getParentFile();
 			if (!folder.exists()) {
 				folder.mkdirs();
@@ -379,7 +379,7 @@ public abstract class AbstractController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return relativeFilePath;
+		return attachFile;
 	}
 
 	public String genRandomRelativePath(String fileName) {

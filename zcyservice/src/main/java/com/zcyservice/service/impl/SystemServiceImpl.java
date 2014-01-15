@@ -48,8 +48,6 @@ public class SystemServiceImpl extends AbstractArchiveService implements ISystem
 			} else {
 				this.dao.insert(cfg);
 			}
-			CFGManager.remove(SystemConfig.BAIDU_MAP_KEY_ERROR);
-			CFGManager.remove(SystemConfig.SMS_ACCOUNT_ID_ERROR);
 
 			CFGManager.loadDbConfig();
 		}

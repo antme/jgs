@@ -13,7 +13,7 @@
 <%
 	if (session.getValue("userName") == null) {
 		String url = request.getServerName();
-		response.sendRedirect("http://" + url + "/login.jsp");
+		/*  response.sendRedirect("http://" + url + "/login.jsp");*/
 	}
 %>
 
