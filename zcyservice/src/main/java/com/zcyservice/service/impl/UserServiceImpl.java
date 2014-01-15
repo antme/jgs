@@ -41,10 +41,18 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 		user.setId(EcThreadLocal.getCurrentUserId());
 
 		if (EcUtil.isValid(user.getPassword())) {
-			user.setPassword(DataEncrypt.generatePassword(user.getPassword()));
-		}
-		this.dao.updateById(user);
+			DataBaseQueryBuilder builder = new DataBaseQueryBuilder(User.TABLE_NAME);
+			builder.and(User.ID, user.getId());
+			builder.and(User.PASSWORD, DataEncrypt.generatePassword(user.getPassword()));
 
+			if (this.dao.exists(builder)) {
+				user.setPassword(DataEncrypt.generatePassword(user.getNewPwd()));
+			} else {
+				throw new ResponseException("原始密码错误");
+			}
+		}
+		
+		this.dao.updateById(user);
 	}
 
 	@Override
