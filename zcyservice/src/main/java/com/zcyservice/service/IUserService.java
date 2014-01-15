@@ -24,9 +24,7 @@ public interface IUserService{
        
     public EntityResults<User> listForAdmin(SearchVo vo);
 
-	public void getForgotPwdSmsCode(User user, String code);
 
-	public void resetPwdByMobile(User user);
 
 	public void resetPwd(User user);
 
@@ -43,13 +41,10 @@ public interface IUserService{
     
 	public Map<String, Object> getTodoListInfo();
 	
-	public void checkUserMobile(String mobilePhone);
 	
 	public void checkUserName(String userName);
 	
-	public String generateCode(String prefix, String db,boolean isCustomerService);
 	
 	public boolean inRole(String groupIds, String roleId);
 	
-	public void updateUserMobileNumber(String userId, String mfcContactMobilePhone, String oldPhone); 
 }

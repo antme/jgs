@@ -38,8 +38,6 @@ public class ZcyUserController extends AbstractController {
 	public static final String IMG_CODE = "imgCode_User";
 	public static final String REG_CODE = "regCode_User";
 	private static final String FORGET_PWD_IMG_CODE = "pwdImgCode_User";
-	private static final String FORGET_PWD_SMS_CODE = "pwdSmsCode_User";
-	private static final String FORGET_PWD_MOBILE_PHONE = "pwdMobilePhone_User";
 
 	@Autowired
 	private IUserService userService;
@@ -100,17 +98,7 @@ public class ZcyUserController extends AbstractController {
 		} else {
 			throw new ResponseException("请输入正确验证码");
 		}
-//
-//		if (EcUtil.isEmpty(user.getRegCode())) {
-//			throw new ResponseException("请输入手机验证码");
-//		}
-//
-//		if (getSessionValue(request, REG_CODE) == null) {
-//			throw new ResponseException("请先点击发送短信获取验证码");
-//		}
-//		if (!(getSessionValue(request, REG_CODE).equalsIgnoreCase(user.getRegCode()))) {
-//			throw new ResponseException("验证码不正确");
-//		}
+
 
 	}
 
@@ -145,50 +133,9 @@ public class ZcyUserController extends AbstractController {
 		}
 	}
 
-	@RequestMapping("/forgot/pwd/getCode.do")
-	@LoginRequired(required = false)
-	public void getPwdCode(HttpServletRequest request, HttpServletResponse response) {
-		User user = (User) parserJsonParameters(request, false, User.class);
-		if (EcUtil.isEmpty(user.getImgCode())) {
-			throw new ResponseException("请输图片验证码");
-		}
-		if (!(getSessionValue(request, FORGET_PWD_IMG_CODE).equalsIgnoreCase(user.getImgCode()))) {
-			throw new ResponseException("验证码不正确");
-		}
+	
 
-		String word = ImgUtil.getRandomWord(4);
-		setSessionValue(request, FORGET_PWD_SMS_CODE, word);
-		setSessionValue(request, FORGET_PWD_MOBILE_PHONE, user.getMobileNumber());
-
-		userService.getForgotPwdSmsCode(user, word);
-
-		responseWithDataPagnation(null, request, response);
-	}
-
-	@RequestMapping("/forgot/pwd/reset.do")
-	@LoginRequired(required = false)
-	public void resetPwdByMobile(HttpServletRequest request, HttpServletResponse response) {
-		User user = (User) parserJsonParameters(request, false, User.class);
-
-		String pwdCode = getSessionValue(request, FORGET_PWD_SMS_CODE);
-
-		if (EcUtil.isEmpty(pwdCode)) {
-			throw new ResponseException("请输入手机验证码");
-		}
-
-		if (EcUtil.isEmpty(user.getPwdCode())) {
-			throw new ResponseException("请输入手机验证码");
-		}
-
-		if (!pwdCode.equalsIgnoreCase(user.getPwdCode())) {
-			throw new ResponseException("验证码不对");
-		}
-		user.setMobileNumber(getSessionValue(request, FORGET_PWD_MOBILE_PHONE));
-		userService.resetPwdByMobile(user);
-
-		removeSessionInfo(request);
-		responseWithDataPagnation(null, request, response);
-	}
+	
 
 	@RequestMapping("/pwd/reset.do")
 	@LoginRequired(required = false)
@@ -225,7 +172,7 @@ public class ZcyUserController extends AbstractController {
 		responseWithEntity(null, request, response);
 	}
 
-	@RequestMapping("/adminadd.do")
+	@RequestMapping("/admin/add.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void adminAddUserForCustomer(HttpServletRequest request, HttpServletResponse response) {
 		User user = (User) parserJsonParameters(request, true, User.class);

@@ -168,20 +168,9 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 		return dao.listByQueryWithPagnation(builder, User.class);
 	}
 
-	public void getForgotPwdSmsCode(User user, String code) {
-
-		if (!this.dao.exists(User.MOBILE_NUMBER, user.getMobileNumber(), User.TABLE_NAME)) {
-			throw new ResponseException("此手机号码没有注册");
-		}
 
 
-	}
 
-	public void resetPwdByMobile(User user) {
-		User u = (User) this.dao.findByKeyValue(User.MOBILE_NUMBER, user.getMobileNumber(), User.TABLE_NAME, User.class);
-		u.setPassword(DataEncrypt.generatePassword(user.getPassword()));
-		this.dao.updateById(u);
-	}
 
 	public void resetPwd(User user) {
 		DataBaseQueryBuilder builder = new DataBaseQueryBuilder(User.TABLE_NAME);
@@ -221,28 +210,13 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 	@Override
 	public void adminAddUserAsUserRole(User user) {
 		if (EcUtil.isEmpty(user.getId())) {
-			String roleName = user.getRoleName();
-			if (Role.CUSTOMER_SERVICE.toString().equalsIgnoreCase(roleName)) {
-				user.setUserCode(generateCode("K", User.TABLE_NAME, true));
-
-			}
-			if (Role.USER.toString().equalsIgnoreCase(roleName)) {
-			}
 
 			if (EcUtil.isEmpty(user.getUserName())) {
 				user.setUserName(user.getMobileNumber());
 			}
 
-
 			this.regUser(user);
 		} else {
-			if (!EcUtil.isEmpty(user.getUserLocationAreaId())) {
-			}
-			User old = (User) this.dao.findById(user.getId(), User.TABLE_NAME, User.class);
-			if (!old.getMobileNumber().equalsIgnoreCase(user.getMobileNumber())) {
-				checkUserMobile(user.getMobileNumber());
-				updateUserMobileNumber(old.getId(), user.getMobileNumber(), old.getMobileNumber());
-			}
 
 			dao.updateById(user);
 		}
@@ -357,33 +331,7 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 		}
 	}
 
-	public String generateCode(String prefix, String db, boolean isCustomerService) {
-		DataBaseQueryBuilder builder = new DataBaseQueryBuilder(db);
-		if (isCustomerService) {
-			builder.and(User.ROLE_NAME, Role.CUSTOMER_SERVICE.toString());
-		}
-		int index = 1000 + this.dao.count(builder) + 1;
-		return prefix + index;
-	}
-	
-	public void updateUserMobileNumber(String userId, String mfcContactMobilePhone, String oldPhone) {
-	    User user = (User) this.dao.findById(userId, User.TABLE_NAME, User.class);
-		if (user != null) {
-			user.setMobileNumber(mfcContactMobilePhone);
 
-			if (user.getUserName() != null && oldPhone != null && user.getUserName().equalsIgnoreCase(oldPhone)) {
-				user.setUserName(mfcContactMobilePhone);
-			}
-			dao.updateById(user);
-		}
-    }
 
-	
-
-	@Override
-    public void checkUserMobile(String mobilePhone) {
-	    // TODO Auto-generated method stub
-	    
-    }
 
 }
