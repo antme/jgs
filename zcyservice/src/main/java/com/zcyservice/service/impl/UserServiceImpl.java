@@ -213,6 +213,10 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 			this.regUser(user);
 		} else {
 
+
+			if (EcUtil.isValid(user.getPassword())) {
+				user.setPassword(DataEncrypt.generatePassword(user.getPassword()));
+			}
 			dao.updateById(user);
 		}
 
