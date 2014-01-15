@@ -160,10 +160,7 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 			builder2.or(DataBaseQueryOpertion.LIKE, User.USER_NAME, keyword);
 			builder2.or(DataBaseQueryOpertion.LIKE, "name", keyword);
 			builder2.or(DataBaseQueryOpertion.LIKE, User.MOBILE_NUMBER, keyword);
-			if (Role.CUSTOMER_SERVICE.toString().equalsIgnoreCase(roleName)) {
-				builder2.or(DataBaseQueryOpertion.LIKE, User.USER_EXT_PHONE, keyword);
-				builder2.or(DataBaseQueryOpertion.LIKE, User.USER_CODE, keyword);
-			}
+		
 			builder.and(builder2);
 		}
 

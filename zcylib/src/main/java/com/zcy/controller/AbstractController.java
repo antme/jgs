@@ -292,9 +292,7 @@ public abstract class AbstractController {
 		setSessionValue(request, User.USER_NAME, user.getUserName());
 		setSessionValue(request, User.ID, user.getId());
 		setSessionValue(request, User.ROLE_NAME, user.getRoleName());
-		if (user.getIndexPage() != null) {
-			setSessionValue(request, User.INDEX_PAGE, user.getIndexPage());
-		}
+		
 		String path = EcUtil.isEmpty(request.getContextPath()) ? "/" : request.getContextPath();
 		if (request.getParameter("remember") != null || request.getAttribute("remember") != null) {
 			Cookie account = new Cookie("account", null);
