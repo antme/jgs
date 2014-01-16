@@ -74,8 +74,10 @@
                 	 }
                  }
              });
-             function keyDown(e) {  
-            	if(e.keyCode=='13'){
+             function keyDown(evt) {  
+            	evt = (evt) ? evt : ((window.event) ? window.event : "") 
+                keyCode = evt.keyCode ? evt.keyCode : (evt.which ? evt.which : evt.charCode);
+            	if(keyCode=='13'){
             		if($("#userName").val()!="" && $("#password").val()!="" && $("#imgCode").val()!=""){
             			$("#bd").submit();
             		}
