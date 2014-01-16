@@ -88,6 +88,20 @@ public class Archive extends BaseEntity {
 	@Column(name = "destroyComments")
 	@Expose
 	public String destroyComments;
+	
+	
+	
+	
+	//页面搜索字段
+	@Expose
+	public Date startDate;
+
+	@Expose
+	public Date endDate;
+
+	@Expose
+	public String keyword;
+	
 
 	public String getArchiveCode() {
 		return archiveCode;
@@ -210,6 +224,36 @@ public class Archive extends BaseEntity {
 	public void setDestroyComments(String destroyComments) {
 		this.destroyComments = destroyComments;
 	}
+
+	
+	
+
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+
 
 
 

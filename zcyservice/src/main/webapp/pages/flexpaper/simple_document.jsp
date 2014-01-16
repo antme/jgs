@@ -37,12 +37,7 @@
 		
     </head>
     <body id="b_height">
-        <div class="line_clear"></div>
-           <div class="public_title">
-              <div class="public_title_icon">​</div>​
-              <label class="public_title_text">档案预览</label>
-          </div>
-        <div class="line_clear"></div>
+
         <div id="archive_info" style="margin:0px 40px;">
             <div class="width100 font18 margintop10">上 海 市 虹 口 区 劳 动 人 事 争 议 仲 裁 委 员 会 </div>
             <div class="width100 font24 fontweight margintop20">仲 裁 卷 宗</div>
@@ -105,11 +100,9 @@
 		<div class="watermark"></div>
 		<script type="text/javascript">
 			function getDocumentUrl(document){
-				console.log(document);
 				return "/pages/flexpaper/view.jsp?doc={doc}&format={format}&page={page}".replace("{doc}",document);     
 			}
 			function getDocQueryServiceUrl(document){
-				console.log(document);
 				return "/pages/flexpaper/swfsize.jsp&doc={doc}&page={page}".replace("{doc}",document);
 			}
 

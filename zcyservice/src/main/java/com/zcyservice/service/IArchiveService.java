@@ -13,13 +13,13 @@ public interface IArchiveService {
 	
 	public void scanArchines();
 
-	public EntityResults<Archive> listArchives(SearchVo vo);
+	public EntityResults<Archive> listArchives(Archive archive);
 
 	public Map<String, Object> listArchiveFiles(Archive archive);
 
 	public void addArchive(Archive archive);
 
-	public EntityResults<Archive> listNeddApproveArchives(SearchVo vo);
+	public EntityResults<Archive> listNeddApproveArchives(Archive archive);
 
 	public void approveArchive(Archive archive);
 
@@ -29,7 +29,7 @@ public interface IArchiveService {
 
 	public Archive getArchive(Archive archive);
 
-	public EntityResults<ArchiveBorrowing> listArchiveBorrowRecord(SearchVo vo);
+	public EntityResults<ArchiveBorrowing> listArchiveBorrowRecord(Archive archive);
 
 	public BaseEntity getArchiveBorrowRecord(ArchiveBorrowing archive);
 

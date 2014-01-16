@@ -215,7 +215,7 @@ public abstract class AbstractController {
 	 *            data as it's value, and both the dataKey and "code" key are
 	 *            child of the JSON root node. If not set dataKey, the data and
 	 *            the "code" node are both the child of the JSON root node
-	 * @param status
+	 * @param userStatus
 	 *            0:FAIL, 1: SUCCESS
 	 * @return
 	 */

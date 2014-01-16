@@ -23,8 +23,24 @@
             <span class="span_style_label"><label class="display_nones">至：</label></span>
             <span class="span_style"><input class="easyui-datebox"   style="width:150px" name="endDate" id="endDate"/></span>
             <span class="span_style_label"><label class="display_nones">档案关键字：</label></span>
-            <span class="span_style"><input id="mfcKeyword" class="public_search_input_text display_nones" /></span>         
+            <span class="span_style"><input id="keyword" class="public_search_input_text display_nones" /></span>         
             <span class="span_style" style="margin-left:25px;"><button class="public_search_btn display_nones" onclick="searchArchive();"></button></span>
         </div>
         <div class="line_clear"></div>
     </div>
+    <script type="text/javascript">
+	    function searchArchive(){
+	    	
+	    	var data = {
+	    			"archiveCode" : $("#archiveCode").val(),
+	    			"archiveName" : $("#archiveName").val(),
+	    			"archiveStatus" : $("#archiveStatus").combobox('getValue'),
+	    			"startDate" : $("#startDate").datebox('getValue'),
+	    			"endDate" : $("#endDate").datebox('getValue'),
+	    			"keyword" : $("#keyword").val()
+	    	}
+	    	
+			$("#archiveList").datagrid('reload', data);	    	
+			  
+		}
+    </script>

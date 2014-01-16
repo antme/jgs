@@ -72,12 +72,12 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		}
 	}
 
-	public EntityResults<Archive> listArchives(SearchVo vo) {
+	public EntityResults<Archive> listArchives(Archive archive) {
 
 		return this.dao.listByQueryWithPagnation(new DataBaseQueryBuilder(Archive.TABLE_NAME), Archive.class);
 	}
 
-	public EntityResults<Archive> listNeddApproveArchives(SearchVo vo) {
+	public EntityResults<Archive> listNeddApproveArchives(Archive archive) {
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
 		query.or(Archive.ACHIVE_PROCESS_STATUS, ProcessStatus.NEW);
 
@@ -165,7 +165,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		return (Archive) this.dao.findById(archive.getId(), Archive.TABLE_NAME, Archive.class);
 	}
 
-	public EntityResults<ArchiveBorrowing> listArchiveBorrowRecord(SearchVo vo) {
+	public EntityResults<ArchiveBorrowing> listArchiveBorrowRecord(Archive archive) {
 
 		return this.dao.listByQueryWithPagnation(new DataBaseQueryBuilder(ArchiveBorrowing.TABLE_NAME), ArchiveBorrowing.class);
 	}
