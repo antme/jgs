@@ -27,15 +27,15 @@
                 <span class="cal_cen_login_form">
                     <p>
                        <label class="cal_cen_login_lab">用户名：</label>
-                       <input type="text" name="userName" class="input_middel cal_cen_login_pwd easyui-validatebox"  required missingMessage="请输入用户名"/>
+                       <input id="userName" type="text" name="userName" class="input_middel cal_cen_login_pwd easyui-validatebox"  required missingMessage="请输入用户名"/>
                     </p>
                     <p>
                        <label class="cal_cen_login_lab">密&nbsp;&nbsp;码：</label>
-                       <input type="password" name="password" class="input_middel cal_cen_login_pwd easyui-validatebox"  required missingMessage="请输入密码"/>
+                       <input id="password" type="password" name="password" class="input_middel cal_cen_login_pwd easyui-validatebox"  required missingMessage="请输入密码"/>
                     </p>
                     <p>
                        <label class="cal_cen_login_lab">验证码：</label>
-                       <input type="text" name="imgCode" class="input_middel cal_cen_login_yzm easyui-validatebox"  deltaX="70" required missingMessage="请输入验证码"/>
+                       <input id="imgCode" type="text" name="imgCode" class="input_middel cal_cen_login_yzm easyui-validatebox"  deltaX="70" required missingMessage="请输入验证码"/>
                        <img  src="/ecs/user/img.do" id="randomcode" onclick="changeImage();" class="input_middel cal_cen_login_yzimg"/>
                     </p>
                     <script type="text/javascript">
@@ -74,6 +74,14 @@
                 	 }
                  }
              });
+             function keyDown(e) {  
+            	if(e.keyCode=='13'){
+            		if($("#userName").val()!="" && $("#password").val()!="" && $("#imgCode").val()!=""){
+            			$("#bd").submit();
+            		}
+            	}
+             }
+             document.onkeydown = keyDown;
         </script>
 </body>
 </html>

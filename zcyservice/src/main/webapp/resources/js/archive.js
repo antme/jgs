@@ -97,6 +97,7 @@ function openAddGroupWindow(){
     $('#addarchive').window('setTitle', "新增卷宗");
     openDialog("addarchive");
     $("#addarchiveForm").form("clear");
+    $(".window-shadow").css("height","auto");
     $("#sid").remove();
 }
 function getarchiveWindow(id){

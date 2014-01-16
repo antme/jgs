@@ -205,7 +205,7 @@
 	border-left:1px solid #cdcdcd;
 }
 .width_500px{
-	width:664px;
+	width:740px;
 }
 .ac_div{
 	border-bottom:1px solid #cdcdcd;
@@ -221,6 +221,13 @@
     padding-top:5px;
     padding-bottom:5px;
     padding-left:5px;
+}
+.span_width2{
+    width:250px;
+    height:30px;
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-left:55px;
 }
 .overflow{
 	overflow:hidden;
@@ -248,7 +255,7 @@
     z-index:99999;
 }
 
-#addrecordForm,#delerecordForm{
+#addrecordForm,#delerecordForm,#fj{
 	border:1px solid #cdcdcd;
 	border-bottom:none;
 }
