@@ -29,15 +29,15 @@ public class ArchiveController extends AbstractController {
 	@RequestMapping("/listArchives.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void listArchives(HttpServletRequest request, HttpServletResponse response) {
-		SearchVo vo = (SearchVo) parserJsonParameters(request, true, SearchVo.class);
-		responseWithDataPagnation(archiveService.listArchives(vo), request, response);
+		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
+		responseWithDataPagnation(archiveService.listArchives(archive), request, response);
 	}
 
 	@RequestMapping("/listNew.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void listNeddApproveArchives(HttpServletRequest request, HttpServletResponse response) {
-		SearchVo vo = (SearchVo) parserJsonParameters(request, true, SearchVo.class);
-		responseWithDataPagnation(archiveService.listNeddApproveArchives(vo), request, response);
+		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
+		responseWithDataPagnation(archiveService.listNeddApproveArchives(archive), request, response);
 	}
 
 	@RequestMapping("/files.do")
@@ -90,8 +90,8 @@ public class ArchiveController extends AbstractController {
 	@RequestMapping("/borrow/list.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void listArchiveBorrowRecord(HttpServletRequest request, HttpServletResponse response) {
-		SearchVo vo = (SearchVo) parserJsonParameters(request, true, SearchVo.class);
-		responseWithDataPagnation(archiveService.listArchiveBorrowRecord(vo), request, response);
+		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
+		responseWithDataPagnation(archiveService.listArchiveBorrowRecord(archive), request, response);
 	}
 
 	@RequestMapping("/approve.do")
@@ -118,9 +118,6 @@ public class ArchiveController extends AbstractController {
 		responseWithKeyValue("data", path, request, response);
 	}
 
-	private String getUploadPath(ArchiveFile afile) {
 
-		return null;
-	}
 
 }

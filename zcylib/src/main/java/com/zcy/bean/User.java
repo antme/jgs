@@ -17,7 +17,7 @@ public class User extends BaseEntity {
 	public static final String ADDRESSES = "addresses";
 	public static final String MOBILE_NUMBER = "mobileNumber";
 	public static final String USER_NAME = "userName";
-	public static final String STATUS = "status";
+	public static final String STATUS = "userStatus";
 	
 
 
@@ -56,7 +56,7 @@ public class User extends BaseEntity {
 
 	@Column(name = STATUS)
 	@Expose
-	public String status;
+	public String userStatus;
 
 	@Column(name = GROUP_ID)
 	@Expose
@@ -172,12 +172,12 @@ public class User extends BaseEntity {
 		this.name = name;
 	}
 
-	public String getStatus() {
-		return status;
+	public String getUserStatus() {
+		return userStatus;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setUserStatus(String status) {
+		this.userStatus = status;
 	}
 
 	public String getGroupId() {

@@ -12,13 +12,13 @@
 <script type="text/javascript">
 
  function userstatusformatter(val, row, rowindex){
-	   var status = row.status;
+	   var status = row.userStatus;
 	   if (status == 'NORMAL'){
 		   return "正常";
 	   }else if (status == 'LOCKED'){
 		   return "已冻结";
 	   }else{
-		   return "";
+		   return "正常";
 	   }
 	} 
 
@@ -61,7 +61,7 @@
 		<div class="line_clear"></div>
 	</div>
 	<div style="margin-left:40px;">
-			<table id="newmfc"  class="easyui-datagrid_tf" iconCls="icon-save" url="/ecs/user/manage.do" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
+			<table id="userList"  class="easyui-datagrid_tf" iconCls="icon-save" url="/ecs/user/manage.do" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
 				<thead>
 					<tr>
                         <th align="center"  field="userName"  width="100"  sortable="false">用户名</th>
@@ -107,6 +107,24 @@
                             <input id="email" name="email" class="r-textbox easyui-validatebox"
                                 required type="text" missingMessage="请输入Email" /> <label
                                 class="r-need">*</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="r-edit-label">权限：</div>
+                        <div class="r-edit-field">
+                            <select id="groupIdSel"  name="groupId" class="easyui-combobox easyui-validatebox"  data-options="
+							                    valueField:'id',
+							                    textField:'groupName',
+							                    panelHeight:'auto',
+							                    method:'post',
+							                    width:128,
+							                    height:35,
+							                    url:'/ecs/sys/group/select.do',
+							                    multiple:false,
+							                    loadFilter:function(data){
+							                    	return data.rows;
+							                    }"
+								multiple="false" style="width:200px"></select>*
                         </div>
                     </li>
 					<li>
@@ -157,14 +175,20 @@
 	  return '<button class="table_eidt" onclick=getrecordWindow("'+ row.id +'") >&nbsp;</button>';
   }
   function getrecordWindow(id){
-	  var data = $("#newmfc").datagrid('getData');
+	  var data = $("#userList").datagrid('getData');
 	  $("#edituserform").form('clear');
 	  $("#edituserform").append("<input id='sid' name='id' type='hidden' value='"+id+"' />");
 	  for(var i=0;i<data.rows.length;i++){
 		  if(data.rows[i].id==id){
+			  
+			  
 			  $("#edituserform").form('load',data.rows[i]);
 			  $("#password").val("");
-			  $("#selectUserStatus").combobox('setValue',data.rows[i].status);
+			  if(data.rows[i].userStatus){
+			  	$("#selectUserStatus").combobox('setValue',data.rows[i].userStatus);
+			  }else{
+				  $("#selectUserStatus").combobox('setValue',"NORMAL"); 
+			  }
 			  eidtuser();
 		  }
 	  }
@@ -196,7 +220,7 @@
            }
           
           $('#edituser').window('close');
-          $("#newmfc").datagrid('reload');
+          $("#userList").datagrid('reload');
       }
   });
   </script>

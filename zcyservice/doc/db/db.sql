@@ -59,3 +59,6 @@ CREATE TABLE `ArchiveBorrowing` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+alter table User add column `userStatus` varchar(36) default null;
+
+

@@ -83,8 +83,8 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 			user.setRoleName(Role.USER.toString());
 		}
 
-		if (EcUtil.isEmpty(user.getStatus())) {
-			user.setStatus(UserStatus.NORMAL.toString());
+		if (EcUtil.isEmpty(user.getUserStatus())) {
+			user.setUserStatus(UserStatus.NORMAL.toString());
 		}
 
 		checkUserName(user.getUserName());
@@ -108,7 +108,7 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 		}
 
 		User u = (User) dao.findOneByQuery(nameQuery, User.class);
-		if (u.getStatus() != null && UserStatus.LOCKED.toString().equalsIgnoreCase(u.getStatus())) {
+		if (u.getUserStatus() != null && UserStatus.LOCKED.toString().equalsIgnoreCase(u.getUserStatus())) {
 			throw new ResponseException("账户已冻结，请联系管理员！");
 		}
 
@@ -198,7 +198,7 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 	@Override
 	public void lockUserById(BaseEntity be) {
 		User user = (User) dao.findById(be.getId(), User.TABLE_NAME, User.class);
-		user.setStatus(UserStatus.LOCKED.toString());
+		user.setUserStatus(UserStatus.LOCKED.toString());
 
 		dao.updateById(user);
 	}
@@ -206,7 +206,7 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 	@Override
 	public void unlockUserById(BaseEntity be) {
 		User user = (User) dao.findById(be.getId(), User.TABLE_NAME, User.class);
-		user.setStatus(UserStatus.NORMAL.toString());
+		user.setUserStatus(UserStatus.NORMAL.toString());
 		dao.updateById(user);
 
 	}
