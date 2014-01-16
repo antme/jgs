@@ -101,6 +101,8 @@
     line-height: 29px;
     overflow: hidden;
     width: 194px;
+    *margin-left:-10px;
+    _margin-left:-10px;
 }
 .f-information{
 	height:auto;
@@ -255,6 +257,8 @@
 	height:34px;
 	border:none;
 	background:url("../images/table_edit.png") no-repeat;
+	_background-image: none;
+    _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="resources/images/table_edit.png",sizingMethod='scale');
 	display:inline-block;
 	cursor:pointer;
 }

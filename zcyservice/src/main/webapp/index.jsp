@@ -119,7 +119,7 @@
                         <div class="r-edit-label">用户名：</div>
                         <div class="r-edit-field cc">
                             <input name="userName" id="userName" class="r-textbox easyui-validatebox"
-                                type="text" missingMessage="请输入店铺名称" disable/> <label class="r-need">*</label>
+                                type="text" missingMessage="请输入用户名" disabled/> <label class="r-need">*</label>
                         </div>
                     </li>
                     <li>
@@ -150,7 +150,7 @@
                         <div class="r-edit-label">Email：</div>
                         <div class="r-edit-field">
                             <input id="email" name="email" class="r-textbox easyui-validatebox"
-                                required type="text" missingMessage="请输入公司名称" /> <label
+                                required type="text" missingMessage="请输入Email" /> <label
                                 class="r-need">*</label>
                         </div>
                     </li>
@@ -201,6 +201,13 @@
 	            $('#updateuser').window('close');
 	        }
 	    });
+	    
+	    $(".index_menu").find("li").mouseover(function(){
+	        $(this).find("a").next(".ul_display").show();
+	    });
+	    $(".index_menu").find("li").mouseout(function(){
+            $(this).find("a").next(".ul_display").hide();
+        });
     </script>
 </body>
 </html>

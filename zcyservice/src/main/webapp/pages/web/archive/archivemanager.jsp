@@ -38,8 +38,8 @@
                         
                         <th align="center"  field="createdOn" width="120" sortable="false" >档案归档时间</th>
                         <th align="center"  field="updatedOn" width="120" sortable="false" >档案修改时间</th>
-                        <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="100">档案预览</th>
-                        <th align="center" data-options="field:'eidt'" formatter="formatterArchiveEidt"  width="130">操作</th>
+                        <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="80">档案预览</th>
+                        <th align="center" data-options="field:'eidt'" formatter="formatterArchiveEidt"  width="120">操作</th>
                     </tr>
                 </thead>
             </table>

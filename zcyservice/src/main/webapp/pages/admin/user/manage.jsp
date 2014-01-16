@@ -39,10 +39,6 @@
     <div class="public_title">
         <div class="public_title_icon">​</div>​
         <label class="public_title_text">用户管理</label>
-        <a class="public_title_btn" >
-           <span class="span_style"><img src="/resources/images/public_btn_icon.png" class="btn_img" /></span>
-           <span class="span_style">添加用户</span>
-        </a>
     </div>
     <div class="line_clear"></div>
 	<div class="public_search_div">
@@ -58,8 +54,10 @@
 					<option value="LOCKED">已冻结</option>
 			     </select>
 			</span> 
-			<span class="span_style"><button class="public_search_btn display_nones" onclick="mfcsearch()"></button></span>
+			<span class="span_style" style="margin-left:10px;"><button class="public_search_btn display_nones" onclick="mfcsearch()"></button></span>
 		</div>
+		<div class="line_clear"></div>
+		<button class="btn_add" onclick="openAdduserWindow();">新增用户</button>
 		<div class="line_clear"></div>
 	</div>
 	<div style="margin-left:40px;">
@@ -144,12 +142,12 @@
         }
     });
   });
-  $(".public_title_btn").click(function(){
+  function openAdduserWindow(){
 	  $('#edituser').window('setTitle', "添加用户");
 	  openDialog("edituser");
 	  $("#edituserform").form('clear');
 	  $("#rid").remove();
-  });
+  }
   function eidtuser(){
 	  $('#edituser').window('setTitle', "编辑用户");
       openDialog("edituser");
