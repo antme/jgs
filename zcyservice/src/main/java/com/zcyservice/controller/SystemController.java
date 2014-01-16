@@ -61,21 +61,21 @@ public class SystemController extends AbstractController {
 		responseWithListData(null, request, response);
 	}
 
-	@RequestMapping("/cfg/role/group/list.do")
+	@RequestMapping("/group/list.do")
 	public void listRoleGroups(HttpServletRequest request, HttpServletResponse response) {
 
 		responseWithDataPagnation(sys.listRoleGroups(), request, response);
 
 	}
 	
-	@RequestMapping("/cfg/role/group/select.do")
+	@RequestMapping("/group/select.do")
 	public void listRoleGroupForSelect(HttpServletRequest request, HttpServletResponse response) {
 
 		responseWithDataPagnation(sys.listRoleGroupForSelect(), request, response);
 
 	}
 
-	@RequestMapping("/cfg/role/group/add.do")
+	@RequestMapping("/group/add.do")
 	public void addRoleGroup(HttpServletRequest request, HttpServletResponse response) {
 		RoleGroup group = (RoleGroup) parserJsonParameters(request, false, RoleGroup.class);
 		sys.addRoleGroup(group);

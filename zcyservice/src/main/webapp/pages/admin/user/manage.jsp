@@ -111,6 +111,24 @@
                                 class="r-need">*</label>
                         </div>
                     </li>
+                    <li>
+                        <div class="r-edit-label">权限：</div>
+                        <div class="r-edit-field">
+                            <select id="groupIdSel"  class="easyui-combobox easyui-validatebox" required missingMessage="请选择权限组" data-options="
+							                    valueField:'id',
+							                    textField:'groupName',
+							                    panelHeight:'auto',
+							                    method:'post',
+							                    width:128,
+							                    height:35,
+							                    url:'/ecs/sys/group/select.do',
+							                    multiple:false,
+							                    loadFilter:function(data){
+							                    	return data.rows;
+							                    }"
+								multiple="false" style="width:200px"></select>*
+                        </div>
+                    </li>
 					<li>
 						<div class="r-edit-label">当前状态：</div>
 						<div class="r-edit-field">
