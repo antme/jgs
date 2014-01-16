@@ -58,13 +58,12 @@ $(document).ready(function(){
 		       return $(this).form('validate');
 		   },
 		   success : function(data) {
+			   $("#archiveList").datagrid('reload');
 			   if($("#sid").val()==undefined){
 				   $.messager.alert("添加","新增借阅记录成功！");
 			   }else{
 				   $.messager.alert("编辑","编辑借阅记录成功！");
 			   }
-			   
-			   $("#archiveList").datagrid('reload');
 		       $('#addrecord').window('close');
 		   }
 	});
