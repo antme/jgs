@@ -166,8 +166,12 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 	}
 
 	public EntityResults<ArchiveBorrowing> listArchiveBorrowRecord(Archive archive) {
+		DataBaseQueryBuilder query = new DataBaseQueryBuilder(ArchiveBorrowing.TABLE_NAME);
+		query.join(ArchiveBorrowing.TABLE_NAME, Archive.TABLE_NAME, ArchiveBorrowing.ARCHIVE_ID, Archive.ID);
+		query.joinColumns(Archive.TABLE_NAME, new String[] { Archive.ARCHIVE_CODE, Archive.ARCHIVE_NAME });
+		query.limitColumns(new ArchiveBorrowing().getColumnList());
 
-		return this.dao.listByQueryWithPagnation(new DataBaseQueryBuilder(ArchiveBorrowing.TABLE_NAME), ArchiveBorrowing.class);
+		return this.dao.listByQueryWithPagnation(query, ArchiveBorrowing.class);
 	}
 
 	public BaseEntity getArchiveBorrowRecord(ArchiveBorrowing archive) {
