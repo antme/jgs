@@ -25,7 +25,7 @@ $(document).ready(function(){
 			   }
 	          
 	          $('#addarchive').window('close');
-	          $("#newmfc").datagrid('reload');
+	          $("#archiveList").datagrid('reload');
 	      }
 	});
 	$("#submited").click(function(){
@@ -64,13 +64,13 @@ $(document).ready(function(){
 				   $.messager.alert("编辑","编辑借阅记录成功！");
 			   }
 			   
-			   $("#newmfc").datagrid('reload');
+			   $("#archiveList").datagrid('reload');
 		       $('#addrecord').window('close');
 		   }
 	});
 	
 	$("#submitrecord").click(function(){
-		   $("input[name=archiveId]").val($("#archiveId").combobox('getText'));
+		   $("input[name=archiveId]").val($("#archiveId").combobox('getValue'));
 		   $("#borrowingDate").val($('#borrowingDate').datebox('getValue'));
 		   if($("#borrowingDate").val()=="" || $("#borrowingDate").val()==null){
 		     $.messager.alert("添加失败","请选择调阅日期！");
@@ -87,7 +87,7 @@ $(document).ready(function(){
 		   success : function(data) {
 			   $.messager.alert("信息","销毁档案成功！");
 		       $('#delerecord').window('close');
-		       $("#newmfc").datagrid('reload');
+		       $("#archiveList").datagrid('reload');
 		   }
 	});
 });
@@ -132,7 +132,7 @@ function deletarchive(){
 // 借阅管理 事件
 var myloader = function(param,success,error){
     var q = param.q || '';
-    if (q.length <= 1){return false}
+   
     $.ajax({
         url: ' /ecs/archive/listArchives.do',
         dataType: 'json',

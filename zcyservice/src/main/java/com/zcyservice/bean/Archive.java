@@ -11,17 +11,21 @@ import com.zcy.bean.BaseEntity;
 @Table(name = Archive.TABLE_NAME)
 public class Archive extends BaseEntity {
 
+	public static final String ARCHIVE_NAME = "archiveName";
+
+	public static final String ARCHIVE_CODE = "archiveCode";
+
 	public static final String ACHIVE_PROCESS_STATUS = "archiveProcessStatus";
 
 	public static final String TABLE_NAME = "Archive";
 
 	// 案号
-	@Column(name = "archiveCode")
+	@Column(name = ARCHIVE_CODE)
 	@Expose
 	public String archiveCode;
 
 	// 案由
-	@Column(name = "archiveName")
+	@Column(name = ARCHIVE_NAME)
 	@Expose
 	public String archiveName;
 

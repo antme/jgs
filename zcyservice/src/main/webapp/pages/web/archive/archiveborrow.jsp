@@ -22,7 +22,7 @@
             <table id="archiveList"  class="easyui-datagrid_tf" url="/ecs/archive/borrow/list.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
                 <thead>
                     <tr>
-                        <th align="center"  field="archiveId"  width="100"  sortable="false">档案编号</th>
+                        <th align="center"  field="archiveCode"  width="100"  sortable="false">档案编号</th>
                         <th align="center"  field="archiveName"  width="150"  sortable="false">案由</th>
                         <th align="center"  field="borrowingName" width="120" sortable="false" >调阅人</th>
                         <th align="center"  field="borrowingOrganization" width="220" sortable="false" >调阅单位</th>
@@ -39,7 +39,7 @@
     <div id="addrecord" class="easyui-window" title="编辑科室信息" data-options="modal:true,closed:true,maximizable:false,minimizable:false,collapsible:false,iconCls:'icon-save'" style="width:800px;height:auto;padding:10px;">
             <form action="" id="addrecordForm" method="post" novalidate>
                 <div class="ac_div" >
-                    <span class="span_style"><label class="ac_title">卷宗编号</label></span>
+                    <span class="span_style"><label class="ac_title">调阅卷宗</label></span>
                     <span class="span_style border-left" style="padding:5px;">
                     <input id="archiveId" class="easyui-combobox" type="text"  data-options="loader: myloader,mode: 'remote',valueField: 'id',textField: 'name',width:128"/>
                     <input name="archiveId" type="hidden"/>
