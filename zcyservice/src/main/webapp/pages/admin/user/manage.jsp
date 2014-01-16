@@ -114,7 +114,7 @@
                     <li>
                         <div class="r-edit-label">权限：</div>
                         <div class="r-edit-field">
-                            <select id="groupIdSel"  class="easyui-combobox easyui-validatebox" required missingMessage="请选择权限组" data-options="
+                            <select id="groupIdSel"  name="groupId" class="easyui-combobox easyui-validatebox"  data-options="
 							                    valueField:'id',
 							                    textField:'groupName',
 							                    panelHeight:'auto',

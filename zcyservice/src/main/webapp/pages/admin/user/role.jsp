@@ -77,6 +77,7 @@
 		loading_css();
 	});
 	function openAddGroupWindow(){
+		$("#addRoleGroupForm").form("clear");
 		$('#addRoleGroup').window('setTitle', "新增权限组");
 	      openDialog("addRoleGroup");
 	}
