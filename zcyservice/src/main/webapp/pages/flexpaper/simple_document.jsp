@@ -89,10 +89,12 @@
             <br/>
         </div>
 		<div id="documentViewer" class="flexpaper_viewer" style="position:absolute;width:770px;height:650px;z-index:2"></div>
-		<div id="documentFiles" style="width:170px;height:350px; float:right; margin-top:20px;">
+		<div id="documentFiles" style="width:184px;height:350px; float:right; margin-right:10px;">
 		
 		 	<ul class="easyui-tree" id="firstTrees" data-options="animate:true, state:'closed'"></ul>
 			<ul class="easyui-tree" id="firstAttachTrees" data-options="animate:true, state:'closed'"></ul>
+			
+			
 			<ul class="easyui-tree" id="secondTrees" data-options="animate:true, state:'closed'"></ul>
 			<ul class="easyui-tree" id="secondAttachTrees" data-options="animate:true, state:'closed'"></ul>
 		

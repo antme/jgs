@@ -283,3 +283,79 @@
 	line-height:30px;
 	display:inline-block;
 }
+
+#firstTrees{
+	padding-top:30px;
+	border:1px solid #cdcdcd;
+	border-bottom:none;
+	background:url(../images/zjz.jpg) no-repeat;
+}
+#firstAttachTrees{
+	border:1px solid #cdcdcd;
+    border-top:none;
+    padding-bottom:5px;
+}
+
+#secondTrees{
+	margin-top:10px;
+	padding-top:30px;
+    border:1px solid #cdcdcd;
+    border-bottom:none;
+    background:url(../images/fjz.jpg) no-repeat;
+}
+#secondAttachTrees{
+    border:1px solid #cdcdcd;
+    border-top:none;
+    padding-bottom:5px;
+}
+
+.handle_events {
+    bottom: 30px;
+    cursor: pointer;
+    height: 60px;
+    opacity: 0.8;
+    position: fixed;
+    _position: absolute;
+    right: 20px;
+    width: 140px;
+    z-index: 999;
+}
+.handle_events_title {
+    background-color: #FF6600;
+    border: 1px solid #FF6600;
+    color: #FFFFFF;
+    height: 15px;
+    line-height: 15px;
+    text-indent: 5px;
+    width: 140px;
+}
+.handle_events_text {
+    background-color: #FFFFFF;
+    border: 1px solid #FF6600;
+    font-size: 11px;
+    height: 40px;
+    width: 140px;
+}
+#tips {
+    color: #333333;
+    float: left;
+    font-size: 11px;
+    height: 20px;
+    width: 140px;
+}
+.next_info {
+    float: right;
+    font-size: 10px;
+    height: 20px;
+    width: 40px;
+}
+.handle_events_text a {
+    color: #006699;
+}
+#tips a {
+    color: #666666;
+}
+.menu_mouse_css{
+	font-weight:bold;
+	font-size:18px;
+}

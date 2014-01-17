@@ -41,7 +41,7 @@
     </div>
     <div class="index_menu">
        <ul>
-        	<li>
+           <li>
               <a href="?p=web/archive/archivereport">首页</a>
            
            </li>
@@ -111,6 +111,13 @@
          <div id="remotePage"  class="remotePage" style="display:none;"></div>
          <div id="remotePageWindow"  style="display:none; overflow-y: scroll;"></div>
     </div>
+    <div class="handle_events" >
+           <div class="handle_events_title">待处理事项</div>
+           <div class="handle_events_text">
+               <div id="tips"><a>测试数据</a></div>
+               <div class="next_info"><a onclick="getNextmsg();">下一条</a></div>
+           </div>
+        </div>
  <div id="user_form" style="display:none;">
     <div id="updateuser" class="easyui-window" data-options="modal:true,closed:true,minimizable:false,maximizable:false,collapsible:false,iconCls:'icon-save',top:50" style="width:550px;height:auto;padding:10px; top:50px;">
         <form id="updateuserform" action="" method="post">
@@ -166,8 +173,26 @@
     </div>
     </div>
  	<script type="text/javascript">
+ 	    var pagePath = "<%=pagePath%>";
 	    $(document).ready(function(){
 	    	loading_css();
+	    	
+	    	var links = $(".index_menu a");
+	    	 pagePath="?p="+pagePath;
+	    	 console.log(pagePath);
+            for(index in links){
+                if(links[index].href && pagePath && pagePath!=null && links[index].href.endWith(pagePath)){
+                    var $a = $(links[index].parentNode);
+                    console.log($(links[index]).attr('href'));
+                    if($(links[index]).attr('href')==pagePath){
+                    	$(".index_menu a").removeClass('menu_mouse_css');
+                    	$(links[index]).addClass('menu_mouse_css');
+                    }else{
+                    	
+                    }
+                }
+            }
+	    	
 	    	initDataGridEvent(); 
 	    });
 	    
