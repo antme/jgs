@@ -43,7 +43,7 @@
             <div class="width100 font24 fontweight margintop20">仲 裁 卷 宗</div>
             <br/>
             
-            <span class="span_style_label"><label class="display_nones">档案编号：</label></span>
+            <span class="span_style_label"><label class="display_nones">案号：</label></span>
             <span class="span_style"><div id="archiveCode" class="display_input"></div></span>
             
             <span class="span_style_label"><label class="display_nones">案由：</label></span>

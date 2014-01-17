@@ -36,8 +36,8 @@
             <table id="archiveList"  class="easyui-datagrid_tf" url="/ecs/archive/listNew.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
                 <thead>
                     <tr>
-                        <th align="center"  field="archiveCode"  width="100"  sortable="false">档案编号</th>
-                        <th align="center"  field="archiveName"  width="100"  sortable="false">档案名称</th>
+                        <th align="center"  field="archiveCode"  width="100"  sortable="false">案号</th>
+                        <th align="center"  field="archiveName"  width="100"  sortable="false">案由</th>
                         <th align="center"  field="archiveStatus" width="100" sortable="false" >档案状态</th>
                         <th align="center"  field="archiveProcessStatus" width="100" sortable="false" >档案审核状态</th>
                         

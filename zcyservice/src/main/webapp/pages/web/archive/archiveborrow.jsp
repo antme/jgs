@@ -22,7 +22,7 @@
             <table id="archiveList"  class="easyui-datagrid_tf" url="/ecs/archive/borrow/list.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
                 <thead>
                     <tr>
-                        <th align="center"  field="archiveCode"  width="100"  sortable="false">档案编号</th>
+                        <th align="center"  field="archiveCode"  width="100"  sortable="false">案号</th>
                         <th align="center"  field="archiveName"  width="150"  sortable="false">案由</th>
                         <th align="center"  field="borrowingName" width="120" sortable="false" >调阅人</th>
                         <th align="center"  field="borrowingOrganization" width="220" sortable="false" >调阅单位</th>

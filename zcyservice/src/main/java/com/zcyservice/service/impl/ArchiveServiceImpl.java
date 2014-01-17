@@ -16,17 +16,17 @@ import com.zcy.bean.BaseEntity;
 import com.zcy.bean.EntityResults;
 import com.zcy.cfg.CFGManager;
 import com.zcy.dbhelper.DataBaseQueryBuilder;
+import com.zcy.dbhelper.DataBaseQueryOpertion;
 import com.zcy.exception.ResponseException;
 import com.zcy.util.EcUtil;
 import com.zcy.util.PdfUtil;
 import com.zcyservice.bean.Archive;
-import com.zcyservice.bean.ArchiveBorrowing;
 import com.zcyservice.bean.Archive.ArchiveStatus;
 import com.zcyservice.bean.Archive.ProcessStatus;
+import com.zcyservice.bean.ArchiveBorrowing;
 import com.zcyservice.bean.ArchiveFile;
 import com.zcyservice.bean.ArchiveFile.ArchiveFileProperty;
 import com.zcyservice.bean.vo.ArchiveTree;
-import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.AbstractArchiveService;
 import com.zcyservice.service.IArchiveService;
 import com.zcyservice.util.ZcyServiceConstants;
@@ -74,7 +74,67 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 	public EntityResults<Archive> listArchives(Archive archive) {
 
-		return this.dao.listByQueryWithPagnation(new DataBaseQueryBuilder(Archive.TABLE_NAME), Archive.class);
+		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		mergeArchiveQuery(query, archive);
+
+		return this.dao.listByQueryWithPagnation(query, Archive.class);
+	}
+
+	private void mergeArchiveQuery(DataBaseQueryBuilder query, Archive archive) {
+
+		DataBaseQueryBuilder childQuery = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+
+		if (EcUtil.isValid(archive.getArchiveCode())) {
+			childQuery.and(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_CODE, archive.getArchiveCode());
+		}
+
+		if (EcUtil.isValid(archive.getArchiveName())) {
+			childQuery.and(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_NAME, archive.getArchiveName());
+		}
+
+		if (EcUtil.isValid(archive.getArchiveStatus())) {
+			childQuery.and(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_STATUS, archive.getArchiveStatus());
+		}
+
+		if (EcUtil.isValid(archive.getStartDate())) {
+			childQuery.and(DataBaseQueryOpertion.GREATER_THAN_EQUALS, Archive.ARCHIVE_DATE, archive.getStartDate());
+		}
+
+		if (EcUtil.isValid(archive.getEndDate())) {
+			childQuery.and(DataBaseQueryOpertion.LESS_THAN_EQUAILS, Archive.ARCHIVE_DATE, archive.getEndDate());
+		}
+
+		if (EcUtil.isValid(archive.getArchiveApplicant())) {
+			childQuery.and(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_APPLICANT, archive.getArchiveApplicant());
+		}
+
+		if (EcUtil.isValid(archive.getArchiveOppositeApplicant())) {
+			childQuery.and(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_OPPOSITE_APPLICANT, archive.getArchiveOppositeApplicant());
+		}
+
+		if (EcUtil.isValid(archive.getArchiveJudge())) {
+			childQuery.and(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_JUDGE, archive.getArchiveJudge());
+		}
+
+		if (EcUtil.isValid(archive.getKeyword())) {
+			
+			DataBaseQueryBuilder childKeyWordQuery = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_APPLICANT, archive.getKeyword());
+			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_JUDGE, archive.getKeyword());
+			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_NAME, archive.getKeyword());
+			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_CODE, archive.getKeyword());
+			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_OPPOSITE_APPLICANT, archive.getKeyword());
+			
+			//FIXME: 全文搜索 
+			
+			childQuery.and(childKeyWordQuery);
+
+		}
+
+		if (EcUtil.isValid(childQuery.getQueryStr())) {
+			query.and(childQuery);
+		}
+
 	}
 
 	public EntityResults<Archive> listNeddApproveArchives(Archive archive) {
@@ -82,6 +142,8 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		query.or(Archive.ACHIVE_PROCESS_STATUS, ProcessStatus.NEW);
 
 		query.or(Archive.ACHIVE_PROCESS_STATUS, ProcessStatus.DESTROYING);
+
+		mergeArchiveQuery(query, archive);
 
 		return this.dao.listByQueryWithPagnation(query, Archive.class);
 
