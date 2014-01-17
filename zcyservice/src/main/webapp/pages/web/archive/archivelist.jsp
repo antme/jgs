@@ -19,8 +19,8 @@
 			<table id="archiveList"  class="easyui-datagrid_tf" url="/ecs/archive/listArchives.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
 				<thead>
 					<tr>
-                        <th align="center"  field="archiveCode"  width="100"  sortable="false">档案编号</th>
-                        <th align="center"  field="archiveName"  width="100"  sortable="false">档案名称</th>
+                        <th align="center"  field="archiveCode"  width="100"  sortable="false">案号</th>
+                        <th align="center"  field="archiveName"  width="100"  sortable="false">案由</th>
                         <th align="center"  field="archiveStatus" width="100" sortable="false" >档案状态</th>
                         <th align="center"  field="createdOn" width="120" sortable="false" >档案归档时间</th>
                         <th align="center"  field="updatedOn" width="120" sortable="false" >档案修改时间</th>

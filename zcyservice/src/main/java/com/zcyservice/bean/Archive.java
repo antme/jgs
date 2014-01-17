@@ -11,6 +11,16 @@ import com.zcy.bean.BaseEntity;
 @Table(name = Archive.TABLE_NAME)
 public class Archive extends BaseEntity {
 
+	public static final String ARCHIVE_JUDGE = "archiveJudge";
+
+	public static final String ARCHIVE_OPPOSITE_APPLICANT = "archiveOppositeApplicant";
+
+	public static final String ARCHIVE_APPLICANT = "archiveApplicant";
+
+	public static final String ARCHIVE_DATE = "archiveDate";
+
+	public static final String ARCHIVE_STATUS = "archiveStatus";
+
 	public static final String ARCHIVE_NAME = "archiveName";
 
 	public static final String ARCHIVE_CODE = "archiveCode";
@@ -34,7 +44,7 @@ public class Archive extends BaseEntity {
 	public String archiveDescription;
 
 	// 归档状态
-	@Column(name = "archiveStatus")
+	@Column(name = ARCHIVE_STATUS)
 	@Expose
 	public ArchiveStatus archiveStatus;
 
@@ -49,7 +59,7 @@ public class Archive extends BaseEntity {
 	public String archiveResult;
 
 	// 申请人
-	@Column(name = "archiveApplicant")
+	@Column(name = ARCHIVE_APPLICANT)
 	@Expose
 	public String archiveApplicant;
 
@@ -59,12 +69,12 @@ public class Archive extends BaseEntity {
 	public String archiveThirdPerson;
 
 	// 被申请人
-	@Column(name = "archiveOppositeApplicant")
+	@Column(name = ARCHIVE_OPPOSITE_APPLICANT)
 	@Expose
 	public String archiveOppositeApplicant;
 
 	// 承办人
-	@Column(name = "archiveJudge")
+	@Column(name = ARCHIVE_JUDGE)
 	@Expose
 	public String archiveJudge;
 
@@ -79,7 +89,7 @@ public class Archive extends BaseEntity {
 	public Date archiveCloseDate;
 
 	// 归档日期
-	@Column(name = "archiveDate")
+	@Column(name = ARCHIVE_DATE)
 	@Expose
 	public Date archiveDate;
 
