@@ -1,5 +1,7 @@
 package com.zcy.annotation;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import org.springframework.context.annotation.ClassPathScanningCandidateComponen
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.zcy.cfg.CFGManager;
 import com.zcy.dao.IMyBatisDao;
 
 public class InitialService {
@@ -23,7 +26,7 @@ public class InitialService {
 	public static final Set<String> loginPath = new HashSet<String>();
 	public static final Map<String, String> rolesValidationMap = new HashMap<String, String>();
 	private static final Logger logger = LogManager.getLogger(InitialService.class);
-    
+
 	public static final String ADMIN_USER_NAME = "admin";
 
 	/**
@@ -38,6 +41,30 @@ public class InitialService {
 		initRoleItems(dao, packageName);
 		setLoginPathValidation(packageName);
 		createSystemDefaultGroups(dao);
+
+		String file = InitialService.class.getResource("sigar/.sigar_shellrc").getFile();
+		File classPath = new File(file).getParentFile();
+
+		String path = System.getProperty("java.library.path");
+		if (CFGManager.isWindows()) {
+			try {
+				path += ";" + classPath.getCanonicalPath();
+				System.setProperty("java.library.path", path);
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				path += ":" + classPath.getCanonicalPath();
+				System.setProperty("java.library.path", path);
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 	}
 
@@ -116,7 +143,6 @@ public class InitialService {
 						if (!roleIds.contains(rv.permissionID())) {
 							roleIds.add(rv.permissionID());
 						}
-						
 
 						String validPath = path + mapping.value()[0];
 						rolesValidationMap.put(validPath, rv.permissionID());

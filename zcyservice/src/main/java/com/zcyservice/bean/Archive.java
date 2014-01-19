@@ -11,6 +11,10 @@ import com.zcy.bean.BaseEntity;
 @Table(name = Archive.TABLE_NAME)
 public class Archive extends BaseEntity {
 
+	public static final String YEAR = "year";
+
+	public static final String ARCHIVE_OPEN_DATE = "archiveOpenDate";
+
 	public static final String FOLDER_CODE = "folderCode";
 
 	public static final String ARCHIVE_JUDGE = "archiveJudge";
@@ -86,9 +90,14 @@ public class Archive extends BaseEntity {
 	public String archiveJudge;
 
 	// 立案日期
-	@Column(name = "archiveOpenDate")
+	@Column(name = ARCHIVE_OPEN_DATE)
 	@Expose
 	public Date archiveOpenDate;
+	
+	// 立案日期
+	@Column(name = YEAR)
+	@Expose
+	public Integer year;
 
 	// 结案日期
 	@Column(name = "archiveCloseDate")
@@ -332,9 +341,6 @@ public class Archive extends BaseEntity {
     }
 
 
-
-
-
 	public String getFilePath() {
     	return filePath;
     }
@@ -342,9 +348,16 @@ public class Archive extends BaseEntity {
 	public void setFilePath(String filePath) {
     	this.filePath = filePath;
     }
+	
 
 
+	public Integer getYear() {
+    	return year;
+    }
 
+	public void setYear(Integer year) {
+    	this.year = year;
+    }
 
 
 	public enum ArchiveStatus {

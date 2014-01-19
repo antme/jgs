@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +31,9 @@ import com.zcyservice.bean.Archive.ProcessStatus;
 import com.zcyservice.bean.ArchiveBorrowing;
 import com.zcyservice.bean.ArchiveFile;
 import com.zcyservice.bean.ArchiveFile.ArchiveFileProperty;
+import com.zcyservice.bean.vo.ArchiveReport;
 import com.zcyservice.bean.vo.ArchiveTree;
+import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.AbstractArchiveService;
 import com.zcyservice.service.IArchiveService;
 import com.zcyservice.util.ZcyServiceConstants;
@@ -62,7 +65,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 						arc.setArchiveCode(subFile.getName());
 						arc.setFolderCode(subFile.getName());
 						arc.setArchiveStatus(ArchiveStatus.ARCHIVED);
-
+						arc.setYear(Calendar.getInstance().get(Calendar.YEAR));
 //						arc.setArchiveName(subFile.getName());
 
 						this.dao.insert(arc);
@@ -227,11 +230,15 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			if (EcUtil.isEmpty(archive.getMainFile())) {
 				throw new ResponseException("请上传档案");
 			}
+						
+			if(EcUtil.isEmpty(archive.getYear())){				
+				Calendar c = Calendar.getInstance();
+				c.setTime(archive.getArchiveOpenDate());
+				archive.setYear(c.get(Calendar.YEAR));
+			}
 
 			archive = (Archive) dao.insert(archive);
-
 			initArchiveFiles(archive);
-
 		}
 	}
 
@@ -305,6 +312,17 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		archive.setArchiveProcessStatus(ProcessStatus.DESTROYING);
 
 		this.dao.updateById(archive);
+
+	}
+	
+	
+	public List<ArchiveReport> countArchive(SearchVo searchvo) {
+
+		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		query.distinct(Archive.YEAR);
+		List<ArchiveReport> reports = this.dao.distinctQuery(query, ArchiveReport.class);
+
+		return reports;
 
 	}
 
@@ -525,20 +543,24 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 				dateType = "号数";
 			} else if (line.contains("年") && line.contains("月") && line.contains("日")) {
 
+				Date dateTime = DateUtil.getDateTime(line.trim().replaceAll(" ", ""));
+				Calendar c = Calendar.getInstance();
+				c.setTime(dateTime);
+				archive.setYear(c.get(Calendar.YEAR));
 				if (dateType == "立案") {
 
 					System.out.println(line);
-					archive.setArchiveOpenDate(DateUtil.getDateTime(line.trim().replaceAll(" ", "")));
+					archive.setArchiveOpenDate(dateTime);
 
 				} else if (dateType == "结案") {
 
 					System.out.println(line);
-					archive.setArchiveCloseDate(DateUtil.getDateTime(line.trim().replaceAll(" ", "")));
+					archive.setArchiveCloseDate(dateTime);
 
 				} else if (dateType == "归档") {
 
 					System.out.println(line);
-					archive.setArchiveDate(DateUtil.getDateTime(line.trim().replaceAll(" ", "")));
+					archive.setArchiveDate(dateTime);
 
 				}
 

@@ -21,6 +21,7 @@ CREATE TABLE `Archive` (
   `createdOn` datetime DEFAULT NULL,
   `updatedOn` datetime DEFAULT NULL,
   `creatorId` varchar(36) DEFAULT NULL,
+  `year` int DEFAULT 0,  
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

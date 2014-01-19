@@ -49,6 +49,7 @@
        <div class="easyui-tabs" style="height:auto;">
             <div title="基本信息" style="padding: 10px">
                 <form action="" id="addarchiveForm" method="post" novalidate>
+                    <input  type="hidden" name="year" id="year"/>
                     <div class="width100 font18 margintop10">上 海 市 虹 口 区 劳 动 人 事 争 议 仲 裁 委 员 会 </div>
                     <div class="width100 font24 fontweight margintop20">仲 裁 卷 宗</div>
                     <div class="ac_div">

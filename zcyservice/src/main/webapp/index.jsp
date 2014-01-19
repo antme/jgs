@@ -43,7 +43,7 @@
     <div class="index_menu">
        <ul>
            <li >
-              <a href="?p=web/archive/archivereport">首页</a>
+              <a href="index.jsp">首页</a>
            
            </li>
            <li class="menu_cline access"></li>
@@ -83,13 +83,11 @@
            </li>
            <li class="menu_cline"></li>
           
-           <li  class="access" access="adm_sys_settings">
-              <a href="#">系统管理</a>
-              <ul class="ul_display">
-                 <li><a href="#">系统设置</a></li>
-                 <li><a href="#">系统状态监控</a></li>
-              </ul>
+          <li class="access" access="adm_sys_settings">
+              <a href="?p=admin/cfg/cfg">系统设置</a>
+           
            </li>
+           
        </ul>
     </div>
     <div class="context">
@@ -98,7 +96,7 @@
 	                   String pagePath = request.getParameter("p"); 
 	                   if(pagePath == null){
 	         
-	                         pagePath = "web/archive/archivereport";
+	                         pagePath = "web/archive/archiveindex";
 	                        
 	                   }
 	                   if(pagePath != null){
@@ -180,11 +178,9 @@
 	    	
 	    	var links = $(".index_menu a");
 	    	 pagePath="?p="+pagePath;
-	    	 console.log(pagePath);
             for(index in links){
                 if(links[index].href && pagePath && pagePath!=null && links[index].href.endWith(pagePath)){
                     var $a = $(links[index].parentNode);
-                    console.log($(links[index]).attr('href'));
                     if($(links[index]).attr('href')==pagePath){
                     	$(".index_menu a").removeClass('menu_mouse_css');
                     	$(links[index]).addClass('menu_mouse_css');
@@ -259,10 +255,8 @@
 	            }
 	            if(!hasAccess){
 	                node.hide();
-	            }else{
-	            
-	                node.show();
-	                
+	            }else{	            
+	                node.show();	               
 	            }
 	            
 	        });
