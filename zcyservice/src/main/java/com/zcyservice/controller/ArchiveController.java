@@ -1,5 +1,8 @@
 package com.zcyservice.controller;
 
+import java.io.File;
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,6 +19,7 @@ import com.zcyservice.bean.ArchiveFile;
 import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.IArchiveService;
 import com.zcyservice.util.PermissionConstants;
+import com.zcyservice.util.ZcyUtil;
 
 @Controller
 @RequestMapping("/ecs/archive")
@@ -113,11 +117,10 @@ public class ArchiveController extends AbstractController {
 	@RequestMapping("/upload.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void uploadArchiveFile(HttpServletRequest request, HttpServletResponse response) {
-		ArchiveFile archiveFile = (ArchiveFile) parserJsonParameters(request, true, ArchiveFile.class);
-		String path = uploadArchiveFile(request, archiveFile.getArchiveUploadKey());
-		responseWithKeyValue("data", path, request, response);
+		String relativeFilePath = UUID.randomUUID().toString();
+		String fileName = uploadArchiveFile(request, ZcyUtil.getUploadPath() + File.separator + relativeFilePath);
+
+		responseWithKeyValue("data", relativeFilePath + File.separator + fileName, request, response);
 	}
-
-
 
 }

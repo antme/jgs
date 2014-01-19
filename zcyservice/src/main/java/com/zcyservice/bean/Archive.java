@@ -11,6 +11,8 @@ import com.zcy.bean.BaseEntity;
 @Table(name = Archive.TABLE_NAME)
 public class Archive extends BaseEntity {
 
+	public static final String FOLDER_CODE = "folderCode";
+
 	public static final String ARCHIVE_JUDGE = "archiveJudge";
 
 	public static final String ARCHIVE_OPPOSITE_APPLICANT = "archiveOppositeApplicant";
@@ -33,6 +35,11 @@ public class Archive extends BaseEntity {
 	@Column(name = ARCHIVE_CODE)
 	@Expose
 	public String archiveCode;
+	
+	// 存的档案文件夹的编号
+	@Column(name = FOLDER_CODE)
+	@Expose
+	public String folderCode;
 
 	// 案由
 	@Column(name = ARCHIVE_NAME)
@@ -103,18 +110,30 @@ public class Archive extends BaseEntity {
 	@Expose
 	public String destroyComments;
 	
-	
-	
-	
 	//页面搜索字段
 	@Expose
 	public Date startDate;
 
 	@Expose
 	public Date endDate;
-
+	
 	@Expose
 	public String keyword;
+
+	
+	//档案文件上传
+	@Expose
+	public String mainFile;
+	
+	@Expose
+	public String mainFilkeAttach;
+	
+	@Expose
+	public String secondFile;
+	
+	@Expose
+	public String secondFileAttach;
+	
 	
 
 	public String getArchiveCode() {
@@ -124,6 +143,14 @@ public class Archive extends BaseEntity {
 	public void setArchiveCode(String archiveCode) {
 		this.archiveCode = archiveCode;
 	}
+
+	public String getFolderCode() {
+    	return folderCode;
+    }
+
+	public void setFolderCode(String folderCode) {
+    	this.folderCode = folderCode;
+    }
 
 	public String getArchiveName() {
 		return archiveName;
@@ -266,6 +293,40 @@ public class Archive extends BaseEntity {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
+
+
+
+	public String getMainFile() {
+    	return mainFile;
+    }
+
+	public void setMainFile(String mainFile) {
+    	this.mainFile = mainFile;
+    }
+
+	public String getMainFilkeAttach() {
+    	return mainFilkeAttach;
+    }
+
+	public void setMainFilkeAttach(String mainFilkeAttach) {
+    	this.mainFilkeAttach = mainFilkeAttach;
+    }
+
+	public String getSecondFile() {
+    	return secondFile;
+    }
+
+	public void setSecondFile(String secondFile) {
+    	this.secondFile = secondFile;
+    }
+
+	public String getSecondFileAttach() {
+    	return secondFileAttach;
+    }
+
+	public void setSecondFileAttach(String secondFileAttach) {
+    	this.secondFileAttach = secondFileAttach;
+    }
 
 
 

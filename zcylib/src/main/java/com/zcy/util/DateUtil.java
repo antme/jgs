@@ -45,11 +45,12 @@ public class DateUtil {
 		}
 		return null;
 	}
+
 	public static Date getDateTime(String date) {
-	    
-	    if(EcUtil.isEmpty(date)){
-	        return null;
-	    }
+
+		if (EcUtil.isEmpty(date)) {
+			return null;
+		}
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		if (EcUtil.isEmpty(date)) {
 			return null;
@@ -64,9 +65,14 @@ public class DateUtil {
 				sdf = new SimpleDateFormat("MM/dd/yyyy");
 				try {
 					return sdf.parse(date);
-				} catch (ParseException e2) {				
-//						e2.printStackTrace();	
-					logger.error(e2);
+				} catch (ParseException e2) {
+					sdf = new SimpleDateFormat("yyyy年MM月dd日");
+					try {
+						return sdf.parse(date);
+					} catch (ParseException e3) {
+						// e2.printStackTrace();
+						logger.error(e3);
+					}
 				}
 			}
 		}

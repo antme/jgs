@@ -38,8 +38,8 @@
                     <tr>
                         <th align="center"  field="archiveCode"  width="100"  sortable="false">案号</th>
                         <th align="center"  field="archiveName"  width="100"  sortable="false">案由</th>
-                        <th align="center"  field="archiveStatus" width="100" sortable="false" >档案状态</th>
-                        <th align="center"  field="archiveProcessStatus" width="100" sortable="false" >档案审核状态</th>
+                        <th align="center"  field="archiveStatus" formatter="formatterArchiveStatus"  width="100" sortable="false" >档案状态</th>
+                        <th align="center"  field="archiveProcessStatus" formatter="formatterArchiveProcessStatus" width="100" sortable="false" >档案审核状态</th>
                         
                         <th align="center"  field="createdOn" width="120" sortable="false" >档案归档时间</th>
                         <th align="center"  field="updatedOn" width="120" sortable="false" >档案修改时间</th>

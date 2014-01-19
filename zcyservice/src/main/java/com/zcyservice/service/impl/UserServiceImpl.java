@@ -195,21 +195,8 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 		return (User) this.dao.findOneByQuery(query, User.class);
 	}
 
-	@Override
-	public void lockUserById(BaseEntity be) {
-		User user = (User) dao.findById(be.getId(), User.TABLE_NAME, User.class);
-		user.setUserStatus(UserStatus.LOCKED.toString());
 
-		dao.updateById(user);
-	}
 
-	@Override
-	public void unlockUserById(BaseEntity be) {
-		User user = (User) dao.findById(be.getId(), User.TABLE_NAME, User.class);
-		user.setUserStatus(UserStatus.NORMAL.toString());
-		dao.updateById(user);
-
-	}
 
 	@Override
 	public void adminAddUserAsUserRole(User user) {

@@ -41,31 +41,31 @@
     </div>
     <div class="index_menu">
        <ul>
-           <li>
+           <li >
               <a href="?p=web/archive/archivereport">首页</a>
            
            </li>
-           <li class="menu_cline"></li>
-           <li>
+           <li class="menu_cline access"></li>
+           <li class="access" access="adm_archive_manage">
               <a href="?p=web/archive/archivemanager">档案管理</a>
            
            </li>
            <li class="menu_cline"></li>
-           <li>
+           <li  class="access" access="adm_archive_approve">
               <a href="?p=web/archive/archiveapprove">档案审核</a>          
            </li>
            
            <li class="menu_cline"></li>
       
-           <li>
+           <li  class="access" access="adm_archive_borrow_manager">
               <a href="?p=web/archive/archiveborrow">借阅管理</a>         
            </li>
            <li class="menu_cline"></li>
-           <li>
+           <li  class="access" access="adm_achive_query">
               <a href="?p=web/archive/archivelist">档案查询</a>         
            </li>
            <li class="menu_cline"></li>
-           <li>
+           <li  class="access" access="adm_archive_report">
               <a href="?p=web/archive/archivereport">数据统计</a>         
            </li>    
            
@@ -73,8 +73,8 @@
            
            <li class="menu_cline"></li>
           
-           <li>
-              <a href="#">用户管理</a>
+           <li  class="access" access="adm_user_manage">
+              <a href="#" >用户管理</a>
               <ul class="ul_display">
                  <li><a href="?p=admin/user/role">权限管理</a></li>
                  <li><a href="?p=admin/user/manage">用户账号管理</a></li>
@@ -82,7 +82,7 @@
            </li>
            <li class="menu_cline"></li>
           
-           <li>
+           <li  class="access" access="adm_sys_settings">
               <a href="#">系统管理</a>
               <ul class="ul_display">
                  <li><a href="#">系统设置</a></li>
@@ -233,6 +233,41 @@
 	    $(".index_menu").find("li").mouseout(function(){
             $(this).find("a").next(".ul_display").hide();
         });
+	    
+	    
+	    var userRoles = undefined;
+	    
+	    postAjaxRequest("/ecs/user/access.do", {}, function(data) {
+	        userRoles = data.data;
+	        checkRoles();
+	    }, false);
+
+	    function checkRoles(){
+	        var buttons = $('li[access]');
+	        buttons.each(function(index){
+	            var node = jQuery(buttons[index]);
+	            var roleId = node.attr("access");
+	            var hasAccess = false;
+	            for(i in userRoles){    
+
+	                if(userRoles[i] == roleId){
+
+	                    hasAccess = true;
+	                    break;
+	                }
+	            }
+	            if(!hasAccess){
+	                node.hide();
+	            }else{
+	            
+	                node.show();
+	                
+	            }
+	            
+	        });
+	        
+	        
+	    }
     </script>
 </body>
 </html>

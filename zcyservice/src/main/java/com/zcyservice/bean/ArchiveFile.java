@@ -10,6 +10,8 @@ import com.zcy.bean.BaseEntity;
 
 @Table(name = ArchiveFile.TABLE_NAME)
 public class ArchiveFile extends BaseEntity {
+	public static final String ARCHIVE_TEXT_DATA = "archiveTextData";
+
 	public static final String ARCHIVE_ID = "archiveId";
 
 	public static final String TABLE_NAME = "ArchiveFile";
@@ -37,6 +39,15 @@ public class ArchiveFile extends BaseEntity {
 	@Column(name = "archiveFileLastModifyDate")
 	@Expose
 	public Date archiveFileLastModifyDate;
+	
+	
+	
+	// 扫描的数据
+	@Column(name = ARCHIVE_TEXT_DATA)
+	@Expose
+	public String archiveTextData;
+	
+	
 
 	@Expose
 	public String archiveUploadKey;
@@ -96,6 +107,18 @@ public class ArchiveFile extends BaseEntity {
 	public void setArchiveUploadKey(String archiveUploadKey) {
 		this.archiveUploadKey = archiveUploadKey;
 	}
+	
+	
+
+	public String getArchiveTextData() {
+    	return archiveTextData;
+    }
+
+	public void setArchiveTextData(String archiveTextData) {
+    	this.archiveTextData = archiveTextData;
+    }
+
+
 
 	public enum ArchiveFileProperty {
 		FIRST, SECOND, FIRST_ATTACH, SECOND_ATTACH

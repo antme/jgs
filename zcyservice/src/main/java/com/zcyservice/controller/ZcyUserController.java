@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.zcy.annotation.LoginRequired;
 import com.zcy.annotation.Permission;
-import com.zcy.bean.BaseEntity;
 import com.zcy.bean.User;
 import com.zcy.controller.AbstractController;
 import com.zcy.exception.ResponseException;
@@ -181,22 +180,7 @@ public class ZcyUserController extends AbstractController {
 		responseWithEntity(null, request, response);
 	}
 
-	@RequestMapping("/lock.do")
-	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
-	public void lockUser(HttpServletRequest request, HttpServletResponse response) {
-		BaseEntity be = (BaseEntity) parserJsonParameters(request, false, BaseEntity.class);
-		userService.lockUserById(be);
-		responseWithData(null, request, response);
-	}
 
-	@RequestMapping("/unlock.do")
-	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
-	public void unlockUser(HttpServletRequest request, HttpServletResponse response) {
-		BaseEntity be = (BaseEntity) parserJsonParameters(request, false, BaseEntity.class);
-		userService.unlockUserById(be);
-		responseWithData(null, request, response);
-	}
-	
 
 	@RequestMapping("/access.do")
 	public void listUserAccessMenuIds(HttpServletRequest request, HttpServletResponse response) {		

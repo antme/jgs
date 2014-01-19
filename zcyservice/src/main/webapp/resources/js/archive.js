@@ -10,6 +10,37 @@ function formatterRecordEidt(val, row, rowindex){
 	return '<button class="table_eidt" onclick=getrecordWindow("'+ row.id+'");>&nbsp;</button>';
 }
 
+
+function formatterArchiveStatus(val, row, rowindex) {
+	
+	if(val == "ARCHIVED"){
+		return "已归档";
+	}
+	
+	return "未归档";
+	
+}
+
+function formatterArchiveProcessStatus(val, row, rowindex) {
+	
+	if(val == "DRAFT"){
+		return "草稿";
+	}else if(val == "NEW"){
+		return "待审核";
+	}else if(val == "APPROVED"){
+		return "审核通过";
+	}else if(val == "REJECTED"){
+		return "审核拒绝";
+	}else if(val == "DESTROYING"){
+		return "销毁审核中";
+	}else if(val == "DESTROYED"){
+		return "已销毁";
+	}
+	
+	return "扫描导入";
+	
+}
+
 $(document).ready(function(){
 
 	$("#addarchiveForm").form({
@@ -38,11 +69,11 @@ $(document).ready(function(){
 	      }else if($("#mainFile").val()=="" || $("#mainFile").val()==null){
 	          $.messager.alert("添加失败","请上传正卷宗！");
 	      }else if($("#mainFilkeAttach").val()=="" || $("#mainFilkeAttach").val()==null){
-	          $.messager.alert("添加失败","请上传正卷宗附件！");
+	         
 	      }else if($("#secondFile").val()=="" || $("#secondFile").val()==null){
-	          $.messager.alert("添加失败","请上传副卷宗！");
+	          
 	      }else if($("#secondFileAttach").val()=="" || $("#secondFileAttach").val()==null){
-	          $.messager.alert("添加失败","请上传副卷宗附件！");
+	         
 	      }else{
 	          $("#addarchiveForm").submit();
 	      }
