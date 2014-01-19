@@ -473,6 +473,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 						if (EcUtil.isEmpty(archive.getArchiveApplicant())) {
 
 							getDocumentInfo(subFile.getAbsolutePath(), archive);
+							this.dao.updateById(archive);
 
 						}
 					}
@@ -485,7 +486,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 	}
 
-	private void getDocumentInfo(String absolutePath, Archive archive) {
+	public void getDocumentInfo(String absolutePath, Archive archive) {
 
 		List<String> lines = PdfUtil.getLines(absolutePath, 0, 1);
 		String code = null;
@@ -557,7 +558,6 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		archive.setArchiveThirdPerson(thirdApplicant);
 		archive.setArchiveJudge(judgePerson);
 
-		this.dao.updateById(archive);
 
 	}
 }

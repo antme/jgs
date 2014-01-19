@@ -35,5 +35,7 @@ public interface IArchiveService {
 
 	public void destroyArchive(Archive archive);
 	
+	public void getDocumentInfo(String absolutePath, Archive archive);
+	
 	
 }

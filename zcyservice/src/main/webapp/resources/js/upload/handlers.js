@@ -275,7 +275,8 @@ function uploadSuccess(file, serverData) {
 		addFileInfo(file.id,"文件上传完成");
 		var obj = serverData;
         obj = JSON.parse(obj);
-        $("#mainFile").val(obj.data);
+        $("#addarchiveForm").form("load",obj.data);
+        $("#mainFile").val(obj.data.filePath);
 	} catch (ex) {
 		this.debug(ex);
 	}
@@ -286,7 +287,7 @@ function uploadSuccess1(file, serverData) {
 		addFileInfo1(file.id,"文件上传完成");
 		var obj = serverData;
         obj = JSON.parse(obj);
-        mainFilkeAttach+=obj.data+","
+        mainFilkeAttach+=obj.data.filePath+","
         $("#mainFilkeAttach").val(mainFilkeAttach);
 	} catch (ex) {
 		this.debug(ex);
@@ -298,7 +299,7 @@ function uploadSuccess2(file, serverData) {
 		addFileInfo2(file.id,"文件上传完成");
 		var obj = serverData;
         obj = JSON.parse(obj);
-        $("#secondFile").val(obj.data);
+        $("#secondFile").val(obj.data.filePath);
 	} catch (ex) {
 		this.debug(ex);
 	}
@@ -309,7 +310,7 @@ function uploadSuccess3(file, serverData) {
 		addFileInfo3(file.id,"文件上传完成");
 		var obj = serverData;
         obj = JSON.parse(obj);
-        secondFileAttach+=obj.data+","
+        secondFileAttach+=obj.data.filePath+","
         $("#secondFileAttach").val(secondFileAttach);
 	} catch (ex) {
 		this.debug(ex);

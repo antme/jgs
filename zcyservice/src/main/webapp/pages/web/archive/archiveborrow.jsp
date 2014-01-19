@@ -75,6 +75,10 @@
     </script>
     </div>
   </div>
-
+  <script type="text/javascript">
+     $(document).ready(function(){
+    	 initAddBorrowRecordPage();
+     });      
+  </script>
 </body>
 </html>

@@ -134,6 +134,9 @@ public class Archive extends BaseEntity {
 	@Expose
 	public String secondFileAttach;
 	
+	@Expose
+	public String filePath;
+	
 	
 
 	public String getArchiveCode() {
@@ -326,6 +329,18 @@ public class Archive extends BaseEntity {
 
 	public void setSecondFileAttach(String secondFileAttach) {
     	this.secondFileAttach = secondFileAttach;
+    }
+
+
+
+
+
+	public String getFilePath() {
+    	return filePath;
+    }
+
+	public void setFilePath(String filePath) {
+    	this.filePath = filePath;
     }
 
 

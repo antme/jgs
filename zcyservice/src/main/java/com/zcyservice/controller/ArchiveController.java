@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.zcy.annotation.LoginRequired;
 import com.zcy.annotation.Permission;
 import com.zcy.controller.AbstractController;
+import com.zcy.util.EcUtil;
 import com.zcyservice.bean.Archive;
 import com.zcyservice.bean.ArchiveBorrowing;
 import com.zcyservice.bean.ArchiveFile;
-import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.IArchiveService;
 import com.zcyservice.util.PermissionConstants;
 import com.zcyservice.util.ZcyUtil;
@@ -117,10 +117,20 @@ public class ArchiveController extends AbstractController {
 	@RequestMapping("/upload.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void uploadArchiveFile(HttpServletRequest request, HttpServletResponse response) {
+
+		ArchiveFile af = (ArchiveFile) parserJsonParameters(request, false, ArchiveFile.class);
+
 		String relativeFilePath = UUID.randomUUID().toString();
 		String fileName = uploadArchiveFile(request, ZcyUtil.getUploadPath() + File.separator + relativeFilePath);
 
-		responseWithKeyValue("data", relativeFilePath + File.separator + fileName, request, response);
+		String fileN = ZcyUtil.getUploadPath() + File.separator + relativeFilePath + File.separator + fileName;
+		Archive archive = new Archive();
+		if (EcUtil.isValid(af.getArchiveUploadKey()) && af.getArchiveUploadKey().equalsIgnoreCase("first")) {
+			archiveService.getDocumentInfo(fileN, archive);
+		}
+		archive.setFilePath(relativeFilePath + File.separator + fileName);
+
+		responseWithEntity(archive, request, response);
 	}
 
 }

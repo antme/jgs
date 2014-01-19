@@ -29,7 +29,7 @@
     <%@ include file="/pages/web/archive/searcharchive.jsp"%>
     
     <div style="margin-left:40px;">
-        <button class="btn_add" onclick="openAddGroupWindow();">审核</button>
+        <button class="btn_add" onclick="openApproveArchivePage();">审核</button>
     </div>
     <div class="line_clear"></div>
     <div style="margin-left:40px;">
@@ -39,12 +39,12 @@
                         <th align="center"  field="archiveCode"  width="100"  sortable="false">案号</th>
                         <th align="center"  field="archiveName"  width="100"  sortable="false">案由</th>
                         <th align="center"  field="archiveStatus" formatter="formatterArchiveStatus"  width="100" sortable="false" >档案状态</th>
-                        <th align="center"  field="archiveProcessStatus" formatter="formatterArchiveProcessStatus" width="100" sortable="false" >档案审核状态</th>
                         
                         <th align="center"  field="createdOn" width="120" sortable="false" >档案归档时间</th>
                         <th align="center"  field="updatedOn" width="120" sortable="false" >档案修改时间</th>
                         
                          <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="150">档案预览</th>
+                         <th align="center" data-options="field:'archiveProcessStatus'" formatter="formatterArchiveApproveView"  width="150">档案审核</th>
                     </tr>
                 </thead>
             </table>
