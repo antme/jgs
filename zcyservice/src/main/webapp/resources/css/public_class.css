@@ -365,6 +365,7 @@
 .index_menu .menu_mouse_css{
 	font-weight:bold;
 	font-size:18px;
+	color:#f8b14c;
 }
 .width_border_noright{
 	float:left;
@@ -419,4 +420,7 @@
 }
 .div_span_Noleft{
     border-left:none;
+}
+.line_seach .span_style_label{
+	width:105px;
 }

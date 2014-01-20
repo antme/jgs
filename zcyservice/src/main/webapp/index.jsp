@@ -43,36 +43,34 @@
     <div class="index_menu">
        <ul>
            <li >
-              <a href="index.jsp">首页</a>
-           
+              <a href="?p=web/archive/archiveindex">首页</a>
            </li>
-           <li class="menu_cline access"></li>
+           <li class="menu_cline" access="adm_archive_manage"></li>
            <li class="access" access="adm_archive_manage">
               <a href="?p=web/archive/archivemanager">档案管理</a>
            
            </li>
-           <li class="menu_cline"></li>
+           <li class="menu_cline access" access="adm_archive_approve"></li>
            <li  class="access" access="adm_archive_approve">
               <a href="?p=web/archive/archiveapprove">档案审核</a>          
            </li>
            
-           <li class="menu_cline"></li>
+           <li class="menu_cline" access="adm_archive_borrow_manager"></li>
       
            <li  class="access" access="adm_archive_borrow_manager">
               <a href="?p=web/archive/archiveborrow">借阅管理</a>         
            </li>
-           <li class="menu_cline"></li>
+           
+           <li class="menu_cline" access="adm_achive_query"></li>
            <li  class="access" access="adm_achive_query">
               <a href="?p=web/archive/archivelist">档案查询</a>         
            </li>
-           <li class="menu_cline"></li>
+           <li class="menu_cline" access="adm_archive_report"></li>
            <li  class="access" access="adm_archive_report">
               <a href="?p=web/archive/archivereport">数据统计</a>         
            </li>    
            
-           
-           
-           <li class="menu_cline"></li>
+           <li class="menu_cline" access="adm_user_manage"></li>
           
            <li  class="access" access="adm_user_manage">
               <a href="#" >用户管理</a>
@@ -81,7 +79,7 @@
                  <li><a href="?p=admin/user/manage">用户账号管理</a></li>
               </ul>
            </li>
-           <li class="menu_cline"></li>
+           <li class="menu_cline" access="adm_sys_settings"></li>
           
           <li class="access" access="adm_sys_settings">
               <a href="?p=admin/cfg/cfg">系统设置</a>
@@ -182,20 +180,17 @@
                 if(links[index].href && pagePath && pagePath!=null && links[index].href.endWith(pagePath)){
                     var $a = $(links[index].parentNode);
                     var a_herf=$(links[index]).attr('href');
+                    console.log($(links[index]).text());
                     pagePath=String(pagePath);
-                    if($(links[index]).text()=="档案管理" || $(links[index]).text()=="档案审核"
+                    if($(links[index]).text()=="首页" || $(links[index]).text()=="档案管理" || $(links[index]).text()=="档案审核" || $(links[index]).text()=="系统设置"
                     || $(links[index]).text()=="借阅管理" || $(links[index]).text()=="档案查询" || $(links[index]).text()=="数据统计"){                	
                     	$(".index_menu a").removeClass('menu_mouse_css');
                         $(links[index]).addClass('menu_mouse_css');
                     }else if($(links[index]).text()=="权限管理" || $(links[index]).text()=="用户账号管理"){
                     	$(".index_menu a").removeClass('menu_mouse_css');
                         $(links[index].parentNode.parentNode.parentNode).addClass('menu_mouse_css');
-                    }else if($(links[index]).text()=="系统设置" || $(links[index]).text()=="系统状态监控"){
-                        $(".index_menu a").removeClass('menu_mouse_css');
-                        $(links[index].parentNode.parentNode.parentNode).addClass('menu_mouse_css');
-                    }else if($(links[index]).text()=="首页"){
-                    	$(".index_menu a").removeClass('menu_mouse_css');
-                        $(links[index]).addClass('menu_mouse_css');
+                    }else {
+                    	
                     }
                 }
             }
