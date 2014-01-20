@@ -45,16 +45,16 @@
 		<div class="line_clear"></div>
 		<div class="line_seach">
 			<span class="span_style"><label class="display_nones">关键字：</label></span>
-			<span class="span_style"><input id="mfcKeyword" class="public_search_input_text display_nones" /></span> 
+			<span class="span_style"><input id="userKeyword" class="public_search_input_text display_nones" /></span> 
 			<span class="span_style"><label class="display_nones pdf">状态：</label></span>
 			<span class="span_style"> 
-			     <select class="easyui-combobox display_nones" style="width:128px;height:30px;background:url(/resources/images/public_select.png) no-repeat;" data-options="multiple:false" id="mfcSearchStatus">
+			     <select class="easyui-combobox display_nones" style="width:128px;height:30px;background:url(/resources/images/public_select.png) no-repeat;" data-options="multiple:false" id="userSearchStatus">
 					<option value="" selected>用户状态</option>
 					<option value="NORMAL">正常</option>
 					<option value="LOCKED">已冻结</option>
 			     </select>
 			</span> 
-			<span class="span_style" style="margin-left:10px;"><button class="public_search_btn display_nones" onclick="mfcsearch()"></button></span>
+			<span class="span_style" style="margin-left:10px;"><button class="public_search_btn display_nones" onclick="searchUser()"></button></span>
 		</div>
 		<div class="line_clear"></div>
 		<button class="btn_add" onclick="openAdduserWindow();">新增用户</button>
@@ -65,6 +65,7 @@
 				<thead>
 					<tr>
                         <th align="center"  field="userName"  width="100"  sortable="false">用户名</th>
+                        <th align="center"  field="name"  width="100"  sortable="false">姓名</th>
                         <th align="center"  field="mobileNumber" width="100" sortable="false" >联系手机</th>
                         <th align="center"  field="email" width="120" sortable="false" >Email</th>
                         <th align="center"  field="createdOn" width="80" >创建日期</th>
@@ -223,6 +224,15 @@
           $("#userList").datagrid('reload');
       }
   });
+  
+  function searchUser(){
+	  var data = {
+			  "userStatus" : $("#userSearchStatus").combobox('getValue'),
+			   "keyword" : $("#userKeyword").val()
+	  }
+	  
+	  $("#userList").datagrid("reload", data);
+  }
   </script>
 </body>
 </html>
