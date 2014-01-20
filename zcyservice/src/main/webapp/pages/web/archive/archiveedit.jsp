@@ -15,38 +15,12 @@
 <script type="text/javascript" src="/resources/js/upload/swfus.js"></script>
 </head>
 <body>
+   
+
     <div class="line_clear"></div>
-           <div class="public_title">
-              <div class="public_title_icon">​</div>​
-              <label class="public_title_text">档案管理</label>
-          </div>
-        <div class="line_clear"></div>
-    <%@ include file="/pages/web/archive/searcharchive.jsp"%>
     
-    <div style="margin-left:40px;">
-        <a href="?p=web/archive/archiveedit"><button class="btn_add" >新增档案</button></a>
-    </div>
-    <div class="line_clear"></div>
-    <div style="margin-left:40px;">
-            <table id="archiveList"  class="easyui-datagrid_tf" url="/ecs/archive/listArchives.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
-                <thead>
-                    <tr>
-                        <th align="center"  field="archiveCode"  width="100"  sortable="false">案号</th>
-                        <th align="center"  field="archiveName"  width="100"  sortable="false">案由</th>
-                        <th align="center"  field="archiveStatus" formatter="formatterArchiveStatus"  width="100" sortable="false" >档案状态</th>
-                        <th align="center"  field="archiveProcessStatus" formatter="formatterArchiveProcessStatus" width="100" sortable="false" >审核状态</th>
-                        
-                        <th align="center"  field="createdOn" width="120" sortable="false" >档案归档时间</th>
-                        <th align="center"  field="updatedOn" width="120" sortable="false" >档案修改时间</th>
-                        <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="80">档案预览</th>
-                        <th align="center" data-options="field:'eidt'" formatter="formatterArchiveEidt"  width="120">操作</th>
-                    </tr>
-                </thead>
-            </table>
-    </div>
-    <div style="display:none;">
-    <div id="addarchive" class="easyui-window" title="编辑科室信息" data-options="modal:true,closed:true,maximizable:false,minimizable:false,collapsible:false,iconCls:'icon-save'" style="width:900px;height:auto;padding:10px;">
-       <div class="easyui-tabs" style="height:auto;">
+ 
+
             <div title="基本信息" style="padding: 10px">
                 <form action="" id="addarchiveForm" method="post" novalidate>
                     <input  type="hidden" name="year" id="year"/>
@@ -205,33 +179,30 @@
                 </div>
                 </div>
             </div>
-        </div>
+       
         <div style="text-align:center;padding:5px;">
              <button id="submited" class="btn_add">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
              <button id="closed" class="btn_add">取消</button>
         </div>
-    </div>
-     
-    <div id="delerecord" class="easyui-window" title="销毁档案" data-options="modal:true,closed:true,maximizable:false,minimizable:false,collapsible:false,iconCls:'icon-save'" style="width:800px;height:auto;padding:10px;">
-            <form action="" id="delerecordForm" method="post" novalidate>
-                <input id="did" type="hidden" name="id" />
-                <div class="ac_div">
-                    <span class="span_style"><label class="ac_title">销毁原因</label></span>
-                    <span class="span_style border-left" style="padding:5px;">
-                       <textarea id="destroyComments" name="destroyComments" rows="10" cols="59" ></textarea>
-                    </span>
-                </div>
-             </form>
-             <div style="text-align:center;padding:5px;">
-                     <button class="btn_add" onclick="deletarchive()">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                     <button class="btn_add" onclick="closedwindows('delerecord')">取消</button>
-             </div>
-    </div>
-  </div>
-  
+        
+<%
+	String id = request.getParameter("id");
+%>
+
   <script type="text/javascript">
      $(document).ready(function(){
 	    initArchiveManagePage();
+	    
+	    var id = "<%=id%>";
+	    console.log(id);
+	    if(id!="null"){
+	    postAjaxRequest("/ecs/archive/get.do", {id:id}, function(data){
+	     	   $("#addarchiveForm").form("clear");
+	     	   $("#addarchiveForm").form("load",data.data);
+	     	   $("#addarchiveForm").append("<input id='sid' name='id' type='hidden' value='"+id+"' />");
+	        });
+	    
+	    }
 	 });	  
   </script>
 

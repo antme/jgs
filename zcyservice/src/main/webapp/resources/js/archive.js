@@ -9,7 +9,7 @@ function formatterArchiveApproveView(val, row, rowindex) {
 }
 
 function formatterArchiveEidt(val, row, rowindex){
-	return '<span class="span_style"><button class="table_eidt" onclick=getarchiveWindow("'+ row.id+'");></button></span><span class="span_style" style="margin-left:20px;"><button class="table_delect" onclick=deletarchiveWindow("'+ row.id+'");>&nbsp;</button></span>';
+	return '<span class="span_style"><a class="table_eidt" href="?p=web/archive/archiveedit&id=' + row.id + '"></a></span><span class="span_style" style="margin-left:20px;"><button class="table_delect" onclick=deletarchiveWindow("'+ row.id+'");>&nbsp;</button></span>';
 }
 function formatterRecordEidt(val, row, rowindex){
 	return '<button class="table_eidt" onclick=getrecordWindow("'+ row.id+'");>&nbsp;</button>';
