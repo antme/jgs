@@ -42,50 +42,54 @@
             <div class="width100 font18 margintop10">上 海 市 虹 口 区 劳 动 人 事 争 议 仲 裁 委 员 会 </div>
             <div class="width100 font24 fontweight margintop20">仲 裁 卷 宗</div>
             <br/>
+            <div class="div_span">
+                 <span class="span_style_label width_border_noright"><label class="display_nones">案号：</label></span>
+                 <span class="span_style width_border_noright"><div id="archiveCode" class="display_input"></div></span>
             
-            <span class="span_style_label"><label class="display_nones">案号：</label></span>
-            <span class="span_style"><div id="archiveCode" class="display_input"></div></span>
+                 <span class="span_style_label width_border_noright"><label class="display_nones">创建日期：</label></span>
+                 <span class="span_style width_border_noright"><div id="createdOn" class="display_input"></div></span>
             
-            <span class="span_style_label"><label class="display_nones">案由：</label></span>
-            <span class="span_style"><div id="archiveName" class="display_input"></div></span>
+                 <span class="span_style_label width_border_noright"><label class="display_nones">修改日期：</label></span>
+                 <span class="span_style width_border"><div id="updatedOn" class="display_input"></div></span>
+            </div>
+            <div class="div_span div_span_left">
+                 <span class="span_style_label width_border_noright div_span_Noleft"><label class="display_nones">案由：</label></span>
+                 <span class="span_style width_border_one"><div id="archiveName" class="display_input598"></div></span>
+            </div>
+            <div class="div_span div_span_left">
+                 <span class="span_style_label width_border_noright div_span_Noleft"><label class="display_nones">处理结果：</label></span>
+                 <span class="span_style width_border_one"><div id="archiveStatus" class="display_input598"></div></span>
+            </div>
+            <div class="div_span">
+                 <span class="span_style_label width_border_noright"><label class="display_nones">申请人：</label></span>
+                <span class="span_style width_border_noright"><div id="archiveApplicant" class="display_input"></div></span>
             
-            <span class="span_style_label"><label class="display_nones">处理结果：</label></span>
-            <span class="span_style"><div id="archiveStatus" class="display_input"></div></span>
-            <br/>
+                <span class="span_style_label width_border_noright"><label class="display_nones">被申请人：</label></span>
+                <span class="span_style width_border_noright"><div id="archiveOppositeApplicant" class="display_input"></div></span>
             
-            <span class="span_style_label"><label class="display_nones">申请人：</label></span>
-            <span class="span_style"><div id="archiveApplicant" class="display_input"></div></span>
+                <span class="span_style_label width_border_noright"><label class="display_nones">第三人：</label></span>
+                <span class="span_style width_border"><div id="archiveThirdPerson" class="display_input"></div></span>
+            </div>
+            <div class="div_span">
+                <span class="span_style_label width_border_noright"><label class="display_nones">承办人：</label></span>
+                <span class="span_style width_border_noright"><div id="archiveJudge" class="display_input"></div></span>
             
-            <span class="span_style_label"><label class="display_nones">被申请人：</label></span>
-            <span class="span_style"><div id="archiveOppositeApplicant" class="display_input"></div></span>
+                <span class="span_style_label width_border_noright"><label class="display_nones">立案日期：</label></span>
+                <span class="span_style width_border_noright"><div id="archiveOpenDate" class="display_input"></div></span>
             
-            <span class="span_style_label"><label class="display_nones">第三人：</label></span>
-            <span class="span_style"><div id="archiveThirdPerson" class="display_input"></div></span>
-            <br/>
+                <span class="span_style_label width_border_noright"><label class="display_nones">结案日期：</label></span>
+                <span class="span_style width_border"><div id="archiveCloseDate" class="display_input"></div></span>
+            </div>
+            <div class="div_span">
+                <span class="span_style_label width_border_bottom"><label class="display_nones">归档日期：</label></span>
+                <span class="span_style width_border_bottom"><div id="archiveDate" class="display_input"></div></span>
             
-            <span class="span_style_label"><label class="display_nones">承办人：</label></span>
-            <span class="span_style"><div id="archiveJudge" class="display_input"></div></span>
+                <span class="span_style_label width_border_bottom"><label class="display_nones">归档号数：</label></span>
+                <span class="span_style width_border_bottom"><div id="archiveSerialNumber" class="display_input"></div></span>
             
-            <span class="span_style_label"><label class="display_nones">立案日期：</label></span>
-            <span class="span_style"><div id="archiveOpenDate" class="display_input"></div></span>
-            
-            <span class="span_style_label"><label class="display_nones">结案日期：</label></span>
-            <span class="span_style"><div id="archiveCloseDate" class="display_input"></div></span>
-            <br>
-            
-            <span class="span_style_label"><label class="display_nones">归档日期：</label></span>
-            <span class="span_style"><div id="archiveDate" class="display_input"></div></span>
-            
-            <span class="span_style_label"><label class="display_nones">归档号数：</label></span>
-            <span class="span_style"><div id="archiveSerialNumber" class="display_input"></div></span>
-            
-            <span class="span_style_label"><label class="display_nones">创建日期：</label></span>
-            <span class="span_style"><div id="createdOn" class="display_input"></div></span>
-            <br>
-            
-            <span class="span_style_label"><label class="display_nones">修改日期：</label></span>
-            <span class="span_style"><div id="updatedOn" class="display_input"></div></span>
-            <br/>
+                <span class="span_style_label width_border_bottom"><label class="display_nones"></label></span>
+                <span class="span_style width_borders"><div class="display_input"></div></span>
+            </div>
             <br/>
         </div>
 		<div id="documentViewer" class="flexpaper_viewer" style="position:absolute;width:770px;height:650px;z-index:2"></div>

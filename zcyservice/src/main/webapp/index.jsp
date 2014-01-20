@@ -178,17 +178,25 @@
 	    	loading_css();
 	    	
 	    	var links = $(".index_menu a");
-	    	 pagePath="?p="+pagePath;
-	    	 console.log(pagePath);
+	    	pagePath="?p="+pagePath;
             for(index in links){
                 if(links[index].href && pagePath && pagePath!=null && links[index].href.endWith(pagePath)){
                     var $a = $(links[index].parentNode);
-                    console.log($(links[index]).attr('href'));
-                    if($(links[index]).attr('href')==pagePath){
+                    var a_herf=$(links[index]).attr('href');
+                    pagePath=String(pagePath);
+                    if($(links[index]).text()=="档案管理" || $(links[index]).text()=="档案审核"
+                    || $(links[index]).text()=="借阅管理" || $(links[index]).text()=="档案查询" || $(links[index]).text()=="数据统计"){                	
                     	$(".index_menu a").removeClass('menu_mouse_css');
-                    	$(links[index]).addClass('menu_mouse_css');
-                    }else{
-                    	
+                        $(links[index]).addClass('menu_mouse_css');
+                    }else if($(links[index]).text()=="权限管理" || $(links[index]).text()=="用户账号管理"){
+                    	$(".index_menu a").removeClass('menu_mouse_css');
+                        $(links[index].parentNode.parentNode.parentNode).addClass('menu_mouse_css');
+                    }else if($(links[index]).text()=="系统设置" || $(links[index]).text()=="系统状态监控"){
+                        $(".index_menu a").removeClass('menu_mouse_css');
+                        $(links[index].parentNode.parentNode.parentNode).addClass('menu_mouse_css');
+                    }else if($(links[index]).text()=="首页"){
+                    	$(".index_menu a").removeClass('menu_mouse_css');
+                        $(links[index]).addClass('menu_mouse_css');
                     }
                 }
             }

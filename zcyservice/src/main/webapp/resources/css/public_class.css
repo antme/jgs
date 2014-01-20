@@ -22,6 +22,7 @@
     font-size: 14px;
     overflow: hidden;
     vertical-align: middle;
+    text-indent:5px;
 }
 
 .span_style_label{
@@ -30,7 +31,7 @@
     overflow: hidden;
     vertical-align: middle;
     width:100px;
-    text-align: right;
+    text-indent:5px;
 }
 
 .line_clear{
@@ -284,6 +285,12 @@
 	display:inline-block;
 }
 
+.display_input598{
+    width:784px;
+    line-height:30px;
+    display:inline-block;
+}
+
 #firstTrees{
 	padding-top:30px;
 	border:1px solid #cdcdcd;
@@ -355,7 +362,61 @@
 #tips a {
     color: #666666;
 }
-.menu_mouse_css{
+.index_menu .menu_mouse_css{
 	font-weight:bold;
 	font-size:18px;
+}
+.width_border_noright{
+	float:left;
+	height:30px;
+	line-height:29px;
+	border:1px solid #cdcdcd;
+	border-right:none; 
+	border-bottom:none;
+}
+.width_border_bottom{
+    float:left;
+    height:30px;
+    line-height:29px;
+    border:1px solid #cdcdcd;
+    border-right:none; 
+}
+.width_borders{
+    float:left;
+    height:30px;
+    line-height:29px;
+    border:1px solid #cdcdcd;
+}
+.width_border{
+	float:left;
+    height:30px;
+    line-height:29px;
+    border:1px solid #cdcdcd;
+    border-bottom:none;
+}
+.width_border_one{
+	float:left;
+    line-height:29px;
+    border:1px solid #cdcdcd;
+    border-bottom:none;
+}
+.div_span{
+	width:auto;
+	height:auto;
+	overflow:hidden;
+}
+.div_bottom_border{
+	border-bottom:1px solid #cdcdcd;
+}
+.div_span .display_input{
+	width:190px;
+}
+.div_span .span_style_label{
+	font-weight:bold;
+}
+.div_span_left{
+	border-left:1px solid #cdcdcd;
+}
+.div_span_Noleft{
+    border-left:none;
 }
