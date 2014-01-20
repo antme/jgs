@@ -70,13 +70,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 						this.dao.insert(arc);
 
-						scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中", arc, ArchiveFileProperty.FIRST);
-
-						scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中", arc, ArchiveFileProperty.SECOND);
-
-						scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中" + File.separator + "附件", arc, ArchiveFileProperty.FIRST_ATTACH);
-
-						scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中" + File.separator + "附件", arc, ArchiveFileProperty.SECOND_ATTACH);
+						scanArchiveAttach(subFile, arc);
 					}
 
 				}
@@ -86,6 +80,16 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			logger.error("请创建好扫描目录: " + scanPath);
 		}
 	}
+
+	public void scanArchiveAttach(File subFile, Archive arc) {
+	    scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中", arc, ArchiveFileProperty.FIRST);
+
+	    scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中", arc, ArchiveFileProperty.SECOND);
+
+	    scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中" + File.separator + "附件", arc, ArchiveFileProperty.FIRST_ATTACH);
+
+	    scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中" + File.separator + "附件", arc, ArchiveFileProperty.SECOND_ATTACH);
+    }
 
 	public EntityResults<Archive> listArchives(Archive archive) {
 
@@ -226,6 +230,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 			archive.setArchiveStatus(ArchiveStatus.NEW);
 			archive.setArchiveProcessStatus(ProcessStatus.NEW);
+			archive.setFolderCode(archive.getArchiveCode());
 
 			if (EcUtil.isEmpty(archive.getMainFile())) {
 				throw new ResponseException("请上传档案");
@@ -265,6 +270,10 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 				moveFile(archive, fileName, "副卷中附件");
 			}
 		}
+
+		File file = new File(ZcyUtil.getDocumentPath() + File.separator + archive.getArchiveCode());
+		scanArchiveAttach(file, archive);
+
 	}
 
 	public void moveFile(Archive archive, String fileName, String fileType) {

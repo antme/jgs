@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
+import com.zcy.annotation.IntegerColumn;
 import com.zcy.bean.BaseEntity;
 
 @Table(name = Archive.TABLE_NAME)
@@ -97,6 +98,7 @@ public class Archive extends BaseEntity {
 	// 立案日期
 	@Column(name = YEAR)
 	@Expose
+	@IntegerColumn
 	public Integer year;
 
 	// 结案日期

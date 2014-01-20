@@ -39,11 +39,23 @@
     </head>
     <body id="b_height">
 
+<%
+
+    
+    String action = request.getParameter("action");
+    if(action!=null){
+
+%>
         <div id="archive_approve" style="margin:0px 40px;">
             <input type="hidden" id="archiveId"/>
             <button onclick="approveArchive();">批准</button>
             <button onclick="rejectArchive();">拒绝</button>
         </div>
+        
+<%
+    }
+%>        
+        
         
         <div id="archive_info" style="margin:0px 40px;">
             <div class="width100 font18 margintop10">上 海 市 虹 口 区 劳 动 人 事 争 议 仲 裁 委 员 会 </div>
