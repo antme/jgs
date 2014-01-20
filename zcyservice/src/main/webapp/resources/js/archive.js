@@ -3,6 +3,11 @@ function formatterArchiveView(val, row, rowindex) {
 	return '<a href="?p=flexpaper/simple_document&id=' + row.id + '"><img height="40" width="40" src="/resources/images/print-preview.png"></img></a>';
 }
 
+function formatterArchiveApproveView(val, row, rowindex) {
+	
+	return '<a href="?p=flexpaper/simple_document&action=approve&id=' + row.id + '"><button style="cursor:pointer">审核</button></a>';
+}
+
 function formatterArchiveEidt(val, row, rowindex){
 	return '<span class="span_style"><button class="table_eidt" onclick=getarchiveWindow("'+ row.id+'");></button></span><span class="span_style" style="margin-left:20px;"><button class="table_delect" onclick=deletarchiveWindow("'+ row.id+'");>&nbsp;</button></span>';
 }
@@ -10,7 +15,53 @@ function formatterRecordEidt(val, row, rowindex){
 	return '<button class="table_eidt" onclick=getrecordWindow("'+ row.id+'");>&nbsp;</button>';
 }
 
-$(document).ready(function(){
+
+function formatterArchiveStatus(val, row, rowindex) {
+	
+	if(val == "ARCHIVED"){
+		return "已归档";
+	}
+	
+	return "未归档";
+	
+}
+
+function formatterArchiveProcessStatus(val, row, rowindex) {
+	
+	if(val == "DRAFT"){
+		return "草稿";
+	}else if(val == "NEW"){
+		return "待审核";
+	}else if(val == "APPROVED"){
+		return "审核通过";
+	}else if(val == "REJECTED"){
+		return "审核拒绝";
+	}else if(val == "DESTROYING"){
+		return "销毁审核中";
+	}else if(val == "DESTROYED"){
+		return "已销毁";
+	}
+	
+	return "扫描导入";
+	
+}
+
+function approveArchive(){
+	 postAjaxRequest("/ecs/archive/approve.do", {id:id}, function(data){		 
+		 window.location.href="index.jsp?p=web/archive/archiveapprove";
+		 
+	 });
+}
+
+function rejectArchive(){
+	 postAjaxRequest("/ecs/archive/reject.do", {id:id}, function(data){
+		 window.location.href="index.jsp?p=web/archive/archiveapprove";
+	 });
+}
+
+
+
+function initArchiveManagePage(){
 
 	$("#addarchiveForm").form({
 	      url : '/ecs/archive/add.do',
@@ -38,11 +89,11 @@ $(document).ready(function(){
 	      }else if($("#mainFile").val()=="" || $("#mainFile").val()==null){
 	          $.messager.alert("添加失败","请上传正卷宗！");
 	      }else if($("#mainFilkeAttach").val()=="" || $("#mainFilkeAttach").val()==null){
-	          $.messager.alert("添加失败","请上传正卷宗附件！");
+	         
 	      }else if($("#secondFile").val()=="" || $("#secondFile").val()==null){
-	          $.messager.alert("添加失败","请上传副卷宗！");
+	          
 	      }else if($("#secondFileAttach").val()=="" || $("#secondFileAttach").val()==null){
-	          $.messager.alert("添加失败","请上传副卷宗附件！");
+	         
 	      }else{
 	          $("#addarchiveForm").submit();
 	      }
@@ -51,6 +102,23 @@ $(document).ready(function(){
 	$("#closed").click(function(){
 	      $('#addarchive').window('close');
 	});
+	
+	
+	$("#delerecordForm").form({
+		url : '/ecs/archive/destroy.do',
+		   onSubmit : function() {
+		       return $(this).form('validate');
+		   },
+		   success : function(data) {
+			   $.messager.alert("信息","销毁档案成功！");
+		       $('#delerecord').window('close');
+		       $("#archiveList").datagrid('reload');
+		   }
+	});
+}
+
+
+function initAddBorrowRecordPage(){
 	
 	$("#addrecordForm").form({
 		   url : '/ecs/archive/borrow/add.do',
@@ -78,18 +146,7 @@ $(document).ready(function(){
 		   }
 	});
 	
-	$("#delerecordForm").form({
-		url : '/ecs/archive/destroy.do',
-		   onSubmit : function() {
-		       return $(this).form('validate');
-		   },
-		   success : function(data) {
-			   $.messager.alert("信息","销毁档案成功！");
-		       $('#delerecord').window('close');
-		       $("#archiveList").datagrid('reload');
-		   }
-	});
-});
+}
 
 //档案管理 事件
 function openAddGroupWindow(){
@@ -177,11 +234,6 @@ function getrecordWindow(id){
 
 
 
-
-function searchArchive(){
-	
-	
-	
+function loadReport(){
 	
 }
-

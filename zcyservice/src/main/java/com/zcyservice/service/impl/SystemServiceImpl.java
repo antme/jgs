@@ -111,29 +111,6 @@ public class SystemServiceImpl extends AbstractArchiveService implements ISystem
 		return userData;
 	}
 
-	public void updateUserGroup(User user) {
-		this.dao.updateById(user);
-	}
-
-	public void updateMenuGroup(Menu menu) {
-
-		Menu old = (Menu) this.dao.findByKeyValue(Menu.MENU_ID, menu.getMenuId(), Menu.TABLE_NAME, Menu.class);
-		if (old != null) {
-			old.setGroupId(menu.getGroupId());
-			this.dao.updateById(old);
-		} else {
-			this.dao.insert(menu);
-		}
-	}
-
-	public Menu loadMenuGroup(Menu menu) {
-
-		return (Menu) this.dao.findById(menu.getId(), Menu.TABLE_NAME, Menu.class);
-	}
-
-
-
-
 
 
 	@Override

@@ -82,36 +82,9 @@ public class SystemController extends AbstractController {
 		responseWithData(null, request, response);
 
 	}
-	
-	@RequestMapping("/cfg/user/group/update.do")
-	public void updateUserGroup(HttpServletRequest request, HttpServletResponse response) {
-		User user = (User) parserJsonParameters(request, false, User.class);
-		sys.updateUserGroup(user);
-		responseWithData(null, request, response);
 
-	}
 	
-	@RequestMapping("/cfg/menu/group/update.do")
-	public void updateMenuGroup(HttpServletRequest request, HttpServletResponse response) {
-		Menu menu = (Menu) parserJsonParameters(request, false, Menu.class);
-		sys.updateMenuGroup(menu);
-		responseWithData(null, request, response);
 
-	}
-	
-	@RequestMapping("/cfg/menu/group/load.do")
-	public void loadMenuGroup(HttpServletRequest request, HttpServletResponse response) {
-		Menu menu = (Menu) parserJsonParameters(request, false, Menu.class);
-		responseWithEntity(sys.loadMenuGroup(menu), request, response);
-	}
-	
-	
-	@RequestMapping("/cfg/role/bakend/user/list.do")
-	public void listBackendUsers(HttpServletRequest request, HttpServletResponse response) {
-		
-		responseWithDataPagnation(sys.listBackendUsers(), request, response);
-
-	}
 	
 
 	@RequestMapping("/log/listlog.do")

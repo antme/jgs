@@ -333,6 +333,7 @@ public abstract class AbstractController {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile uploadFile = multipartRequest.getFile("Filedata");
 		String fileName = uploadFile.getOriginalFilename().toLowerCase().trim().replaceAll(" ", "");
+		String attachFile = path + File.separator + fileName;
 
 		InputStream inputStream = null;
 		try {
@@ -342,42 +343,9 @@ public abstract class AbstractController {
 			e.printStackTrace();
 		}
 
+		EcUtil.createFile(attachFile, inputStream);
 
-		BufferedInputStream bis = null;
-		FileOutputStream fos = null;
-		String attachFile = path + File.separator +  fileName;
-
-		try {
-			bis = new BufferedInputStream(inputStream);
-
-			File file = new File(attachFile);
-			File folder = file.getParentFile();
-			if (!folder.exists()) {
-				folder.mkdirs();
-			}
-			fos = new FileOutputStream(file);
-
-			byte[] buf = new byte[1024];
-			int size = 0;
-
-			while ((size = bis.read(buf)) != -1) {
-				fos.write(buf, 0, size);
-			}
-
-			if (bis != null)
-				bis.close();
-
-			if (fos != null)
-				fos.close();
-
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return attachFile;
+		return fileName;
 	}
 
 	public String genRandomRelativePath(String fileName) {

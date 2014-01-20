@@ -1,5 +1,11 @@
 package com.zcy.util;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -123,23 +129,7 @@ public class EcUtil {
 		return result;
 	}
 
-	public static String getRandomNum(int num) {
-		String[] digits = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
-		Random rnum = new Random(new Date().getTime());
 
-		for (int i = 0; i < digits.length; i++) {
-			int index = Math.abs(rnum.nextInt()) % 10;
-			String tmpDigit = digits[index];
-			digits[index] = digits[i];
-			digits[i] = tmpDigit;
-		}
-
-		String returnStr = digits[0];
-		for (int i = 1; i < num; i++) {
-			returnStr = digits[i] + returnStr;
-		}
-		return returnStr;
-	}
 
 	public static String join(String[] array) {
 		return join(array, ",");
@@ -358,13 +348,43 @@ public class EcUtil {
 		return false;
 	}
 	
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		double distance = GetDistance(121.38254370023, 31.239157976918, 121.41725835734, 31.248301067351);
-		System.out.println(distance);
-	}
+
+	public static void createFile(String attachFile, InputStream inputStream) {
+	    BufferedInputStream bis = null;
+		FileOutputStream fos = null;
+
+		try {
+			bis = new BufferedInputStream(inputStream);
+
+			File file = new File(attachFile);
+			File folder = file.getParentFile();
+			if (!folder.exists()) {
+				folder.mkdirs();
+			}
+			fos = new FileOutputStream(file);
+
+			byte[] buf = new byte[1024];
+			int size = 0;
+
+			while ((size = bis.read(buf)) != -1) {
+				fos.write(buf, 0, size);
+			}
+
+			if (bis != null)
+				bis.close();
+
+			if (fos != null)
+				fos.close();
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+
+
 
 }

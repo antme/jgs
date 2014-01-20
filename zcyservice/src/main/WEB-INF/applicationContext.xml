@@ -24,7 +24,18 @@
         </property>
     </bean>
     
-
+    <bean
+        class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetClass" value="com.zcyservice.service.ZcyInitialService" />
+        <property name="targetMethod" value="initSystem"></property>
+        <property name="arguments">
+            <list>
+                <ref bean="dao" />
+                <value>com.zcyservice.controller</value>
+            </list>
+        </property>
+    </bean>
+    
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
 		<property name="interceptors">

@@ -1,7 +1,11 @@
 package com.zcyservice.service.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +22,7 @@ import com.zcy.cfg.CFGManager;
 import com.zcy.dbhelper.DataBaseQueryBuilder;
 import com.zcy.dbhelper.DataBaseQueryOpertion;
 import com.zcy.exception.ResponseException;
+import com.zcy.util.DateUtil;
 import com.zcy.util.EcUtil;
 import com.zcy.util.PdfUtil;
 import com.zcyservice.bean.Archive;
@@ -26,10 +31,13 @@ import com.zcyservice.bean.Archive.ProcessStatus;
 import com.zcyservice.bean.ArchiveBorrowing;
 import com.zcyservice.bean.ArchiveFile;
 import com.zcyservice.bean.ArchiveFile.ArchiveFileProperty;
+import com.zcyservice.bean.vo.ArchiveReport;
 import com.zcyservice.bean.vo.ArchiveTree;
+import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.AbstractArchiveService;
 import com.zcyservice.service.IArchiveService;
 import com.zcyservice.util.ZcyServiceConstants;
+import com.zcyservice.util.ZcyUtil;
 
 @Service(value = "archiveService")
 public class ArchiveServiceImpl extends AbstractArchiveService implements IArchiveService {
@@ -48,21 +56,22 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			for (File subFile : subFiles) {
 
 				if (subFile.isDirectory()) {
-					Archive arc = new Archive();
-					arc.setArchiveCode(subFile.getName());
-					arc.setArchiveStatus(ArchiveStatus.ARCHIVED);
 
-					arc.setArchiveName(subFile.getName());
+					DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+					query.and(Archive.FOLDER_CODE, subFile.getName());
 
-					this.dao.insert(arc);
+					if (!this.dao.exists(query)) {
+						Archive arc = new Archive();
+						arc.setArchiveCode(subFile.getName());
+						arc.setFolderCode(subFile.getName());
+						arc.setArchiveStatus(ArchiveStatus.ARCHIVED);
+						arc.setYear(Calendar.getInstance().get(Calendar.YEAR));
+//						arc.setArchiveName(subFile.getName());
 
-					scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中", arc, ArchiveFileProperty.FIRST);
+						this.dao.insert(arc);
 
-					scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中", arc, ArchiveFileProperty.SECOND);
-
-					scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中" + File.separator + "附件", arc, ArchiveFileProperty.FIRST_ATTACH);
-
-					scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中" + File.separator + "附件", arc, ArchiveFileProperty.SECOND_ATTACH);
+						scanArchiveAttach(subFile, arc);
+					}
 
 				}
 			}
@@ -71,6 +80,16 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			logger.error("请创建好扫描目录: " + scanPath);
 		}
 	}
+
+	public void scanArchiveAttach(File subFile, Archive arc) {
+	    scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中", arc, ArchiveFileProperty.FIRST);
+
+	    scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中", arc, ArchiveFileProperty.SECOND);
+
+	    scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中" + File.separator + "附件", arc, ArchiveFileProperty.FIRST_ATTACH);
+
+	    scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中" + File.separator + "附件", arc, ArchiveFileProperty.SECOND_ATTACH);
+    }
 
 	public EntityResults<Archive> listArchives(Archive archive) {
 
@@ -117,16 +136,16 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		}
 
 		if (EcUtil.isValid(archive.getKeyword())) {
-			
+
 			DataBaseQueryBuilder childKeyWordQuery = new DataBaseQueryBuilder(Archive.TABLE_NAME);
 			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_APPLICANT, archive.getKeyword());
 			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_JUDGE, archive.getKeyword());
 			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_NAME, archive.getKeyword());
 			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_CODE, archive.getKeyword());
 			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_OPPOSITE_APPLICANT, archive.getKeyword());
-			
-			//FIXME: 全文搜索 
-			
+
+			// FIXME: 全文搜索
+
 			childQuery.and(childKeyWordQuery);
 
 		}
@@ -208,9 +227,65 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		if (EcUtil.isValid(archive.getId())) {
 			this.dao.updateById(archive);
 		} else {
+
 			archive.setArchiveStatus(ArchiveStatus.NEW);
 			archive.setArchiveProcessStatus(ProcessStatus.NEW);
-			this.dao.insert(archive);
+			archive.setFolderCode(archive.getArchiveCode());
+
+			if (EcUtil.isEmpty(archive.getMainFile())) {
+				throw new ResponseException("请上传档案");
+			}
+						
+			if(EcUtil.isEmpty(archive.getYear())){				
+				Calendar c = Calendar.getInstance();
+				c.setTime(archive.getArchiveOpenDate());
+				archive.setYear(c.get(Calendar.YEAR));
+			}
+
+			archive = (Archive) dao.insert(archive);
+			initArchiveFiles(archive);
+		}
+	}
+
+	private void initArchiveFiles(Archive archive) {
+
+		if (EcUtil.isValid(archive.getMainFile())) {
+			moveFile(archive, archive.getMainFile(), "正卷中");
+		}
+
+		if (EcUtil.isValid(archive.getMainFilkeAttach())) {
+			String files[] = archive.getMainFilkeAttach().split(",");
+			for (String fileName : files) {
+				moveFile(archive, fileName, "正卷中附件");
+			}
+		}
+
+		if (EcUtil.isValid(archive.getSecondFile())) {
+			moveFile(archive, archive.getSecondFile(), "副卷中");
+		}
+
+		if (EcUtil.isValid(archive.getSecondFileAttach())) {
+			String files[] = archive.getSecondFileAttach().split(",");
+			for (String fileName : files) {
+				moveFile(archive, fileName, "副卷中附件");
+			}
+		}
+
+		File file = new File(ZcyUtil.getDocumentPath() + File.separator + archive.getArchiveCode());
+		scanArchiveAttach(file, archive);
+
+	}
+
+	public void moveFile(Archive archive, String fileName, String fileType) {
+		String path = ZcyUtil.getUploadPath() + File.separator + fileName;
+		try {
+			File file = new File(path);
+			InputStream in = new FileInputStream(file);
+			String targetFule = ZcyUtil.getDocumentPath() + File.separator + archive.getArchiveCode() + File.separator + fileType + File.separator + file.getName();
+			EcUtil.createFile(targetFule, in);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -246,6 +321,17 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		archive.setArchiveProcessStatus(ProcessStatus.DESTROYING);
 
 		this.dao.updateById(archive);
+
+	}
+	
+	
+	public List<ArchiveReport> countArchive(SearchVo searchvo) {
+
+		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		query.distinct(Archive.YEAR);
+		List<ArchiveReport> reports = this.dao.distinctQuery(query, ArchiveReport.class);
+
+		return reports;
 
 	}
 
@@ -414,6 +500,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 						if (EcUtil.isEmpty(archive.getArchiveApplicant())) {
 
 							getDocumentInfo(subFile.getAbsolutePath(), archive);
+							this.dao.updateById(archive);
 
 						}
 					}
@@ -426,7 +513,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 	}
 
-	private void getDocumentInfo(String absolutePath, Archive archive) {
+	public void getDocumentInfo(String absolutePath, Archive archive) {
 
 		List<String> lines = PdfUtil.getLines(absolutePath, 0, 1);
 		String code = null;
@@ -465,13 +552,25 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 				dateType = "号数";
 			} else if (line.contains("年") && line.contains("月") && line.contains("日")) {
 
+				Date dateTime = DateUtil.getDateTime(line.trim().replaceAll(" ", ""));
+				Calendar c = Calendar.getInstance();
+				c.setTime(dateTime);
+				archive.setYear(c.get(Calendar.YEAR));
 				if (dateType == "立案") {
 
 					System.out.println(line);
+					archive.setArchiveOpenDate(dateTime);
+
 				} else if (dateType == "结案") {
+
 					System.out.println(line);
+					archive.setArchiveCloseDate(dateTime);
+
 				} else if (dateType == "归档") {
+
 					System.out.println(line);
+					archive.setArchiveDate(dateTime);
+
 				}
 
 				dateType = "";
@@ -481,6 +580,15 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			}
 
 		}
+
+		archive.setArchiveCode(code);
+		archive.setArchiveName(reason);
+		archive.setArchiveResult(results);
+		archive.setArchiveApplicant(applicant);
+		archive.setArchiveOppositeApplicant(applicantBad);
+		archive.setArchiveThirdPerson(thirdApplicant);
+		archive.setArchiveJudge(judgePerson);
+
 
 	}
 }

@@ -7,10 +7,6 @@
 	"id" : "adm_sys_settings",
 	"indexPage" : "web/archive/archivereport"
 },{
-	"text" : "系统监控",
-	"id" : "adm_sys_monitor",
-	"indexPage" : "web/archive/archivereport"
-},{
 	"text" : "权限管理",
 	"id" : "adm_role_manage",
 	"indexPage" : "web/archive/archivereport"

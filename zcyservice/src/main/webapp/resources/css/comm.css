@@ -128,3 +128,7 @@ ol, ul {
 	text-decoration:underline;
 	cursor:pointer;
 }
+
+.access{
+	display:none;
+}

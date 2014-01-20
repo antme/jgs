@@ -16,6 +16,7 @@ import com.zcyservice.bean.Archive;
 import com.zcyservice.service.IArchiveService;
 import com.zcyservice.service.ISystemService;
 import com.zcyservice.service.IUserService;
+import com.zcyservice.service.ZcyInitialService;
 import com.zcyservice.service.impl.ArchiveServiceImpl;
 import com.zcyservice.service.impl.SystemServiceImpl;
 import com.zcyservice.service.impl.UserServiceImpl;
@@ -67,6 +68,7 @@ public class BaseTestCase extends TestCase {
 //		file = file.substring(scanPath.length() +1);
 //		System.out.println(file);
 		
+		String file = ZcyInitialService.class.getResource("/sigar/.sigar_shellrc").getFile();
 		
 		for(int i =0; i< 100; i++){
 			

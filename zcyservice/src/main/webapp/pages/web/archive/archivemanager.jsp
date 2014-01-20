@@ -33,8 +33,8 @@
                     <tr>
                         <th align="center"  field="archiveCode"  width="100"  sortable="false">案号</th>
                         <th align="center"  field="archiveName"  width="100"  sortable="false">案由</th>
-                        <th align="center"  field="archiveStatus" width="100" sortable="false" >档案状态</th>
-                        <th align="center"  field="archiveProcessStatus" width="100" sortable="false" >档案审核状态</th>
+                        <th align="center"  field="archiveStatus" formatter="formatterArchiveStatus"  width="100" sortable="false" >档案状态</th>
+                        <th align="center"  field="archiveProcessStatus" formatter="formatterArchiveProcessStatus" width="100" sortable="false" >审核状态</th>
                         
                         <th align="center"  field="createdOn" width="120" sortable="false" >档案归档时间</th>
                         <th align="center"  field="updatedOn" width="120" sortable="false" >档案修改时间</th>
@@ -49,6 +49,7 @@
        <div class="easyui-tabs" style="height:auto;">
             <div title="基本信息" style="padding: 10px">
                 <form action="" id="addarchiveForm" method="post" novalidate>
+                    <input  type="hidden" name="year" id="year"/>
                     <div class="width100 font18 margintop10">上 海 市 虹 口 区 劳 动 人 事 争 议 仲 裁 委 员 会 </div>
                     <div class="width100 font24 fontweight margintop20">仲 裁 卷 宗</div>
                     <div class="ac_div">
@@ -227,5 +228,12 @@
              </div>
     </div>
   </div>
+  
+  <script type="text/javascript">
+     $(document).ready(function(){
+	    initArchiveManagePage();
+	 });	  
+  </script>
+
 </body>
 </html>

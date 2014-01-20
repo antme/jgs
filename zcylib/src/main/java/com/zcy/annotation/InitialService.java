@@ -23,7 +23,7 @@ public class InitialService {
 	public static final Set<String> loginPath = new HashSet<String>();
 	public static final Map<String, String> rolesValidationMap = new HashMap<String, String>();
 	private static final Logger logger = LogManager.getLogger(InitialService.class);
-    
+
 	public static final String ADMIN_USER_NAME = "admin";
 
 	/**
@@ -38,6 +38,7 @@ public class InitialService {
 		initRoleItems(dao, packageName);
 		setLoginPathValidation(packageName);
 		createSystemDefaultGroups(dao);
+
 
 	}
 
@@ -116,7 +117,6 @@ public class InitialService {
 						if (!roleIds.contains(rv.permissionID())) {
 							roleIds.add(rv.permissionID());
 						}
-						
 
 						String validPath = path + mapping.value()[0];
 						rolesValidationMap.put(validPath, rv.permissionID());

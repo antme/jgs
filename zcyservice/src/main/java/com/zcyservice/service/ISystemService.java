@@ -26,11 +26,6 @@ public interface ISystemService {
 
 	public EntityResults<User> listBackendUsers();
 
-	public void updateUserGroup(User user);
-
-	public void updateMenuGroup(Menu menu);
-
-	public Menu loadMenuGroup(Menu menu);
 
 
 	public EntityResults<Log> listLogs(SearchVo search);

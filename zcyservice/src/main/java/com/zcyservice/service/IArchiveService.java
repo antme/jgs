@@ -1,11 +1,13 @@
 package com.zcyservice.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.zcy.bean.BaseEntity;
 import com.zcy.bean.EntityResults;
 import com.zcyservice.bean.Archive;
 import com.zcyservice.bean.ArchiveBorrowing;
+import com.zcyservice.bean.vo.ArchiveReport;
 import com.zcyservice.bean.vo.SearchVo;
 
 public interface IArchiveService {
@@ -34,6 +36,10 @@ public interface IArchiveService {
 	public BaseEntity getArchiveBorrowRecord(ArchiveBorrowing archive);
 
 	public void destroyArchive(Archive archive);
+	
+	public void getDocumentInfo(String absolutePath, Archive archive);
+
+	public List<ArchiveReport> countArchive(SearchVo searchvo);
 	
 	
 }

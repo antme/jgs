@@ -30,9 +30,7 @@ public interface IUserService{
 
 	public User loadUserInfo(User user);
 	
-	public void lockUserById(BaseEntity be);
-	
-	public void unlockUserById(BaseEntity be);
+
 	
 	public void adminAddUserAsUserRole(User user);
 	

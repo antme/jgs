@@ -2,7 +2,7 @@ var swfu,swfu1,swfu2,swf3;
             window.onload = function () {
                 swfu = new SWFUpload({
                     upload_url: "/ecs/archive/upload.do",
-                    post_params: {"archiveUploadKey" : "archiveUploadKey"},
+                    post_params: {"archiveUploadKey" : "first"},
                     
                     // File Upload Settings
                     file_size_limit : "10 MB",  // 1000MB
@@ -42,7 +42,7 @@ var swfu,swfu1,swfu2,swf3;
                 });
                 swfu1 = new SWFUpload({
                 	upload_url: "/ecs/archive/upload.do",
-                    post_params: {"archiveUploadKey" : "archiveUploadKey"},
+                    post_params: {"archiveUploadKey" : "firstAttach"},
                     
                     // File Upload Settings
                     file_size_limit : "10 MB",  // 1000MB
@@ -82,7 +82,7 @@ var swfu,swfu1,swfu2,swf3;
                 });
                 swfu2 = new SWFUpload({
                 	upload_url: "/ecs/archive/upload.do",
-                    post_params: {"archiveUploadKey" : "archiveUploadKey"},
+                    post_params: {"archiveUploadKey" : "second"},
                     
                     // File Upload Settings
                     file_size_limit : "10 MB",  // 1000MB
@@ -122,7 +122,7 @@ var swfu,swfu1,swfu2,swf3;
                 });
                 swfu3 = new SWFUpload({
                 	upload_url: "/ecs/archive/upload.do",
-                    post_params: {"archiveUploadKey" : "archiveUploadKey"},
+                    post_params: {"archiveUploadKey" : "secondAttach"},
                     
                     // File Upload Settings
                     file_size_limit : "10 MB",  // 1000MB
