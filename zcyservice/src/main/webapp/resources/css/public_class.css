@@ -137,6 +137,18 @@
     text-algin:center;
     line-height:28px;
 }
+
+.btn_add_two{
+    width:87px;
+    height:28px;
+    background: url("../images/add_btn_two.png") no-repeat;
+    color:#fff;
+    cursor:pointer;
+    border:0;
+    text-algin:center;
+    line-height:28px;
+}
+
 .width100{width:100%;text-align: center;}
 .font16{
 	font-size:16px;
@@ -217,7 +229,7 @@
 	border-left:1px solid #cdcdcd;
 }
 .span_width{
-    width:235px;
+    width:240px;
     height:30px;
     padding-top:5px;
     padding-bottom:5px;

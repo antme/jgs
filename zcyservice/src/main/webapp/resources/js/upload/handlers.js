@@ -144,19 +144,15 @@ function fileQueueError3(file, errorCode, message) {
  */
 function fileQueued(file){
 	addReadyFileInfo(file.id,file.name,"成功加载到上传队列");
-	document.getElementById("infoTable").style.display="block";
 }
 function fileQueued1(file){
 	addReadyFileInfo1(file.id,file.name,"成功加载到上传队列");
-	document.getElementById("infoTable1").style.display="block";
 }
 function fileQueued2(file){
 	addReadyFileInfo2(file.id,file.name,"成功加载到上传队列");
-	document.getElementById("infoTable2").style.display="block";
 }
 function fileQueued3(file){
 	addReadyFileInfo3(file.id,file.name,"成功加载到上传队列");
-	document.getElementById("infoTable3").style.display="block";
 }
 
 function fileDialogComplete(numFilesSelected, numFilesQueued) {

@@ -18,14 +18,58 @@
    
 
     <div class="line_clear"></div>
-    
- 
+      <div id="change_btn" style="padding: 10px"><input type="radio" name="archive" checked/><label>正卷宗</label>&nbsp;<input name="archive" type="radio" /><label>副卷宗</label></div>
+
+      <div title="附件上传" style="padding: 10px">
+               <div id="fj">
+                <div class="ac_div zjz" >
+                    <span class="span_style"><label class="ac_title2 ">卷宗</label></span>
+                    <span class="span_style span_left_border">
+                              <div style="display: inline; ">
+                              <span id="spanButtonPlaceholder"></span>
+                              </div>
+                             <div id="divFileProgressContainer" style="display:none;"></div>
+                             <div id="thumbnails" style="border: solid 1px #7FAAFF; background-color: #C5D9FF;min-height:30px;width:530px;">
+                             <table id="infoTable" border="0" width="530" style="padding: 2px;margin-top:8px;">
+                             </table>
+                             </div>
+                             <div style="padding-top:5px;">
+                                 <input id="btnUpload" type="button" value="上传" class="btn_add"
+                                 onclick="startUploadFile();" class="btn3_mouseout" />
+                                 <input id="btnCancel" type="button" value="取消" class="btn_add"
+                                 onclick="cancelUpload();" disabled="disabled" class="btn3_mouseout" />
+                             
+                             </div>
+                    </span>
+                </div>
+                <div class="ac_div zjz">
+                    <span class="span_style"><label class="ac_title2 ">卷宗附件</label></span>
+                    <span class="span_style span_left_border">
+                              <div style="display: inline;">
+                              <span id="archiveattachment"></span>
+                              
+                             </div>
+                             <div id="divFileProgressContainer1" style="display:none;"></div>
+                             <div id="thumbnails1" style="border: solid 1px #7FAAFF; background-color: #C5D9FF;min-height:30px;width:530px;">
+                             <table id="infoTable1" border="0" width="530" style=" padding: 2px;margin-top:8px;">
+                             </table>
+                             </div>
+                             <div style="padding-top:5px;">
+                                  <input id="btnUpload1" type="button" value="上传" class="btn_add"
+                                 onclick="startUploadFile1();" class="btn3_mouseout" />
+                                <input id="btnCancel1" type="button" value="取消" class="btn_add"
+                                 onclick="cancelUpload1();" disabled="disabled" class="btn3_mouseout" />
+                             </div>
+                    </span>
+                </div>
+                
+                
+                </div>
+            </div>
 
             <div title="基本信息" style="padding: 10px">
                 <form action="" id="addarchiveForm" method="post" novalidate>
                     <input  type="hidden" name="year" id="year"/>
-                    <div class="width100 font18 margintop10">上 海 市 虹 口 区 劳 动 人 事 争 议 仲 裁 委 员 会 </div>
-                    <div class="width100 font24 fontweight margintop20">仲 裁 卷 宗</div>
                     <div class="ac_div">
                     <span class="span_style"><label class="ac_title">卷宗编号</label></span>
                     <span class="span_style border-left span_width"><input class="ac_input2 easyui-validatebox" type="text" name="archiveCode" required missingMessage="请输入卷宗编号"/></span>
@@ -83,102 +127,7 @@
                     <input id="secondFileAttach" type="hidden" name="secondFileAttach"/>
                  </form>
              </div>
-            <div title="附件上传" style="padding: 10px">
-               <div id="fj">
-                <div class="ac_div">
-                    <span class="span_style"><label class="ac_title2 ">正卷宗</label></span>
-                    <span class="span_style span_left_border">
-                              <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 5px; *+padding:2px; _padding:2px;">
-                              <span id="spanButtonPlaceholder"></span>
-                              <input id="btnUpload" type="button" value="上  传" style="width:60px;"
-                                 onclick="startUploadFile();" class="btn3_mouseout" onMouseUp="this.className='btn3_mouseup'"
-                                 onmousedown="this.className='btn3_mousedown'"
-                                 onMouseOver="this.className='btn3_mouseover'"
-                                 onmouseout="this.className='btn3_mouseout'"/>
-                             <input id="btnCancel" type="button" value="取消所有上传" style="width:120px;"
-                                 onclick="cancelUpload();" disabled="disabled" class="btn3_mouseout" onMouseUp="this.className='btn3_mouseup'"
-                                 onmousedown="this.className='btn3_mousedown'"
-                                 onMouseOver="this.className='btn3_mouseover'"
-                                 onmouseout="this.className='btn3_mouseout'"/>
-                             </div>
-                             <div id="divFileProgressContainer"></div>
-                             <div id="thumbnails">
-                             <table id="infoTable" border="0" width="530" style="display: none; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px;margin-top:8px;">
-                             </table>
-                             </div>
-                    </span>
-                </div>
-                <div class="ac_div">
-                    <span class="span_style"><label class="ac_title2 ">正卷宗附件</label></span>
-                    <span class="span_style span_left_border">
-                              <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 5px; *+padding:2px; _padding:2px;">
-                              <span id="archiveattachment"></span>
-                              <input id="btnUpload1" type="button" value="上  传" style="width:60px;"
-                                 onclick="startUploadFile1();" class="btn3_mouseout" onMouseUp="this.className='btn3_mouseup'"
-                                 onmousedown="this.className='btn3_mousedown'"
-                                 onMouseOver="this.className='btn3_mouseover'"
-                                 onmouseout="this.className='btn3_mouseout'"/>
-                             <input id="btnCancel1" type="button" value="取消所有上传" style="width:120px;"
-                                 onclick="cancelUpload1();" disabled="disabled" class="btn3_mouseout" onMouseUp="this.className='btn3_mouseup'"
-                                 onmousedown="this.className='btn3_mousedown'"
-                                 onMouseOver="this.className='btn3_mouseover'"
-                                 onmouseout="this.className='btn3_mouseout'"/>
-                             </div>
-                             <div id="divFileProgressContainer1"></div>
-                             <div id="thumbnails1">
-                             <table id="infoTable1" border="0" width="530" style="display: none; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px;margin-top:8px;">
-                             </table>
-                             </div>
-                    </span>
-                </div>
-                <div class="ac_div">
-                    <span class="span_style "><label class="ac_title2 ">副卷宗</label></span>
-                    <span class="span_style span_left_border">
-                              <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 5px; *+padding:2px; _padding:2px;">
-                              <span id="archiveattachment2"></span>
-                              <input id="btnUpload2" type="button" value="上  传" style="width:60px;"
-                                 onclick="startUploadFile2();" class="btn3_mouseout" onMouseUp="this.className='btn3_mouseup'"
-                                 onmousedown="this.className='btn3_mousedown'"
-                                 onMouseOver="this.className='btn3_mouseover'"
-                                 onmouseout="this.className='btn3_mouseout'"/>
-                             <input id="btnCancel2" type="button" value="取消所有上传" style="width:120px;"
-                                 onclick="cancelUpload2();" disabled="disabled" class="btn3_mouseout" onMouseUp="this.className='btn3_mouseup'"
-                                 onmousedown="this.className='btn3_mousedown'"
-                                 onMouseOver="this.className='btn3_mouseover'"
-                                 onmouseout="this.className='btn3_mouseout'"/>
-                             </div>
-                             <div id="divFileProgressContainer2"></div>
-                             <div id="thumbnails2">
-                             <table id="infoTable2" border="0" width="530" style="display: none; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px;margin-top:8px;">
-                             </table>
-                             </div>
-                    </span>
-                </div>
-                <div class="ac_div">
-                    <span class="span_style "><label class="ac_title2 ">副卷宗附件</label></span>
-                    <span class="span_style span_left_border">
-                              <div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 5px; *+padding:2px; _padding:2px;">
-                              <span id="archiveattachment3"></span>
-                              <input id="btnUpload3" type="button" value="上  传" style="width:60px;"
-                                 onclick="startUploadFile3();" class="btn3_mouseout" onMouseUp="this.className='btn3_mouseup'"
-                                 onmousedown="this.className='btn3_mousedown'"
-                                 onMouseOver="this.className='btn3_mouseover'"
-                                 onmouseout="this.className='btn3_mouseout'"/>
-                             <input id="btnCancel3" type="button" value="取消所有上传" style="width:120px;"
-                                 onclick="cancelUpload3();" disabled="disabled" class="btn3_mouseout" onMouseUp="this.className='btn3_mouseup'"
-                                 onmousedown="this.className='btn3_mousedown'"
-                                 onMouseOver="this.className='btn3_mouseover'"
-                                 onmouseout="this.className='btn3_mouseout'"/>
-                             </div>
-                             <div id="divFileProgressContainer3"></div>
-                             <div id="thumbnails3">
-                             <table id="infoTable3" border="0" width="530" style="display: none; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px;margin-top:8px;">
-                             </table>
-                             </div>
-                    </span>
-                </div>
-                </div>
-            </div>
+           
        
         <div style="text-align:center;padding:5px;">
              <button id="submited" class="btn_add">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
