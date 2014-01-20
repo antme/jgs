@@ -180,7 +180,6 @@
                 if(links[index].href && pagePath && pagePath!=null && links[index].href.endWith(pagePath)){
                     var $a = $(links[index].parentNode);
                     var a_herf=$(links[index]).attr('href');
-                    console.log($(links[index]).text());
                     pagePath=String(pagePath);
                     if($(links[index]).text()=="首页" || $(links[index]).text()=="档案管理" || $(links[index]).text()=="档案审核" || $(links[index]).text()=="系统设置"
                     || $(links[index]).text()=="借阅管理" || $(links[index]).text()=="档案查询" || $(links[index]).text()=="数据统计"){                	
