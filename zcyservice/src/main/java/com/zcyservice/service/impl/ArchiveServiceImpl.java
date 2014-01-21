@@ -56,7 +56,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			for (File subFile : subFiles) {
 
 				if (subFile.isDirectory()) {
-
+					
 					scanArchiveAttach(subFile);
 
 				}
@@ -224,7 +224,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 	}
 
-	public void addArchive(Archive archive) {
+	public Archive addArchive(Archive archive) {
 
 		if (EcUtil.isValid(archive.getId())) {
 			this.dao.updateById(archive);
@@ -247,6 +247,8 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			archive = (Archive) dao.insert(archive);
 			initArchiveFiles(archive);
 		}
+		
+		return archive;
 	}
 
 	private void initArchiveFiles(Archive archive) {

@@ -19,6 +19,10 @@
 	"id" : "adm_archive_approve",
 	"indexPage" : "web/archive/archivereport"
 },{
+    "text" : "档案销毁审核",
+    "id" : "adm_archive_destory_approve",
+    "indexPage" : "web/archive/archivereport"
+},{
 	"text" : "调阅管理",
 	"id" : "adm_archive_borrow_manager",
 	"indexPage" : "web/archive/archivereport"

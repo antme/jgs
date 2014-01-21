@@ -19,7 +19,7 @@ public interface IArchiveService {
 
 	public Map<String, Object> listArchiveFiles(Archive archive);
 
-	public void addArchive(Archive archive);
+	public Archive addArchive(Archive archive);
 
 	public EntityResults<Archive> listNeddApproveArchives(Archive archive);
 

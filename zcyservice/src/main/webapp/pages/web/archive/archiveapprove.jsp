@@ -28,9 +28,7 @@
 
     <%@ include file="/pages/web/archive/searcharchive.jsp"%>
     
-    <div style="margin-left:40px;">
-        <button class="btn_add" onclick="openApproveArchivePage();">审核</button>
-    </div>
+
     <div class="line_clear"></div>
     <div style="margin-left:40px;">
             <table id="archiveList"  class="easyui-datagrid_tf" url="/ecs/archive/listNew.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">

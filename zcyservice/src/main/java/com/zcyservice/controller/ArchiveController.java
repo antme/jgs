@@ -56,8 +56,7 @@ public class ArchiveController extends AbstractController {
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void addArchive(HttpServletRequest request, HttpServletResponse response) {
 		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
-		archiveService.addArchive(archive);
-		responseWithData(null, request, response);
+		responseWithEntity(archiveService.addArchive(archive), request, response);
 	}
 	
 	

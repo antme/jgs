@@ -52,7 +52,12 @@
            </li>
            <li class="menu_cline access" access="adm_archive_approve"></li>
            <li  class="access" access="adm_archive_approve">
-              <a href="?p=web/archive/archiveapprove">档案审核</a>          
+              <a href="?p=web/archive/archiveapprove">归档审核</a>          
+           </li>
+           
+           <li class="menu_cline access" access="adm_archive_destory_approve"></li>
+           <li  class="access" access="adm_archive_destory_approve">
+              <a href="?p=web/archive/archivedestoryapprove">销毁审核</a>          
            </li>
            
            <li class="menu_cline" access="adm_archive_borrow_manager"></li>
@@ -181,7 +186,7 @@
                     var $a = $(links[index].parentNode);
                     var a_herf=$(links[index]).attr('href');
                     pagePath=String(pagePath);
-                    if($(links[index]).text()=="首页" || $(links[index]).text()=="档案管理" || $(links[index]).text()=="档案审核" || $(links[index]).text()=="系统设置"
+                    if($(links[index]).text()=="首页" || $(links[index]).text()=="档案管理" || $(links[index]).text()=="归档审核" ||  $(links[index]).text()=="销毁审核" || $(links[index]).text()=="系统设置"
                     || $(links[index]).text()=="借阅管理" || $(links[index]).text()=="档案查询" || $(links[index]).text()=="数据统计"){                	
                     	$(".index_menu a").removeClass('menu_mouse_css');
                         $(links[index]).addClass('menu_mouse_css');

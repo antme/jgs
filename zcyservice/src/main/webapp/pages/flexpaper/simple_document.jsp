@@ -116,10 +116,7 @@
 		
 		 	<ul class="easyui-tree" id="firstTrees" data-options="animate:true, state:'closed'"></ul>
 			<ul class="easyui-tree" id="firstAttachTrees" data-options="animate:true, state:'closed'"></ul>
-			
-			
-			<ul class="easyui-tree" id="secondTrees" data-options="animate:true, state:'closed'"></ul>
-			<ul class="easyui-tree" id="secondAttachTrees" data-options="animate:true, state:'closed'"></ul>
+
 		
 		</div>
 		<div class="watermark11"></div>

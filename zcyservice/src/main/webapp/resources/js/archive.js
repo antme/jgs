@@ -86,9 +86,9 @@ function initArchiveManagePage(){
 			   }else{
 				   $.messager.alert("编辑档案","编辑档案成功！");
 			   }
-	          
-	          $('#addarchive').window('close');
-	          $("#archiveList").datagrid('reload');
+	    	  
+	    	  $("#id").val(data.id);
+	
 	      }
 	});
 	$("#submited").click(function(){
@@ -101,10 +101,7 @@ function initArchiveManagePage(){
 	      }
 	      
 	});
-	$("#closed").click(function(){
-	      $('#addarchive').window('close');
-	});
-	
+
 	
 	$("#delerecordForm").form({
 		url : '/ecs/archive/destroy.do',
@@ -112,7 +109,7 @@ function initArchiveManagePage(){
 		       return $(this).form('validate');
 		   },
 		   success : function(data) {
-			   $.messager.alert("信息","销毁档案成功！");
+			   $.messager.alert("信息","提交档案销毁申请成功，请耐心等待审核！");
 		       $('#delerecord').window('close');
 		       $("#archiveList").datagrid('reload');
 		   }

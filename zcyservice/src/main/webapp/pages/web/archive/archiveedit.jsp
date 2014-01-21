@@ -18,7 +18,10 @@
    
 
     <div class="line_clear"></div>
-      <div id="change_btn" style="padding: 10px"><input type="radio" name="archive" checked/><label>正卷宗</label>&nbsp;<input name="archive" type="radio" /><label>副卷宗</label></div>
+    
+   <div title="基本信息" style="padding: 10px">
+     <form action="" id="addarchiveForm" method="post" novalidate>
+      <div id="change_btn" style="padding: 10px"><input type="radio" name="archiveType" value="MAIN" checked/><label>正卷宗</label>&nbsp;<input name="archiveType" value="SECOND" type="radio" /><label>副卷宗</label></div>
 
       <div title="附件上传" style="padding: 10px">
                <div id="fj">
@@ -67,8 +70,7 @@
                 </div>
             </div>
 
-            <div title="基本信息" style="padding: 10px">
-                <form action="" id="addarchiveForm" method="post" novalidate>
+                    <input  type="hidden" name="id" id="id"/>
                     <input  type="hidden" name="year" id="year"/>
                     <div class="ac_div">
                     <span class="span_style"><label class="ac_title">卷宗编号</label></span>
@@ -76,7 +78,7 @@
                     </div>  
                     <div class="ac_div">
                     <span class="span_style"><label class="ac_title">案&nbsp;&nbsp;&nbsp;&nbsp;由</label></span>
-                    <span class="span_style border-left"><input class="ac_input easyui-validatebox" type="text" name="archiveName" required missingMessage="请输入卷案由"/></span>
+                    <span class="span_style border-left"><input class="ac_input easyui-validatebox" type="text" name="archiveName" required missingMessage="请输入案由"/></span>
                     </div>
                     <div class="ac_div">
                     <span class="span_style"><label class="ac_title">处理结果</label></span>
@@ -131,7 +133,7 @@
        
         <div style="text-align:center;padding:5px;">
              <button id="submited" class="btn_add">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-             <a href="?p=web/archive/archivemanager"><button class="btn_add">取消</button></a>
+             <a href="?p=web/archive/archivemanager"><button class="btn_add">返回</button></a>
         </div>
         
 <%
