@@ -38,35 +38,14 @@
             <table id="archiveListYear"  class="easyui-datagrid_tf" url="/ecs/archive/count.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
                 <thead>
                     <tr>
-                        <th align="center"  field="archiveCode"  width="100"  sortable="false">年</th>
+                        <th align="center"  field="archiveCode"  width="100"  sortable="false">统计纬度</th>                    
                         <th align="center"  field="archiveName"  width="150"  sortable="false">卷宗数</th>
                     </tr>
                 </thead>
             </table>
     </div>
     
-   <div style="margin-left:40px;">
-            <table id="archiveListApplicant"  class="easyui-datagrid_tf" url="/ecs/archive/count.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
-                <thead>
-                    <tr>
-                        <th align="center"  field="archiveCode"  width="100"  sortable="false">申请人</th>
-                        <th align="center"  field="archiveName"  width="150"  sortable="false">卷宗数</th>
-                    </tr>
-                </thead>
-            </table>
-    </div>    
-    
-   <div style="margin-left:40px;">
-            <table id="archiveListOptApplicant"  class="easyui-datagrid_tf" url="/ecs/archive/count.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
-                <thead>
-                    <tr>
-                        <th align="center"  field="archiveCode"  width="100"  sortable="false">被申请人</th>
-                        <th align="center"  field="archiveName"  width="150"  sortable="false">卷宗数</th>
-                    </tr>
-                </thead>
-            </table>
-    </div>
-    
+
         
    <script type="text/javascript">
  

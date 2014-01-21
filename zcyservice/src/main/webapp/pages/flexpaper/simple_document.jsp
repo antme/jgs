@@ -167,7 +167,7 @@
 						 ProgressiveLoading : true,
 						 MinZoomSize : 0.5,
 						 MaxZoomSize : 8,
-						 StartAtPage : 2,
+						 StartAtPage : startPage,
 						 SearchMatchAll : true,
 						 RenderingOrder : RenderingOrder,
 						 ViewModeToolsVisible : true,
