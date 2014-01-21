@@ -176,7 +176,7 @@
 						 CursorToolsVisible : true,
 						 SearchToolsVisible : true,
 						 PrintEnabled : true,
-						 PrintVisible:true,
+						 PrintVisible : true,
 						 DocSizeQueryService : "?p=flexpaper/swfsize&doc=" + pdfStartDocumentFile,
 						 jsDirectory : jsDirectory,
 						 localeDirectory : localeDirectory,
