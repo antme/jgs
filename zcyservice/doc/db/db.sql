@@ -9,6 +9,7 @@ CREATE TABLE `Archive` (
   `archiveProcessStatus` varchar(255) DEFAULT NULL,
   `archiveResult` varchar(255) DEFAULT NULL,
   `archiveApplicant` varchar(255) DEFAULT NULL,
+  `archiveType` varchar(255) DEFAULT NULL,
   `archiveThirdPerson` varchar(255) DEFAULT NULL,
   `archiveOppositeApplicant` varchar(255) DEFAULT NULL,
   `archiveJudge` varchar(255) DEFAULT NULL,

@@ -3,6 +3,17 @@ function formatterArchiveView(val, row, rowindex) {
 	return '<a href="?p=flexpaper/simple_document&id=' + row.id + '"><img height="40" width="40" src="/resources/images/print-preview.png"></img></a>';
 }
 
+function formatterArchiveType(val, row, rowindex) {
+	
+	if(val == "MAIN"){
+		return "正卷中";
+	}
+	
+	return "副卷中";
+	
+}
+
+
 function formatterArchiveApproveView(val, row, rowindex) {
 	
 	return '<a href="?p=flexpaper/simple_document&action=approve&id=' + row.id + '"><button style="cursor:pointer">审核</button></a>';

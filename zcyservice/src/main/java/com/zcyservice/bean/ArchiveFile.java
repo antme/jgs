@@ -10,6 +10,8 @@ import com.zcy.bean.BaseEntity;
 
 @Table(name = ArchiveFile.TABLE_NAME)
 public class ArchiveFile extends BaseEntity {
+	public static final String ARCHIVE_FILE_PROPERTY = "archiveFileProperty";
+
 	public static final String ARCHIVE_TEXT_DATA = "archiveTextData";
 
 	public static final String ARCHIVE_ID = "archiveId";
@@ -32,7 +34,7 @@ public class ArchiveFile extends BaseEntity {
 	@Expose
 	public String archiveFileType;
 
-	@Column(name = "archiveFileProperty")
+	@Column(name = ARCHIVE_FILE_PROPERTY)
 	@Expose
 	public ArchiveFileProperty archiveFileProperty;
 
@@ -121,7 +123,7 @@ public class ArchiveFile extends BaseEntity {
 
 
 	public enum ArchiveFileProperty {
-		FIRST, SECOND, FIRST_ATTACH, SECOND_ATTACH
+		ATTACH_FILE, MAIN_FILE
 	}
 
 }

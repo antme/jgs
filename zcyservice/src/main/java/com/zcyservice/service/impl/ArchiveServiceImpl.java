@@ -57,21 +57,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 				if (subFile.isDirectory()) {
 
-					DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
-					query.and(Archive.FOLDER_CODE, subFile.getName());
-
-					if (!this.dao.exists(query)) {
-						Archive arc = new Archive();
-						arc.setArchiveCode(subFile.getName());
-						arc.setFolderCode(subFile.getName());
-						arc.setArchiveStatus(ArchiveStatus.ARCHIVED);
-						arc.setYear(Calendar.getInstance().get(Calendar.YEAR));
-//						arc.setArchiveName(subFile.getName());
-
-						this.dao.insert(arc);
-
-						scanArchiveAttach(subFile, arc);
-					}
+					scanArchiveAttach(subFile);
 
 				}
 			}
@@ -81,15 +67,36 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		}
 	}
 
-	public void scanArchiveAttach(File subFile, Archive arc) {
-	    scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中", arc, ArchiveFileProperty.FIRST);
+	public void scanArchiveAttach(File subFile) {
 
-	    scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中", arc, ArchiveFileProperty.SECOND);
+		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		query.and(Archive.FOLDER_CODE, subFile.getName());
+		query.and(Archive.ARCHIVE_TYPE, Archive.ARCHIVE_TYPE_MAIN);
 
-	    scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中" + File.separator + "附件", arc, ArchiveFileProperty.FIRST_ATTACH);
+		Archive arc = new Archive();
+		arc.setArchiveCode(subFile.getName());
+		arc.setFolderCode(subFile.getName());
+		arc.setArchiveStatus(ArchiveStatus.ARCHIVED);
+		arc.setYear(Calendar.getInstance().get(Calendar.YEAR));
 
-	    scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中" + File.separator + "附件", arc, ArchiveFileProperty.SECOND_ATTACH);
-    }
+		if (!this.dao.exists(query)) {
+			arc.setArchiveType(Archive.ARCHIVE_TYPE_MAIN);
+			this.dao.insert(arc);
+			scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中", arc, ArchiveFileProperty.MAIN_FILE);
+			scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中" + File.separator + "附件", arc, ArchiveFileProperty.ATTACH_FILE);
+		}
+
+		query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		query.and(Archive.FOLDER_CODE, subFile.getName());
+		query.and(Archive.ARCHIVE_TYPE,  Archive.ARCHIVE_TYPE_SECOND);
+		if (!this.dao.exists(query)) {
+			arc.setId(null);
+			arc.setArchiveType(Archive.ARCHIVE_TYPE_SECOND);
+			this.dao.insert(arc);
+			scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中", arc, ArchiveFileProperty.MAIN_FILE);
+			scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中" + File.separator + "附件", arc, ArchiveFileProperty.ATTACH_FILE);
+		}
+	}
 
 	public EntityResults<Archive> listArchives(Archive archive) {
 
@@ -189,32 +196,27 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 		archive = (Archive) this.dao.findById(archive.getId(), Archive.TABLE_NAME, Archive.class);
 
+		List<ArchiveTree> firstTrees = new ArrayList<ArchiveTree>();
+		List<ArchiveTree> firstAttachTrees = new ArrayList<ArchiveTree>();
+		
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(ArchiveFile.TABLE_NAME);
 		query.and(ArchiveFile.ARCHIVE_ID, archive.getId());
-
+		query.and(ArchiveFile.ARCHIVE_FILE_PROPERTY, ArchiveFileProperty.MAIN_FILE);
 		List<ArchiveFile> fileList = this.dao.listByQuery(query, ArchiveFile.class);
+		createFirstMenuTree(fileList, firstTrees, "目录",  true);
 
-		List<ArchiveTree> firstTrees = new ArrayList<ArchiveTree>();
-
-		List<ArchiveTree> secondTrees = new ArrayList<ArchiveTree>();
-
-		List<ArchiveTree> firstAttachTrees = new ArrayList<ArchiveTree>();
-
-		List<ArchiveTree> secondAttachTrees = new ArrayList<ArchiveTree>();
-
-		createFirstMenuTree(fileList, firstTrees, "正卷中目录", ArchiveFileProperty.FIRST);
-		createFirstMenuTree(fileList, secondTrees, "副卷中目录", ArchiveFileProperty.SECOND);
-
-		createAttachTree(fileList, firstAttachTrees, "正卷中附件", ArchiveFileProperty.FIRST_ATTACH);
-		createAttachTree(fileList, secondAttachTrees, "副卷中附件", ArchiveFileProperty.SECOND_ATTACH);
+		query = new DataBaseQueryBuilder(ArchiveFile.TABLE_NAME);
+		query.and(ArchiveFile.ARCHIVE_ID, archive.getId());
+		query.and(ArchiveFile.ARCHIVE_FILE_PROPERTY, ArchiveFileProperty.ATTACH_FILE);
+		fileList = this.dao.listByQuery(query, ArchiveFile.class);
+		createAttachTree(fileList, firstAttachTrees, "附件");
+		
 
 		Map<String, Object> results = new HashMap<String, Object>();
 
 		results.put("data", archive);
 		results.put("firstTrees", firstTrees);
-		results.put("secondTrees", secondTrees);
 		results.put("firstAttachTrees", firstAttachTrees);
-		results.put("secondAttachTrees", secondAttachTrees);
 
 		System.out.println(EcUtil.toString(results));
 
@@ -235,8 +237,8 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			if (EcUtil.isEmpty(archive.getMainFile())) {
 				throw new ResponseException("请上传档案");
 			}
-						
-			if(EcUtil.isEmpty(archive.getYear())){				
+
+			if (EcUtil.isEmpty(archive.getYear())) {
 				Calendar c = Calendar.getInstance();
 				c.setTime(archive.getArchiveOpenDate());
 				archive.setYear(c.get(Calendar.YEAR));
@@ -272,7 +274,14 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		}
 
 		File file = new File(ZcyUtil.getDocumentPath() + File.separator + archive.getArchiveCode());
-		scanArchiveAttach(file, archive);
+
+		scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "正卷中", archive, ArchiveFileProperty.MAIN_FILE);
+		scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "正卷中" + File.separator + "附件", archive, ArchiveFileProperty.ATTACH_FILE);
+
+		scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "副卷中", archive, ArchiveFileProperty.MAIN_FILE);
+		scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "副卷中" + File.separator + "附件", archive, ArchiveFileProperty.ATTACH_FILE);
+
+		// scanArchiveAttach(file, archive);
 
 	}
 
@@ -323,8 +332,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		this.dao.updateById(archive);
 
 	}
-	
-	
+
 	public List<ArchiveReport> countArchive(SearchVo searchvo) {
 
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
@@ -335,7 +343,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 	}
 
-	private void createAttachTree(List<ArchiveFile> fileList, List<ArchiveTree> firstTrees, String text, ArchiveFileProperty type) {
+	private void createAttachTree(List<ArchiveFile> fileList, List<ArchiveTree> firstTrees, String text) {
 		ArchiveTree attachTreeMenu = new ArchiveTree();
 		attachTreeMenu.setText(text);
 
@@ -343,40 +351,37 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 		if (fileList != null) {
 			for (ArchiveFile file : fileList) {
-				if (file.getArchiveFileProperty().equals(type)) {
-					ArchiveTree menuTreeChild1 = new ArchiveTree();
-					menuTreeChild1.setText(file.getArchiveFileName());
-					menuTreeChild1.setId(UUID.randomUUID().toString());
-					menuTreeChild1.setFilePath(replaceScanPath(file));
-					menuTreeChildren.add(menuTreeChild1);
-				}
+
+				ArchiveTree menuTreeChild1 = new ArchiveTree();
+				menuTreeChild1.setText(file.getArchiveFileName());
+				menuTreeChild1.setId(UUID.randomUUID().toString());
+				menuTreeChild1.setFilePath(replaceScanPath(file));
+				menuTreeChildren.add(menuTreeChild1);
+
 			}
 		}
 		attachTreeMenu.setChildren(menuTreeChildren);
 		firstTrees.add(attachTreeMenu);
 	}
 
-	private void createFirstMenuTree(List<ArchiveFile> fileList, List<ArchiveTree> firstTrees, String text, ArchiveFileProperty type) {
-		ArchiveTree firstMenuTree = new ArchiveTree();
-		firstMenuTree.setText(text);
+	private void createFirstMenuTree(List<ArchiveFile> fileList, List<ArchiveTree> firstTrees, String text, boolean menuDoc) {
+		ArchiveTree tree = new ArchiveTree();
+		tree.setText(text);
 
 		if (fileList != null) {
 
 			for (ArchiveFile file : fileList) {
 
-				if (file.getArchiveFileProperty().equals(type)) {
-
+				if (menuDoc) {
 					List<ArchiveTree> menuTreeChildren = loadDocMenu(file);
-					String filePath = replaceScanPath(file);
 
-					firstMenuTree.setFilePath(replaceScanPath(file));
-					firstMenuTree.setId(UUID.randomUUID().toString());
+					tree.setFilePath(replaceScanPath(file));
+					tree.setId(UUID.randomUUID().toString());
 
-					firstMenuTree.setChildren(menuTreeChildren);
-					firstTrees.add(firstMenuTree);
-
-					break;
+					tree.setChildren(menuTreeChildren);
 				}
+				firstTrees.add(tree);
+	
 			}
 		}
 	}
@@ -495,7 +500,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 					arfile.setArchiveFileProperty(scanType);
 					arfile.setArchiveFilePath(subFile.getAbsolutePath());
 
-					if (scanType.equals(ArchiveFileProperty.FIRST) || scanType.equals(ArchiveFileProperty.SECOND)) {
+					if (scanType.equals(ArchiveFileProperty.MAIN_FILE)) {
 
 						if (EcUtil.isEmpty(archive.getArchiveApplicant())) {
 
@@ -588,7 +593,6 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		archive.setArchiveOppositeApplicant(applicantBad);
 		archive.setArchiveThirdPerson(thirdApplicant);
 		archive.setArchiveJudge(judgePerson);
-
 
 	}
 }

@@ -94,6 +94,8 @@ window.FlexPaperViewerEmbedding = window.$f = function(id, args) {
         PanelColor 				: config.PanelColor, // FlexPaper Zine parameter
         BackgroundAlpha         : config.BackgroundAlpha, // FlexPaper Zine parameter
         UIConfig                : config.UIConfig,  // FlexPaper Zine parameter
+        PrintEnabled            : (config.PrintEnabled!=null)?config.PrintEnabled:false,
+        PrintVisible            : (config.PrintVisible!=null)?config.PrintVisible:false,
 
         ViewModeToolsVisible 	: ((config.ViewModeToolsVisible!=null)?config.ViewModeToolsVisible:true),
         ZoomToolsVisible 		: ((config.ZoomToolsVisible!=null)?config.ZoomToolsVisible:true),
