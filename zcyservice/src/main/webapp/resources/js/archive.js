@@ -139,8 +139,11 @@ function initAddBorrowRecordPage(){
 	$("#submitrecord").click(function(){
 		   $("input[name=archiveId]").val($("#archiveId").combobox('getValue'));
 		   $("#borrowingDate").val($('#borrowingDate').datebox('getValue'));
+		   var archiveId = $("#archiveId").combobox('getValue');
 		   if($("#borrowingDate").val()=="" || $("#borrowingDate").val()==null){
 		     $.messager.alert("添加失败","请选择调阅日期！");
+		   }else if(archiveId=="" || archiveId==null){
+			   $.messager.alert("添加失败","请选择卷宗！");
 		   }else{
 		     $("#addrecordForm").submit();
 		   }
