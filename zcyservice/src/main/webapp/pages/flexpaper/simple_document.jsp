@@ -201,9 +201,7 @@
 					 var firstTrees = data.firstTrees;
 					 $('#firstTrees').tree('loadData', firstTrees);
 					 $('#firstAttachTrees').tree('loadData', data.firstAttachTrees);
-			/* 		 $('#secondTrees').tree('loadData', data.secondTrees);
-					 $('#secondAttachTrees').tree('loadData', data.secondAttachTrees); */
-					// console.log(data.data);
+
 					 $("#archiveCode").text(data.data.archiveCode);
 					 $("#archiveName").text(data.data.archiveName);
 					 $("#archiveStatus").text(data.data.archiveStatus);
@@ -251,25 +249,10 @@
 					 }					 
 
 					 intPdfView(startDocument, startDocument, startPage);
-					 
-					 
+		
 				 });
-                 var offsettop=$("#documentViewer").offset().top;
-                 var offsetleft=$("#documentViewer").offset().left;
-                 offsettop+=($("#documentViewer").height()/2-135);
-                 offsetleft+=($("#documentViewer").width()/2-175);
-                // $(".watermark").css("top",offsettop+"px");
-                // $(".watermark").css("left",offsetleft+"px");
-                 
-                 var speed = 2000;
-                 function Marqueess() {
-                         $(".watermark").css({"position":"absolute","width":"350px","height":"270px","background":"url(/resources/images/back01.png) no-repeat","filter":"alpha(opacity=30)","-moz-opacity":"0.3","-khtml-opacity":"0.3","opacity":"0.3",
-                         "_background-image": "none",
-                         "_filter": "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='resources/images/table_edit.png',sizingMethod='scale')"});
-                        // $(".watermark").css("top",offsettop+"px");
-                        // $(".watermark").css("left",offsetleft+"px");
-                 }
-                // var MyMaryr = setInterval(Marqueess, speed);
+         
+              
 			  }, false);
              
 			

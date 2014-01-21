@@ -131,7 +131,7 @@
        
         <div style="text-align:center;padding:5px;">
              <button id="submited" class="btn_add">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-             <button id="closed" class="btn_add">取消</button>
+             <a href="?p=web/archive/archivemanager"><button class="btn_add">取消</button></a>
         </div>
         
 <%
@@ -143,13 +143,12 @@
 	    initArchiveManagePage();
 	    
 	    var id = "<%=id%>";
-	    console.log(id);
 	    if(id!="null"){
-	    postAjaxRequest("/ecs/archive/get.do", {id:id}, function(data){
-	     	   $("#addarchiveForm").form("clear");
-	     	   $("#addarchiveForm").form("load",data.data);
-	     	   $("#addarchiveForm").append("<input id='sid' name='id' type='hidden' value='"+id+"' />");
-	        });
+	    	   postAjaxRequest("/ecs/archive/get.do", {id:id}, function(data){
+		     	   $("#addarchiveForm").form("clear");
+		     	   $("#addarchiveForm").form("load",data.data);
+		     	   $("#addarchiveForm").append("<input id='sid' name='id' type='hidden' value='"+id+"' />");
+	     	   });
 	    
 	    }
 	 });	  

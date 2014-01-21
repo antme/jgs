@@ -77,6 +77,7 @@ function initArchiveManagePage(){
 	$("#addarchiveForm").form({
 	      url : '/ecs/archive/add.do',
 	      onSubmit : function() {
+	    	  console.log("...........");
 	          return $(this).form('validate');
 	      },
 	      success : function(data) {
@@ -93,18 +94,8 @@ function initArchiveManagePage(){
 	$("#submited").click(function(){
 	      $("#archiveOpenDate").val($('#archiveOpenDate').datebox('getValue'));
 	      $("#archiveCloseDate").val($('#archiveCloseDate').datebox('getValue'));
-	      if($("#archiveOpenDate").val()=="" || $("#archiveOpenDate").val()==null){
-	          $.messager.alert("添加失败","请选择立案日期！");
-	      }else if($("#archiveCloseDate").val()=="" || $("#archiveCloseDate").val()==null){
-	          $.messager.alert("添加失败","请选择结案日期！");
-	      }else if($("#mainFile").val()=="" || $("#mainFile").val()==null){
-	          $.messager.alert("添加失败","请上传正卷宗！");
-	      }else if($("#mainFilkeAttach").val()=="" || $("#mainFilkeAttach").val()==null){
-	         
-	      }else if($("#secondFile").val()=="" || $("#secondFile").val()==null){
-	          
-	      }else if($("#secondFileAttach").val()=="" || $("#secondFileAttach").val()==null){
-	         
+	      if($("#mainFile").val()=="" || $("#mainFile").val()==null){
+	          $.messager.alert("添加失败","请上传卷宗！");
 	      }else{
 	          $("#addarchiveForm").submit();
 	      }
