@@ -148,17 +148,18 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 	public EntityResults<User> listForAdmin(SearchVo vo) {
 		String keyword = vo.getKeyword();
 		String userStatus = vo.getUserStatus();
-		String roleName = vo.getRoleName();
-
-		if (EcUtil.isEmpty(roleName)) {
-			roleName = Role.USER.toString();
-		}
+	
 
 		DataBaseQueryBuilder builder = new DataBaseQueryBuilder(User.TABLE_NAME);
-		builder.and(User.ROLE_NAME, roleName.toUpperCase());
 
 		if (!EcUtil.isEmpty(userStatus)) {
-			builder.and(User.STATUS, userStatus);
+
+			if (userStatus.equalsIgnoreCase("NORMAL")) {
+				builder.and(DataBaseQueryOpertion.NOT_EQUALS, User.STATUS, "LOCKED");
+			} else {
+				builder.and(User.STATUS, userStatus);
+			}
+
 		}
 
 		if (!EcUtil.isEmpty(keyword)) {

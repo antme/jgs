@@ -24,7 +24,7 @@
     <%@ include file="/pages/web/archive/searcharchive.jsp"%>
     
     <div style="margin-left:40px;">
-        <button class="btn_add" onclick="openAddGroupWindow();">新增档案</button>
+        <a href="?p=web/archive/archiveedit"><button class="btn_add" >新增档案</button></a>
     </div>
     <div class="line_clear"></div>
     <div style="margin-left:40px;">
