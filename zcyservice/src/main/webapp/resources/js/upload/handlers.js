@@ -1,4 +1,4 @@
-var mainFilkeAttach="";
+var mainFileAttach="";
 var secondFileAttach="";
 function fileQueueError(file, errorCode, message) {
 	try {
@@ -283,8 +283,8 @@ function uploadSuccess1(file, serverData) {
 		addFileInfo1(file.id,"文件上传完成");
 		var obj = serverData;
         obj = JSON.parse(obj);
-        mainFilkeAttach+=obj.data.filePath+","
-        $("#mainFilkeAttach").val(mainFilkeAttach);
+        mainFileAttach+=obj.data.filePath+","
+        $("#mainFileAttach").val(mainFileAttach);
 	} catch (ex) {
 		this.debug(ex);
 	}

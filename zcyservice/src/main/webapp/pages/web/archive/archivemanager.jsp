@@ -104,7 +104,7 @@
                     </div>
                     </div>
                     <input id="mainFile" type="hidden" name="mainFile"/>
-                    <input id="mainFilkeAttach" type="hidden" name="mainFilkeAttach"/>
+                    <input id="mainFileAttach" type="hidden" name="mainFileAttach"/>
                     <input id="secondFile" type="hidden" name="secondFile"/>
                     <input id="secondFileAttach" type="hidden" name="secondFileAttach"/>
                  </form>

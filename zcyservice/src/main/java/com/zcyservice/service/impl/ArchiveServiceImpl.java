@@ -254,34 +254,40 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 	private void initArchiveFiles(Archive archive) {
 
 		if (EcUtil.isValid(archive.getMainFile())) {
-			moveFile(archive, archive.getMainFile(), "正卷中");
-		}
 
-		if (EcUtil.isValid(archive.getMainFilkeAttach())) {
-			String files[] = archive.getMainFilkeAttach().split(",");
-			for (String fileName : files) {
-				moveFile(archive, fileName, "正卷中附件");
+			if (archive.getArchiveType().equalsIgnoreCase(Archive.ARCHIVE_TYPE_MAIN)) {
+				moveFile(archive, archive.getMainFile(), "正卷中");
+			}
+			if (archive.getArchiveType().equalsIgnoreCase(Archive.ARCHIVE_TYPE_SECOND)) {
+				moveFile(archive, archive.getMainFile(), "副卷中");
 			}
 		}
 
-		if (EcUtil.isValid(archive.getSecondFile())) {
-			moveFile(archive, archive.getSecondFile(), "副卷中");
-		}
-
-		if (EcUtil.isValid(archive.getSecondFileAttach())) {
-			String files[] = archive.getSecondFileAttach().split(",");
+		if (EcUtil.isValid(archive.getMainFileAttach())) {
+			String files[] = archive.getMainFileAttach().split(",");
 			for (String fileName : files) {
-				moveFile(archive, fileName, "副卷中附件");
+
+				if (archive.getArchiveType().equalsIgnoreCase(Archive.ARCHIVE_TYPE_MAIN)) {
+					moveFile(archive, fileName, "正卷中附件");
+				}
+				if (archive.getArchiveType().equalsIgnoreCase(Archive.ARCHIVE_TYPE_SECOND)) {
+					moveFile(archive, fileName, "副卷中附件");
+				}
+
 			}
 		}
 
 		File file = new File(ZcyUtil.getDocumentPath() + File.separator + archive.getArchiveCode());
 
-		scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "正卷中", archive, ArchiveFileProperty.MAIN_FILE);
-		scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "正卷中" + File.separator + "附件", archive, ArchiveFileProperty.ATTACH_FILE);
+		if (archive.getArchiveType().equalsIgnoreCase(Archive.ARCHIVE_TYPE_MAIN)) {
+			scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "正卷中", archive, ArchiveFileProperty.MAIN_FILE);
+			scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "正卷中" + File.separator + "附件", archive, ArchiveFileProperty.ATTACH_FILE);
+		}
 
-		scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "副卷中", archive, ArchiveFileProperty.MAIN_FILE);
-		scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "副卷中" + File.separator + "附件", archive, ArchiveFileProperty.ATTACH_FILE);
+		if (archive.getArchiveType().equalsIgnoreCase(Archive.ARCHIVE_TYPE_SECOND)) {
+			scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "副卷中", archive, ArchiveFileProperty.MAIN_FILE);
+			scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "副卷中" + File.separator + "附件", archive, ArchiveFileProperty.ATTACH_FILE);
+		}
 
 		// scanArchiveAttach(file, archive);
 

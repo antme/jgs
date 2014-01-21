@@ -148,14 +148,9 @@ public class Archive extends BaseEntity {
 	public String mainFile;
 	
 	@Expose
-	public String mainFilkeAttach;
+	public String mainFileAttach;
 	
-	@Expose
-	public String secondFile;
-	
-	@Expose
-	public String secondFileAttach;
-	
+
 	@Expose
 	public String filePath;
 	
@@ -329,30 +324,14 @@ public class Archive extends BaseEntity {
     	this.mainFile = mainFile;
     }
 
-	public String getMainFilkeAttach() {
-    	return mainFilkeAttach;
+
+	public String getMainFileAttach() {
+    	return mainFileAttach;
     }
 
-	public void setMainFilkeAttach(String mainFilkeAttach) {
-    	this.mainFilkeAttach = mainFilkeAttach;
+	public void setMainFileAttach(String mainFileAttach) {
+    	this.mainFileAttach = mainFileAttach;
     }
-
-	public String getSecondFile() {
-    	return secondFile;
-    }
-
-	public void setSecondFile(String secondFile) {
-    	this.secondFile = secondFile;
-    }
-
-	public String getSecondFileAttach() {
-    	return secondFileAttach;
-    }
-
-	public void setSecondFileAttach(String secondFileAttach) {
-    	this.secondFileAttach = secondFileAttach;
-    }
-
 
 	public String getFilePath() {
     	return filePath;
