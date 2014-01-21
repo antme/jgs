@@ -11,6 +11,11 @@ import com.zcy.bean.BaseEntity;
 
 @Table(name = Archive.TABLE_NAME)
 public class Archive extends BaseEntity {
+	public static final String ARCHIVE_TYPE_MAIN = "MAIN";
+	public static final String ARCHIVE_TYPE_SECOND = "SECOND";
+
+	
+	public static final String ARCHIVE_TYPE = "archiveType";
 
 	public static final String YEAR = "year";
 
@@ -120,6 +125,12 @@ public class Archive extends BaseEntity {
 	@Column(name = "destroyComments")
 	@Expose
 	public String destroyComments;
+	
+	
+	// 档案类型： 正卷宗，副卷宗
+	@Column(name = ARCHIVE_TYPE)
+	@Expose
+	public String archiveType;
 	
 	//页面搜索字段
 	@Expose
@@ -360,6 +371,19 @@ public class Archive extends BaseEntity {
 	public void setYear(Integer year) {
     	this.year = year;
     }
+	
+	
+
+
+	public String getArchiveType() {
+    	return archiveType;
+    }
+
+	public void setArchiveType(String archiveType) {
+    	this.archiveType = archiveType;
+    }
+
+
 
 
 	public enum ArchiveStatus {

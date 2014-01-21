@@ -31,15 +31,15 @@
             <table id="archiveList"  class="easyui-datagrid_tf" url="/ecs/archive/listArchives.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
                 <thead>
                     <tr>
-                        <th align="center"  field="archiveCode"  width="100"  sortable="false">案号</th>
-                        <th align="center"  field="archiveName"  width="100"  sortable="false">案由</th>
-                        <th align="center"  field="archiveStatus" formatter="formatterArchiveStatus"  width="100" sortable="false" >档案状态</th>
-                        <th align="center"  field="archiveProcessStatus" formatter="formatterArchiveProcessStatus" width="100" sortable="false" >审核状态</th>
+                        <th align="center"  field="archiveCode"  width="110"  sortable="false">案号</th>
+                        <th align="center"  field="archiveName"  width="150"  sortable="false">案由</th>
+                        <th align="center"  field="archiveType"  formatter="formatterArchiveType"  width="50"  sortable="false">类型</th>
+                        <th align="center"  field="archiveStatus" formatter="formatterArchiveStatus"  width="70" sortable="false" >档案状态</th>
+                        <th align="center"  field="archiveProcessStatus" formatter="formatterArchiveProcessStatus" width="70" sortable="false" >审核状态</th>
                         
-                        <th align="center"  field="createdOn" width="120" sortable="false" >档案归档时间</th>
-                        <th align="center"  field="updatedOn" width="120" sortable="false" >档案修改时间</th>
-                        <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="80">档案预览</th>
-                        <th align="center" data-options="field:'eidt'" formatter="formatterArchiveEidt"  width="120">操作</th>
+                        <th align="center"  field="createdOn" width="100" sortable="false" >归档时间</th>
+                        <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="60">预览</th>
+                        <th align="center" data-options="field:'eidt'" formatter="formatterArchiveEidt"  width="75">操作</th>
                     </tr>
                 </thead>
             </table>

@@ -118,12 +118,14 @@
 			<ul class="easyui-tree" id="secondAttachTrees" data-options="animate:true, state:'closed'"></ul>
 		
 		</div>
-		<div class="watermark"></div>
+		<div class="watermark11"></div>
 		<script type="text/javascript">
 			function getDocumentUrl(document){
+				document = encodeURIComponent(document);
 				return "/pages/flexpaper/view.jsp?doc={doc}&format={format}&page={page}".replace("{doc}",document);     
 			}
 			function getDocQueryServiceUrl(document){
+				document = encodeURIComponent(document);
 				return "/pages/flexpaper/swfsize.jsp&doc={doc}&page={page}".replace("{doc}",document);
 			}
 
@@ -164,16 +166,16 @@
 						 ProgressiveLoading : true,
 						 MinZoomSize : 0.5,
 						 MaxZoomSize : 8,
-						 StartAtPage : pdfStartPage,
+						 StartAtPage : 2,
 						 SearchMatchAll : true,
 						 RenderingOrder : RenderingOrder,
-
 						 ViewModeToolsVisible : true,
 						 ZoomToolsVisible : true,
-						 NavToolsVisible : true,
+						 NavToolsVisible : false,
 						 CursorToolsVisible : true,
 						 SearchToolsVisible : true,
-
+						 PrintEnabled : true,
+						 PrintVisible:true,
 						 DocSizeQueryService : "?p=flexpaper/swfsize&doc=" + pdfStartDocumentFile,
 						 jsDirectory : jsDirectory,
 						 localeDirectory : localeDirectory,
@@ -252,18 +254,18 @@
                  var offsetleft=$("#documentViewer").offset().left;
                  offsettop+=($("#documentViewer").height()/2-135);
                  offsetleft+=($("#documentViewer").width()/2-175);
-                 $(".watermark").css("top",offsettop+"px");
-                 $(".watermark").css("left",offsetleft+"px");
+                // $(".watermark").css("top",offsettop+"px");
+                // $(".watermark").css("left",offsetleft+"px");
                  
                  var speed = 2000;
                  function Marqueess() {
                          $(".watermark").css({"position":"absolute","width":"350px","height":"270px","background":"url(/resources/images/back01.png) no-repeat","filter":"alpha(opacity=30)","-moz-opacity":"0.3","-khtml-opacity":"0.3","opacity":"0.3",
                          "_background-image": "none",
                          "_filter": "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='resources/images/table_edit.png',sizingMethod='scale')"});
-                         $(".watermark").css("top",offsettop+"px");
-                         $(".watermark").css("left",offsetleft+"px");
+                        // $(".watermark").css("top",offsettop+"px");
+                        // $(".watermark").css("left",offsetleft+"px");
                  }
-                 var MyMaryr = setInterval(Marqueess, speed);
+                // var MyMaryr = setInterval(Marqueess, speed);
 			  }, false);
              
 			
