@@ -70,7 +70,6 @@
                 </div>
             </div>
 
-                    <input  type="hidden" name="id" id="id"/>
                     <input  type="hidden" name="year" id="year"/>
                     <div class="ac_div">
                     <span class="span_style"><label class="ac_title">卷宗编号</label></span>
@@ -132,7 +131,7 @@
            
        
         <div style="text-align:center;padding:5px;">
-             <button id="submited" class="btn_add">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             <button id="submited" class="btn_add">保存</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
              <a href="?p=web/archive/archivemanager"><button class="btn_add">返回</button></a>
         </div>
         

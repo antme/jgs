@@ -81,13 +81,16 @@ function initArchiveManagePage(){
 	          return $(this).form('validate');
 	      },
 	      success : function(data) {
+	
 	    	  if($("#sid").val()==undefined){
+	        	  $("#sid").val(data.id);
 	    		  $.messager.alert("添加档案","添加档案成功！");
 			   }else{
+				   
 				   $.messager.alert("编辑档案","编辑档案成功！");
 			   }
 	    	  
-	    	  $("#id").val(data.id);
+	    
 	
 	      }
 	});
