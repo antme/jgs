@@ -73,7 +73,7 @@
            <li class="menu_cline" access="adm_user_manage"></li>
           
            <li  class="access" access="adm_user_manage">
-              <a href="#" >用户管理</a>
+              <a class="li_a" href="#" >用户管理</a>
               <ul class="ul_display">
                  <li><a href="?p=admin/user/role">权限管理</a></li>
                  <li><a href="?p=admin/user/manage">用户账号管理</a></li>

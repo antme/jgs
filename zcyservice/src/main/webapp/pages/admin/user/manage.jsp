@@ -83,14 +83,22 @@
 						<div class="r-edit-label">用户名：</div>
 						<div class="r-edit-field cc">
 							<input name="userName" id="userName" class="r-textbox easyui-validatebox"
-								type="text" missingMessage="请输入用户名"/> <label class="r-need">*</label>
+								type="text" required missingMessage="请输入用户名"/> <label class="r-need">*</label>
 						</div>
 					</li>
 					<li>
                         <div class="r-edit-label">密码：</div>
                         <div class="r-edit-field">
                             <input id="password" name="password" class="r-textbox easyui-validatebox"
-                                type="password"  /> <label
+                                type="password" required missingMessage="请输入密码" /> <label
+                                class="r-need">*</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="r-edit-label">确认密码：</div>
+                        <div class="r-edit-field">
+                            <input id="password" name="password" class="r-textbox easyui-validatebox"
+                                type="password" validType="pwdEquals['#password']" required missingMessage="请输入再次密码" /> <label
                                 class="r-need">*</label>
                         </div>
                     </li>
@@ -125,14 +133,15 @@
 							                    loadFilter:function(data){
 							                    	return data.rows;
 							                    }"
-								multiple="false" style="width:200px"></select>*
+								multiple="false" style="width:200px"></select><label
+                                class="r-need">*</label>
                         </div>
                     </li>
 					<li>
 						<div class="r-edit-label">当前状态：</div>
 						<div class="r-edit-field">
 							<select class="easyui-combobox" style="width:128px"  data-options="multiple:false" id="selectUserStatus">
-	                        	<option value="NORMAL" selected>正常</option>
+	                        	<option value="NORMAL" selected="selected">正常</option>
 	                        	<option value="LOCKED" >已冻结</option>
 	                        </select>
 	                        <input id="userStatus" type="hidden" name="userStatus" />
@@ -166,10 +175,13 @@
 	  openDialog("edituser");
 	  $("#edituserform").form('clear');
 	  $("#rid").remove();
+	  $("#userName").removeAttr("disabled");
+	  $("#selectUserStatus").combobox('setValue',"NORMAL"); 
   }
   function eidtuser(){
 	  $('#edituser').window('setTitle', "编辑用户");
       openDialog("edituser");
+      $("#userName").attr("disabled","disabled");
   }
   
   function formatteruserEidt(val, row, rowindex){
@@ -196,7 +208,12 @@
   }
   $("#btn_mfc_s").click(function(){
 	  $("#userStatus").val($("#selectUserStatus").combobox('getValue'));
-	  $("#mfc_info_sum").click();
+	  var ss=$("#groupIdSel").combobox('getValue');
+	  if(ss=="" ||  ss==null){
+		  $.messager.alert("信息","请选择用户权限！");
+	  }else{
+		  $("#mfc_info_sum").click();
+	  }
   });
   $("#edituserform").form({
 	  url : '/ecs/user/admin/add.do',
