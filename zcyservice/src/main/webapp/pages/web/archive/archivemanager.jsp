@@ -39,7 +39,7 @@
                         
                         <th align="center"  field="createdOn" width="100" sortable="false" >归档时间</th>
                         <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="60">预览</th>
-                        <th align="center" data-options="field:'eidt'" formatter="formatterArchiveEidt"  width="75">操作</th>
+                        <th align="center" data-options="field:'eidt'" formatter="formatterArchiveEidt"  width="100">操作</th>
                     </tr>
                 </thead>
             </table>
