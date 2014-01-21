@@ -22,6 +22,8 @@ public interface IArchiveService {
 	public Archive addArchive(Archive archive);
 
 	public EntityResults<Archive> listNeddApproveArchives(Archive archive);
+	
+	public EntityResults<Archive> listNeedDestoryApproveArchives(Archive archive);
 
 	public void approveArchive(Archive archive);
 

@@ -44,6 +44,15 @@ public class ArchiveController extends AbstractController {
 		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
 		responseWithDataPagnation(archiveService.listNeddApproveArchives(archive), request, response);
 	}
+	
+	@RequestMapping("/listdestroy.do")
+	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
+	public void listNeedDestoryApproveArchives(HttpServletRequest request, HttpServletResponse response) {
+		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
+		responseWithDataPagnation(archiveService.listNeedDestoryApproveArchives(archive), request, response);
+	}
+	
+	
 
 	@RequestMapping("/files.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)

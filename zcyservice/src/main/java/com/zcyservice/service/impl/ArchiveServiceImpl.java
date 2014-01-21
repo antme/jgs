@@ -165,14 +165,18 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 	public EntityResults<Archive> listNeddApproveArchives(Archive archive) {
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
-		query.or(Archive.ACHIVE_PROCESS_STATUS, ProcessStatus.NEW);
-
-		query.or(Archive.ACHIVE_PROCESS_STATUS, ProcessStatus.DESTROYING);
-
+		query.and(Archive.ACHIVE_PROCESS_STATUS, ProcessStatus.NEW);
 		mergeArchiveQuery(query, archive);
-
 		return this.dao.listByQueryWithPagnation(query, Archive.class);
 
+	}
+	
+	
+	public EntityResults<Archive> listNeedDestoryApproveArchives(Archive archive){
+		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		query.and(Archive.ACHIVE_PROCESS_STATUS, ProcessStatus.DESTROYING);
+		mergeArchiveQuery(query, archive);
+		return this.dao.listByQueryWithPagnation(query, Archive.class);
 	}
 
 	public void approveArchive(Archive archive) {
