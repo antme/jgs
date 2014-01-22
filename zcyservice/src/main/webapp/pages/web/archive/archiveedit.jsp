@@ -116,8 +116,7 @@
                     <span class="span_style"><label class="ac_title">档案状态</label></span>
                     <span class="span_style border-left span_width">
                          <select class="easyui-combobox display_nones" name="archiveStatus" style="width:128px;height:30px;background:url(/resources/images/public_select.png) no-repeat;" data-options="multiple:false" id="archiveStatus">
-                             <option value="" selected>档案状态</option>
-                             <option value="ARCHIVED">已归档</option>
+                             <option value="ARCHIVED" selected>已归档</option>
                              <option value="NEW">未归档</option>
                          </select>
                     </span>

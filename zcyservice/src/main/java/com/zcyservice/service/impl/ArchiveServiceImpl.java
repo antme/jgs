@@ -663,7 +663,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			} else if (line.startsWith("案由")) {
 				reason = line.replaceFirst("案由", "");
 			} else if (line.startsWith("处理结果")) {
-				reason = line.replaceFirst("处理结果", "");
+				results = line.replaceFirst("处理结果", "");
 			} else if (line.startsWith("申请人")) {
 				applicant = line.replaceFirst("申请人", "");
 			} else if (line.startsWith("被申请人")) {
