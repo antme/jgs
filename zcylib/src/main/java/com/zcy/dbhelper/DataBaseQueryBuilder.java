@@ -354,7 +354,7 @@ public class DataBaseQueryBuilder {
 		}
 
 		if (this.limitColumns == null) {
-			this.limitColumns = "count(*) as count";
+			this.limitColumns = column + ", count(*) as count";
 		} else {
 			this.limitColumns = this.limitColumns + "," + "count(*) as count";
 		}

@@ -14,6 +14,7 @@ import com.zcy.dao.IQueryDao;
 import com.zcy.dao.QueryDaoImpl;
 import com.zcy.dbhelper.DataBaseQueryBuilder;
 import com.zcyservice.bean.Archive;
+import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.IArchiveService;
 import com.zcyservice.service.ISystemService;
 import com.zcyservice.service.IUserService;
@@ -69,12 +70,7 @@ public class BaseTestCase extends TestCase {
 //		file = file.substring(scanPath.length() +1);
 //		System.out.println(file);
 		
-
-		
-		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
-		query.distinct(Archive.YEAR);
-		
-		System.out.println(dao.distinctQuery(query, Archive.class));
+		archiveService.countArchive(new SearchVo());
 		
 		
 //		archiveService.scanArchines();

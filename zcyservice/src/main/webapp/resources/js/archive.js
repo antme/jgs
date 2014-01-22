@@ -242,6 +242,3 @@ function getrecordWindow(id){
 
 
 
-function loadReport(){
-	
-}

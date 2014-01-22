@@ -73,7 +73,7 @@ public class ArchiveController extends AbstractController {
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
 	public void countArchive(HttpServletRequest request, HttpServletResponse response) {
 		SearchVo searchvo = (SearchVo) parserJsonParameters(request, true, SearchVo.class);
-		responseWithListData(archiveService.countArchive(searchvo), request, response);
+		responseWithDataPagnation(archiveService.countArchive(searchvo), request, response);
 	}	
 	
 	@RequestMapping("/indexcount.do")

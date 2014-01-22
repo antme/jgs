@@ -31,7 +31,6 @@ import com.zcyservice.bean.Archive.ProcessStatus;
 import com.zcyservice.bean.ArchiveBorrowing;
 import com.zcyservice.bean.ArchiveFile;
 import com.zcyservice.bean.ArchiveFile.ArchiveFileProperty;
-import com.zcyservice.bean.vo.ArchiveReport;
 import com.zcyservice.bean.vo.ArchiveTree;
 import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.AbstractArchiveService;
@@ -373,11 +372,30 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 	}
 
-	public List<ArchiveReport> countArchive(SearchVo searchvo) {
+	public EntityResults<Archive> countArchive(SearchVo searchvo) {
+
+		if (searchvo.getReportType() == null) {
+			searchvo.setReportType(Archive.YEAR);
+		}
 
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
-		query.distinct(Archive.YEAR);
-		List<ArchiveReport> reports = this.dao.distinctQuery(query, ArchiveReport.class);
+		query.groupBy(searchvo.getReportType(), true);
+		EntityResults<Archive> reports = this.dao.listByQueryWithPagnation(query, Archive.class);
+
+		List<Archive> list = reports.getEntityList();
+		for (Archive report : list) {
+
+			if (searchvo.getReportType().equalsIgnoreCase(Archive.YEAR)) {
+				report.setReportKey(report.getYear().toString());
+
+			} else if (searchvo.getReportType().equalsIgnoreCase(Archive.ARCHIVE_OPPOSITE_APPLICANT)) {
+				report.setReportKey(report.getArchiveOppositeApplicant());
+
+			} else if (searchvo.getReportType().equalsIgnoreCase(Archive.ARCHIVE_APPLICANT)) {
+				report.setReportKey(report.getArchiveApplicant());
+
+			}
+		}
 
 		return reports;
 
@@ -390,11 +408,9 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		List<Archive> reports = this.dao.distinctQuery(query, Archive.class);
 
 		Map<String, Object> result = new HashMap<String, Object>();
-		
+
 		List<Map<String, Object>> colorMapList = new ArrayList<Map<String, Object>>();
-		
-		
-		
+
 		Map<String, Object> yearsCountMap = new HashMap<String, Object>();
 		for (Archive archive : reports) {
 
@@ -402,15 +418,12 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			cquery.and(Archive.YEAR, archive.getYear());
 			int count = this.dao.count(cquery);
 			yearsCountMap.put("year" + archive.getYear(), count);
-			
-			
+
 			Map<String, Object> colorMap = new HashMap<String, Object>();
 			colorMap.put("y", count);
-			
 
 		}
 
-	
 		return yearsCountMap;
 
 	}
@@ -676,4 +689,5 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		archive.setArchiveJudge(judgePerson);
 
 	}
+
 }
