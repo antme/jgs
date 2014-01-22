@@ -5,7 +5,7 @@ var swfu,swfu1,swfu2,swf3;
                     post_params: {"archiveUploadKey" : "first"},
                     
                     // File Upload Settings
-                    file_size_limit : "10 MB",  // 1000MB
+                    file_size_limit : "100 MB",  // 1000MB
                     file_types : "*.*",
                     file_types_description : "所有文件",
                     file_upload_limit : "1",
@@ -45,7 +45,7 @@ var swfu,swfu1,swfu2,swf3;
                     post_params: {"archiveUploadKey" : "firstAttach"},
                     
                     // File Upload Settings
-                    file_size_limit : "10 MB",  // 1000MB
+                    file_size_limit : "100 MB",  // 1000MB
                     file_types : "*.*",
                     file_types_description : "所有文件",
                     file_upload_limit : "0",

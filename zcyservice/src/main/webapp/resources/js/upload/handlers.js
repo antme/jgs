@@ -1,5 +1,6 @@
 var mainFileAttach="";
 var secondFileAttach="";
+var count=1;
 function fileQueueError(file, errorCode, message) {
 	try {
 		var imageName = "<font color='red'>文件上传错误</font>";
@@ -143,16 +144,16 @@ function fileQueueError3(file, errorCode, message) {
  * filestatus : number		// 文件的当前状态，对应的状态代码可查看SWFUpload.FILE_STATUS }
  */
 function fileQueued(file){
-	addReadyFileInfo(file.id,file.name,"成功加载到上传队列");
+	addReadyFileInfo(file.id,file.name,"");
 }
 function fileQueued1(file){
-	addReadyFileInfo1(file.id,file.name,"成功加载到上传队列");
+	addReadyFileInfo1(file.id,file.name,"");
 }
 function fileQueued2(file){
-	addReadyFileInfo2(file.id,file.name,"成功加载到上传队列");
+	addReadyFileInfo2(file.id,file.name,"");
 }
 function fileQueued3(file){
-	addReadyFileInfo3(file.id,file.name,"成功加载到上传队列");
+	addReadyFileInfo3(file.id,file.name,"");
 }
 
 function fileDialogComplete(numFilesSelected, numFilesQueued) {
@@ -342,7 +343,7 @@ function addReadyFileInfo(fileid,fileName,message,status){
 	var col3 = row.insertCell();
 	var col4 = row.insertCell();
 	col4.align = "right";
-	col1.innerHTML = message+" : ";
+	col1.innerHTML = message+"";
 	col2.innerHTML = fileName;
 	if(status!=null&&status!=""){
 		col3.innerHTML="<font color='red'>"+status+"</font>";
@@ -365,7 +366,7 @@ function addReadyFileInfo1(fileid,fileName,message,status){
 	var col3 = row.insertCell();
 	var col4 = row.insertCell();
 	col4.align = "right";
-	col1.innerHTML = message+" : ";
+	col1.innerHTML = message+"";
 	col2.innerHTML = fileName;
 	if(status!=null&&status!=""){
 		col3.innerHTML="<font color='red'>"+status+"</font>";
@@ -493,6 +494,10 @@ function cancelUpload3(){
 	var row = document.getElementById(fileId);
 	infoTable.deleteRow(row.rowIndex);
 	swfu.cancelUpload(fileId,false);
+	var stats = swfu.getStats();
+	count=stats.successful_uploads+1;
+	swfu.setFileQueueLimit(count);
+	swfu.setFileUploadLimit(count);
 }
 function deleteFile1(fileId){
 	//用表格显示

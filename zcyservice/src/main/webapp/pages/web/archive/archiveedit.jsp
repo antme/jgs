@@ -16,8 +16,12 @@
 </head>
 <body>
    
-
-    <div class="line_clear"></div>
+    <div id="archive_title">
+        <div class="public_title">
+              <div class="public_title_icon">​</div>​
+              <label class="public_title_text"></label>
+          </div>
+    </div>
     
    <div title="基本信息" style="padding: 10px">
      <form action="" id="addarchiveForm" method="post" novalidate>
@@ -150,8 +154,11 @@
 		     	   $("#addarchiveForm").form("load",data.data);
 		     	   $("#addarchiveForm").append("<input id='sid' name='id' type='hidden' value='"+id+"' />");
 	     	   });
-	    
+	       $("#archive_title").find(".public_title_text").text("编辑档案");
+	    }else{
+	    	$("#archive_title").find(".public_title_text").text("添加档案");
 	    }
+	    
 	 });	  
   </script>
 

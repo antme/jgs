@@ -26,7 +26,7 @@
                         <th align="center"  field="createdOn" width="120" sortable="false" >档案归档时间</th>
                         <th align="center"  field="updatedOn" width="120" sortable="false" >档案修改时间</th>
                         
-                         <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="150">档案预览</th>
+                         <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="50">档案预览</th>
                     </tr>
 				</thead>
 			</table>
