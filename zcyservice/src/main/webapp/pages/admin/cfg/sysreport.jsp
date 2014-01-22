@@ -10,6 +10,7 @@
 <script type="text/javascript" src="resources/js/validation.js"></script>
 <%
 Sigar sigar = new Sigar();
+SysInfo s =new SysInfo();
 
 %>
 
@@ -18,6 +19,13 @@ Sigar sigar = new Sigar();
 
 	
 		<div class="p_height_div"></div>
+		 <div class="line_seach">
+            <span class="span_style_label"><label class="display_nones">CPU个数：</label></span>
+            <span class="span_style"><%=sigar.getCpuInfoList().length%></span> 
+            
+             <span class="span_style_label"><label class="display_nones">CPU个数：</label></span>
+            <span class="span_style"><%=sigar.getCpuInfoList().length%></span> 
+        </div>
 
 
 </body>
