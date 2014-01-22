@@ -18,14 +18,16 @@
 	
 		<div title="权限设置" style="padding: 10px;margin-left:30px;">
 			<button class="btn_add" onclick="openAddGroupWindow();">新增权限</button>
+			<button class="btn_add" onclick="deleteRoles();">批量删除权限</button>
 			<div class="line_clear"></div>
 			<div>
                <span class="span_style">“<img height="16" width="16" src="/resources/images/table_edit.png" />”</span>
                <span class="span_style">代表编辑</span>
             </div>
-			<table class="easyui-datagrid_tf" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true" id="groupList"  url="/ecs/sys/group/list.do" iconCls="icon-save" sortOrder="asc"  pagination="true"  singleSelect="true" data-options="onClickRow: onGroupPermissionClickRow">
+			<table class="easyui-datagrid_tf" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true" id="groupList"  url="/ecs/sys/group/list.do" iconCls="icon-save" sortOrder="asc"  pagination="true"  data-options="onClickRow: onGroupPermissionClickRow">
 	        <thead>
 	            <tr>
+	                <th data-options="field:'ck',checkbox:true" width="70"></th>
 	                <th align="center"  field="groupName"  sortable="false" width='200' align="center" resizable="true">权限名称</th>
 	                <th align="center"  field="description"  sortable="false" width='200' align="center" resizable="true">描述</th>
 	                <th data-options="field:'id',formatter:formatterGroupOperation" width='200' align="center" resizable="true">操作</th>
@@ -88,6 +90,24 @@
 	 
 	function formatterGroupOperation(val, row){
 		return '<button class="table_eidt" onclick=editRoleGroups("' + row.id + '");></button>';
+	}
+	
+	function deleteRoles(){
+		var ids = getGridCheckedIds('groupList');
+	    if(ids.length == 0){        
+	        alert("请在列表中选择需要删除的数据，也可以点击标题左边的选择框全部选择本页的数据删除！");
+	        return false;
+	    }else{
+	        
+	        if(confirm("确认删除所选权限组 ?")){
+	            postAjaxRequest("/ecs/sys/group/del.do", {
+	                "ids" : ids
+	            }, function(data) {
+	                alert("删除成功");
+	                $('#groupList').datagrid('reload');
+	            });
+	        }
+	    }
 	}
 	
 	function editRoleGroups(id){

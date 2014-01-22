@@ -25,9 +25,6 @@ import com.zcyservice.util.Role;
 public class SystemServiceImpl extends AbstractArchiveService implements ISystemService {
 	private static Logger logger = LogManager.getLogger(SystemServiceImpl.class);
 
-	
-
-	
 	public List<SystemConfig> listSystemConfig() {
 		DataBaseQueryBuilder builder = new DataBaseQueryBuilder(SystemConfig.TABLE_NAME);
 		return this.dao.listByQuery(builder, SystemConfig.class);
@@ -41,7 +38,7 @@ public class SystemServiceImpl extends AbstractArchiveService implements ISystem
 
 			String log = String.format("修改了系统配置【%s】", cfgList.toString());
 			logger.info(log);
-			
+
 			if (config != null) {
 				config.setCfgValue(cfg.getCfgValue());
 				this.dao.updateById(config);
@@ -51,18 +48,15 @@ public class SystemServiceImpl extends AbstractArchiveService implements ISystem
 
 			CFGManager.loadDbConfig();
 		}
-		
-
 
 	}
 
-
-	public EntityResults<RoleGroup>  listRoleGroups() {
+	public EntityResults<RoleGroup> listRoleGroups() {
 		DataBaseQueryBuilder builder = new DataBaseQueryBuilder(RoleGroup.TABLE_NAME);
 		return this.dao.listByQueryWithPagnation(builder, RoleGroup.class);
 	}
-	
-	public EntityResults<RoleGroup>  listRoleGroupForSelect(){
+
+	public EntityResults<RoleGroup> listRoleGroupForSelect() {
 		DataBaseQueryBuilder builder = new DataBaseQueryBuilder(RoleGroup.TABLE_NAME);
 		return this.dao.listByQueryWithPagnation(builder, RoleGroup.class);
 	}
@@ -80,28 +74,26 @@ public class SystemServiceImpl extends AbstractArchiveService implements ISystem
 		builder.or(User.ROLE_NAME, Role.ADMIN.toString());
 		builder.or(User.ROLE_NAME, Role.CUSTOMER_SERVICE.toString());
 		builder.or(User.ROLE_NAME, Role.SUPPER_ADMIN.toString());
-		
+
 		DataBaseQueryBuilder roleQuery = new DataBaseQueryBuilder(RoleGroup.TABLE_NAME);
 		List<RoleGroup> groupList = this.dao.listByQuery(roleQuery, RoleGroup.class);
-		
-		
-		
+
 		EntityResults<User> userData = this.dao.listByQueryWithPagnation(builder, User.class);
-		
+
 		List<User> userList = userData.getEntityList();
 		for (User user : userList) {
 
 			String name = null;
 			if (user.getGroupId() != null) {
 
-				for(RoleGroup group: groupList){
-					if(user.getGroupId().contains(group.getId())){
-						
-						if(name == null){
+				for (RoleGroup group : groupList) {
+					if (user.getGroupId().contains(group.getId())) {
+
+						if (name == null) {
 							name = group.getGroupName();
-							
-						}else{
-							 name = name + ", " + group.getGroupName();
+
+						} else {
+							name = name + ", " + group.getGroupName();
 						}
 					}
 				}
@@ -111,14 +103,18 @@ public class SystemServiceImpl extends AbstractArchiveService implements ISystem
 		return userData;
 	}
 
-
-
 	@Override
-    public EntityResults<Log> listLogs(SearchVo search) {
-	    // TODO Auto-generated method stub
-	    return null;
-    }
+	public EntityResults<Log> listLogs(SearchVo search) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-	
+	public void deleteRoleGroups(List<String> ids) {
+		for (String id : ids) {
+			RoleGroup group = new RoleGroup();
+			group.setId(id);
+			this.dao.deleteById(group);
+		}
+	}
 
 }

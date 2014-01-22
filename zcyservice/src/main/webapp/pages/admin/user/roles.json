@@ -11,6 +11,14 @@
 	"id" : "adm_role_manage",
 	"indexPage" : "web/archive/archivereport"
 },{
+    "text" : "档案下载",
+    "id" : "adm_archive_download",
+    "indexPage" : "web/archive/archivereport"
+},{
+    "text" : "档案打印",
+    "id" : "adm_archive_print",
+    "indexPage" : "web/archive/archivereport"
+},{
 	"text" : "档案管理",
 	"id" : "adm_archive_manage",
 	"indexPage" : "web/archive/archivereport"
@@ -28,7 +36,7 @@
 	"indexPage" : "web/archive/archivereport"
 },{
 	"text" : "档案查询",
-	"id" : "adm_achive_query",
+	"id" : "adm_archive_query",
 	"indexPage" : "web/archive/archivereport"
 },{
 	"text" : "报表统计",

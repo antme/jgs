@@ -1,16 +1,26 @@
 package com.zcyservice.service.impl;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -22,6 +32,7 @@ import com.zcy.cfg.CFGManager;
 import com.zcy.dbhelper.DataBaseQueryBuilder;
 import com.zcy.dbhelper.DataBaseQueryOpertion;
 import com.zcy.exception.ResponseException;
+import com.zcy.lucene.IndexFiles;
 import com.zcy.util.DateUtil;
 import com.zcy.util.EcUtil;
 import com.zcy.util.PdfUtil;
@@ -119,6 +130,18 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		return this.dao.listByQueryWithPagnation(query, Archive.class);
 	}
 
+	public EntityResults<Archive> listPubArchives(Archive archive) {
+
+		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		query.and(DataBaseQueryOpertion.NOT_IN, Archive.ARCHIVE_PROCESS_STATUS, new String[] { ProcessStatus.DRAFT.toString(), ProcessStatus.NEW.toString(),
+		        ProcessStatus.DESTROYING.toString(), ProcessStatus.REJECTED.toString() });
+
+		mergeArchiveQuery(query, archive);
+
+		return this.dao.listByQueryWithPagnation(query, Archive.class);
+
+	}
+
 	private void mergeArchiveQuery(DataBaseQueryBuilder query, Archive archive) {
 
 		DataBaseQueryBuilder childQuery = new DataBaseQueryBuilder(Archive.TABLE_NAME);
@@ -155,16 +178,41 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			childQuery.and(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_JUDGE, archive.getArchiveJudge());
 		}
 
-		if (EcUtil.isValid(archive.getKeyword())) {
+		String keyword = archive.getKeyword();
+		if (EcUtil.isValid(keyword)) {
 
 			DataBaseQueryBuilder childKeyWordQuery = new DataBaseQueryBuilder(Archive.TABLE_NAME);
-			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_APPLICANT, archive.getKeyword());
-			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_JUDGE, archive.getKeyword());
-			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_NAME, archive.getKeyword());
-			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_CODE, archive.getKeyword());
-			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_OPPOSITE_APPLICANT, archive.getKeyword());
 
-			// FIXME: 全文搜索
+			String[] keyWordItems = keyword.split(" ");
+			for (String wordItem : keyWordItems) {
+
+				childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_APPLICANT, wordItem);
+				childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_JUDGE, wordItem);
+				childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_NAME, wordItem);
+				childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_CODE, wordItem);
+				childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_OPPOSITE_APPLICANT, wordItem);
+
+			}
+
+			DataBaseQueryBuilder fileQuery = new DataBaseQueryBuilder(ArchiveFile.TABLE_NAME);
+			fileQuery.limitColumns(new String[] { ArchiveFile.ARCHIVE_ID });
+
+			for (String wordItem : keyWordItems) {
+				fileQuery.or(DataBaseQueryOpertion.LIKE, ArchiveFile.ARCHIVE_TEXT_DATA, wordItem);
+			}
+
+			List<ArchiveFile> files = this.dao.listByQuery(fileQuery, ArchiveFile.class);
+			Set<String> ids = new HashSet<String>();
+
+			for (ArchiveFile file : files) {
+				if (EcUtil.isValid(file.getArchiveId())) {
+					ids.add(file.getArchiveId());
+				}
+			}
+
+			if (EcUtil.isValid(ids)) {
+				childKeyWordQuery.and(DataBaseQueryOpertion.IN, Archive.ID, ids);
+			}
 
 			childQuery.and(childKeyWordQuery);
 
@@ -178,7 +226,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 	public EntityResults<Archive> listNeddApproveArchives(Archive archive) {
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
-		query.and(Archive.ACHIVE_PROCESS_STATUS, ProcessStatus.NEW);
+		query.and(Archive.ARCHIVE_PROCESS_STATUS, ProcessStatus.NEW);
 		mergeArchiveQuery(query, archive);
 		return this.dao.listByQueryWithPagnation(query, Archive.class);
 
@@ -186,7 +234,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 	public EntityResults<Archive> listNeedDestoryApproveArchives(Archive archive) {
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
-		query.and(Archive.ACHIVE_PROCESS_STATUS, ProcessStatus.DESTROYING);
+		query.and(Archive.ARCHIVE_PROCESS_STATUS, ProcessStatus.DESTROYING);
 		mergeArchiveQuery(query, archive);
 		return this.dao.listByQueryWithPagnation(query, Archive.class);
 	}
@@ -427,6 +475,50 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		return yearsCountMap;
 
 	}
+	
+	public void downloadArchiveFile(Archive archive, HttpServletRequest request, HttpServletResponse response) {
+		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		query.and(Archive.ID, archive.getId());
+		query.limitColumns(new String[] { Archive.FOLDER_CODE, Archive.ARCHIVE_TYPE, Archive.ID });
+
+		archive = (Archive) this.dao.findOneByQuery(query, Archive.class);
+
+		String sourcePath = ZcyUtil.getDocumentPath() + File.separator + archive.getFolderCode();
+
+		String targetName = archive.getFolderCode() + archive.getArchiveType() + ".zip";
+
+		if (archive.getArchiveType().equalsIgnoreCase(Archive.ARCHIVE_TYPE_MAIN)) {
+			new IndexFiles().compressedFile(sourcePath, ZcyUtil.getUploadPath(), targetName, "正卷中");
+		} else {
+			new IndexFiles().compressedFile(sourcePath, ZcyUtil.getUploadPath(), targetName, "副卷中");
+		}
+
+		String fileName = ZcyUtil.getUploadPath() + File.separator + targetName;
+		File downloadFile = new File(fileName);
+
+		try {
+
+			// 以流的形式下载文件。
+			InputStream fis = new BufferedInputStream(new FileInputStream(downloadFile));
+			byte[] buffer = new byte[fis.available()];
+			fis.read(buffer);
+			fis.close();
+			// 清空response
+			response.reset();
+			// 设置response的Header
+			response.addHeader("Content-Disposition", "attachment;filename= " + URLEncoder.encode(targetName, "utf-8"));
+			response.addHeader("Content-Length", "" + downloadFile.length());
+			OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
+			response.setContentType("application/octet-stream");
+			toClient.write(buffer);
+			toClient.flush();
+			toClient.close();
+			
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+	}
 
 	private void createAttachTree(List<ArchiveFile> fileList, List<ArchiveTree> firstTrees, String text) {
 		ArchiveTree attachTreeMenu = new ArchiveTree();
@@ -587,6 +679,8 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 					arfile.setArchiveFileProperty(scanType);
 					arfile.setArchiveFilePath(subFile.getAbsolutePath());
 
+					arfile.setArchiveTextData(new IndexFiles().getDocString(subFile.getAbsolutePath()));
+
 					if (scanType.equals(ArchiveFileProperty.MAIN_FILE)) {
 
 						if (EcUtil.isEmpty(archive.getArchiveApplicant())) {
@@ -632,7 +726,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			} else if (line.startsWith("案由")) {
 				reason = line.replaceFirst("案由", "");
 			} else if (line.startsWith("处理结果")) {
-				reason = line.replaceFirst("处理结果", "");
+				results = line.replaceFirst("处理结果", "");
 			} else if (line.startsWith("申请人")) {
 				applicant = line.replaceFirst("申请人", "");
 			} else if (line.startsWith("被申请人")) {

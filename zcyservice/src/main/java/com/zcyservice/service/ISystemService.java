@@ -30,6 +30,8 @@ public interface ISystemService {
 
 	public EntityResults<Log> listLogs(SearchVo search);
 
+	public void deleteRoleGroups(List<String> ids);
+
 
 
 

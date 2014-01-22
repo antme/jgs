@@ -44,7 +44,7 @@ public class SystemSchedule {
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
 		query.and(DataBaseQueryOpertion.GREATER_THAN_EQUALS, Archive.CREATED_ON, c.getTime());
 		query.and(DataBaseQueryOpertion.IS_FALSE, Archive.IS_NEW);
-		query.and(DataBaseQueryOpertion.NOT_IN, Archive.ACHIVE_PROCESS_STATUS, new String[] { ProcessStatus.NEW.toString(), ProcessStatus.REJECTED.toString() });
+		query.and(DataBaseQueryOpertion.NOT_IN, Archive.ARCHIVE_PROCESS_STATUS, new String[] { ProcessStatus.NEW.toString(), ProcessStatus.REJECTED.toString() });
 
 		List<Archive> list = this.dao.listByQuery(query, Archive.class);
 		for (Archive archive : list) {

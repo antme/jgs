@@ -111,8 +111,8 @@
             </div>
             <br/>
         </div>
-		<div id="documentViewer" class="flexpaper_viewer" style="position:absolute;width:770px;height:650px;z-index:2"></div>
-		<div id="documentFiles" style="width:184px;height:350px; float:right; margin-right:10px;">
+		<div id="documentViewer" class="flexpaper_viewer" style="position:absolute;width:720px;height:750px;z-index:2; margin-left: 40px;"></div>
+		<div id="documentFiles" style="width:200px;height:350px; float:right; margin-right:10px;">
 		
 		 	<ul class="easyui-tree" id="firstTrees" data-options="animate:true, state:'closed'"></ul>
 			<ul class="easyui-tree" id="firstAttachTrees" data-options="animate:true, state:'closed'"></ul>

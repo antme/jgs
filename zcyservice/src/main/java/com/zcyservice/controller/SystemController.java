@@ -16,9 +16,8 @@ import com.zcy.annotation.LoginRequired;
 import com.zcy.annotation.Permission;
 import com.zcy.bean.RoleGroup;
 import com.zcy.bean.SystemConfig;
-import com.zcy.bean.User;
 import com.zcy.controller.AbstractController;
-import com.zcyservice.bean.Menu;
+import com.zcyservice.bean.vo.IDS;
 import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.ISystemService;
 import com.zcyservice.util.PermissionConstants;
@@ -34,6 +33,7 @@ public class SystemController extends AbstractController {
 	private ISystemService sys;
 
 	@RequestMapping("/cfg/list.do")
+	@Permission(groupName = PermissionConstants.ADM_SYS_SETTINGS, permissionID = PermissionConstants.ADM_SYS_SETTINGS)
 	public void listSystemConfig(HttpServletRequest request, HttpServletResponse response) {
 		List<SystemConfig> cfgList = sys.listSystemConfig();
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -45,7 +45,7 @@ public class SystemController extends AbstractController {
 	}
 
 	@RequestMapping("/cfg/add.do")
-	@Permission(groupName = PermissionConstants.ADM_RULE_MANAGE, permissionID = PermissionConstants.ADM_RULE_MANAGE)
+	@Permission(groupName = PermissionConstants.ADM_SYS_SETTINGS, permissionID = PermissionConstants.ADM_SYS_SETTINGS)
 	public void addSystemConfig(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> parameters = parserJsonParameters(request, false);
 
@@ -62,9 +62,20 @@ public class SystemController extends AbstractController {
 	}
 
 	@RequestMapping("/group/list.do")
+	@Permission(groupName = PermissionConstants.adm_role_manage, permissionID = PermissionConstants.adm_role_manage)
 	public void listRoleGroups(HttpServletRequest request, HttpServletResponse response) {
 
 		responseWithDataPagnation(sys.listRoleGroups(), request, response);
+
+	}
+	
+	@RequestMapping("/group/del.do")
+	@Permission(groupName = PermissionConstants.adm_role_manage, permissionID = PermissionConstants.adm_role_manage)
+	public void deleteRoleGroups(HttpServletRequest request, HttpServletResponse response) {
+
+		IDS ids = (IDS) parserJsonParameters(request, false, IDS.class);
+		sys.deleteRoleGroups(ids.getIds());
+		responseWithData(null, request, response);
 
 	}
 	
@@ -76,6 +87,7 @@ public class SystemController extends AbstractController {
 	}
 
 	@RequestMapping("/group/add.do")
+	@Permission(groupName = PermissionConstants.adm_role_manage, permissionID = PermissionConstants.adm_role_manage)
 	public void addRoleGroup(HttpServletRequest request, HttpServletResponse response) {
 		RoleGroup group = (RoleGroup) parserJsonParameters(request, false, RoleGroup.class);
 		sys.addRoleGroup(group);
