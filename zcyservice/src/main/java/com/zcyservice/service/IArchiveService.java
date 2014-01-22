@@ -44,4 +44,7 @@ public interface IArchiveService {
 	public List<ArchiveReport> countArchive(SearchVo searchvo);
 	
 	
+	public Map<String, Object> listArchiveReportByYear();
+	
+	
 }

@@ -12,6 +12,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 import com.zcy.cfg.CFGManager;
 import com.zcy.dao.IQueryDao;
 import com.zcy.dao.QueryDaoImpl;
+import com.zcy.dbhelper.DataBaseQueryBuilder;
 import com.zcyservice.bean.Archive;
 import com.zcyservice.service.IArchiveService;
 import com.zcyservice.service.ISystemService;
@@ -68,22 +69,12 @@ public class BaseTestCase extends TestCase {
 //		file = file.substring(scanPath.length() +1);
 //		System.out.println(file);
 		
-		String file = ZcyInitialService.class.getResource("/sigar/.sigar_shellrc").getFile();
+
 		
-		for(int i =0; i< 100; i++){
-			
-			String result = "";
-			int total = 0; 
-			for(int j=0; j<3; j++){
-			
-				int random  = 1+ new java.util.Random().nextInt(6);
-				total = total + random;
-				result = result + random + ",";
-			}
-			
-			System.out.println(result + " ======= " + total);
-		}
+		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		query.distinct(Archive.YEAR);
 		
+		System.out.println(dao.distinctQuery(query, Archive.class));
 		
 		
 //		archiveService.scanArchines();

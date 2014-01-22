@@ -75,6 +75,12 @@ public class ArchiveController extends AbstractController {
 		SearchVo searchvo = (SearchVo) parserJsonParameters(request, true, SearchVo.class);
 		responseWithListData(archiveService.countArchive(searchvo), request, response);
 	}	
+	
+	@RequestMapping("/indexcount.do")
+	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)
+	public void countArchiveByYear(HttpServletRequest request, HttpServletResponse response) {
+		responseWithData(archiveService.listArchiveReportByYear(), request, response);
+	}
 
 	@RequestMapping("/get.do")
 	@Permission(groupName = PermissionConstants.ADM_USER_MANAGE, permissionID = PermissionConstants.ADM_USER_MANAGE)

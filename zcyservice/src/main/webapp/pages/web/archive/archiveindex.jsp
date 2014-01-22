@@ -23,14 +23,7 @@
 </head>
 <body>
 
-	<div style="margin-top:20px; margin-left:30px;padding-top: 30px;">
-		<select onchange="loadReport();">
-			<option value="years">按年度统计</option>
-			<option value="applicant">按申请人统计</option>
-			<option value="oppositeApplicant">按被申请人统计</option>
-		</select>
-	</div>
-	
+
 	
    <div class="p_height_div"></div>
 
@@ -38,6 +31,25 @@
     
     
     <script type="text/javascript">
+    
+    var charData = new Array();
+    var colors = Highcharts.getOptions().colors;
+	 postAjaxRequest("/ecs/archive/indexcount.do", {}, function(data){
+		 console.log(data);
+		 var i =0;
+		 for(key in data){
+			 if(key!="code"){
+				 console.log(data[key]);
+			 }
+			 var itemData = {};
+			 itemData.y = data[key];
+			 itemData.color =colors[i];
+			 i++;
+			 charData.push(itemData);
+		 }
+		 console.log(charData);
+		 
+	 });
     var chart;
 
     
