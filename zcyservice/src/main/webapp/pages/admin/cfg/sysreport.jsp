@@ -19,11 +19,12 @@ SysInfo s =new SysInfo();
 
 	
 		<div class="p_height_div"></div>
-		 <div class="line_seach">
-            <span class="span_style_label"><label class="display_nones">CPU个数：</label></span>
+		 <div class="">
+            <span class="span_style_label"><label class="">CPU个数：</label></span>
             <span class="span_style"><%=sigar.getCpuInfoList().length%></span> 
             
-             <span class="span_style_label"><label class="display_nones">CPU个数：</label></span>
+            <div class="line_clear"></div>
+             <span class="span_style_label"><label class="">CPU个数：</label></span>
             <span class="span_style"><%=sigar.getCpuInfoList().length%></span> 
         </div>
 
