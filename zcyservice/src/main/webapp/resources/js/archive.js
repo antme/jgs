@@ -16,14 +16,14 @@ function formatterArchiveType(val, row, rowindex) {
 
 function formatterArchiveApproveView(val, row, rowindex) {
 	
-	return '<a href="?p=flexpaper/simple_document&action=approve&id=' + row.id + '"><button style="cursor:pointer">审核</button></a>';
+	return '<span class="span_style"><a href="?p=flexpaper/simple_document&id=' + row.id + '"><img height="16" width="16" src="/resources/images/print-preview.png"></img></a></span><span class="span_style" style="margin-left:10px;"><a href="?p=flexpaper/simple_document&action=approve&id=' + row.id + '"><button class="sh" style="cursor:pointer"></button></a></span>';
 }
 
 function formatterArchiveEidt(val, row, rowindex){
 	return '<span class="span_style"><a href="?p=flexpaper/simple_document&id=' + row.id + '"><img height="16" width="16" src="/resources/images/print-preview.png"></img></a></span><span class="span_style" style="margin-left:5px;"><a class="table_eidt" href="?p=web/archive/archiveedit&id=' + row.id + '"></a></span><span class="span_style" style="margin-left:5px;"><button class="table_delect" onclick=deletarchiveWindow("'+ row.id+'");>&nbsp;</button></span>';
 }
 function formatterRecordEidt(val, row, rowindex){
-	return '<button class="table_eidt" onclick=getrecordWindow("'+ row.id+'");>&nbsp;</button>';
+	return '<span class="span_style"><a href="?p=flexpaper/simple_document&id=' + row.id + '"><img height="16" width="16" src="/resources/images/print-preview.png"></img></a></span><span class="span_style" style="margin-left:5px;"><button class="table_eidt" onclick=getrecordWindow("'+ row.id+'");>&nbsp;</button></span>';
 }
 
 
@@ -186,7 +186,13 @@ function deletarchive(){
 	if($("#destroyComments").val()=="" || $("#destroyComments").val()==null){
 		$.messager.alert("销毁失败","请选择填写销毁原因！");
 	}else{
-		$("#delerecordForm").submit();
+		$.messager.confirm('信息','审核过后档案将彻底删除，请确认是否销毁?',function(r){   
+		    if (r){   
+		    	$("#delerecordForm").submit();  
+		    }else{
+		    	$('#delerecord').window('close');
+		    }   
+		});  
 	}
 }
 

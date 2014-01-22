@@ -138,6 +138,17 @@
     line-height:28px;
 }
 
+.btn_delected{
+    width:100px;
+    height:28px;
+    background: url("../images/delet_btn.png") no-repeat;
+    color:#fff;
+    cursor:pointer;
+    border:0;
+    text-algin:center;
+    line-height:28px;
+}
+
 .btn_add_two{
     width:87px;
     height:28px;
@@ -442,4 +453,14 @@
 #archive_title{
 	padding-top:10px;
 	
+}
+.sh{
+	width:16px;
+    height:16px;
+    border:none;
+    background:url("../images/table_sh.png") no-repeat;
+    _background-image: none;
+    _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="resources/images/table_sh.png",sizingMethod='scale');
+    display:inline-block;
+    cursor:pointer;
 }

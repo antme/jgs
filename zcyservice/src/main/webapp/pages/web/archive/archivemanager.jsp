@@ -240,6 +240,13 @@
   <script type="text/javascript">
      $(document).ready(function(){
 	    initArchiveManagePage();
+	    $('#archiveList').datagrid({
+	        rowStyler: function(index,row){
+	            if (row.isNew==true || row.isNew=="true"){
+	                return 'background:url(/resources/images/new.png) no-repeat 3px 0px;';
+	            }
+	        }
+	    });
 	 });	  
   </script>
 

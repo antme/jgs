@@ -19,6 +19,10 @@
 		<div title="权限设置" style="padding: 10px;margin-left:30px;">
 			<button class="btn_add" onclick="openAddGroupWindow();">新增权限</button>
 			<div class="line_clear"></div>
+			<div>
+               <span class="span_style">“<img height="16" width="16" src="/resources/images/table_edit.png" />”</span>
+               <span class="span_style">代表编辑</span>
+            </div>
 			<table class="easyui-datagrid_tf" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true" id="groupList"  url="/ecs/sys/group/list.do" iconCls="icon-save" sortOrder="asc"  pagination="true"  singleSelect="true" data-options="onClickRow: onGroupPermissionClickRow">
 	        <thead>
 	            <tr>
@@ -83,7 +87,7 @@
 	}
 	 
 	function formatterGroupOperation(val, row){
-		return '<button onclick=editRoleGroups("' + row.id + '");>编辑</button>';
+		return '<button class="table_eidt" onclick=editRoleGroups("' + row.id + '");></button>';
 	}
 	
 	function editRoleGroups(id){

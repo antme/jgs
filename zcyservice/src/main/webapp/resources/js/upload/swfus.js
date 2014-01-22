@@ -6,7 +6,7 @@ var swfu,swfu1,swfu2,swf3;
                     
                     // File Upload Settings
                     file_size_limit : "100 MB",  // 1000MB
-                    file_types : "*.*",
+                    file_types : "*.pdf",
                     file_types_description : "所有文件",
                     file_upload_limit : "1",
                     file_queue_limit : "1",

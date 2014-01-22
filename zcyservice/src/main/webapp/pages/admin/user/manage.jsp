@@ -61,6 +61,10 @@
 		<div class="line_clear"></div>
 	</div>
 	<div style="margin-left:40px;">
+         <span class="span_style">“<img height="16" width="16" src="/resources/images/table_edit.png" />”</span>
+         <span class="span_style">代表编辑</span>
+    </div>
+	<div style="margin-left:40px;">
 			<table id="userList"  class="easyui-datagrid_tf" iconCls="icon-save" url="/ecs/user/manage.do" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
 				<thead>
 					<tr>
@@ -114,8 +118,7 @@
                         <div class="r-edit-label">Email：</div>
                         <div class="r-edit-field">
                             <input id="email" name="email" class="r-textbox easyui-validatebox"
-                                required type="text" missingMessage="请输入Email" /> <label
-                                class="r-need">*</label>
+                                required type="text"  /> 
                         </div>
                     </li>
                     <li>

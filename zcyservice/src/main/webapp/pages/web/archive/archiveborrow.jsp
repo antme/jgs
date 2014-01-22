@@ -19,6 +19,12 @@
     </div>
     <div class="line_clear"></div>
     <div style="margin-left:40px;">
+       <span class="span_style">“<img height="16" width="16" src="/resources/images/print-preview.png" />”</span>
+       <span class="span_style">代表预览</span>
+       <span class="span_style">“<img height="16" width="16" src="/resources/images/table_edit.png" />”</span>
+       <span class="span_style">代表编辑</span>
+    </div>
+    <div style="margin-left:40px;">
             <table id="archiveList"  class="easyui-datagrid_tf" url="/ecs/archive/borrow/list.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
                 <thead>
                     <tr>
@@ -27,9 +33,6 @@
                         <th align="center"  field="borrowingName" width="120" sortable="false" >调阅人</th>
                         <th align="center"  field="borrowingOrganization" width="220" sortable="false" >调阅单位</th>
                         <th align="center"  field="borrowingDate" width="120" sortable="false" >调阅日期</th>
-                        
-                        
-                        <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="100">备注</th>
                         <th align="center" data-options="field:'eidt'" formatter="formatterRecordEidt"  width="100">操作</th>
                     </tr>
                 </thead>
@@ -40,8 +43,8 @@
             <form action="" id="addrecordForm" method="post" novalidate>
                 <div class="ac_div" >
                     <span class="span_style"><label class="ac_title">调阅卷宗</label></span>
-                    <span class="span_style border-left" style="padding:5px;">
-                    <input id="archiveId" class="easyui-combobox" type="text"  data-options="loader: myloader,mode: 'remote',valueField: 'id',textField: 'name',width:128"/>
+                    <span class="span_style border-left none" style="padding:5px;">
+                    <input id="archiveId" class="easyui-combobox" type="text"  data-options="loader: myloader,mode: 'remote',valueField: 'id',textField: 'name',width:231"/>
                     <input name="archiveId" type="hidden"/>
                     </span>
                 </div>  
@@ -78,6 +81,9 @@
   <script type="text/javascript">
      $(document).ready(function(){
     	 initAddBorrowRecordPage();
+    	 $(".none").find(".combo").css({"width":"231px","height":"30px","background":"url(resources/images/public_select3.jpg) no-repeat"});
+    	 $(".none").find(".combo-arrow").css({"width":"15px","height":"30px"});
+    	 $(".none").find(".combo-text").css({"width":"205px","height":"25px","margin":"2px 0px 0px 2px","line-height":"25px","_width":"93px","_height":"30px","color":"#000","text-align":"center"});
      });      
   </script>
 </body>

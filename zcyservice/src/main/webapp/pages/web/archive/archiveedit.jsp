@@ -27,7 +27,7 @@
      <form action="" id="addarchiveForm" method="post" novalidate>
       <div id="change_btn" style="padding: 10px"><input type="radio" name="archiveType" value="MAIN" checked/><label>正卷宗</label>&nbsp;<input name="archiveType" value="SECOND" type="radio" /><label>副卷宗</label></div>
 
-      <div title="附件上传" style="padding: 10px">
+      <div title="附件上传" style="padding: 10px; border-bottom:1px solid #cdcdcd;">
                <div id="fj">
                 <div class="ac_div zjz" >
                     <span class="span_style"><label class="ac_title2 ">卷宗</label></span>
@@ -111,6 +111,16 @@
                     <div class="ac_div">
                     <span class="span_style"><label class="ac_title">承办人</label></span>
                     <span class="span_style border-left span_width"><input class="ac_input2 easyui-validatebox" type="text" name="archiveJudge" required missingMessage="请输入承办人"/></span>
+                    </div>
+                    <div class="ac_div">
+                    <span class="span_style"><label class="ac_title">档案状态</label></span>
+                    <span class="span_style border-left span_width">
+                         <select class="easyui-combobox display_nones" name="archiveStatus" style="width:128px;height:30px;background:url(/resources/images/public_select.png) no-repeat;" data-options="multiple:false" id="archiveStatus">
+                             <option value="" selected>档案状态</option>
+                             <option value="ARCHIVED">已归档</option>
+                             <option value="NEW">未归档</option>
+                         </select>
+                    </span>
                     </div>
                     <div class="ac_div">
                     <div class="ac_div">

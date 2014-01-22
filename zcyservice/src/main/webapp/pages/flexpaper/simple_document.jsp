@@ -46,10 +46,10 @@
     if(action!=null){
 
 %>
-        <div id="archive_approve" style="margin:0px 40px;">
+        <div id="archive_approve" style="margin:0px 40px;padding-top:20px;">
             <input type="hidden" id="archiveId"/>
-            <button onclick="approveArchive();">批准</button>
-            <button onclick="rejectArchive();">拒绝</button>
+            <button class="btn_add" onclick="approveArchive();">批准</button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="btn_delected" onclick="rejectArchive();">拒绝</button>
         </div>
         
 <%

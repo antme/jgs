@@ -31,6 +31,12 @@
 
     <div class="line_clear"></div>
     <div style="margin-left:40px;">
+       <span class="span_style">“<img height="16" width="16" src="/resources/images/print-preview.png" />”</span>
+       <span class="span_style">代表预览</span>
+       <span class="span_style">“<img height="16" width="16" src="/resources/images/table_sh.png" />”</span>
+       <span class="span_style">代表审核</span>
+    </div>
+    <div style="margin-left:40px;">
             <table id="archiveList"  class="easyui-datagrid_tf" url="/ecs/archive/listNew.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
                 <thead>
                     <tr>
@@ -40,8 +46,7 @@
                         
                         <th align="center"  field="createdOn" width="120" sortable="false" >归档时间</th>
                         <th align="center"  field="userName" width="120" sortable="false" >申请人</th>
-                        <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="150">预览</th>
-                        <th align="center" data-options="field:'archiveProcessStatus'" formatter="formatterArchiveApproveView"  width="150">审核</th>
+                        <th align="center" data-options="field:'archiveProcessStatus'" formatter="formatterArchiveApproveView"  width="100">操作</th>
                     </tr>
                 </thead>
             </table>
