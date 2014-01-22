@@ -32,54 +32,44 @@
     
     <script type="text/javascript">
     
+    
     var charData = new Array();
-    var colors = Highcharts.getOptions().colors;
+    var categories = new Array();
+
+    var chart;
+
+    
+    $(document).ready(function(){
+        
+     var colors = Highcharts.getOptions().colors;
 	 postAjaxRequest("/ecs/archive/indexcount.do", {}, function(data){
-		 console.log(data);
 		 var i =0;
 		 for(key in data){
 			 if(key!="code"){
-				 console.log(data[key]);
-			 }
+			 
 			 var itemData = {};
 			 itemData.y = data[key];
 			 itemData.color =colors[i];
 			 i++;
 			 charData.push(itemData);
+			 
+			 categories.push('<a style="text-decoration:none;*+line-height:19px;margin-top:10px;display:inline-block;" href="index.jsp?p=web/archive/archivelist&year='+key.replace("year", "") +'">' + key.replace("year", "")+'年</a>');
+			 }
 		 }
-		 console.log(charData);
-		 
+		 queryOrderStat();
+		
 	 });
-    var chart;
+	 
+	
+	 
+    });
 
     
-    function queryOrderStat(type){
-       
-    	var response ={
-    			"year13":800,
-    			"year12":500,
-    			"year14":100
-    	};
+    function queryOrderStat(){
+	    	
              var text = "档案数汇总";
            
-                var colors = Highcharts.getOptions().colors,
-                    categories = ['<a style="text-decoration:none;*+line-height:19px;margin-top:10px;display:inline-block;" href="index.jsp?p=web/archive/archivelist&poStatus=INACTIVE">2012</a>', 
-                            '<a style="text-decoration:none;*+line-height:19px;margin-top:10px;display:inline-block;" href="index.jsp?p=web/archive/archivelist&poStatus=NEED_SP_CONFIRM">2013</a>', 
-                            '<a style="text-decoration:none;*+line-height:19px;margin-top:10px;display:inline-block;" href="index.jsp?p=web/archive/archivelist&poStatus=ACCEPTED">2014</a>'],
-                    name = '订单状态',
-                    data = [{
-                            y: response.year12,
-                            color: colors[0]
-                        }, {
-                            y: response.year13,
-                            color: colors[1]
-                        }, {
-                            y: response.year14,
-                            color: colors[2]
-                        }];
-            
 
-            
                 var chart = $('#sp-chart').highcharts({
                     chart: {
                         type: 'column'
@@ -123,21 +113,7 @@
                     tooltip: {
                         formatter: function() {
                             var url = "index.jsp?p=web/archive/archivelist";
-
-                            if(this.x == "未激活"){
-                                url = url + "&poStatus=INACTIVE";
-                            }else if(this.x == "待服务商确认"){
-                                url = url + "&poStatus=NEED_SP_CONFIRM";
-                            }else if(this.x == "已确认待分配"){
-                                url = url + "&poStatus=ACCEPTED";
-                            }else if(this.x == "已分配未安装"){
-                                url = url + "&poStatus=ASSIGNED";
-                            }else if(this.x == "人工处理"){
-                                url = url + "&poStatus=MANUAL";
-                            }else if(this.x == "已取消"){
-                                url = url + "&poStatus=CANCELLED";
-                            }
-                            
+                         
                             var point = this.point,
                                 s = this.x +': <a target="_blank"  style="color:red;" href="' + url +'">'+ this.y +'</a> 份档案归档';
                             return s;
@@ -145,7 +121,7 @@
                     },
                     series: [{
                         name: name,
-                        data: data,
+                        data: charData,
                         color: 'white'
                     }],
                     exporting: {
@@ -158,11 +134,7 @@
  
     }
     
-    $(function () {
-    	queryOrderStat();
-       
-  
-    });
+
     </script>
 </body>
 </html>
