@@ -38,7 +38,7 @@ public class Archive extends BaseEntity {
 
 	public static final String ARCHIVE_CODE = "archiveCode";
 
-	public static final String ACHIVE_PROCESS_STATUS = "archiveProcessStatus";
+	public static final String ARCHIVE_PROCESS_STATUS = "archiveProcessStatus";
 
 	public static final String TABLE_NAME = "Archive";
 
@@ -67,7 +67,7 @@ public class Archive extends BaseEntity {
 	public ArchiveStatus archiveStatus;
 
 	// 审批状态
-	@Column(name = ACHIVE_PROCESS_STATUS)
+	@Column(name = ARCHIVE_PROCESS_STATUS)
 	@Expose
 	public ProcessStatus archiveProcessStatus;
 

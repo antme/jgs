@@ -2,6 +2,9 @@ package com.zcyservice.service;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.zcy.bean.BaseEntity;
 import com.zcy.bean.EntityResults;
 import com.zcyservice.bean.Archive;
@@ -14,6 +17,8 @@ public interface IArchiveService {
 	public void scanArchines();
 
 	public EntityResults<Archive> listArchives(Archive archive);
+	
+	public EntityResults<Archive> listPubArchives(Archive archive);
 
 	public Map<String, Object> listArchiveFiles(Archive archive);
 
@@ -43,6 +48,11 @@ public interface IArchiveService {
 	
 	
 	public Map<String, Object> listArchiveReportByYear();
+
+	public void downloadArchiveFile(Archive archive, HttpServletRequest request, HttpServletResponse response);
+	
+	
+	
 	
 	
 }

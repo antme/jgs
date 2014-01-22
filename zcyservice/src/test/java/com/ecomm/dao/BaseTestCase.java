@@ -13,6 +13,7 @@ import com.zcy.cfg.CFGManager;
 import com.zcy.dao.IQueryDao;
 import com.zcy.dao.QueryDaoImpl;
 import com.zcy.dbhelper.DataBaseQueryBuilder;
+import com.zcy.lucene.IndexFiles;
 import com.zcyservice.bean.Archive;
 import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.IArchiveService;
@@ -70,7 +71,9 @@ public class BaseTestCase extends TestCase {
 //		file = file.substring(scanPath.length() +1);
 //		System.out.println(file);
 		
-		archiveService.countArchive(new SearchVo());
+//		archiveService.countArchive(new SearchVo());
+		
+//		new IndexFiles().compressedFile("E:\\zcy\\doc", "E:\\zcy\\upload\\test", "正卷中");
 		
 		
 //		archiveService.scanArchines();
