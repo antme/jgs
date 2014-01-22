@@ -161,6 +161,13 @@ public class Archive extends BaseEntity {
 	@Expose
 	public String filePath;
 	
+	@Expose
+	public String reportKey;
+	
+	
+	@Expose
+	public Integer count;
+	
 	
 
 	public String getArchiveCode() {
@@ -379,6 +386,30 @@ public class Archive extends BaseEntity {
 
 	public void setIsNew(Boolean isNew) {
 		this.isNew = isNew;
+	}
+
+
+
+
+
+	public String getReportKey() {
+		return reportKey;
+	}
+
+	public void setReportKey(String reportKey) {
+		this.reportKey = reportKey;
+	}
+
+
+
+
+
+	public Integer getCount() {
+		return count;
+	}
+
+	public void setCount(Integer count) {
+		this.count = count;
 	}
 
 

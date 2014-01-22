@@ -24,10 +24,10 @@
 <body>
 
 	<div style="margin-top:20px; margin-left:40px;padding-top: 30px;">
-		<select onchange="loadReport();">
-			<option value="years">按年度统计</option>
-			<option value="applicant">按申请人统计</option>
-			<option value="oppositeApplicant">按被申请人统计</option>
+		<select onchange="loadReport();" id="report_type">
+			<option value="year">按年度统计</option>
+			<option value="archiveApplicant">按申请人统计</option>
+			<option value="archiveOppositeApplicant">按被申请人统计</option>
 		</select>
 	</div>
 	
@@ -38,8 +38,8 @@
             <table id="archiveListYear"  class="easyui-datagrid_tf" url="/ecs/archive/count.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
                 <thead>
                     <tr>
-                        <th align="center"  field="archiveCode"  width="100"  sortable="false">统计纬度</th>                    
-                        <th align="center"  field="archiveName"  width="150"  sortable="false">卷宗数</th>
+                        <th align="center"  field="reportKey"  width="100"  sortable="false">统计纬度</th>                    
+                        <th align="center"  field="count"  width="150"  sortable="false">卷宗数</th>
                     </tr>
                 </thead>
             </table>
@@ -49,15 +49,17 @@
         
    <script type="text/javascript">
  
-    function queryOrderStat(type){
-       
-    
- 
-    }
-    
-    $(function () {
-    	queryOrderStat();
-    });
+	   function loadReport(){
+		   	var report = $("#report_type").val();
+		   	var data = {"reportType" : report};
+		   	$("#archiveListYear").datagrid("reload",data);
+		   	
+			
+	   }
+	   
+	   
+
+
     </script>
 </body>
 </html>

@@ -24,8 +24,6 @@
         <if test="queryStr!=null">
             where ${queryStr}
         </if>
-
-        
 	</select>
 
 	<select id="listByQuery" resultMap="map">
