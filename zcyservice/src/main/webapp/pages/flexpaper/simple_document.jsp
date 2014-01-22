@@ -117,7 +117,9 @@
 		 	<ul class="easyui-tree" id="firstTrees" data-options="animate:true, state:'closed'"></ul>
 			<ul class="easyui-tree" id="firstAttachTrees" data-options="animate:true, state:'closed'"></ul>
 
+            <div class="line_clear"></div>
 		
+		    <ul ><a id="download"  href="#">下载档案</a></ul>
 		</div>
 		<div class="watermark11"></div>
 		<script type="text/javascript">
@@ -136,6 +138,7 @@
 			
 			var startPage = <%=startPage%>;
 			var id = "<%=id%>";
+			$("#download").attr("href", "/ecs/archive/dowload.do?id=" + id);
 			var RenderingOrder  = '<%=(conf.getConfig("renderingorder.primary", "") + "," +	conf.getConfig("renderingorder.secondary", "")) %>';
 			var  jsDirectory = '<%=dir%>js/';
 			var localeDirectory = '<%=dir %>locale/';
