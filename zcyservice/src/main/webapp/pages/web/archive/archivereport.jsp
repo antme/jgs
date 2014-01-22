@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>我的订单</title>
+<title>数据统计</title>
 <script type="text/javascript" src="/resources/js/highcharts.js"></script>
 <style type="text/css">
     .highcharts-legend{
@@ -22,7 +22,11 @@
 </style>
 </head>
 <body>
-
+    <div class="line_clear"></div>
+           <div class="public_title">
+              <div class="public_title_icon">​</div>​
+              <label class="public_title_text">数据统计</label>
+    </div>
 	<div style="margin-top:20px; margin-left:40px;padding-top: 30px;">
 		<select onchange="loadReport();" id="report_type">
 			<option value="year">按年度统计</option>

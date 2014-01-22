@@ -38,7 +38,7 @@
     <div class="line_clear"></div>
     <div class="public_title">
         <div class="public_title_icon">​</div>​
-        <label class="public_title_text">用户管理</label>
+        <label class="public_title_text">用户账号管理</label>
     </div>
     <div class="line_clear"></div>
 	<div class="public_search_div">
@@ -55,6 +55,7 @@
 			     </select>
 			</span> 
 			<span class="span_style" style="margin-left:10px;"><button class="public_search_btn display_nones" onclick="searchUser()"></button></span>
+			<span class="span_style"><div style="margin-left:10px;color:red;font-size:12px;">关键字搜索：多个关键字之间请用空格隔开</div></span>
 		</div>
 		<div class="line_clear"></div>
 		<button class="btn_add" onclick="openAdduserWindow();">新增用户</button>

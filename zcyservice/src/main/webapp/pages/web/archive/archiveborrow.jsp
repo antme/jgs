@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>档案查询</title>
+<title>借阅管理</title>
 <script type="text/javascript" src="resources/js/ecommerce.js"></script>
 <script type="text/javascript" src="/resources/js/jquery.easyui.min.js"></script>
 <link href="/resources/css/easyui.css" rel="stylesheet"/>
@@ -12,8 +12,15 @@
 
 </head>
 <body>
-
+    <div class="line_clear"></div>
+           <div class="public_title">
+              <div class="public_title_icon">​</div>​
+              <label class="public_title_text">借阅管理</label>
+    </div>
+    <div class="line_clear"></div>
     <%@ include file="/pages/web/archive/searcharchive.jsp"%>
+    <div style="margin-left:50px;color:red;font-size:12px;">关键字搜索：多个关键字之间请用空格隔开</div>
+    <div class="line_clear"></div>
        <div style="margin-left:50px;">
         <button class="btn_add" onclick="openAddrecordWindow();">新增借阅记录</button>
     </div>

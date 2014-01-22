@@ -464,3 +464,8 @@
     display:inline-block;
     cursor:pointer;
 }
+.bottom_info{
+	width:960px;
+	margin:10px auto;
+	text-algin:center;
+}

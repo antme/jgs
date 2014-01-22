@@ -83,10 +83,19 @@ var swfu,swfu1,swfu2,swf3;
                 
             };
             function startUploadFile(){
-                swfu.startUpload();
+            	if($("#infoTable").find("tr").length!=0){
+            		swfu.startUpload();
+            	}else{
+            		alert("请选择待上传的文件！");
+            	}
+                
             }
             function startUploadFile1(){
-                swfu1.startUpload();
+                if($("#thumbnails1").find("tr").length!=0){
+                	swfu1.startUpload();
+            	}else{
+            		alert("请选择待上传的文件！");
+            	}
             }
             function startUploadFile2(){
                 swfu2.startUpload();

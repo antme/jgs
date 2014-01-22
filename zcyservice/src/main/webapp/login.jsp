@@ -47,7 +47,7 @@
                            $("#randomcode").attr("src", "/ecs/user/img.do?_id=" + +Math.random());
                        }
                     </script>
-                    <p class="cal_cen_tip"><label class="cal_cen_lab_c" id="tsMsg"></label></p>
+                    <p class="cal_cen_tip"><label class="cal_cen_lab_c" id="tsMsg">如果忘记密码请联系管理员重置密码</label></p>
                     <span class="cal_cen_login_btn_bg" onclick="login()"></span>
                 </span>
                 </form>
