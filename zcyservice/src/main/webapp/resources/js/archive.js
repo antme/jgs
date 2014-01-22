@@ -82,15 +82,18 @@ function initArchiveManagePage(){
 	      },
 	      success : function(data) {
 	
-	    	  if($("#sid").val()==undefined){
-	        	  $("#sid").val(data.id);
-	    		  $.messager.alert("添加档案","添加档案成功！");
-			   }else{
-				   
-				   $.messager.alert("编辑档案","编辑档案成功！");
-			   }
 	    	  
-	    
+	    	  if($("#sid").val()==undefined){
+	    		  
+	    		  dealMessageWithCallBack(data, "添加档案", function(){
+	    			  $("#sid").val(data.id);
+		    		  $.messager.alert("添加档案","添加档案成功！");
+	    		  })
+			   }else{
+				   dealMessageWithCallBack(data, "编辑档案", function(){
+					   $.messager.alert("编辑档案","编辑档案成功！");
+				   })				  
+			   }  
 	
 	      }
 	});
