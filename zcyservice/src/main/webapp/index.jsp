@@ -87,8 +87,11 @@
            <li class="menu_cline" access="adm_sys_settings"></li>
           
           <li class="access" access="adm_sys_settings">
-              <a href="?p=admin/cfg/cfg">系统设置</a>
-           
+              <a href="#">系统管理</a>
+              <ul class="ul_display">
+                 <li><a href="?p=admin/cfg/cfg">系统设置</a></li>
+                 <li><a href="?p=admin/cfg/sysreport">系统状态监控</a></li>
+              </ul>
            </li>
            
        </ul>
