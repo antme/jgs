@@ -190,7 +190,6 @@
                     var $a = $(links[index].parentNode);
                     var a_herf=$(links[index]).attr('href');
                     pagePath=String(pagePath);
-                    console.log($(links[index]).text());
                     if($(links[index]).text()=="首页" || $(links[index]).text()=="档案管理" || $(links[index]).text()=="归档审核" ||  $(links[index]).text()=="销毁审核" || $(links[index]).text()=="系统设置"
                     || $(links[index]).text()=="借阅管理" || $(links[index]).text()=="档案查询" || $(links[index]).text()=="数据统计"){                	
                     	$(".index_menu a").removeClass('menu_mouse_css');
@@ -248,9 +247,14 @@
 	    
 	    
 	    var userRoles = undefined;
-	    
 	    postAjaxRequest("/ecs/user/access.do", {}, function(data) {
 	        userRoles = data.data;
+	        for(i in userRoles){    
+
+	        	userRolestr +=userRoles[i];
+
+            }
+	        
 	        checkRoles();
 	    }, false);
 

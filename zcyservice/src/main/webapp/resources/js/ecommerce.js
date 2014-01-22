@@ -1,6 +1,8 @@
 var idParam = undefined;
 var gridId = undefined;
 var ieGridPopupInit = false;
+var userRolestr = undefined;
+
 function loadRemotePage(page, config) {	
 	if (page) {
 		var url = page;

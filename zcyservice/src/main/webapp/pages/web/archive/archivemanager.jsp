@@ -41,6 +41,7 @@
                 <thead>
                     <tr>
                         <th align="center"  field="archiveCode"  width="110"  sortable="false" formatter="formatterArchiveStyle">案号</th>
+                        <th align="center"  field="archiveApplicant"  width="60"  sortable="false">申请人</th>
                         <th align="center"  field="archiveName"  width="150"  sortable="false">案由</th>
                         <th align="center"  field="archiveType"  formatter="formatterArchiveType"  width="50"  sortable="false">类型</th>
                         <th align="center"  field="archiveStatus" formatter="formatterArchiveStatus"  width="50" sortable="false" >状态</th>
@@ -49,7 +50,7 @@
                         
                         <th align="center"  field="createdOn" width="85" sortable="false" >归档时间</th>
                         <!--  <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="60">预览</th> -->
-                        <th align="center" data-options="field:'eidt'" formatter="formatterArchiveEidt"  width="60">操作</th>
+                        <th align="center" data-options="field:'eidt'" formatter="formatterArchiveEidt"  width="70">操作</th>
                     </tr>
                 </thead>
             </table>

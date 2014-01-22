@@ -119,7 +119,7 @@
 
             <div class="line_clear"></div>
 		
-		    <ul ><a id="download"  href="#">下载档案</a></ul>
+		    <ul ><a id="download"  href="#" style="display:none;">下载档案</a></ul>
 		</div>
 		<div class="watermark11"></div>
 		<script type="text/javascript">
@@ -138,7 +138,7 @@
 			
 			var startPage = <%=startPage%>;
 			var id = "<%=id%>";
-			$("#download").attr("href", "/ecs/archive/dowload.do?id=" + id);
+	
 			var RenderingOrder  = '<%=(conf.getConfig("renderingorder.primary", "") + "," +	conf.getConfig("renderingorder.secondary", "")) %>';
 			var  jsDirectory = '<%=dir%>js/';
 			var localeDirectory = '<%=dir %>locale/';
@@ -157,6 +157,17 @@
 			
 			
 			function intPdfView(pdfFilePath, pdfStartDocumentFile, pdfStartPage){
+				var canPrint = false;
+				if(userRolestr && userRolestr.indexOf("adm_archive_download")!=-1){
+                      $("#download").attr("href", "/ecs/archive/dowload.do?id=" + id);
+                      $("#download").show();
+                }
+				
+			    if(userRolestr && userRolestr.indexOf("adm_archive_print")!=-1){
+			    	canPrint = true;
+                }
+              
+				
 				$('#documentViewer').FlexPaperViewer({
 					 config : {
 						 DOC : escape(getDocumentUrl(pdfFilePath)),
@@ -178,8 +189,8 @@
 						 NavToolsVisible : false,
 						 CursorToolsVisible : true,
 						 SearchToolsVisible : true,
-						 PrintEnabled : true,
-						 PrintVisible : true,
+						 PrintEnabled : canPrint,
+						 PrintVisible : canPrint,
 						 DocSizeQueryService : "?p=flexpaper/swfsize&doc=" + pdfStartDocumentFile,
 						 jsDirectory : jsDirectory,
 						 localeDirectory : localeDirectory,
@@ -194,10 +205,14 @@
 			}
 			
 			 $(document).ready(function(){
+			 
 				 var h_height=$("#archive_info").height()+650+$(".public_title").height()+100;
 				 $(".context").css("height",h_height+"px");
 				 $("#archiveId").val(id);
 				 postAjaxRequest("/ecs/archive/files.do", {id:id}, function(data){
+					 
+					
+		                 
 					 var firstTrees = data.firstTrees;
 					 var firstAttachTrees = data.firstAttachTrees;
 					 $('#firstTrees').tree('loadData', firstTrees);
