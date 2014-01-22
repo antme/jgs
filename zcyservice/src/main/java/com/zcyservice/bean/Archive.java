@@ -11,6 +11,7 @@ import com.zcy.bean.BaseEntity;
 
 @Table(name = Archive.TABLE_NAME)
 public class Archive extends BaseEntity {
+	public static final String IS_NEW = "isNew";
 	public static final String ARCHIVE_TYPE_MAIN = "MAIN";
 	public static final String ARCHIVE_TYPE_SECOND = "SECOND";
 
@@ -131,6 +132,12 @@ public class Archive extends BaseEntity {
 	@Column(name = ARCHIVE_TYPE)
 	@Expose
 	public String archiveType;
+	
+	
+	@Column(name = IS_NEW)
+	@Expose
+	public Boolean isNew;
+	
 	
 	//页面搜索字段
 	@Expose
@@ -361,6 +368,19 @@ public class Archive extends BaseEntity {
 	public void setArchiveType(String archiveType) {
     	this.archiveType = archiveType;
     }
+
+
+	
+
+
+	public Boolean getIsNew() {
+		return isNew;
+	}
+
+	public void setIsNew(Boolean isNew) {
+		this.isNew = isNew;
+	}
+
 
 
 

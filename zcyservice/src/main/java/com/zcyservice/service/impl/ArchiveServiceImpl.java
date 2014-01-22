@@ -89,7 +89,9 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		query.and(Archive.ARCHIVE_CODE, arc.getArchiveCode());
 		query.and(Archive.ARCHIVE_TYPE, archiveType);
 
-		if (!this.dao.exists(query) && EcUtil.isValid(arc.getArchiveCode()) && mainFiles != null) {
+		if (!this.dao.exists(query) && EcUtil.isValid(arc.getArchiveCode()) && mainFiles != null && mainFiles.size() == 1) {
+
+			arc.setIsNew(true);
 
 			this.dao.insert(arc);
 
@@ -311,11 +313,14 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			files.addAll(scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "副卷中" + File.separator + "附件", archive, ArchiveFileProperty.ATTACH_FILE));
 		}
 
-		dao.insert(archive);
-		for (ArchiveFile afile : files) {
-			afile.setArchiveId(archive.getId());
+		if (files.size() > 0) {
+			archive.setIsNew(true);
+			dao.insert(archive);
+			for (ArchiveFile afile : files) {
+				afile.setArchiveId(archive.getId());
 
-			this.dao.insert(afile);
+				this.dao.insert(afile);
+			}
 		}
 
 	}
@@ -544,9 +549,14 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 							getDocumentInfo(subFile.getAbsolutePath(), archive);
 
 						}
-					}
 
-					files.add(arfile);
+						if (subFile.getName().toLowerCase().contains(".pdf")) {
+							files.add(arfile);
+						}
+					} else {
+
+						files.add(arfile);
+					}
 
 				}
 

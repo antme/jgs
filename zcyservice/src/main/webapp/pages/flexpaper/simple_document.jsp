@@ -167,7 +167,7 @@
 						 ProgressiveLoading : true,
 						 MinZoomSize : 0.5,
 						 MaxZoomSize : 8,
-						 StartAtPage : startPage,
+						 StartAtPage : pdfStartPage,
 						 SearchMatchAll : true,
 						 RenderingOrder : RenderingOrder,
 						 ViewModeToolsVisible : true,
@@ -196,6 +196,7 @@
 				 $("#archiveId").val(id);
 				 postAjaxRequest("/ecs/archive/files.do", {id:id}, function(data){
 					 var firstTrees = data.firstTrees;
+					 var firstAttachTrees = data.firstAttachTrees;
 					 $('#firstTrees').tree('loadData', firstTrees);
 					 $('#firstAttachTrees').tree('loadData', data.firstAttachTrees);
 
@@ -228,6 +229,29 @@
 											if(node.id == firstTrees[i].children[j].id){
 												
 												intPdfView(firstTrees[i].children[j].filePath, startDocument, firstTrees[i].children[j].pdfMenuPage);
+												break;
+												
+											}
+										}
+										 break;
+									}
+								}
+							}
+					 });
+					 
+					 $('#firstAttachTrees').tree({
+						    state: "closed",
+							onClick: function(node){
+								
+								var parent =  $('#firstAttachTrees').tree('getParent', node.target);
+								for(var i=0; i< firstAttachTrees.length; i++){
+									if(parent.id == firstAttachTrees[i].id){
+										
+										for(var j=0; j< firstAttachTrees[i].children.length; j++){
+											
+											if(node.id == firstAttachTrees[i].children[j].id){
+												
+												intPdfView(firstAttachTrees[i].children[j].filePath, startDocument, firstAttachTrees[i].children[j].pdfMenuPage);
 												break;
 												
 											}
