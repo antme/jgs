@@ -37,11 +37,11 @@
     var categories = new Array();
 
     var chart;
+    var colors = Highcharts.getOptions().colors;
 
     
     $(document).ready(function(){
         
-     var colors = Highcharts.getOptions().colors;
 	 postAjaxRequest("/ecs/archive/indexcount.do", {}, function(data){
 		 var i =0;
 		 for(key in data){
