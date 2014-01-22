@@ -21,6 +21,7 @@
         <div class="cal_cen_login_top">
             <div class="cal_cen_login_top_left"></div>
             <div class="cal_cen_login_top_mid">
+                <div class="login_title">虹口区仲裁卷宗管理系统</div>
                 <span class="cal_cen_login_headimg"></span>
                 <span class="cal_cen_login_h_line"></span>
                 <form id="bd"  action="" method="post" >
