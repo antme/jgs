@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import org.apache.log4j.LogManager;
@@ -22,6 +24,7 @@ import com.zcy.cfg.CFGManager;
 import com.zcy.dbhelper.DataBaseQueryBuilder;
 import com.zcy.dbhelper.DataBaseQueryOpertion;
 import com.zcy.exception.ResponseException;
+import com.zcy.lucene.IndexFiles;
 import com.zcy.util.DateUtil;
 import com.zcy.util.EcUtil;
 import com.zcy.util.PdfUtil;
@@ -155,16 +158,41 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			childQuery.and(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_JUDGE, archive.getArchiveJudge());
 		}
 
-		if (EcUtil.isValid(archive.getKeyword())) {
+		String keyword = archive.getKeyword();
+		if (EcUtil.isValid(keyword)) {
 
 			DataBaseQueryBuilder childKeyWordQuery = new DataBaseQueryBuilder(Archive.TABLE_NAME);
-			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_APPLICANT, archive.getKeyword());
-			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_JUDGE, archive.getKeyword());
-			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_NAME, archive.getKeyword());
-			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_CODE, archive.getKeyword());
-			childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_OPPOSITE_APPLICANT, archive.getKeyword());
 
-			// FIXME: 全文搜索
+			String[] keyWordItems = keyword.split(" ");
+			for (String wordItem : keyWordItems) {
+
+				childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_APPLICANT, wordItem);
+				childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_JUDGE, wordItem);
+				childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_NAME, wordItem);
+				childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_CODE, wordItem);
+				childKeyWordQuery.or(DataBaseQueryOpertion.LIKE, Archive.ARCHIVE_OPPOSITE_APPLICANT, wordItem);
+
+			}
+
+			DataBaseQueryBuilder fileQuery = new DataBaseQueryBuilder(ArchiveFile.TABLE_NAME);
+			fileQuery.limitColumns(new String[] { ArchiveFile.ARCHIVE_ID });
+
+			for (String wordItem : keyWordItems) {
+				fileQuery.or(DataBaseQueryOpertion.LIKE, ArchiveFile.ARCHIVE_TEXT_DATA, wordItem);
+			}
+
+			List<ArchiveFile> files = this.dao.listByQuery(fileQuery, ArchiveFile.class);
+			Set<String> ids = new HashSet<String>();
+
+			for (ArchiveFile file : files) {
+				if (EcUtil.isValid(file.getArchiveId())) {
+					ids.add(file.getArchiveId());
+				}
+			}
+
+			if (EcUtil.isValid(ids)) {
+				childKeyWordQuery.and(DataBaseQueryOpertion.IN, Archive.ID, ids);
+			}
 
 			childQuery.and(childKeyWordQuery);
 
@@ -586,6 +614,9 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 					arfile.setArchiveId(archive.getId());
 					arfile.setArchiveFileProperty(scanType);
 					arfile.setArchiveFilePath(subFile.getAbsolutePath());
+					
+					arfile.setArchiveTextData(new IndexFiles().getDocString(subFile.getAbsolutePath()));
+					
 
 					if (scanType.equals(ArchiveFileProperty.MAIN_FILE)) {
 

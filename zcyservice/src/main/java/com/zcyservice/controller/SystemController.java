@@ -16,9 +16,8 @@ import com.zcy.annotation.LoginRequired;
 import com.zcy.annotation.Permission;
 import com.zcy.bean.RoleGroup;
 import com.zcy.bean.SystemConfig;
-import com.zcy.bean.User;
 import com.zcy.controller.AbstractController;
-import com.zcyservice.bean.Menu;
+import com.zcyservice.bean.vo.IDS;
 import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.ISystemService;
 import com.zcyservice.util.PermissionConstants;
@@ -65,6 +64,15 @@ public class SystemController extends AbstractController {
 	public void listRoleGroups(HttpServletRequest request, HttpServletResponse response) {
 
 		responseWithDataPagnation(sys.listRoleGroups(), request, response);
+
+	}
+	
+	@RequestMapping("/group/del.do")
+	public void deleteRoleGroups(HttpServletRequest request, HttpServletResponse response) {
+
+		IDS ids = (IDS) parserJsonParameters(request, false, IDS.class);
+		sys.deleteRoleGroups(ids.getIds());
+		responseWithData(null, request, response);
 
 	}
 	

@@ -124,21 +124,42 @@ public class IndexFiles {
 			}
 	}
 
-	public String getDocString(String fileName) throws Exception {
+	public String getDocString(String fileName) {
 
+		String fileExtension = "*.avi *.rmvb *.rm *.asf *.divx *.mpg *.mpeg *.mpe *.wmv *.mp4 *.mkv *.vob";
+		String extension = fileName.substring(fileName.lastIndexOf("."));
+
+		if (fileName.endsWith(".jpg") || fileName.endsWith(".png") || fileName.endsWith(".gif") || fileName.endsWith(".jpeg") || fileExtension.contains(extension)) {
+			return "";
+		}
 		if (fileName.endsWith(".pdf")) {
 
-			return PdfUtil.PdfboxFileReader(fileName);
+			try {
+				return PdfUtil.PdfboxFileReader(fileName);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
 		} else if (fileName.endsWith(".doc") || fileName.endsWith(".docx")) {
 
-			return WordFileReader(fileName);
+			try {
+				return WordFileReader(fileName);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
-		return FileReaderAll(fileName, "UTF-8");
+		try {
+			return FileReaderAll(fileName, "UTF-8");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return "";
 
 	}
-
 
 	/**
 	 * Excel表格提取数据
