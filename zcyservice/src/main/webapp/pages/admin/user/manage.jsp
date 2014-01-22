@@ -95,15 +95,15 @@
                         <div class="r-edit-label">密码：</div>
                         <div class="r-edit-field">
                             <input id="password" name="password" class="r-textbox easyui-validatebox"
-                                type="password" required missingMessage="请输入密码" /> <label
+                                type="password"  /> <label
                                 class="r-need">*</label>
                         </div>
                     </li>
                     <li>
                         <div class="r-edit-label">确认密码：</div>
                         <div class="r-edit-field">
-                            <input id="password" name="password" class="r-textbox easyui-validatebox"
-                                type="password" validType="pwdEquals['#password']" required missingMessage="请输入再次密码" /> <label
+                            <input id="password2" name="password" class="r-textbox easyui-validatebox"
+                                type="password" validType="pwdEquals['#password']" /> <label
                                 class="r-need">*</label>
                         </div>
                     </li>
@@ -201,6 +201,7 @@
 			  
 			  $("#edituserform").form('load',data.rows[i]);
 			  $("#password").val("");
+			  $("#password2").val("");
 			  if(data.rows[i].userStatus){
 			  	$("#selectUserStatus").combobox('setValue',data.rows[i].userStatus);
 			  }else{

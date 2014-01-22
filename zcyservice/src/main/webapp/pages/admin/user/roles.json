@@ -1,45 +1,45 @@
 [  {
 	"text" : "用户管理",
 	"id" : "adm_user_manage",
-	"indexPage" : "web/archive/archivereport"
+	"indexPage" : ""
 },{
 	"text" : "系统设置",
 	"id" : "adm_sys_settings",
-	"indexPage" : "web/archive/archivereport"
+	"indexPage" : ""
 },{
 	"text" : "权限管理",
 	"id" : "adm_role_manage",
-	"indexPage" : "web/archive/archivereport"
+	"indexPage" : ""
 },{
     "text" : "档案下载",
     "id" : "adm_archive_download",
-    "indexPage" : "web/archive/archivereport"
+    "indexPage" : ""
 },{
     "text" : "档案打印",
     "id" : "adm_archive_print",
-    "indexPage" : "web/archive/archivereport"
+    "indexPage" : ""
 },{
 	"text" : "档案管理",
 	"id" : "adm_archive_manage",
-	"indexPage" : "web/archive/archivereport"
+	"indexPage" : ""
 },{
 	"text" : "档案审核",
 	"id" : "adm_archive_approve",
-	"indexPage" : "web/archive/archivereport"
+	"indexPage" : ""
 },{
     "text" : "档案销毁审核",
     "id" : "adm_archive_destory_approve",
-    "indexPage" : "web/archive/archivereport"
+    "indexPage" : ""
 },{
 	"text" : "调阅管理",
 	"id" : "adm_archive_borrow_manager",
-	"indexPage" : "web/archive/archivereport"
+	"indexPage" : ""
 },{
 	"text" : "档案查询",
 	"id" : "adm_archive_query",
-	"indexPage" : "web/archive/archivereport"
+	"indexPage" : ""
 },{
 	"text" : "报表统计",
 	"id" : "adm_archive_report",
-	"indexPage" : "web/archive/archivereport"
+	"indexPage" : ""
 }]

@@ -66,8 +66,8 @@
               <a href="?p=web/archive/archiveborrow">借阅管理</a>         
            </li>
            
-           <li class="menu_cline" access="adm_achive_query"></li>
-           <li  class="access" access="adm_achive_query">
+           <li class="menu_cline" access="adm_archive_query"></li>
+           <li  class="access" access="adm_archive_query">
               <a href="?p=web/archive/archivelist">档案查询</a>         
            </li>
            <li class="menu_cline" access="adm_archive_report"></li>

@@ -159,11 +159,11 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		}
 
 		if (EcUtil.isValid(archive.getStartDate())) {
-			childQuery.and(DataBaseQueryOpertion.GREATER_THAN_EQUALS, Archive.ARCHIVE_DATE, archive.getStartDate());
+			childQuery.and(DataBaseQueryOpertion.GREATER_THAN_EQUALS, Archive.CREATED_ON, archive.getStartDate());
 		}
 
 		if (EcUtil.isValid(archive.getEndDate())) {
-			childQuery.and(DataBaseQueryOpertion.LESS_THAN_EQUAILS, Archive.ARCHIVE_DATE, archive.getEndDate());
+			childQuery.and(DataBaseQueryOpertion.LESS_THAN_EQUAILS, Archive.CREATED_ON, archive.getEndDate());
 		}
 
 		if (EcUtil.isValid(archive.getArchiveApplicant())) {
@@ -240,7 +240,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 	}
 
 	public void approveArchive(Archive archive) {
-
+		
 		archive.setArchiveProcessStatus(ProcessStatus.APPROVED);
 		this.dao.updateById(archive);
 	}

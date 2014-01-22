@@ -46,13 +46,15 @@
             <table id="archiveList"  class="easyui-datagrid_tf" url="/ecs/archive/listNew.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
                 <thead>
                     <tr>
-                        <th align="center"  field="archiveCode"  width="110"  sortable="false">案号</th>
+                        <th align="center"  field="archiveCode"  width="120"  sortable="false">案号</th>
+                        <th align="center"  field="archiveApplicant"  width="60"  sortable="false">申请人</th>
                         <th align="center"  field="archiveName"  width="150"  sortable="false">案由</th>
                         <th align="center"  field="archiveType"  formatter="formatterArchiveType"  width="50"  sortable="false">类型</th>
+                        <th align="center"  field="archiveStatus" formatter="formatterArchiveStatus"  width="50" sortable="false" >状态</th>
+                        <th align="center"  field="archiveResult"  width="100" sortable="false" >处理结果</th>
                         
                         <th align="center"  field="createdOn" width="120" sortable="false" >归档时间</th>
-                        <th align="center"  field="userName" width="120" sortable="false" >申请人</th>
-                        <th align="center" data-options="field:'archiveProcessStatus'" formatter="formatterArchiveApproveView"  width="100">操作</th>
+                        <th align="center" data-options="field:'archiveProcessStatus'" formatter="formatterArchiveApproveView"  width="60">操作</th>
                     </tr>
                 </thead>
             </table>

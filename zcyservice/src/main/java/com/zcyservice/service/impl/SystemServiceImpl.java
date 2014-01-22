@@ -1,7 +1,6 @@
 package com.zcyservice.service.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -15,7 +14,6 @@ import com.zcy.bean.User;
 import com.zcy.cfg.CFGManager;
 import com.zcy.dbhelper.DataBaseQueryBuilder;
 import com.zcy.util.EcUtil;
-import com.zcyservice.bean.Menu;
 import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.AbstractArchiveService;
 import com.zcyservice.service.ISystemService;
