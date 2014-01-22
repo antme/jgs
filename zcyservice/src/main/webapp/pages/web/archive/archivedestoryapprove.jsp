@@ -14,7 +14,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>档案查询</title>
+<title>销毁审核</title>
 <script type="text/javascript" src="resources/js/ecommerce.js"></script>
 <script type="text/javascript" src="/resources/js/jquery.easyui.min.js"></script>
 <link href="/resources/css/easyui.css" rel="stylesheet"/>
@@ -25,10 +25,15 @@
 <script type="text/javascript" src="/resources/js/upload/swfus.js"></script>
 </head>
 <body>
-
+    <div class="line_clear"></div>
+           <div class="public_title">
+              <div class="public_title_icon">​</div>​
+              <label class="public_title_text">销毁审核</label>
+    </div>
+    <div class="line_clear"></div>
     <%@ include file="/pages/web/archive/searcharchive.jsp"%>
     
-
+    <div style="margin-left:50px;color:red;font-size:12px;">关键字搜索：多个关键字之间请用空格隔开</div>
     <div class="line_clear"></div>
     <div style="margin-left:40px;">
        <span class="span_style">“<img height="16" width="16" src="/resources/images/print-preview.png" />”</span>

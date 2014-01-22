@@ -116,6 +116,7 @@
          <div id="remotePage"  class="remotePage" style="display:none;"></div>
          <div id="remotePageWindow"  style="display:none; overflow-y: scroll;"></div>
     </div>
+    <div class="bottom_info">@2014-2024 虹口区劳动争议仲裁院版权所有</div>
     <div class="handle_events" >
            <div class="handle_events_title">待处理事项</div>
            <div class="handle_events_text">
@@ -189,6 +190,7 @@
                     var $a = $(links[index].parentNode);
                     var a_herf=$(links[index]).attr('href');
                     pagePath=String(pagePath);
+                    console.log($(links[index]).text());
                     if($(links[index]).text()=="首页" || $(links[index]).text()=="档案管理" || $(links[index]).text()=="归档审核" ||  $(links[index]).text()=="销毁审核" || $(links[index]).text()=="系统设置"
                     || $(links[index]).text()=="借阅管理" || $(links[index]).text()=="档案查询" || $(links[index]).text()=="数据统计"){                	
                     	$(".index_menu a").removeClass('menu_mouse_css');
