@@ -1,6 +1,13 @@
 package com.zcyservice.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,8 +44,7 @@ public class ArchiveController extends AbstractController {
 		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
 		responseWithDataPagnation(archiveService.listArchives(archive), request, response);
 	}
-	
-	
+
 	@RequestMapping("/listPubArchives.do")
 	@Permission(groupName = PermissionConstants.adm_archive_query, permissionID = PermissionConstants.adm_archive_query)
 	public void listPubArchives(HttpServletRequest request, HttpServletResponse response) {
@@ -52,15 +58,13 @@ public class ArchiveController extends AbstractController {
 		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
 		responseWithDataPagnation(archiveService.listNeddApproveArchives(archive), request, response);
 	}
-	
+
 	@RequestMapping("/listdestroy.do")
 	@Permission(groupName = PermissionConstants.adm_archive_destory_approve, permissionID = PermissionConstants.adm_archive_destory_approve)
 	public void listNeedDestoryApproveArchives(HttpServletRequest request, HttpServletResponse response) {
 		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
 		responseWithDataPagnation(archiveService.listNeedDestoryApproveArchives(archive), request, response);
 	}
-	
-	
 
 	@RequestMapping("/files.do")
 	@Permission(groupName = PermissionConstants.adm_archive_query, permissionID = PermissionConstants.adm_archive_query)
@@ -75,14 +79,13 @@ public class ArchiveController extends AbstractController {
 		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
 		responseWithEntity(archiveService.addArchive(archive), request, response);
 	}
-	
-	
+
 	@RequestMapping("/count.do")
 	public void countArchive(HttpServletRequest request, HttpServletResponse response) {
 		SearchVo searchvo = (SearchVo) parserJsonParameters(request, true, SearchVo.class);
 		responseWithDataPagnation(archiveService.countArchive(searchvo), request, response);
-	}	
-	
+	}
+
 	@RequestMapping("/indexcount.do")
 	public void countArchiveByYear(HttpServletRequest request, HttpServletResponse response) {
 		responseWithData(archiveService.listArchiveReportByYear(), request, response);
@@ -157,15 +160,37 @@ public class ArchiveController extends AbstractController {
 
 		responseWithEntity(archive, request, response);
 	}
-	
-	
+
 	@RequestMapping("/dowload.do")
 	@Permission(groupName = PermissionConstants.adm_archive_download, permissionID = PermissionConstants.adm_archive_download)
 	public void downloadArchiveFile(HttpServletRequest request, HttpServletResponse response) {
 
 		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
 
-		archiveService.downloadArchiveFile(archive, request, response);
+		String targetName = archiveService.downloadArchiveFile(archive, request, response);
+		String fileName = ZcyUtil.getUploadPath() + File.separator + targetName;
+		File downloadFile = new File(fileName);
+		try {
+
+			// 以流的形式下载文件。
+			InputStream fis = new BufferedInputStream(new FileInputStream(downloadFile));
+			byte[] buffer = new byte[fis.available()];
+			fis.read(buffer);
+			fis.close();
+			// 清空response
+			response.reset();
+			// 设置response的Header
+			response.addHeader("Content-Disposition", "attachment;filename= " + URLEncoder.encode(targetName, "utf-8"));
+			response.addHeader("Content-Length", "" + downloadFile.length());
+			OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
+			response.setContentType("application/octet-stream");
+			toClient.write(buffer);
+			toClient.flush();
+			toClient.close();
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 
 	}
 

@@ -49,7 +49,7 @@ public interface IArchiveService {
 	
 	public Map<String, Object> listArchiveReportByYear();
 
-	public void downloadArchiveFile(Archive archive, HttpServletRequest request, HttpServletResponse response);
+	public String downloadArchiveFile(Archive archive, HttpServletRequest request, HttpServletResponse response);
 	
 	
 	

@@ -422,7 +422,7 @@ public class Archive extends BaseEntity {
 	}
 
 	public enum ProcessStatus {
-		DRAFT, NEW, APPROVED, REJECTED, DESTROYING, DESTROYED;
+		DRAFT, NEW, APPROVED, REJECTED, DESTROYING, DESTROYED, SCAN_IMPORTED;
 
 	}
 	

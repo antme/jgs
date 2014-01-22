@@ -81,18 +81,18 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		arc.setFolderCode(subFile.getName());
 		arc.setArchiveStatus(ArchiveStatus.ARCHIVED);
 		arc.setYear(Calendar.getInstance().get(Calendar.YEAR));
-
+		arc.setArchiveProcessStatus(ProcessStatus.SCAN_IMPORTED);
 		arc.setArchiveType(archiveType);
 		List<ArchiveFile> mainFiles = null;
 		List<ArchiveFile> attachFiles = null;
 		if (archiveType.equalsIgnoreCase(Archive.ARCHIVE_TYPE_MAIN)) {
 			mainFiles = scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中", arc, ArchiveFileProperty.MAIN_FILE);
-			attachFiles = scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中" + File.separator + "附件", arc, ArchiveFileProperty.ATTACH_FILE);
+			attachFiles = scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "正卷中附件", arc, ArchiveFileProperty.ATTACH_FILE);
 
 		} else if (archiveType.equalsIgnoreCase(Archive.ARCHIVE_TYPE_SECOND)) {
 
 			mainFiles = scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中", arc, ArchiveFileProperty.MAIN_FILE);
-			attachFiles = scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中" + File.separator + "附件", arc, ArchiveFileProperty.ATTACH_FILE);
+			attachFiles = scanMainDocumentFolder(subFile.getAbsolutePath() + File.separator + "副卷中附件", arc, ArchiveFileProperty.ATTACH_FILE);
 
 		}
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
@@ -240,7 +240,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 	}
 
 	public void approveArchive(Archive archive) {
-		
+
 		archive.setArchiveProcessStatus(ProcessStatus.APPROVED);
 		this.dao.updateById(archive);
 	}
@@ -290,7 +290,9 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 	public Archive addArchive(Archive archive) {
 
 		if (EcUtil.isValid(archive.getId())) {
+
 			this.dao.updateById(archive);
+
 		} else {
 
 			DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
@@ -337,11 +339,13 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			String files[] = archive.getMainFileAttach().split(",");
 			for (String fileName : files) {
 
-				if (archive.getArchiveType().equalsIgnoreCase(Archive.ARCHIVE_TYPE_MAIN)) {
-					moveFile(archive, fileName, "正卷中附件");
-				}
-				if (archive.getArchiveType().equalsIgnoreCase(Archive.ARCHIVE_TYPE_SECOND)) {
-					moveFile(archive, fileName, "副卷中附件");
+				if (EcUtil.isValid(fileName)) {
+					if (archive.getArchiveType().equalsIgnoreCase(Archive.ARCHIVE_TYPE_MAIN)) {
+						moveFile(archive, fileName, "正卷中附件");
+					}
+					if (archive.getArchiveType().equalsIgnoreCase(Archive.ARCHIVE_TYPE_SECOND)) {
+						moveFile(archive, fileName, "副卷中附件");
+					}
 				}
 
 			}
@@ -352,12 +356,12 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		List<ArchiveFile> files = new ArrayList<ArchiveFile>();
 		if (archive.getArchiveType().equalsIgnoreCase(Archive.ARCHIVE_TYPE_MAIN)) {
 			files.addAll(scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "正卷中", archive, ArchiveFileProperty.MAIN_FILE));
-			files.addAll(scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "正卷中" + File.separator + "附件", archive, ArchiveFileProperty.ATTACH_FILE));
+			files.addAll(scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "正卷中附件", archive, ArchiveFileProperty.ATTACH_FILE));
 		}
 
 		if (archive.getArchiveType().equalsIgnoreCase(Archive.ARCHIVE_TYPE_SECOND)) {
 			files.addAll(scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "副卷中", archive, ArchiveFileProperty.MAIN_FILE));
-			files.addAll(scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "副卷中" + File.separator + "附件", archive, ArchiveFileProperty.ATTACH_FILE));
+			files.addAll(scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "副卷中附件", archive, ArchiveFileProperty.ATTACH_FILE));
 		}
 
 		if (files.size() > 0) {
@@ -475,8 +479,8 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		return yearsCountMap;
 
 	}
-	
-	public void downloadArchiveFile(Archive archive, HttpServletRequest request, HttpServletResponse response) {
+
+	public String downloadArchiveFile(Archive archive, HttpServletRequest request, HttpServletResponse response) {
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
 		query.and(Archive.ID, archive.getId());
 		query.limitColumns(new String[] { Archive.FOLDER_CODE, Archive.ARCHIVE_TYPE, Archive.ID });
@@ -493,30 +497,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			new IndexFiles().compressedFile(sourcePath, ZcyUtil.getUploadPath(), targetName, "副卷中");
 		}
 
-		String fileName = ZcyUtil.getUploadPath() + File.separator + targetName;
-		File downloadFile = new File(fileName);
-
-		try {
-
-			// 以流的形式下载文件。
-			InputStream fis = new BufferedInputStream(new FileInputStream(downloadFile));
-			byte[] buffer = new byte[fis.available()];
-			fis.read(buffer);
-			fis.close();
-			// 清空response
-			response.reset();
-			// 设置response的Header
-			response.addHeader("Content-Disposition", "attachment;filename= " + URLEncoder.encode(targetName, "utf-8"));
-			response.addHeader("Content-Length", "" + downloadFile.length());
-			OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
-			response.setContentType("application/octet-stream");
-			toClient.write(buffer);
-			toClient.flush();
-			toClient.close();
-			
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
+		return targetName;
 
 	}
 

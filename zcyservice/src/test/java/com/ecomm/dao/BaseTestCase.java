@@ -1,6 +1,8 @@
 package com.ecomm.dao;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 
 import junit.framework.TestCase;
 
@@ -9,21 +11,17 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import com.zcy.cfg.CFGManager;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.zcy.dao.IQueryDao;
 import com.zcy.dao.QueryDaoImpl;
-import com.zcy.dbhelper.DataBaseQueryBuilder;
-import com.zcy.lucene.IndexFiles;
-import com.zcyservice.bean.Archive;
-import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.IArchiveService;
 import com.zcyservice.service.ISystemService;
 import com.zcyservice.service.IUserService;
-import com.zcyservice.service.ZcyInitialService;
 import com.zcyservice.service.impl.ArchiveServiceImpl;
 import com.zcyservice.service.impl.SystemServiceImpl;
 import com.zcyservice.service.impl.UserServiceImpl;
-import com.zcyservice.util.ZcyServiceConstants;
 
 public class BaseTestCase extends TestCase {
 	private static Logger logger = LogManager.getLogger(BaseTestCase.class);
@@ -62,50 +60,21 @@ public class BaseTestCase extends TestCase {
 	}
 
 	public void testEmpty() throws IOException, InterruptedException {
-		
-//		String file = "E:\\zcy\\doc\\2013760\\副卷中\\demo.pdf";
-//		
-//		String scanPath = CFGManager.getProperty(ZcyServiceConstants.DOCUMENT_SCAN_PATH);
-//
-//		file = file.replaceAll(scanPath, "");
-//		file = file.substring(scanPath.length() +1);
-//		System.out.println(file);
-		
-//		archiveService.countArchive(new SearchVo());
-		
-//		new IndexFiles().compressedFile("E:\\zcy\\doc", "E:\\zcy\\upload\\test", "正卷中");
-		
-		
-//		archiveService.scanArchines();
-		
-//		Archive archive = new Archive();
-//		archive.setId("53d4b469-c0e2-4a82-9abb-035736c52a78");
-//		archiveService.listArchiveFiles(archive);
-		// new IndexFiles().runIndex();
-		// try {
-		// new SearchFiles().search("money", true);
-		// } catch (Exception e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
 
-//		try {
-//			String pdfboxFileReader = new IndexFiles().PdfboxFileReader("/Users/ymzhou/Documents/pdf/demo.pdf", 1, 2);
-//			pdfboxFileReader.length();
-//			// System.out.println(pdfboxFileReader);
-//			BufferedReader buff = new BufferedReader(new StringReader(pdfboxFileReader));
-//			String line = buff.readLine();
-//
-//			while (line != null) {
-//				System.out.println(line);
-//				System.out.println(line.indexOf("文 件"));
-//				line = buff.readLine();
-//			}
-//
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		Document document = new Document();
+
+		try {
+			PdfWriter.getInstance(document, new FileOutputStream("Image.pdf"));
+			document.open();
+
+			Image image1 = Image.getInstance("test.png");
+			image1.scalePercent(80f);
+			document.add(image1);
+
+			document.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

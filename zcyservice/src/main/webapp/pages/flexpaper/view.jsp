@@ -1,6 +1,9 @@
+<%@page import="com.zcyservice.util.ZcyUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="lib.*,java.io.*" %>
+<%@page import="com.zcyservice.*" %>
+
 <%
     out.clear();
     out = pageContext.pushBody();
@@ -17,7 +20,17 @@
 	
 
 	if(doc == null)return;
-	if(!doc.endsWith(".pdf"))	{pdfdoc 	= doc + ".pdf";}
+	if(!doc.endsWith(".pdf"))	{
+	    
+	    
+	    pdfdoc 	= doc + ".pdf";
+	    
+	    if(doc.contains(".png") || doc.contains(".jpg") ){
+	        ZcyUtil.imgageToPdf(ZcyUtil.getDocumentPath() + File.separator + doc, ZcyUtil.getDocumentPath() + File.separator + pdfdoc);
+	    }
+	    
+	}
+	
 	if(pages == null)			{pages = "";}
 	if(format == null)			{format="swf";}
 	String swfdoc	= pdfdoc + ".swf";
@@ -26,6 +39,7 @@
 	String jsondoc	= pdfdoc + ".js";
 	if("true".equals(conf.getConfig("splitmode", "")))	{	jsondoc = pdfdoc + "_" + pages + ".js";	}
 
+	
 	String pngdoc 		= pdfdoc + "_" + pages + ".png";
 	String jpgcachedoc = pdfdoc + "_" + pages + "_res_" + resolution + ".jpg";
 	String messages 	= "";

@@ -1,11 +1,13 @@
 <!doctype html>
+<%@page import="com.zcyservice.util.ZcyUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="lib.Config" %>
+
 <%
 	Config conf = new Config();
 
-
+    
 	String doc = request.getParameter("doc");
 	String id = request.getParameter("id");
 	if(doc == null)

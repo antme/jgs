@@ -227,6 +227,8 @@ public class IndexFiles {
 		return text;
 
 	}
+	
+	
 
 	public void compressedFile(String resourcesPath, String targetPath, String targetName, String filePathFilter) {
 		File resourcesFile = new File(resourcesPath); // 源文件
