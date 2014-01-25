@@ -134,7 +134,6 @@
 	        url : '/ecs/sys/group/add.do',
 	        onSubmit : function() {
 	            $("#permissions").val($('#permissionsel').combotree('getValues'));
-	            console.log($("#permissions").val());
 	            if($("#groupName").val() == "管理员" && $("#permissions").val().indexOf("adm_user_manage")==-1){
 	            	 $.messager.alert("权限编辑","管理员的[用户管理]权限不能去掉！");
 	            	 return false;

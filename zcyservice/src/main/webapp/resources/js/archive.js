@@ -77,7 +77,6 @@ function initArchiveManagePage(){
 	$("#addarchiveForm").form({
 	      url : '/ecs/archive/add.do',
 	      onSubmit : function() {
-	    	  console.log("...........");
 	          return $(this).form('validate');
 	      },
 	      success : function(data) {

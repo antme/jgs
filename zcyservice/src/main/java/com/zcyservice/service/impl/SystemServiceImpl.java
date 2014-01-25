@@ -13,6 +13,7 @@ import com.zcy.bean.SystemConfig;
 import com.zcy.bean.User;
 import com.zcy.cfg.CFGManager;
 import com.zcy.dbhelper.DataBaseQueryBuilder;
+import com.zcy.exception.ResponseException;
 import com.zcy.util.EcUtil;
 import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.AbstractArchiveService;
@@ -60,13 +61,21 @@ public class SystemServiceImpl extends AbstractArchiveService implements ISystem
 	}
 
 	public void addRoleGroup(RoleGroup group) {
+
+		if (EcUtil.isEmpty(group.getGroupName())) {
+			throw new ResponseException("权限组名字不能为空");
+		}
+
 		if (!EcUtil.isEmpty(group.getId())) {
+			if (this.dao.exists(RoleGroup.GROUP_NAME, group.getGroupName(), RoleGroup.TABLE_NAME)) {
+				throw new ResponseException("权限组名字重复");
+			}
+
 			this.dao.updateById(group);
 		} else {
 			this.dao.insert(group);
 		}
 	}
-
 
 	@Override
 	public EntityResults<Log> listLogs(SearchVo search) {
