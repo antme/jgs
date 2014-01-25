@@ -8,9 +8,7 @@
 }
 
 </style>
-<div class="line_clear"></div>
     <div class="public_search_div archive_search">
-        <div class="line_clear"></div>
         <div class="line_seach">
             <span class="span_style_label"><label class="display_nones">案号：</label></span>
             <span class="span_style"><input id="archiveCode" class="public_search_input_text display_nones" /></span> 

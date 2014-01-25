@@ -246,5 +246,44 @@ function getrecordWindow(id){
 	  
 }
 
+var noticeArray;
+
+function loadToDoList(){
+	
+	 postAjaxRequest("/ecs/user/todolist.do", {}, function(data){
+     	noticeArray = Array();
+   
+          if(data.ARCHIVE_NEW){
+              var tisoordermsg = {};
+              tisoordermsg.msg =  "<div><a href='?p=web/archive/archivemanager'>系统有" + data.ARCHIVE_NEW +"个仲裁文档待审核</a></div>";
+              tisoordermsg.type = "ARCHIVE_NEW";
+              updateNoticDiv(tisoordermsg);
+          }
+          
+          if(data.ARCHIVE_NEW_APPROVE){
+              var tisoordermsg = {};
+              tisoordermsg.msg =  "<div><a href='?p=web/archive/archivemanager'>系统有" + data.ARCHIVE_NEW_APPROVE +"个仲裁文档需要审核</a></div>";
+              tisoordermsg.type = "ARCHIVE_NEW_APPROVE";
+              updateNoticDiv(tisoordermsg);
+          }
+          
+          if(data.ARCHIVE_REJECTED){
+              var tisoordermsg = {};
+              tisoordermsg.msg =  "<div><a href='?p=web/archive/archivemanager'>系统有" + data.ARCHIVE_REJECTED +"个仲裁文档审核未通过，请重新编辑提交</a></div>";
+              tisoordermsg.type = "ARCHIVE_REJECTED";
+              updateNoticDiv(tisoordermsg);
+          }
+          
+          if(data.ARCHIVE_DESTORY_APPROVE){
+              var tisoordermsg = {};
+              tisoordermsg.msg =  "<div><a href='?p=web/archive/archivemanager'>系统有" + data.ARCHIVE_DESTORY_APPROVE +"个待销毁仲裁文档需要审核</a></div>";
+              tisoordermsg.type = "ARCHIVE_DESTORY_APPROVE";
+              updateNoticDiv(tisoordermsg);
+          }
+
+
+     }, false);
+	
+}
 
 

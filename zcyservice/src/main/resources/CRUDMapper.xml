@@ -48,8 +48,10 @@
 			where ${queryStr}
 		</if>
 		
-		<if test="orderBy!=null">
-			order by ${orderBy}
+		<if test="groupBy==null">
+			<if test="orderBy!=null">
+				order by ${orderBy}
+			</if>
 		</if>
 
 		<if test="groupBy!=null">
@@ -82,13 +84,21 @@
             where ${queryStr}
         </if>
         
-        <if test="orderBy!=null">
-            order by ${orderBy}
-        </if>
+		<if test="groupBy==null">
+			<if test="orderBy!=null">
+				order by ${orderBy}
+			</if>
+		</if>
+		
+	    <if test="groupBy!=null">
+			group by ${groupBy}
+		</if>
 
         <if test="limitStart!=null">
             limit ${limitStart},${limitRows}
         </if>
+        
+
 
     </select>
 	

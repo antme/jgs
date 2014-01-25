@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zcy.bean.BaseEntity;
@@ -25,6 +26,7 @@ import com.zcy.util.EcThreadLocal;
 import com.zcy.util.EcUtil;
 import com.zcy.validators.ValidatorUtil;
 import com.zcyservice.bean.vo.SearchVo;
+import com.zcyservice.service.IArchiveService;
 import com.zcyservice.service.IUserService;
 import com.zcyservice.util.PermissionConstants;
 import com.zcyservice.util.Role;
@@ -35,6 +37,10 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 	public static final String ADM_ORDER_MANAGE = "adm_order_manage";
 
 	private static Logger logger = LogManager.getLogger(UserServiceImpl.class);
+	
+	@Autowired
+	private IArchiveService archiveService;
+	
 
 	@Override
 	public void updateUser(User user) {
@@ -209,6 +215,15 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 
 			this.regUser(user);
 		} else {
+			User oldUser = (User) this.dao.findById(user.getId(), User.TABLE_NAME, User.class);
+			
+			if(oldUser.getUserName().equalsIgnoreCase("admin")){
+				
+				if(user.getUserStatus().equalsIgnoreCase("locked")){
+					throw new ResponseException("不能锁定管理员帐号");
+				}
+
+			}
 
 			if (EcUtil.isValid(user.getPassword())) {
 				user.setPassword(DataEncrypt.generatePassword(user.getPassword()));
@@ -254,6 +269,18 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 
 	public Map<String, Object> getTodoListInfo() {
 		Map<String, Object> result = new HashMap<String, Object>();
+		if (inRole(PermissionConstants.adm_archive_approve)) {
+			result.put("ARCHIVE_NEW_APPROVE", dao.count(archiveService.getNewApproveArchiveBuilder()));
+		}
+
+		if (inRole(PermissionConstants.adm_archive_destory_approve)) {
+			result.put("ARCHIVE_DESTORY_APPROVE", dao.count(archiveService.getNeedDestroyApproveBuilder()));
+		}
+
+		if (inRole(PermissionConstants.adm_archive_manage)) {
+			result.put("ARCHIVE_REJECTED", dao.count(archiveService.getNeedRejectBuilder()));
+			result.put("ARCHIVE_NEW", dao.count(archiveService.getNewApproveArchiveBuilder()));
+		}
 
 		return result;
 	}

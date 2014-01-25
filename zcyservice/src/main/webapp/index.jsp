@@ -205,6 +205,7 @@
             }
 	    	
 	    	initDataGridEvent(); 
+	    	loadToDoList();
 	    });
 	    
 	    function logout(){

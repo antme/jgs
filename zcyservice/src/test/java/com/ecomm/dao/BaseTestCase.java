@@ -1,8 +1,6 @@
 package com.ecomm.dao;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
 
 import junit.framework.TestCase;
 
@@ -11,11 +9,9 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.zcy.dao.IQueryDao;
 import com.zcy.dao.QueryDaoImpl;
+import com.zcyservice.bean.vo.SearchVo;
 import com.zcyservice.service.IArchiveService;
 import com.zcyservice.service.ISystemService;
 import com.zcyservice.service.IUserService;
@@ -61,20 +57,7 @@ public class BaseTestCase extends TestCase {
 
 	public void testEmpty() throws IOException, InterruptedException {
 
-		Document document = new Document();
-
-		try {
-			PdfWriter.getInstance(document, new FileOutputStream("Image.pdf"));
-			document.open();
-
-			Image image1 = Image.getInstance("test.png");
-			image1.scalePercent(80f);
-			document.add(image1);
-
-			document.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		System.out.println(archiveService.countArchive(new SearchVo()).getEntityList());
 
 	}
 

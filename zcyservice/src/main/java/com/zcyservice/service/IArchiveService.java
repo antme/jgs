@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.zcy.bean.BaseEntity;
 import com.zcy.bean.EntityResults;
+import com.zcy.dbhelper.DataBaseQueryBuilder;
 import com.zcyservice.bean.Archive;
 import com.zcyservice.bean.ArchiveBorrowing;
 import com.zcyservice.bean.vo.SearchVo;
@@ -26,7 +27,13 @@ public interface IArchiveService {
 
 	public EntityResults<Archive> listNeddApproveArchives(Archive archive);
 	
+	public DataBaseQueryBuilder getNewApproveArchiveBuilder();
+	
 	public EntityResults<Archive> listNeedDestoryApproveArchives(Archive archive);
+	
+	public DataBaseQueryBuilder getNeedDestroyApproveBuilder();
+	
+	public DataBaseQueryBuilder getNeedRejectBuilder();
 
 	public void approveArchive(Archive archive);
 

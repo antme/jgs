@@ -244,19 +244,35 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 	}
 
 	public EntityResults<Archive> listNeddApproveArchives(Archive archive) {
-		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
-		query.and(Archive.ARCHIVE_PROCESS_STATUS, ProcessStatus.NEW);
+		DataBaseQueryBuilder query = getNewApproveArchiveBuilder();
 		mergeArchiveQuery(query, archive);
 		return this.dao.listByQueryWithPagnation(query, Archive.class);
 
 	}
+
+	public DataBaseQueryBuilder getNewApproveArchiveBuilder() {
+	    DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		query.and(Archive.ARCHIVE_PROCESS_STATUS, ProcessStatus.NEW);
+	    return query;
+    }
 
 	public EntityResults<Archive> listNeedDestoryApproveArchives(Archive archive) {
-		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
-		query.and(Archive.ARCHIVE_PROCESS_STATUS, ProcessStatus.DESTROYING);
+		DataBaseQueryBuilder query = getNeedDestroyApproveBuilder();
 		mergeArchiveQuery(query, archive);
 		return this.dao.listByQueryWithPagnation(query, Archive.class);
 	}
+
+	public DataBaseQueryBuilder getNeedDestroyApproveBuilder() {
+	    DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		query.and(Archive.ARCHIVE_PROCESS_STATUS, ProcessStatus.DESTROYING);
+	    return query;
+    }
+	
+	public DataBaseQueryBuilder getNeedRejectBuilder() {
+	    DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		query.and(Archive.ARCHIVE_PROCESS_STATUS, ProcessStatus.REJECTED);
+	    return query;
+    }
 
 	public void approveArchive(Archive archive) {
 
@@ -458,10 +474,16 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		}
 
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
-		query.groupBy(searchvo.getReportType(), true);
+		query.groupBy(searchvo.getReportType(), false);
+		
+		
+		List<Archive> allReports = this.dao.listByQuery(query, Archive.class);
+		
 		EntityResults<Archive> reports = this.dao.listByQueryWithPagnation(query, Archive.class);
 
 		List<Archive> list = reports.getEntityList();
+		reports.getPagnation().setTotal(allReports.size());
+		
 		for (Archive report : list) {
 
 			if (searchvo.getReportType().equalsIgnoreCase(Archive.YEAR)) {
