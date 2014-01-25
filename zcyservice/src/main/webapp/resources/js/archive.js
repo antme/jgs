@@ -214,7 +214,7 @@ var myloader = function(param,success,error){
         url: ' /ecs/archive/listArchives.do',
         dataType: 'json',
         data: {
-            name_startsWith: q
+            archiveCode: q
         },
         success: function(data){
             var items = $.map(data.rows, function(item){
@@ -242,6 +242,7 @@ function openAddrecordWindow(){
        openDialog("addrecord");
        $("#addrecordForm").form("clear");
        $("#sid").remove();
+       $("#archiveId").combobox('readonly', false);
 }
 
 function closedwindows(obj){
@@ -254,6 +255,12 @@ function getrecordWindow(id){
    postAjaxRequest("/ecs/archive/borrow/get.do", {id:id}, function(data){
 	   $("#addrecordForm").form("clear");
 	   $("#addrecordForm").form("load",data.data);
+	   
+	   
+	   $("#archiveId").combobox('setValue', data.data.archiveId);
+	   $("#archiveId").combobox('readonly', true);
+	   
+	   
    });
    $("#addrecordForm").append("<input id='sid' name='id' type='hidden' value='"+id+"' />");
 	  

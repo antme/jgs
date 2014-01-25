@@ -51,6 +51,7 @@
                     <span class="span_style"><label class="ac_title">调阅卷宗</label></span>
                     <span class="span_style border-left none" style="padding:5px;">
                     <input id="archiveId" class="easyui-combobox" type="text"  data-options="loader: myloader,mode: 'remote',valueField: 'id',textField: 'name',width:231"/>
+                    <span class="span_style"><label class="r-need">输入卷宗号数关键字可搜索如： 670</label></span>
                     <input name="archiveId" type="hidden"/>
                     </span>
                 </div>  
