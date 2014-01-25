@@ -160,33 +160,7 @@
      $(document).ready(function(){
 	    initArchiveManagePage();
 	    var id = "<%=id%>";
-	    if(id!="null"){
-	    	   postAjaxRequest("/ecs/archive/get.do", {id:id}, function(data){
-		     	   $("#addarchiveForm").form("clear");
-		     	   $("#addarchiveForm").form("load",data.data);
-		     	   $("#addarchiveForm").append("<input id='sid' name='id' type='hidden' value='"+id+"' />");
-		     	   var fileAttach="";
-		     	   var files = data.data.files;
-		     	   if(files && files.length>0){
-		     		   for(var i in files){		     			   
-		     			   if(files[i].archiveFileProperty == "MAIN_FILE"){
-		     	                 addReadyFileInfo(files[i].id, files[i].archiveFileName, "", "");
-		     	                 $("#mainFile").val(files[i].archiveFilePath);
-		     			   }else{
-		     				     addReadyFileInfo1(files[i].id, files[i].archiveFileName, "", "");
-		     				     fileAttach+=files[i].archiveFilePath+","
-		     				     
-		     			   }
-		     		   }
-		     	   }
-	               $("#mainFileAttach").val(fileAttach);
-
-
-	     	   });
-	       $("#archive_title").find(".public_title_text").text("编辑档案");
-	    }else{
-	    	$("#archive_title").find(".public_title_text").text("添加档案");
-	    }
+	    initEditArchivePage(id);
 	    
 	 });	  
   </script>
