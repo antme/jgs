@@ -101,7 +101,14 @@ function initArchiveManagePage(){
 	$("#addarchiveForm").form({
 	      url : '/ecs/archive/add.do',
 	      onSubmit : function() {
-	          return $(this).form('validate');
+	    	  
+	    	  if($(this).form('validate')){
+	    	 	  $("#submited").attr("disabled","true");
+	    	 	  return true;
+	    	  }
+	   
+
+	          return false;
 	      },
 	      success : function(data) {
 	
@@ -136,7 +143,6 @@ function initArchiveManagePage(){
 	      if($("#mainFile").val()=="" || $("#mainFile").val()==null){
 	          $.messager.alert("添加失败","请上传卷宗！");
 	      }else{
-	    	  $("#submited").attr("disabled","true");
 	          $("#addarchiveForm").submit();
 	      }
 	      
