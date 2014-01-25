@@ -33,13 +33,7 @@
 	                <th data-options="field:'id',formatter:formatterGroupOperation" width='200' align="center" resizable="true">操作</th>
 	            </tr>
 	        </thead>
-	         <tbody>
-                    <tr>
-                       <td>管理员</td>
-                       <td>系统管理员</td>
-                       <td><button onclick="openAddGroupWindow();">编辑</button></td>
-                    </tr>
-                </tbody>
+	        
 	       </table>
 		</div>
 
@@ -84,6 +78,7 @@
 	});
 	function openAddGroupWindow(){
 		$("#addRoleGroupForm").form("clear");
+		$("#groupName").removeAttr("disabled");
 		$('#addRoleGroup').window('setTitle', "新增权限组");
 	      openDialog("addRoleGroup");
 	}
@@ -116,6 +111,11 @@
 		for(var i=0;i<rows.length;i++){
 	    	if(rows[i].id==id){
 	    		$("#addRoleGroupForm").form('load', rows[i]);
+	    		if(rows[i].groupName=="管理员"){
+	    			$("#groupName").attr("disabled", "true");
+	    		}else{
+	    			$("#groupName").removeAttr("disabled");
+	    		}
 	    		var arr = rows[i].permissions.split(",");
 
 	    		$('#permissionsel').combotree('setValues',arr);
@@ -134,6 +134,16 @@
 	        url : '/ecs/sys/group/add.do',
 	        onSubmit : function() {
 	            $("#permissions").val($('#permissionsel').combotree('getValues'));
+	            console.log($("#permissions").val());
+	            if($("#groupName").val() == "管理员" && $("#permissions").val().indexOf("adm_user_manage")==-1){
+	            	 $.messager.alert("权限编辑","管理员的[用户管理]权限不能去掉！");
+	            	 return false;
+	            }
+	            
+	            if($("#groupName").val() == "管理员" && $("#permissions").val().indexOf("adm_role_manage")==-1){
+                    $.messager.alert("权限编辑","管理员的[权限管理]权限不能去掉！");
+                    return false;
+               }
 	            return $(this).form('validate');
 	        },
 	        success : function(data) {

@@ -22,9 +22,6 @@ public interface ISystemService {
 	
 	public void addRoleGroup(RoleGroup group);
 
-	public EntityResults<User> listBackendUsers();
-
-
 
 	public EntityResults<Log> listLogs(SearchVo search);
 

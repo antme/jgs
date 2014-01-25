@@ -67,39 +67,6 @@ public class SystemServiceImpl extends AbstractArchiveService implements ISystem
 		}
 	}
 
-	public EntityResults<User> listBackendUsers() {
-		DataBaseQueryBuilder builder = new DataBaseQueryBuilder(User.TABLE_NAME);
-		builder.or(User.ROLE_NAME, Role.ADMIN.toString());
-		builder.or(User.ROLE_NAME, Role.CUSTOMER_SERVICE.toString());
-		builder.or(User.ROLE_NAME, Role.SUPPER_ADMIN.toString());
-
-		DataBaseQueryBuilder roleQuery = new DataBaseQueryBuilder(RoleGroup.TABLE_NAME);
-		List<RoleGroup> groupList = this.dao.listByQuery(roleQuery, RoleGroup.class);
-
-		EntityResults<User> userData = this.dao.listByQueryWithPagnation(builder, User.class);
-
-		List<User> userList = userData.getEntityList();
-		for (User user : userList) {
-
-			String name = null;
-			if (user.getGroupId() != null) {
-
-				for (RoleGroup group : groupList) {
-					if (user.getGroupId().contains(group.getId())) {
-
-						if (name == null) {
-							name = group.getGroupName();
-
-						} else {
-							name = name + ", " + group.getGroupName();
-						}
-					}
-				}
-			}
-			user.setGroupName(name);
-		}
-		return userData;
-	}
 
 	@Override
 	public EntityResults<Log> listLogs(SearchVo search) {
