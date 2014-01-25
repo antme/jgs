@@ -35,7 +35,8 @@
 		<script type="text/javascript" src="<%=dir %>js/flexpaper.js"></script>
 		<script type="text/javascript" src="<%=dir %>js/flexpaper_handlers.js"></script>
 		<script type="text/javascript" src="/resources/js/jquery.easyui.min.js"></script>
-	
+	    <script type="text/javascript" src="/resources/js/archive.js"></script>
+	    
         
 		
     </head>
@@ -173,7 +174,7 @@
 				$('#documentViewer').FlexPaperViewer({
 					 config : {
 						 DOC : escape(getDocumentUrl(pdfFilePath)),
-						 Scale : 1.0, 
+						 Scale : 1.2, 
 						 ZoomTransition : 'easeOut',
 						 ZoomTime : 0.5, 
 						 ZoomInterval : 0.1,
@@ -182,7 +183,7 @@
 						 FullScreenAsMaxWindow : true,
 						 ProgressiveLoading : true,
 						 MinZoomSize : 0.5,
-						 MaxZoomSize : 8,
+						 MaxZoomSize : 2,
 						 StartAtPage : pdfStartPage,
 						 SearchMatchAll : true,
 						 RenderingOrder : RenderingOrder,
@@ -222,7 +223,7 @@
 
 					 $("#archiveCode").text(data.data.archiveCode);
 					 $("#archiveName").text(data.data.archiveName);
-					 $("#archiveStatus").text(data.data.archiveStatus);
+					 $("#archiveStatus").text(formatterArchiveStatus(data.data.archiveStatus));
 					 $("#createdOn").text(data.data.createdOn);
 					 $("#updatedOn").text(data.data.updatedOn);
 					 $("#archiveApplicant").text(data.data.archiveApplicant);
