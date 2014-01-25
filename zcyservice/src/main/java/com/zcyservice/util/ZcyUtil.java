@@ -1,5 +1,10 @@
 package com.zcyservice.util;
 
+import java.io.FileOutputStream;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.zcy.cfg.CFGManager;
 
 public class ZcyUtil {
