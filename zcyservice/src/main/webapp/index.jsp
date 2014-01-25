@@ -45,9 +45,13 @@
            <li >
               <a href="?p=web/archive/archiveindex">首页</a>
            </li>
-           <li class="menu_cline" access="adm_archive_manage"></li>
+           <li class="menu_cline access" access="adm_archive_manage"></li>
            <li class="access" access="adm_archive_manage">
-              <a href="?p=web/archive/archivemanager">档案管理</a>
+              <a class="li_a" href="?p=web/archive/archivemanager">档案管理</a>
+              <ul class="ul_display">
+                 <li><a href="?p=web/archive/archivemanager">所有档案</a></li>
+                 <li><a href="?p=web/archive/archivenew">待审核档案</a></li>
+              </ul>
            
            </li>
            <li class="menu_cline access" access="adm_archive_approve"></li>
@@ -194,10 +198,9 @@
                     || $(links[index]).text()=="借阅管理" || $(links[index]).text()=="档案查询" || $(links[index]).text()=="数据统计"){                	
                     	$(".index_menu a").removeClass('menu_mouse_css');
                         $(links[index]).addClass('menu_mouse_css');
-                    }else if($(links[index]).text()=="权限管理" || $(links[index]).text()=="用户账号管理"){
-                    	$(".index_menu a").removeClass('menu_mouse_css');
-                        $(links[index].parentNode.parentNode.parentNode).addClass('menu_mouse_css');
-                    }else if($(links[index]).text()=="系统设置" || $(links[index]).text()=="系统状态监控"){
+                    }else if($(links[index]).text()=="权限管理" || $(links[index]).text()=="用户账号管理" || $(links[index]).text()=="系统设置" || $(links[index]).text()=="系统状态监控" 
+                    		|| $(links[index]).text()=="待审核档案" || $(links[index]).text()=="所有档案"){
+                    	
                     	$(".index_menu a").removeClass('menu_mouse_css');
                         $(links[index].parentNode.parentNode.parentNode).addClass('menu_mouse_css');
                     }
