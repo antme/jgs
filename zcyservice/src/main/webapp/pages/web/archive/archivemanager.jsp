@@ -15,7 +15,6 @@
 <script type="text/javascript" src="/resources/js/upload/swfus.js"></script>
 </head>
 <body>
-    <div class="line_clear"></div>
            <div class="public_title">
               <div class="public_title_icon">​</div>​
               <label class="public_title_text">档案管理</label>

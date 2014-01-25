@@ -120,7 +120,7 @@
          <div id="remotePage"  class="remotePage" style="display:none;"></div>
          <div id="remotePageWindow"  style="display:none; overflow-y: scroll;"></div>
     </div>
-    <div class="bottom_info">@2014-2024 虹口区劳动争议仲裁院版权所有</div>
+    <div class="bottom_info" id="bottom_info">@2014 虹口区劳动争议仲裁院版权所有</div>
     <div class="handle_events" >
            <div class="handle_events_title">待处理事项</div>
            <div class="handle_events_text">
@@ -286,6 +286,11 @@
 	        
 	        
 	    }
+	    
+	    var myDate = new Date();
+	    var fullYear = myDate.getFullYear();
+	    $("#bottom_info").text("@"+fullYear + "  虹口仲裁院版权所有");
+	    
     </script>
 </body>
 </html>
