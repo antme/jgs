@@ -19,6 +19,13 @@ function formatterArchiveApproveView(val, row, rowindex) {
 	return '<span class="span_style"><a href="?p=flexpaper/simple_document&id=' + row.id + '"><img height="16" width="16" src="/resources/images/print-preview.png"></img></a></span><span class="span_style" style="margin-left:10px;"><a href="?p=flexpaper/simple_document&action=approve&id=' + row.id + '"><button class="sh" style="cursor:pointer"></button></a></span>';
 }
 
+
+function formatterArchiveDestroyApproveView(val, row, rowindex) {
+	
+	return '<span class="span_style"><a href="?p=flexpaper/simple_document&id=' + row.id + '"><img height="16" width="16" src="/resources/images/print-preview.png"></img></a></span><span class="span_style" style="margin-left:10px;"><a href="?p=flexpaper/simple_document&action=approvedestroy&id=' + row.id + '"><button class="sh" style="cursor:pointer"></button></a></span>';
+}
+
+
 function formatterArchiveEidt(val, row, rowindex){
 	return '<span class="span_style"><a href="?p=flexpaper/simple_document&id=' + row.id + '"><img height="16" width="16" src="/resources/images/print-preview.png"></img></a></span><span class="span_style" style="margin-left:5px;"><a class="table_eidt" href="?p=web/archive/archiveedit&id=' + row.id + '"></a></span><span class="span_style" style="margin-left:5px;"><button class="table_delect" onclick=deletarchiveWindow("'+ row.id+'");>&nbsp;</button></span>';
 }
@@ -67,6 +74,16 @@ function approveArchive(){
 	 postAjaxRequest("/ecs/archive/approve.do", {id:id}, function(data){		
 		 $.messager.alert("档案审核","批准成功！");
 		 window.location.href="index.jsp?p=web/archive/archiveapprove";
+		 
+	 });
+}
+
+
+function approveDestoryArchive(){
+	
+	 postAjaxRequest("/ecs/archive/destroy/approve.do", {id:id}, function(data){		
+		 $.messager.alert("档案审核","批准成功！");
+		 window.location.href="index.jsp?p=web/archive/archivedestoryapprove";
 		 
 	 });
 }

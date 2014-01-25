@@ -295,10 +295,50 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 	public void approveDestroyArchive(Archive archive) {
 
-		// FIXME: delete files
-		archive.setArchiveProcessStatus(ProcessStatus.APPROVED);
-		this.dao.updateById(archive);
+		if (EcUtil.isEmpty(archive.getId())) {
+			throw new ResponseException("请选择要批准的卷宗");
+		}
 
+		archive = (Archive) this.dao.findById(archive.getId(), Archive.TABLE_NAME, Archive.class);
+
+		String folderCode = archive.getFolderCode();
+
+		String archiveType = archive.getArchiveType();
+
+		if (archiveType.equalsIgnoreCase(Archive.ARCHIVE_TYPE_MAIN)) {
+			
+			deleteFiles(new File(ZcyUtil.getDocumentPath() + File.separator + folderCode + File.separator + "正卷中" + File.separator));
+			deleteFiles(new File(ZcyUtil.getDocumentPath() + File.separator + folderCode + File.separator + "正卷中附件" + File.separator));
+
+		} else if (archiveType.equalsIgnoreCase(Archive.ARCHIVE_TYPE_SECOND)) {
+			deleteFiles(new File(ZcyUtil.getDocumentPath() + File.separator + folderCode + File.separator + "副卷中" + File.separator));
+			deleteFiles(new File(ZcyUtil.getDocumentPath() + File.separator + folderCode + File.separator + "副卷中附件" + File.separator));
+
+		}
+		checkValue(archive, Archive.ARCHIVE_PROCESS_STATUS, ProcessStatus.DESTROYING);
+
+		DataBaseQueryBuilder query = new DataBaseQueryBuilder(ArchiveFile.TABLE_NAME);
+		query.and(ArchiveFile.ARCHIVE_ID, archive.getId());
+		this.dao.deleteByQuery(query);
+
+		DataBaseQueryBuilder bquery = new DataBaseQueryBuilder(ArchiveBorrowing.TABLE_NAME);
+		bquery.and(ArchiveFile.ARCHIVE_ID, archive.getId());
+		this.dao.deleteByQuery(bquery);
+
+		this.dao.deleteById(archive);
+
+	}
+	
+	private void deleteFiles(File file) {
+
+		if (file.isDirectory()) {
+			File[] files = file.listFiles();
+			for (File f : files) {
+				deleteFiles(f);
+			}
+		} else {
+			file.delete();
+		}
 	}
 
 	public void rejectArchive(Archive archive) {
@@ -306,6 +346,13 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		archive.setArchiveProcessStatus(ProcessStatus.REJECTED);
 		this.dao.updateById(archive);
 
+	}
+	
+	
+	public void rejectDestoryArchive(Archive archive){
+		
+		archive.setArchiveProcessStatus(ProcessStatus.REJECTED);
+		this.dao.updateById(archive);
 	}
 
 	public Map<String, Object> listArchiveFiles(Archive archive) {

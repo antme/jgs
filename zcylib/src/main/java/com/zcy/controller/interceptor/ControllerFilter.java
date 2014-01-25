@@ -73,8 +73,8 @@ public class ControllerFilter extends AbstractController implements Filter {
 		} else {
 
 			try {
-//				loginCheck((HttpServletRequest) request);
-//				roleCheck((HttpServletRequest) request);
+				loginCheck((HttpServletRequest) request);
+				roleCheck((HttpServletRequest) request);
 				filterChain.doFilter(request, response);
 			} catch (Exception e) {
 

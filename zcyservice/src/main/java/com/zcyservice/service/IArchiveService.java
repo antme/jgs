@@ -59,6 +59,8 @@ public interface IArchiveService {
 	public String downloadArchiveFile(Archive archive, HttpServletRequest request, HttpServletResponse response);
 
 	public void approveDestroyArchive(Archive archive);
+	
+	public void rejectDestoryArchive(Archive archive);
 
 	public EntityResults<Archive> listNewArchives(Archive archive);
 	

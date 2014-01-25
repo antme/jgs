@@ -34,6 +34,20 @@ public abstract class AbstractService {
 	protected void checkOwner(BaseEntity entity, String checkKey, Object checkValue) {
 		checkOwner(entity, BaseEntity.CREATOR_ID, checkKey, checkValue);
 	}
+	
+	protected void checkValue(BaseEntity entity, String checkKey, Object checkValue) {
+		DataBaseQueryBuilder query = new DataBaseQueryBuilder(entity.getTable());
+
+		query.and(BaseEntity.ID, entity.getId());
+		if (checkKey != null && checkValue != null) {
+			query.and(checkKey, checkValue);
+		}
+
+		if (!this.dao.exists(query)) {
+			throw new ResponseException("非法数据");
+		}
+
+	}
 
 	protected void checkOwner(BaseEntity entity, String ownerKey, String checkKey, Object checkValue) {
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(entity.getTable());

@@ -155,20 +155,29 @@
                                 class="r-need">*</label>
                         </div>
                     </li>
+                    
+                    <li>
+                        <div class="r-edit-label">新密码确认：</div>
+                        <div class="r-edit-field">
+                            <input id="newPwdConfirm" name="newPwdConfirm" class="r-textbox easyui-validatebox"
+                                type="password"  validType="pwdEquals['#newPwd']"  /> <label
+                                class="r-need">*</label>
+                        </div>
+                    </li>
                     <li>
                         <div class="r-edit-label">联系手机：</div>
                         <div class="r-edit-field">
                             <input id="mobileNumber" name="mobileNumber" class="r-textbox easyui-validatebox"
-                                type="text" required missingMessage="请输入联系手机"  /> <label
-                                class="r-need">*</label>
+                                type="text"   /> <label
+                                class="r-need"></label>
                         </div>
                     </li>
                     <li>
                         <div class="r-edit-label">Email：</div>
                         <div class="r-edit-field">
                             <input id="email" name="email" class="r-textbox easyui-validatebox"
-                                required type="text" missingMessage="请输入Email" /> <label
-                                class="r-need">*</label>
+                                 type="text" /> <label
+                                class="r-need"></label>
                         </div>
                     </li>
                     <li>
@@ -183,6 +192,16 @@
     </div>
     </div>
  	<script type="text/javascript">
+ 	
+    $.extend($.fn.validatebox.defaults.rules, {
+	        pwdEquals: {
+	               validator: function(value,param){
+	                    return value == $(param[0]).val();
+	        },
+	        message: "密码不匹配"
+
+	       }
+	});
  	    var pagePath = "<%=pagePath%>";
 	    $(document).ready(function(){
 	    	loading_css();

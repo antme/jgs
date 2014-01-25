@@ -46,20 +46,29 @@
 
     
     String action = request.getParameter("action");
-    if(action!=null){
+    if(action!=null && action.equalsIgnoreCase("approve")){
 
 %>
         <div id="archive_approve" style="margin:0px 40px;padding-top:20px;">
-            <input type="hidden" id="archiveId"/>
             <button class="btn_add" onclick="approveArchive();">批准</button>&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="btn_delected" onclick="rejectArchive();">拒绝</button>
         </div>
         
 <%
     }
+    if(action!=null && action.equalsIgnoreCase("approvedestroy")){
+
+%>        
+        <div id="archive_destroy_approve" style="margin:0px 40px;padding-top:20px;">
+            <button class="btn_add" onclick="approveDestoryArchive();">批准</button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="btn_delected" onclick="rejectDestoryArchive();">拒绝</button>
+        </div>
+        
+<%
+    }
 %>        
         
-        
+         <input type="hidden" id="archiveId"/>
         <div id="archive_info" style="margin:0px 40px;">
             <div class="width100 font18 margintop10">上 海 市 虹 口 区 劳 动 人 事 争 议 仲 裁 委 员 会 </div>
             <div class="width100 font24 fontweight margintop20">仲 裁 卷 宗</div>
