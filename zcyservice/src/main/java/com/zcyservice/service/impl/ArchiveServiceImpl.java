@@ -149,8 +149,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 		return this.dao.listByQueryWithPagnation(query, Archive.class);
 	}
-	
-	
+
 	public EntityResults<Archive> listNewArchives(Archive archive) {
 
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
@@ -160,8 +159,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		mergeArchiveQuery(query, archive);
 
 		return this.dao.listByQueryWithPagnation(query, Archive.class);
-	}		
-		
+	}
 
 	public EntityResults<Archive> listPubArchives(Archive archive) {
 
@@ -322,8 +320,8 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 	}
 
 	public void deleteArchiveFiles(String folderCode, String archiveType) {
-	    if (archiveType.equalsIgnoreCase(Archive.ARCHIVE_TYPE_MAIN)) {
-			
+		if (archiveType.equalsIgnoreCase(Archive.ARCHIVE_TYPE_MAIN)) {
+
 			deleteFiles(new File(ZcyUtil.getDocumentPath() + File.separator + folderCode + File.separator + "正卷中" + File.separator));
 			deleteFiles(new File(ZcyUtil.getDocumentPath() + File.separator + folderCode + File.separator + "正卷中附件" + File.separator));
 
@@ -332,8 +330,8 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			deleteFiles(new File(ZcyUtil.getDocumentPath() + File.separator + folderCode + File.separator + "副卷中附件" + File.separator));
 
 		}
-    }
-	
+	}
+
 	private void deleteFiles(File file) {
 
 		if (file.isDirectory()) {
@@ -352,10 +350,9 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		this.dao.updateById(archive);
 
 	}
-	
-	
-	public void rejectDestoryArchive(Archive archive){
-		
+
+	public void rejectDestoryArchive(Archive archive) {
+
 		archive.setArchiveProcessStatus(ProcessStatus.REJECTED);
 		this.dao.updateById(archive);
 	}
@@ -399,19 +396,16 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 			List<ArchiveFile> newArfiles = createArchiveFiles(archive);
 
+			List<ArchiveFile> removedList = new ArrayList<ArchiveFile>();
+
 			DataBaseQueryBuilder query = new DataBaseQueryBuilder(ArchiveFile.TABLE_NAME);
 			query.and(ArchiveFile.ARCHIVE_ID, archive.getId());
 			List<ArchiveFile> list = this.dao.listByQuery(query, ArchiveFile.class);
 
-			String mainFile = archive.getMainFile();
-			String attachFiles = archive.getMainFileAttach();
+			String attachFiles = archive.getMainFileAttach() + "," + archive.getMainFile();
 
-			if (EcUtil.isValid(mainFile)) {
-				for (ArchiveFile af : list) {
-					if (!af.getArchiveFilePath().equals(mainFile)) {
-						newArfiles.add(af);
-					}
-				}
+			for (ArchiveFile naf : newArfiles) {
+				attachFiles = attachFiles + "," + naf.getArchiveFilePath();
 			}
 
 			if (EcUtil.isValid(attachFiles)) {
@@ -419,23 +413,45 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 				for (String afile : atFiles) {
 					if (EcUtil.isValid(afile)) {
 						for (ArchiveFile af : list) {
-							if (!af.getArchiveFilePath().equals(afile)) {
+							if (af.getArchiveFilePath().equals(afile)) {
 								newArfiles.add(af);
+							} else {
+								removedList.add(af);
 							}
 						}
 					}
 				}
 			}
 
-			this.dao.deleteByQuery(query);
+			List<ArchiveFile> savedList = new ArrayList<ArchiveFile>();
+			Set<String> pathSet = new HashSet<String>();
 			for (ArchiveFile naf : newArfiles) {
+				if (!pathSet.contains(naf.getArchiveFilePath())) {
+					pathSet.add(naf.getArchiveFilePath());
+					savedList.add(naf);
+				}
+
+			}
+			
+			this.dao.deleteByQuery(query);
+			
+			for (ArchiveFile naf : removedList) {
+                String pathname = ZcyUtil.getDocumentPath() + File.separator + naf.getArchiveFilePath();
+				if(!pathSet.contains(pathname)) {
+	                deleteFiles(new File(pathname));
+                }
+			}
+
+		
+
+			for (ArchiveFile naf : savedList) {
+
 				if (EcUtil.isEmpty(naf.getId())) {
 
 				}
 				naf.setId(null);
 				naf.setArchiveId(archive.getId());
 				this.dao.insert(naf);
-
 			}
 
 			this.dao.updateById(archive);
@@ -566,7 +582,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 	public EntityResults<ArchiveBorrowing> listArchiveBorrowRecord(Archive archive) {
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(ArchiveBorrowing.TABLE_NAME);
 		query.join(ArchiveBorrowing.TABLE_NAME, Archive.TABLE_NAME, ArchiveBorrowing.ARCHIVE_ID, Archive.ID);
-		
+
 		List<String> columnList = new Archive().getColumnList();
 		columnList.remove(Archive.CREATED_ON);
 		columnList.remove(Archive.UPDATED_ON);
@@ -721,7 +737,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 		String filePath = file.getArchiveFilePath();
 		// filePath = filePath.replaceAll(scanPath, "");
-		if(filePath.contains(scanPath)){
+		if (filePath.contains(scanPath)) {
 			filePath = filePath.substring(scanPath.length() + 1);
 		}
 		return filePath;
