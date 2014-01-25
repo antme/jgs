@@ -1,6 +1,8 @@
 var mainFileAttach="";
 var secondFileAttach="";
 var count=1;
+var deletedFiles = "";
+var fileCache = new Array();
 function fileQueueError(file, errorCode, message) {
 	try {
 		var imageName = "<font color='red'>文件上传错误</font>";
@@ -274,6 +276,7 @@ function uploadSuccess(file, serverData) {
         obj = JSON.parse(obj);
         $("#addarchiveForm").form("load",obj.data);
         $("#mainFile").val(obj.data.filePath);
+
 	} catch (ex) {
 		this.debug(ex);
 	}
@@ -284,8 +287,14 @@ function uploadSuccess1(file, serverData) {
 		addFileInfo1(file.id,"文件上传完成");
 		var obj = serverData;
         obj = JSON.parse(obj);
+		var fileItem = {};
+		fileItem.id=file.id;
+		fileItem.path = obj.data.filePath;
+		
+		fileCache.push(fileItem);	
         mainFileAttach+=obj.data.filePath+","
         $("#mainFileAttach").val(mainFileAttach);
+
 	} catch (ex) {
 		this.debug(ex);
 	}
@@ -498,13 +507,40 @@ function cancelUpload3(){
 	count=stats.successful_uploads+1;
 	swfu.setFileQueueLimit(count);
 	swfu.setFileUploadLimit(count);
+	deletedFiles = deletedFiles + "," + fileId;
+	$("#deletedFiles").val(deletedFiles); 
 }
 function deleteFile1(fileId){
 	//用表格显示
+
 	var infoTable = document.getElementById("infoTable1");
 	var row = document.getElementById(fileId);
 	infoTable.deleteRow(row.rowIndex);
 	swfu.cancelUpload(fileId,false);
+	deletedFiles = deletedFiles + "," + fileId;
+	$("#deletedFiles").val(deletedFiles); 
+	
+	var newValue = "";
+	var datamainFileAttach = $("#mainFileAttach").val();
+
+    for(i in fileCache){
+    	var fc = fileCache[i];
+
+    	if(fc.id == fileId){
+    		var words = datamainFileAttach.split(',');
+    		for(j in words){
+    			if(words[j] == fc.path){
+    				
+    			}else{
+    				newValue = newValue + words[j] + ",";
+    			}
+    		}   		
+    		break;
+    	}
+    	
+    }
+    mainFileAttach = newValue;
+	$("#mainFileAttach").val(newValue);
 
 }
 function deleteFile2(fileId){

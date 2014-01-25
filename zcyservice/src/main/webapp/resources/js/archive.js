@@ -123,6 +123,16 @@ function initArchiveManagePage(){
 	$("#submited").click(function(){
 	      $("#archiveOpenDate").val($('#archiveOpenDate').datebox('getValue'));
 	      $("#archiveCloseDate").val($('#archiveCloseDate').datebox('getValue'));
+	        
+	    
+	       if($("#infoTable tr").length == 0){
+	    	   $.messager.alert("添加失败","请上传卷宗！");
+	    	   return false;
+	       }
+	       if($("#infoTable tr").length > 1){
+	    	   $.messager.alert("添加失败","卷宗文件只能有一个，请删除多余的卷宗文件！");
+	    	   return false;
+	       }
 	      if($("#mainFile").val()=="" || $("#mainFile").val()==null){
 	          $.messager.alert("添加失败","请上传卷宗！");
 	      }else{

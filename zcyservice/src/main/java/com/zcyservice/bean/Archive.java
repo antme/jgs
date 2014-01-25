@@ -158,6 +158,9 @@ public class Archive extends BaseEntity {
 	@Expose
 	public String mainFileAttach;
 	
+	
+	@Expose
+	public String deletedFiles;
 
 	@Expose
 	public String filePath;
@@ -430,7 +433,13 @@ public class Archive extends BaseEntity {
     }
 
 
+	public String getDeletedFiles() {
+    	return deletedFiles;
+    }
 
+	public void setDeletedFiles(String deletedFiles) {
+    	this.deletedFiles = deletedFiles;
+    }
 
 
 	public enum ArchiveStatus {
