@@ -1,6 +1,7 @@
 package com.zcyservice.bean;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
@@ -167,6 +168,10 @@ public class Archive extends BaseEntity {
 	
 	@Expose
 	public Integer count;
+	
+	
+	@Expose
+	public List<ArchiveFile> files;
 	
 	
 
@@ -411,6 +416,18 @@ public class Archive extends BaseEntity {
 	public void setCount(Integer count) {
 		this.count = count;
 	}
+
+
+
+
+
+	public List<ArchiveFile> getFiles() {
+    	return files;
+    }
+
+	public void setFiles(List<ArchiveFile> files) {
+    	this.files = files;
+    }
 
 
 

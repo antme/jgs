@@ -10,6 +10,10 @@ import com.zcy.bean.BaseEntity;
 
 @Table(name = ArchiveFile.TABLE_NAME)
 public class ArchiveFile extends BaseEntity {
+	public static final String ARCHIVE_FILE_NAME = "archiveFileName";
+
+	public static final String ARCHIVE_FILE_PATH = "archiveFilePath";
+
 	public static final String ARCHIVE_FILE_PROPERTY = "archiveFileProperty";
 
 	public static final String ARCHIVE_TEXT_DATA = "archiveTextData";
@@ -22,11 +26,11 @@ public class ArchiveFile extends BaseEntity {
 	@Expose
 	public String archiveId;
 
-	@Column(name = "archiveFileName")
+	@Column(name = ARCHIVE_FILE_NAME)
 	@Expose
 	public String archiveFileName;
 
-	@Column(name = "archiveFilePath")
+	@Column(name = ARCHIVE_FILE_PATH)
 	@Expose
 	public String archiveFilePath;
 

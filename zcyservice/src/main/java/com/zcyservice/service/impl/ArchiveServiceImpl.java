@@ -99,26 +99,45 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		query.and(Archive.ARCHIVE_CODE, arc.getArchiveCode());
 		query.and(Archive.ARCHIVE_TYPE, archiveType);
 
-		if (!this.dao.exists(query) && EcUtil.isValid(arc.getArchiveCode()) && mainFiles != null && mainFiles.size() == 1) {
+		if (!this.dao.exists(query)) {
 
-			arc.setIsNew(true);
+			if (EcUtil.isValid(arc.getArchiveCode())) {
 
-			this.dao.insert(arc);
+				if (mainFiles != null && mainFiles.size() == 1) {
+					arc.setIsNew(true);
 
-			if (attachFiles != null) {
+					this.dao.insert(arc);
 
-				for (ArchiveFile file : attachFiles) {
-					file.setArchiveId(arc.getId());
-					this.dao.insert(file);
+					if (attachFiles != null) {
+
+						for (ArchiveFile file : attachFiles) {
+							file.setArchiveId(arc.getId());
+							this.dao.insert(file);
+						}
+					}
+
+					for (ArchiveFile file : mainFiles) {
+						file.setArchiveId(arc.getId());
+						this.dao.insert(file);
+					}
+
+				} else {
+
+					if (mainFiles.isEmpty()) {
+						logger.info("主文件为空: " + arc.getFolderCode());
+
+					} else {
+						logger.info("主文件不止一个: " + arc.getFolderCode());
+					}
+
 				}
+
+			} else {
+				logger.info("Ignore archive folder due to cannot get code: " + arc.getFolderCode());
 			}
 
-			for (ArchiveFile file : mainFiles) {
-				file.setArchiveId(arc.getId());
-
-				this.dao.insert(file);
-			}
-
+		} else {
+			logger.debug("Ignore archive folder due to archive exists: " + arc.getFolderCode());
 		}
 	}
 
@@ -281,7 +300,6 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		results.put("firstTrees", firstTrees);
 		results.put("firstAttachTrees", firstAttachTrees);
 
-		System.out.println(EcUtil.toString(results));
 
 		return results;
 
@@ -399,7 +417,16 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 	public Archive getArchive(Archive archive) {
 
-		return (Archive) this.dao.findById(archive.getId(), Archive.TABLE_NAME, Archive.class);
+		archive = (Archive) this.dao.findById(archive.getId(), Archive.TABLE_NAME, Archive.class);
+
+		DataBaseQueryBuilder query = new DataBaseQueryBuilder(ArchiveFile.TABLE_NAME);
+		query.and(ArchiveFile.ARCHIVE_ID, archive.getId());
+		query.limitColumns(new String[] { ArchiveFile.ARCHIVE_FILE_PROPERTY, ArchiveFile.ARCHIVE_FILE_PATH, ArchiveFile.ARCHIVE_FILE_NAME });
+
+		archive.setFiles(this.dao.listByQuery(query, ArchiveFile.class));
+
+		return archive;
+
 	}
 
 	public EntityResults<ArchiveBorrowing> listArchiveBorrowRecord(Archive archive) {
@@ -702,7 +729,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		for (String line : lines) {
 			line = line.replaceAll(" ", "").trim();
 
-			if (line.contains("年度第")) {
+			if (line.contains("年度第") || line.contains("度第")) {
 				code = line;
 			} else if (line.startsWith("案由")) {
 				reason = line.replaceFirst("案由", "");
@@ -732,17 +759,14 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 				archive.setYear(c.get(Calendar.YEAR));
 				if (dateType == "立案") {
 
-					System.out.println(line);
 					archive.setArchiveOpenDate(dateTime);
 
 				} else if (dateType == "结案") {
 
-					System.out.println(line);
 					archive.setArchiveCloseDate(dateTime);
 
 				} else if (dateType == "归档") {
 
-					System.out.println(line);
 					archive.setArchiveDate(dateTime);
 
 				}

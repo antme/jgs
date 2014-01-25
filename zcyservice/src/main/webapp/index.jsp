@@ -120,7 +120,7 @@
     <div class="handle_events" >
            <div class="handle_events_title">待处理事项</div>
            <div class="handle_events_text">
-               <div id="tips"><a>测试数据</a></div>
+               <div id="tips"></div>
                <div class="next_info"><a onclick="getNextmsg();">下一条</a></div>
            </div>
         </div>
