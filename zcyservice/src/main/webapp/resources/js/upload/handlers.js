@@ -268,7 +268,7 @@ function uploadProgress3(file, bytesLoaded) {
 
 function uploadSuccess(file, serverData) {
 	try {
-		var progress = new FileProgress(file,  this.customSettings.upload_target);
+		var progress = new FileProgress(file, this.customSettings.upload_target);
 		addFileInfo(file.id,"文件上传完成");
 		var obj = serverData;
         obj = JSON.parse(obj);
@@ -505,6 +505,7 @@ function deleteFile1(fileId){
 	var row = document.getElementById(fileId);
 	infoTable.deleteRow(row.rowIndex);
 	swfu.cancelUpload(fileId,false);
+
 }
 function deleteFile2(fileId){
 	//用表格显示

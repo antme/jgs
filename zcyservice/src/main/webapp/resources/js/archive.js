@@ -105,7 +105,7 @@ function initArchiveManagePage(){
 	      },
 	      success : function(data) {
 	
-	    	  
+	    	  $("#submited").removeAttr("disabled");
 	    	  if($("#sid").val()==undefined){
 	    		  
 	    		  dealMessageWithCallBack(data, "添加档案", function(){
@@ -126,6 +126,7 @@ function initArchiveManagePage(){
 	      if($("#mainFile").val()=="" || $("#mainFile").val()==null){
 	          $.messager.alert("添加失败","请上传卷宗！");
 	      }else{
+	    	  $("#submited").attr("disabled","true");
 	          $("#addarchiveForm").submit();
 	      }
 	      

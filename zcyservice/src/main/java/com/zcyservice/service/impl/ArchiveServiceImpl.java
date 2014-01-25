@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import com.zcy.bean.BaseEntity;
 import com.zcy.bean.EntityResults;
 import com.zcy.cfg.CFGManager;
+import com.zcy.dbhelper.DataBaseQuery;
 import com.zcy.dbhelper.DataBaseQueryBuilder;
 import com.zcy.dbhelper.DataBaseQueryOpertion;
 import com.zcy.exception.ResponseException;
@@ -305,16 +306,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 		String archiveType = archive.getArchiveType();
 
-		if (archiveType.equalsIgnoreCase(Archive.ARCHIVE_TYPE_MAIN)) {
-			
-			deleteFiles(new File(ZcyUtil.getDocumentPath() + File.separator + folderCode + File.separator + "正卷中" + File.separator));
-			deleteFiles(new File(ZcyUtil.getDocumentPath() + File.separator + folderCode + File.separator + "正卷中附件" + File.separator));
-
-		} else if (archiveType.equalsIgnoreCase(Archive.ARCHIVE_TYPE_SECOND)) {
-			deleteFiles(new File(ZcyUtil.getDocumentPath() + File.separator + folderCode + File.separator + "副卷中" + File.separator));
-			deleteFiles(new File(ZcyUtil.getDocumentPath() + File.separator + folderCode + File.separator + "副卷中附件" + File.separator));
-
-		}
+		deleteArchiveFiles(folderCode, archiveType);
 		checkValue(archive, Archive.ARCHIVE_PROCESS_STATUS, ProcessStatus.DESTROYING);
 
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(ArchiveFile.TABLE_NAME);
@@ -328,6 +320,19 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		this.dao.deleteById(archive);
 
 	}
+
+	public void deleteArchiveFiles(String folderCode, String archiveType) {
+	    if (archiveType.equalsIgnoreCase(Archive.ARCHIVE_TYPE_MAIN)) {
+			
+			deleteFiles(new File(ZcyUtil.getDocumentPath() + File.separator + folderCode + File.separator + "正卷中" + File.separator));
+			deleteFiles(new File(ZcyUtil.getDocumentPath() + File.separator + folderCode + File.separator + "正卷中附件" + File.separator));
+
+		} else if (archiveType.equalsIgnoreCase(Archive.ARCHIVE_TYPE_SECOND)) {
+			deleteFiles(new File(ZcyUtil.getDocumentPath() + File.separator + folderCode + File.separator + "副卷中" + File.separator));
+			deleteFiles(new File(ZcyUtil.getDocumentPath() + File.separator + folderCode + File.separator + "副卷中附件" + File.separator));
+
+		}
+    }
 	
 	private void deleteFiles(File file) {
 
@@ -392,6 +397,47 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 		if (EcUtil.isValid(archive.getId())) {
 
+			List<ArchiveFile> newArfiles = createArchiveFiles(archive);
+
+			DataBaseQueryBuilder query = new DataBaseQueryBuilder(ArchiveFile.TABLE_NAME);
+			query.and(ArchiveFile.ARCHIVE_ID, archive.getId());
+			List<ArchiveFile> list = this.dao.listByQuery(query, ArchiveFile.class);
+
+			String mainFile = archive.getMainFile();
+			String attachFiles = archive.getMainFileAttach();
+
+			if (EcUtil.isValid(mainFile)) {
+				for (ArchiveFile af : list) {
+					if (!af.getArchiveFilePath().equals(mainFile)) {
+						newArfiles.add(af);
+					}
+				}
+			}
+
+			if (EcUtil.isValid(attachFiles)) {
+				String[] atFiles = attachFiles.split(",");
+				for (String afile : atFiles) {
+					if (EcUtil.isValid(afile)) {
+						for (ArchiveFile af : list) {
+							if (!af.getArchiveFilePath().equals(afile)) {
+								newArfiles.add(af);
+							}
+						}
+					}
+				}
+			}
+
+			this.dao.deleteByQuery(query);
+			for (ArchiveFile naf : newArfiles) {
+				if (EcUtil.isEmpty(naf.getId())) {
+
+				}
+				naf.setId(null);
+				naf.setArchiveId(archive.getId());
+				this.dao.insert(naf);
+
+			}
+
 			this.dao.updateById(archive);
 
 		} else {
@@ -418,13 +464,15 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 				archive.setYear(c.get(Calendar.YEAR));
 			}
 
+			archive.setIsNew(true);
+			deleteArchiveFiles(archive.getFolderCode(), archive.getArchiveType());
 			createArchiveFiles(archive);
 		}
 
 		return archive;
 	}
 
-	private void createArchiveFiles(Archive archive) {
+	private List<ArchiveFile> createArchiveFiles(Archive archive) {
 
 		if (EcUtil.isValid(archive.getMainFile())) {
 
@@ -465,15 +513,15 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			files.addAll(scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "副卷中附件", archive, ArchiveFileProperty.ATTACH_FILE));
 		}
 
-		if (files.size() > 0) {
-			archive.setIsNew(true);
+		if (files.size() > 0 && EcUtil.isEmpty(archive.getId())) {
 			dao.insert(archive);
 			for (ArchiveFile afile : files) {
 				afile.setArchiveId(archive.getId());
-
 				this.dao.insert(afile);
 			}
 		}
+
+		return files;
 
 	}
 
@@ -481,9 +529,12 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		String path = ZcyUtil.getUploadPath() + File.separator + fileName;
 		try {
 			File file = new File(path);
-			InputStream in = new FileInputStream(file);
-			String targetFule = ZcyUtil.getDocumentPath() + File.separator + archive.getArchiveCode() + File.separator + fileType + File.separator + file.getName();
-			EcUtil.createFile(targetFule, in);
+
+			if (file.exists()) {
+				InputStream in = new FileInputStream(file);
+				String targetFule = ZcyUtil.getDocumentPath() + File.separator + archive.getArchiveCode() + File.separator + fileType + File.separator + file.getName();
+				EcUtil.createFile(targetFule, in);
+			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -504,7 +555,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(ArchiveFile.TABLE_NAME);
 		query.and(ArchiveFile.ARCHIVE_ID, archive.getId());
-		query.limitColumns(new String[] { ArchiveFile.ARCHIVE_FILE_PROPERTY, ArchiveFile.ARCHIVE_FILE_PATH, ArchiveFile.ARCHIVE_FILE_NAME });
+		query.limitColumns(new String[] { ArchiveFile.ID, ArchiveFile.ARCHIVE_FILE_PROPERTY, ArchiveFile.ARCHIVE_FILE_PATH, ArchiveFile.ARCHIVE_FILE_NAME });
 
 		archive.setFiles(this.dao.listByQuery(query, ArchiveFile.class));
 
@@ -670,14 +721,17 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 		String filePath = file.getArchiveFilePath();
 		// filePath = filePath.replaceAll(scanPath, "");
-		filePath = filePath.substring(scanPath.length() + 1);
+		if(filePath.contains(scanPath)){
+			filePath = filePath.substring(scanPath.length() + 1);
+		}
 		return filePath;
 	}
 
 	private List<ArchiveTree> loadDocMenu(ArchiveFile file) {
 		List<ArchiveTree> menuTreeChildren = new ArrayList<ArchiveTree>();
 
-		int totalPdfPages = PdfUtil.getPdfPages(file.getArchiveFilePath());
+		String archiveFilePath = ZcyUtil.getDocumentPath() + File.separator + file.getArchiveFilePath();
+		int totalPdfPages = PdfUtil.getPdfPages(archiveFilePath);
 
 		int start = 0;
 
@@ -685,7 +739,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 		for (int i = 0; i < totalPdfPages; i++) {
 
-			List<String> lines = PdfUtil.getLines(file.getArchiveFilePath(), i, i + 1);
+			List<String> lines = PdfUtil.getLines(archiveFilePath, i, i + 1);
 
 			for (String line : lines) {
 
@@ -780,6 +834,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 					arfile.setArchiveId(archive.getId());
 					arfile.setArchiveFileProperty(scanType);
 					arfile.setArchiveFilePath(subFile.getAbsolutePath());
+					arfile.setArchiveFilePath(replaceScanPath(arfile));
 
 					arfile.setArchiveTextData(new IndexFiles().getDocString(subFile.getAbsolutePath()));
 

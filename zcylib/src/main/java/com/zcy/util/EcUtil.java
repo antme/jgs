@@ -375,6 +375,9 @@ public class EcUtil {
 
 			if (fos != null)
 				fos.close();
+			
+			
+			inputStream.close();
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

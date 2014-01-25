@@ -39,7 +39,7 @@
                                
                               </div>
                              <div id="divFileProgressContainer" style="display:none;"></div>
-                             <div id="thumbnails" style="border: solid 1px #7FAAFF; background-color: #C5D9FF;min-height:30px;width:300px;">
+                             <div id="thumbnails" style="border: solid 1px #7FAAFF; background-color: #C5D9FF;min-height:30px;width:580px;">
                              <table id="infoTable" border="0" width="530" style="padding: 2px;margin-top:8px;">
                              </table>
                              </div>
@@ -60,7 +60,7 @@
                               
                              </div>
                              <div id="divFileProgressContainer1" style="display:none;"></div>
-                             <div id="thumbnails1" style="border: solid 1px #7FAAFF; background-color: #C5D9FF;min-height:30px;width:300px;">
+                             <div id="thumbnails1" style="border: solid 1px #7FAAFF; background-color: #C5D9FF;min-height:30px;width:580px;">
                              <table id="infoTable1" border="0" width="530" style=" padding: 2px;margin-top:8px;">
                              </table>
                              </div>
@@ -158,13 +158,29 @@
   <script type="text/javascript">
      $(document).ready(function(){
 	    initArchiveManagePage();
-	    
 	    var id = "<%=id%>";
 	    if(id!="null"){
 	    	   postAjaxRequest("/ecs/archive/get.do", {id:id}, function(data){
 		     	   $("#addarchiveForm").form("clear");
 		     	   $("#addarchiveForm").form("load",data.data);
 		     	   $("#addarchiveForm").append("<input id='sid' name='id' type='hidden' value='"+id+"' />");
+		     	   var fileAttach="";
+		     	   var files = data.data.files;
+		     	   if(files && files.length>0){
+		     		   for(var i in files){		     			   
+		     			   if(files[i].archiveFileProperty == "MAIN_FILE"){
+		     	                 addReadyFileInfo(files[i].id, files[i].archiveFileName, "", "");
+		     	                 $("#mainFile").val(files[i].archiveFilePath);
+		     			   }else{
+		     				     addReadyFileInfo1(files[i].id, files[i].archiveFileName, "", "");
+		     				     fileAttach+=files[i].archiveFilePath+","
+		     				     
+		     			   }
+		     		   }
+		     	   }
+	               $("#mainFileAttach").val(fileAttach);
+
+
 	     	   });
 	       $("#archive_title").find(".public_title_text").text("编辑档案");
 	    }else{
