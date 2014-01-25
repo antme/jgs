@@ -251,10 +251,10 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 	}
 
 	public DataBaseQueryBuilder getNewApproveArchiveBuilder() {
-	    DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
 		query.and(Archive.ARCHIVE_PROCESS_STATUS, ProcessStatus.NEW);
-	    return query;
-    }
+		return query;
+	}
 
 	public EntityResults<Archive> listNeedDestoryApproveArchives(Archive archive) {
 		DataBaseQueryBuilder query = getNeedDestroyApproveBuilder();
@@ -263,21 +263,29 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 	}
 
 	public DataBaseQueryBuilder getNeedDestroyApproveBuilder() {
-	    DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
 		query.and(Archive.ARCHIVE_PROCESS_STATUS, ProcessStatus.DESTROYING);
-	    return query;
-    }
-	
+		return query;
+	}
+
 	public DataBaseQueryBuilder getNeedRejectBuilder() {
-	    DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
 		query.and(Archive.ARCHIVE_PROCESS_STATUS, ProcessStatus.REJECTED);
-	    return query;
-    }
+		return query;
+	}
 
 	public void approveArchive(Archive archive) {
 
 		archive.setArchiveProcessStatus(ProcessStatus.APPROVED);
 		this.dao.updateById(archive);
+	}
+
+	public void approveDestroyArchive(Archive archive) {
+
+		// FIXME: delete files
+		archive.setArchiveProcessStatus(ProcessStatus.APPROVED);
+		this.dao.updateById(archive);
+
 	}
 
 	public void rejectArchive(Archive archive) {
@@ -315,7 +323,6 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		results.put("data", archive);
 		results.put("firstTrees", firstTrees);
 		results.put("firstAttachTrees", firstAttachTrees);
-
 
 		return results;
 
@@ -475,15 +482,14 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
 		query.groupBy(searchvo.getReportType(), false);
-		
-		
+
 		List<Archive> allReports = this.dao.listByQuery(query, Archive.class);
-		
+
 		EntityResults<Archive> reports = this.dao.listByQueryWithPagnation(query, Archive.class);
 
 		List<Archive> list = reports.getEntityList();
 		reports.getPagnation().setTotal(allReports.size());
-		
+
 		for (Archive report : list) {
 
 			if (searchvo.getReportType().equalsIgnoreCase(Archive.YEAR)) {
@@ -773,7 +779,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 				dateType = "归档";
 			} else if (line.contains("号数")) {
 				dateType = "号数";
-			} else if ((line.contains("年") && line.contains("月")  && line.contains("日")) && dateType != null) {
+			} else if ((line.contains("年") && line.contains("月") && line.contains("日")) && dateType != null) {
 
 				Date dateTime = DateUtil.getDateTime(line.trim().replaceAll(" ", ""));
 				Calendar c = Calendar.getInstance();
@@ -795,11 +801,11 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 				dateType = "";
 			} else if (dateType == "号数") {
-				
+
 				archive.setArchiveSerialNumber(line);
 				dateType = "";
 			}
-			
+
 			System.out.println(line);
 
 		}

@@ -57,6 +57,8 @@ public interface IArchiveService {
 	public Map<String, Object> listArchiveReportByYear();
 
 	public String downloadArchiveFile(Archive archive, HttpServletRequest request, HttpServletResponse response);
+
+	public void approveDestroyArchive(Archive archive);
 	
 	
 	

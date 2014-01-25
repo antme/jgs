@@ -133,6 +133,14 @@ public class ArchiveController extends AbstractController {
 		archiveService.approveArchive(archive);
 		responseWithData(null, request, response);
 	}
+	
+	@RequestMapping("/destroy/approve.do")
+	@Permission(groupName = PermissionConstants.adm_archive_approve, permissionID = PermissionConstants.adm_archive_approve)
+	public void approveDestroyArchive(HttpServletRequest request, HttpServletResponse response) {
+		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
+		archiveService.approveDestroyArchive(archive);
+		responseWithData(null, request, response);
+	}
 
 	@RequestMapping("/reject.do")
 	@Permission(groupName = PermissionConstants.adm_archive_approve, permissionID = PermissionConstants.adm_archive_approve)

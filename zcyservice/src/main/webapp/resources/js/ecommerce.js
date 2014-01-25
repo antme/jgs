@@ -2,8 +2,9 @@ var idParam = undefined;
 var gridId = undefined;
 var ieGridPopupInit = false;
 var userRolestr = undefined;
+var rowArchiveData = undefined;
 
-function loadRemotePage(page, config) {	
+function loadRemotePage(page) {	
 	if (page) {
 		var url = page;
 		if (!page.endWith(".html") && !page.endWith(".jsp")) {
@@ -27,14 +28,10 @@ function loadRemotePage(page, config) {
 		$.ajax({
 			url : url,
 			success : function(data) {
-				
-				if(gridId && gridId == "soOrderList"){
-					$("#remotePagePopup").show();
-					$("#remotePagePopup").html(data);
-				}else{
-					$("#remotePage").show();
-					$("#remotePage").html(data);
-				}
+
+				$("#remotePage").show();
+				$("#remotePage").html(data);
+
 			},
 			error : function(res){
 
@@ -420,219 +417,14 @@ function formatterServiceOrderStatus(val, row) {
 }
 
 
-function formatterBillCloseDate(val, row){	
-	
-	if (row.billStatus == "MFC_DONE" || row.billStatus == "SP_DONE") {	
-		return showDateTimeFormatter(val);
-	}
-	
-	return "";
+
+
+function openArchiveDetailPage(rowData){
+	rowData = rowData;
+	loadRemotePage("web/archive/archiveDetail", rowData);
 }
 
 
-function formatterProductOrderDetailWithCode(val, row) {
-	return '<a href="#" onclick=openProductOrderDetailPage("' + val + '")>' + val + '</a>';
-
-}
-
-function formatterProductOrderDetail(val, row) {
-	return '<a href="#" onclick=openProductOrderDetailPage("' + row.id+ '")>' + val + '</a>';
-
-}
-
-function formatterSPorMfcDetail(val, row){
-	var roleName = row.roleName;
-	if(roleName == 'SP'){
-		return formatterSPDetail(val, row);
-	}else{
-		return formatterMFCDetail(val, row)
-	}
-}
-
-function formatterSPDetail(val, row) {//历史审核列表：查看SP详情
-	return '<a href="#" onclick=openSPDetailPage("' + row.userId+ '")>' + val + '</a>';
-}
-
-function formatterMFCDetail(val, row) {//历史审核列表：查看MFC详情
-	return '<a href="#" onclick=openMFCDetailPage("' + row.userId+ '")>' + val + '</a>';
-}
-
-function formatterSiteMessageDetail(val, row){//站内信息列表：查看站内信息详情
-	var id = row.id;
-	var smuid = row.siteMessageUserId;
-	if(smuid == null || smuid == ""){
-		
-	}else{
-		id = smuid;
-	}
-	return '<a href="#" onclick=openSMDetailPage("' + id + '")>' + val + '</a>';
-}
-
-function formatterNewsDetail(val, row){//新闻列表：查看新闻详情
-	return '<a href="#" onclick=openNewsDetailPage("' + row.id+ '")>' + val + '</a>';
-}
-
-function preViewImageFormatter(val, row){//图片预览
-	if(val == null || val == ""){
-		return "无";
-	}
-	var val2=val.replaceAll( "\\\\",   "\\\\\\\\");
-	return '<a href="#" onclick=perViewImage("' + val2+ '")>' + '预览' + '</a>';
-}
-
-function perViewImage(id){
-	idParam =id;	
-	var config = {
-		    width:400,
-		    height:300,
-		    modal:true,
-		    minimizable:false,
-		    maximizable:false,
-		    collapsible:false,
-		    title : "图片预览"
-		};
-	loadRemotePage("web/image/imagePreview", config);
-}
-
-function openSMDetailPage(id){
-	idParam =id;	
-	var config = {
-		    width:800,
-		    height:500,
-		    modal:true,
-		    minimizable:false,
-		    maximizable:false,
-		    collapsible:false,
-		    title : "站内信息详情"
-		};
-	loadRemoteWindowPage("message/receiver/siteMessageDetail", config);
-}
-
-function openProductServiceOrdersPage(id){
-	idParam = id;	
-	var config = {
-		    width:1090,
-		    height:600,
-		    modal:true,
-		    minimizable:false,
-		    maximizable:false,
-		    collapsible:false,
-		    title : "服务订单"
-		};
-	loadRemoteWindowPage("web/mfc/order/poServiceOrder", config);
-	ieGridPopupInit = true;
-}
-
-
-
-function openNewsDetailPage(id){
-	idParam =id;	
-	var config = {
-		    width:800,
-		    height:500,
-		    modal:true,
-		    minimizable:false,
-		    maximizable:false,
-		    collapsible:false,
-		    title : "新闻详情"
-		};
-	loadRemoteWindowPage("admin/news/newsDetail", config);
-}
-
-function openProductOrderDetailPage(id){
-	idParam =id;	
-	var config = {
-		    width:918,
-		    height:500,
-		    modal:true,
-		    minimizable:false,
-		    maximizable:false,
-		    collapsible:false,
-		    title : "产品订单详情"
-		};
-	loadRemotePage("web/mfc/order/orderDetail", config);
-}
-
-function openSPDetailPage(id){
-	idParam =id;	
-	var config = {
-		    width:800,
-		    height:500,
-		    modal:true,
-		    minimizable:false,
-		    maximizable:false,
-		    collapsible:false,
-		    title : "服务商详情"
-		};
-	loadRemoteWindowPage("web/sp/spDetail", config);
-}
-
-function openMFCDetailPage(id){
-	idParam =id;	
-	var config = {
-		    width:800,
-		    height:500,
-		    modal:true,
-		    minimizable:false,
-		    maximizable:false,
-		    collapsible:false,
-		    title : "厂商详情"
-		};
-	loadRemoteWindowPage("web/mfc/mfcDetail", config);
-}
-
-
-
-function formatterServiceOrderDetail(val, row) {
-	return '<a href="#" onclick=openServiceOrderDetailPage("' + val + '")>' + val + '</a>';
-
-}
-
-
-
-
-function openServiceOrderDetailPage(id){
-	idParam =id;	
-	var config = {
-		    width:918,
-		    height:500,
-		    modal:true,
-		    title : "服务订单详情"
-		};
-	loadRemotePage("web/sp/order/orderDetail", config);
-}
-
-
-function formatterBillOrderList(val, row){
-    return '<button onclick=openBillServiceOrdersPage("' + row.id + '")>结算订单列表</button>';
-}
-
-function openBillServiceOrdersPage(id){
-    idParam = id;    
-     var config = {
-             width:1100,
-             height:650,
-             modal:true,
-             title : "订单账单详情"
-         };
-     loadRemoteWindowPage("web/sp/order/billServiceOrder", config);
-     ieGridPopupInit = true;
-}
-
-function formatterTitleDetail(val, row) {
-
-	
-	var txt = val;
-	if (val && val.length > 15) {
-		txt = val.substr(0, 15) + "...";		
-		txt = "<span   '>" + txt  + "</span><label class=\"right_a titleTooltip\" data=\"" + val + "\" ></label>"
-	}
-
-	return val;
-	
-	
-
-}
 
 function showGridEmptyDataMessage(id) {
 	var target = $("#" + id);
@@ -788,33 +580,30 @@ function resizeTabAndGrid(){
 
 function loadPageDetail(rowIndex, field, value){
 	var rowData = undefined;
+
 	var rows =  $(this).datagrid('getRows');
 	if($(this)[0].id){
 		gridId = $(this)[0].id;
 	}
-	for(index in rows){
-		
+	for(index in rows){	
 		if(index == rowIndex){
 			rowData = rows[index];
 			break;
 		}
 	}
+	
+	rowArchiveData = rowData;
 	$("#logDetail").html("");
 	if(field != "id"){
-		if(!rowData.poId && rowData.poStatus){
-			openProductOrderDetailPage(rowData.id);
+
+		if(rowData.folderCode && rowData.id){
+			openArchiveDetailPage(rowData);
 		}else if(rowData.soStatus){
-			openServiceOrderDetailPage(rowData.id);
-		}else if(rowData.tableName && rowData.tableName=="ServiceOrder"){
-			openServiceOrderDetailPage(rowData.dataId);
-		}else if(rowData.tableName && rowData.tableName=="ProductOrder"){
-			openProductOrderDetailPage(rowData.dataId);
-		}else if(rowData.tableName && (rowData.tableName=="Manufacturer" || rowData.tableName=="User" || rowData.tableName=="ServiceProvider"  || rowData.tableName=="Worker")){
 			
-			if(rowData.data){
-				createLogPage(rowData.data, rowData.tableName);
-			}
+		}else if(rowData.tableName && rowData.tableName=="Archive"){
 			
+		}else if(rowData.tableName && rowData.tableName=="ArchiveFile"){
+			openArchiveDetailPage(rowData.dataId);
 		}else{
 		
 			$(".remotePage").hide();
@@ -833,34 +622,15 @@ function createLogPage(data, tableName){
 	
 	var mfclabels = {
 			mfcCompanyName: "厂商公司", 
-			mfcCompanyAdress: "厂商公司地址", 
-			mfcContactPerson: "厂商联系人", 
-			mfcContactPhone: "厂商电话", 
-			mfcContactMobilePhone: "厂商联系手机", 
-			mfcServiceTypeStr: "主营类型", 
-			mfcLocation: "所在地", 
-			mfcQQ: "厂商qq"
+	
 	}
 	
 	var splabels = {
-			spUserName: "用户名", 
-			spServiceTypeStr: "主营服务类型", 
-			spCompanySize: "工人数", 
-			spCompanyName: "公司名称", 
-			spCompanyAddress: "公司地址", 
-			spContactPerson: "联系人", 
-			spLocation: "所在地", 
-			spContactPhone: "联系电话", 
-			spContactMobilePhone :"联系手机", 
-			spQQ: "qq"
+
 	}
 	
 	var workderlabels = {
-			workerName: "工人名", 
-			idCard: "请输入身份证", 
-			address: "地址", 
-			mobilePhone: "手机号码", 
-			workerType: "工人类型"
+	
 	}
 	
 	if(tableName == "Manufacturer"){
@@ -896,16 +666,6 @@ function openDialog(id, title){
 
 }
 
-
-function formatterFindServiceOrderOperation(val, row){	
-	if(row.poStatus !="MANUAL" && row.poStatus !="INACTIVE"){
-		return '<button class=\"button_color1\" onclick=openProductServiceOrdersPage("' + row.id + '")>已配服务订单</button>';
-	}
-}
-
-
-
-
 function s4() {
 	return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
 };
@@ -913,56 +673,6 @@ function s4() {
 function guid() {
 	return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4()
 			+ s4() + s4();
-}
-
-function checkMfcServiceType(arr) {
-	loadServerType("mfc_category", arr, false);
-}
-
-function checkSpServiceType(arr) {
-
-	loadServerType("sp_category", arr, true);
-}
-
-function loadServerType(id, checkedArra, isSp){
-	
-	postAjaxRequest("/ecs/category/listLevel1.do", {}, function(data) {
-		var rows = data.rows;
-		var div = $("#" + id);
-         div.html("");
-		
-		for (index in rows) {
-			var row = rows[index];
-			var checked = false;
-			if (checkedArra) {
-				for ( var i = 0; i < checkedArra.length; i++) {
-					if (row.id == checkedArra[i]) {
-						checked = true;
-						break;
-					}
-				}
-			}
-			
-			if(isSp){
-				if (checked) {
-					$('<span class="span_style_s"><input type="checkbox" name="spServiceTypeArray[]" checked="true" id="' + row.id + id + '" value="' + row.id + '" /></span>').appendTo(div);
-				} else {
-					$('<span class="span_style_s"><input type="checkbox" name="spServiceTypeArray[]" id="' + row.id+ id + '" value="' + row.id + '" /></span>').appendTo(div);
-				}
-			}else{
-				if (checked) {
-					$('<span class="span_style_s"><input type="checkbox" name="mfcServiceTypeArray[]" checked="true" id="' + row.id+ id + '" value="' + row.id + '" /></span>').appendTo(div);
-				} else {
-					$('<span class="span_style_s"><input type="checkbox" name="mfcServiceTypeArray[]" id="' + row.id+ id + '" value="' + row.id + '" /></span>').appendTo(div);
-				}
-			}
-			$('<span class="span_style_s"><label for="' + row.id+ id + '">' + row.name + '</label></span>').appendTo(div);
-			if (index > 0 && (index % 3 == 0)) {
-				$('<br>').appendTo(div);
-			}
-		}
-
-	}, false);
 }
 
 
