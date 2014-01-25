@@ -44,6 +44,13 @@ public class ArchiveController extends AbstractController {
 		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
 		responseWithDataPagnation(archiveService.listArchives(archive), request, response);
 	}
+	
+	@RequestMapping("/listNewArchives.do")
+	@Permission(groupName = PermissionConstants.adm_archive_manage, permissionID = PermissionConstants.adm_archive_manage)
+	public void listNewArchives(HttpServletRequest request, HttpServletResponse response) {
+		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
+		responseWithDataPagnation(archiveService.listNewArchives(archive), request, response);
+	}
 
 	@RequestMapping("/listPubArchives.do")
 	@Permission(groupName = PermissionConstants.adm_archive_query, permissionID = PermissionConstants.adm_archive_query)

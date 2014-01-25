@@ -30,7 +30,7 @@
             </div>
             <div class="div_span div_span_left">
                  <span class="span_style_label width_border_noright div_span_Noleft"><label class="display_nones">处理结果：</label></span>
-                 <span class="span_style width_border_one"><div id="archiveStatus_info" class="display_input598"></div></span>
+                 <span class="span_style width_border_one"><div id="archiveResult_info" class="display_input598"></div></span>
             </div>
             <div class="div_span">
                  <span class="span_style_label width_border_noright"><label class="display_nones">申请人：</label></span>
@@ -59,8 +59,8 @@
                 <span class="span_style_label width_border_bottom"><label class="display_nones">归档号数：</label></span>
                 <span class="span_style width_border_bottom"><div id="archiveSerialNumber_info" class="display_input"></div></span>
             
-                <span class="span_style_label width_border_bottom"><label class="display_nones"></label></span>
-                <span class="span_style width_borders"><div class="display_input"></div></span>
+                <span class="span_style_label width_border_bottom"><label class="display_nones">归档状态</label></span>
+                <span class="span_style width_borders"><div class="display_input" id="archiveStatus_info"></div></span>
             </div>
             <br/>
         </div>
@@ -73,6 +73,7 @@
         $("#archiveStatus_info").text(formatterArchiveStatus(rowArchiveData.archiveStatus));
         $("#createdOn_info").text(rowArchiveData.createdOn);
         $("#updatedOn_info").text(rowArchiveData.updatedOn);
+        $("#archiveResult_info").text(rowArchiveData.archiveResult);
         $("#archiveApplicant_info").text(rowArchiveData.archiveApplicant);
         $("#archiveOppositeApplicant_info").text(rowArchiveData.archiveOppositeApplicant);
         $("#archiveThirdPerson_info").text(rowArchiveData.archiveThirdPerson);

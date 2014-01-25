@@ -598,8 +598,8 @@ function loadPageDetail(rowIndex, field, value){
 
 		if(rowData.folderCode && rowData.id){
 			openArchiveDetailPage(rowData);
-		}else if(rowData.soStatus){
-			
+		}else if(rowData.archiveId){
+			openArchiveDetailPage(rowData);
 		}else if(rowData.tableName && rowData.tableName=="Archive"){
 			
 		}else if(rowData.tableName && rowData.tableName=="ArchiveFile"){

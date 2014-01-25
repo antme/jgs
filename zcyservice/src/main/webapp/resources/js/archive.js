@@ -23,9 +23,15 @@ function formatterArchiveEidt(val, row, rowindex){
 	return '<span class="span_style"><a href="?p=flexpaper/simple_document&id=' + row.id + '"><img height="16" width="16" src="/resources/images/print-preview.png"></img></a></span><span class="span_style" style="margin-left:5px;"><a class="table_eidt" href="?p=web/archive/archiveedit&id=' + row.id + '"></a></span><span class="span_style" style="margin-left:5px;"><button class="table_delect" onclick=deletarchiveWindow("'+ row.id+'");>&nbsp;</button></span>';
 }
 function formatterRecordEidt(val, row, rowindex){
-	return '<span class="span_style"><a href="?p=flexpaper/simple_document&id=' + row.id + '"><img height="16" width="16" src="/resources/images/print-preview.png"></img></a></span><span class="span_style" style="margin-left:5px;"><button class="table_eidt" onclick=getrecordWindow("'+ row.id+'");>&nbsp;</button></span>';
-}
 
+	if(row.archiveId){
+		return '<span class="span_style"><a href="?p=flexpaper/simple_document&id=' + row.archiveId + '"><img height="16" width="16" src="/resources/images/print-preview.png"></img></a></span><span class="span_style" style="margin-left:5px;"><button class="table_eidt" onclick=getrecordWindow("'+ row.id+'");>&nbsp;</button></span>';
+		
+	}else{
+		return '<span class="span_style"><a href="?p=flexpaper/simple_document&id=' + row.id + '"><img height="16" width="16" src="/resources/images/print-preview.png"></img></a></span><span class="span_style" style="margin-left:5px;"><button class="table_eidt" onclick=getrecordWindow("'+ row.id+'");>&nbsp;</button></span>';
+
+	}
+}
 
 function formatterArchiveStatus(val, row, rowindex) {
 	

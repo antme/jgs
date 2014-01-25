@@ -79,11 +79,11 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 			throw new ResponseException("此用户名已经被注册");
 		}
 
-		builder = new DataBaseQueryBuilder(User.TABLE_NAME);
-		builder.and(User.MOBILE_NUMBER, user.getMobileNumber());
-		if (dao.exists(builder)) {
-			throw new ResponseException("此手机号码已经被注册");
-		}
+//		builder = new DataBaseQueryBuilder(User.TABLE_NAME);
+//		builder.and(User.MOBILE_NUMBER, user.getMobileNumber());
+//		if (dao.exists(builder)) {
+//			throw new ResponseException("此手机号码已经被注册");
+//		}
 
 		if (user.getRoleName() == null) {
 			user.setRoleName(Role.USER.toString());

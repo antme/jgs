@@ -148,6 +148,19 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 		return this.dao.listByQueryWithPagnation(query, Archive.class);
 	}
+	
+	
+	public EntityResults<Archive> listNewArchives(Archive archive) {
+
+		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		query.and(DataBaseQueryOpertion.IN, Archive.ARCHIVE_PROCESS_STATUS,
+		        new String[] { ProcessStatus.DRAFT.toString(), ProcessStatus.NEW.toString(), ProcessStatus.DESTROYING.toString(), ProcessStatus.REJECTED.toString() });
+
+		mergeArchiveQuery(query, archive);
+
+		return this.dao.listByQueryWithPagnation(query, Archive.class);
+	}		
+		
 
 	public EntityResults<Archive> listPubArchives(Archive archive) {
 

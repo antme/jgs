@@ -67,12 +67,12 @@ public class SystemServiceImpl extends AbstractArchiveService implements ISystem
 		}
 
 		if (!EcUtil.isEmpty(group.getId())) {
-			if (this.dao.exists(RoleGroup.GROUP_NAME, group.getGroupName(), RoleGroup.TABLE_NAME)) {
-				throw new ResponseException("权限组名字重复");
-			}
 
 			this.dao.updateById(group);
 		} else {
+			if (this.dao.exists(RoleGroup.GROUP_NAME, group.getGroupName(), RoleGroup.TABLE_NAME)) {
+				throw new ResponseException("权限组名字重复");
+			}
 			this.dao.insert(group);
 		}
 	}

@@ -39,7 +39,7 @@
        <div class="span_style">档案只有审核过后才能开放查询</div>
     </div>
     <div style="margin-left:40px;">
-            <table id="archiveList"  class="easyui-datagrid_tf" url="/ecs/archive/listArchives.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
+            <table id="archiveList"  class="easyui-datagrid_tf" url="/ecs/archive/listNewArchives.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
                 <thead>
                     <tr>
                         <th align="center"  field="archiveCode"  width="120"  sortable="false" formatter="formatterArchiveStyle">案号</th>

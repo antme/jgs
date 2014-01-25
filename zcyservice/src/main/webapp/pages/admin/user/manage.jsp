@@ -91,12 +91,13 @@
 								type="text" required missingMessage="请输入用户名"/> <label class="r-need">*</label>
 						</div>
 					</li>
+					
 					<li>
                         <div class="r-edit-label">密码：</div>
                         <div class="r-edit-field">
                             <input id="password" name="password" class="r-textbox easyui-validatebox"
                                 type="password"  /> <label
-                                class="r-need">*</label>
+                                class="r-need">* 编辑时留空代表不修改密码</label>
                         </div>
                     </li>
                     <li>
@@ -111,15 +112,15 @@
 						<div class="r-edit-label">联系手机：</div>
 						<div class="r-edit-field">
 							<input id="mobileNumber" name="mobileNumber" class="r-textbox easyui-validatebox"
-								type="text" required missingMessage="请输入联系手机"  /> <label
-								class="r-need">*</label>
+								type="text"  /> <label
+								class="r-need"></label>
 						</div>
 					</li>
 					<li>
                         <div class="r-edit-label">Email：</div>
                         <div class="r-edit-field">
                             <input id="email" name="email" class="r-textbox easyui-validatebox"
-                                required type="text"  /> 
+                                 type="text"  /> 
                         </div>
                     </li>
                     <li>
