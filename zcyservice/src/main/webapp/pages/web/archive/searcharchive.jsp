@@ -8,6 +8,8 @@
 }
 
 </style>
+    <div style="margin-left:50px;color:red;font-size:12px;">关键字搜索：多个关键字之间请用空格隔开</div>
+    <div class="line_clear"></div>
     <div class="public_search_div archive_search">
         <div class="line_seach">
             <span class="span_style_label"><label class="display_nones">案号：</label></span>

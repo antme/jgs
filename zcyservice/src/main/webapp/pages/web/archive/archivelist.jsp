@@ -20,7 +20,6 @@
     </div>
     <div class="line_clear"></div>
    <%@ include file="/pages/web/archive/searcharchive.jsp"%>
-   <div style="margin-left:50px;color:red;font-size:12px;">关键字搜索：多个关键字之间请用空格隔开</div>
     <div class="line_clear"></div>
 	<div style="margin-left:40px;">
 			<table id="archiveList"  class="easyui-datagrid_tf" url="/ecs/archive/listPubArchives.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">

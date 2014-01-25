@@ -230,7 +230,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			}
 
 			if (EcUtil.isValid(ids)) {
-				childKeyWordQuery.and(DataBaseQueryOpertion.IN, Archive.ID, ids);
+				childKeyWordQuery.or(DataBaseQueryOpertion.IN, Archive.ID, ids);
 			}
 
 			childQuery.and(childKeyWordQuery);
@@ -746,7 +746,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		String applicantBad = null;
 		String thirdApplicant = null;
 		String judgePerson = null;
-		String dateType = "";
+		String dateType = null;
 
 		for (String line : lines) {
 			line = line.replaceAll(" ", "").trim();
@@ -765,15 +765,15 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 				thirdApplicant = line.replaceFirst("第三人", "");
 			} else if (line.startsWith("承办人")) {
 				judgePerson = line.replaceFirst("承办人", "");
-			} else if (line.startsWith("立案")) {
+			} else if (line.startsWith("立案") || (line.contains("案日期") && dateType == null)) {
 				dateType = "立案";
-			} else if (line.startsWith("结案")) {
+			} else if (line.startsWith("结案") || (line.contains("案日期") && dateType == "立案")) {
 				dateType = "结案";
-			} else if (line.startsWith("归档")) {
+			} else if (line.startsWith("归档") || (line.contains("档日期") && dateType == "结案")) {
 				dateType = "归档";
-			} else if (line.startsWith("号数")) {
+			} else if (line.contains("号数")) {
 				dateType = "号数";
-			} else if (line.contains("年") && line.contains("月") && line.contains("日")) {
+			} else if ((line.contains("年") && line.contains("月")  && line.contains("日")) && dateType != null) {
 
 				Date dateTime = DateUtil.getDateTime(line.trim().replaceAll(" ", ""));
 				Calendar c = Calendar.getInstance();
@@ -795,9 +795,12 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 				dateType = "";
 			} else if (dateType == "号数") {
-				System.out.println(line);
+				
+				archive.setArchiveSerialNumber(line);
 				dateType = "";
 			}
+			
+			System.out.println(line);
 
 		}
 

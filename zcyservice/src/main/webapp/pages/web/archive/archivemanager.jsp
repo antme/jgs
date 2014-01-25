@@ -21,8 +21,9 @@
               <label class="public_title_text">档案管理</label>
           </div>
         <div class="line_clear"></div>
+
     <%@ include file="/pages/web/archive/searcharchive.jsp"%>
-    <div style="margin-left:50px;color:red;font-size:12px;">关键字搜索：多个关键字之间请用空格隔开</div>
+
     <div class="line_clear"></div>
     <div style="margin-left:40px;">
         <a href="?p=web/archive/archiveedit"><button class="btn_add" >新增档案</button></a>
@@ -35,12 +36,13 @@
        <span class="span_style">代表编辑</span>
        <span class="span_style">“<img height="16" width="16" src="/resources/images/delect_btn.png" />”</span>
        <span class="span_style">代表销毁</span>
+       <div class="span_style">档案只有审核过后才能开放查询</div>
     </div>
     <div style="margin-left:40px;">
             <table id="archiveList"  class="easyui-datagrid_tf" url="/ecs/archive/listArchives.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
                 <thead>
                     <tr>
-                        <th align="center"  field="archiveCode"  width="110"  sortable="false" formatter="formatterArchiveStyle">案号</th>
+                        <th align="center"  field="archiveCode"  width="120"  sortable="false" formatter="formatterArchiveStyle">案号</th>
                         <th align="center"  field="archiveApplicant"  width="60"  sortable="false">申请人</th>
                         <th align="center"  field="archiveName"  width="150"  sortable="false">案由</th>
                         <th align="center"  field="archiveType"  formatter="formatterArchiveType"  width="50"  sortable="false">类型</th>

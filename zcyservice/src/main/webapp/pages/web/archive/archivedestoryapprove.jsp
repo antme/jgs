@@ -33,7 +33,6 @@
     <div class="line_clear"></div>
     <%@ include file="/pages/web/archive/searcharchive.jsp"%>
     
-    <div style="margin-left:50px;color:red;font-size:12px;">关键字搜索：多个关键字之间请用空格隔开</div>
     <div class="line_clear"></div>
     <div style="margin-left:40px;">
        <span class="span_style">“<img height="16" width="16" src="/resources/images/print-preview.png" />”</span>

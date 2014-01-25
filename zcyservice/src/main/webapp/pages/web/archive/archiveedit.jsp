@@ -22,21 +22,24 @@
               <label class="public_title_text"></label>
           </div>
     </div>
-    
+    <div class="line_clear"></div>
+   <div style="margin-left:50px;color:red;font-size:12px;">新增档案需要审核后才归档，编辑档案如果增加了卷宗附件或则修改了卷宗也需要审核</div>
    <div title="基本信息" style="padding: 10px">
      <form action="" id="addarchiveForm" method="post" novalidate>
-      <div id="change_btn" style="padding: 10px"><input type="radio" name="archiveType" value="MAIN" checked/><label>正卷宗</label>&nbsp;<input name="archiveType" value="SECOND" type="radio" /><label>副卷宗</label></div>
+      <div id="change_btn" style="padding: 10px;margin-left:250px;"><input type="radio" name="archiveType" value="MAIN" checked/><label>正卷宗</label>&nbsp;<input name="archiveType" value="SECOND" type="radio" /><label>副卷宗</label></div>
 
       <div title="附件上传" style="padding: 10px; border-bottom:1px solid #cdcdcd;">
                <div id="fj">
                 <div class="ac_div zjz" >
                     <span class="span_style"><label class="ac_title2 ">卷宗</label></span>
                     <span class="span_style span_left_border">
+                     <div style="color:red;font-size:12px;">上传OCR过后的pdf文件，系统会自动识别档案基本信息</div>
                               <div style="display: inline; ">
-                              <span id="spanButtonPlaceholder"></span>
+                                <span id="spanButtonPlaceholder"></span>
+                               
                               </div>
                              <div id="divFileProgressContainer" style="display:none;"></div>
-                             <div id="thumbnails" style="border: solid 1px #7FAAFF; background-color: #C5D9FF;min-height:30px;width:530px;">
+                             <div id="thumbnails" style="border: solid 1px #7FAAFF; background-color: #C5D9FF;min-height:30px;width:300px;">
                              <table id="infoTable" border="0" width="530" style="padding: 2px;margin-top:8px;">
                              </table>
                              </div>
@@ -57,7 +60,7 @@
                               
                              </div>
                              <div id="divFileProgressContainer1" style="display:none;"></div>
-                             <div id="thumbnails1" style="border: solid 1px #7FAAFF; background-color: #C5D9FF;min-height:30px;width:530px;">
+                             <div id="thumbnails1" style="border: solid 1px #7FAAFF; background-color: #C5D9FF;min-height:30px;width:300px;">
                              <table id="infoTable1" border="0" width="530" style=" padding: 2px;margin-top:8px;">
                              </table>
                              </div>

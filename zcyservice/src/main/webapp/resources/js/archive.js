@@ -58,7 +58,8 @@ function formatterArchiveProcessStatus(val, row, rowindex) {
 }
 
 function approveArchive(){
-	 postAjaxRequest("/ecs/archive/approve.do", {id:id}, function(data){		 
+	 postAjaxRequest("/ecs/archive/approve.do", {id:id}, function(data){		
+		 $.messager.alert("档案审核","批准成功！");
 		 window.location.href="index.jsp?p=web/archive/archiveapprove";
 		 
 	 });
@@ -211,9 +212,16 @@ var myloader = function(param,success,error){
         },
         success: function(data){
             var items = $.map(data.rows, function(item){
+            	var displayName = item.archiveCode;
+            	if(item.archiveType == "MAIN"){
+            		displayName = displayName + "-正卷中";
+            	}else{
+            		displayName = displayName + "-副卷中";
+            	}
+            	
                 return {
                     id: item.id,
-                    name: item.archiveCode 
+                    name: displayName 
                 };
             });
             success(items);
