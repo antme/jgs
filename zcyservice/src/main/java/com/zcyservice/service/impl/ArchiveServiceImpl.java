@@ -17,9 +17,12 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lib.pdf2swf;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zcy.bean.BaseEntity;
 import com.zcy.bean.EntityResults;
@@ -48,6 +51,7 @@ import com.zcyservice.util.ZcyUtil;
 public class ArchiveServiceImpl extends AbstractArchiveService implements IArchiveService {
 	private static Logger logger = LogManager.getLogger(ArchiveServiceImpl.class);
 
+	@Transactional
 	public void scanArchines() {
 
 		String scanPath = CFGManager.getProperty(ZcyServiceConstants.DOCUMENT_SCAN_PATH);
@@ -393,6 +397,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			DataBaseQueryBuilder existsQuery = new DataBaseQueryBuilder(Archive.TABLE_NAME);
 			existsQuery.and(DataBaseQueryOpertion.NOT_EQUALS, ArchiveFile.ID, archive.getId());
 			existsQuery.and(Archive.ARCHIVE_TYPE, archive.getArchiveType());
+			existsQuery.and(Archive.ARCHIVE_CODE, archive.getArchiveCode());
 
 			if (this.dao.exists(existsQuery)) {
 				throw new ResponseException("此卷中已经存在，请不要重复上传");
@@ -418,9 +423,9 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 			}
 			for (ArchiveFile af : dlist) {
-				if (!pathSet.contains(new File(ZcyUtil.getDocumentPath() + File.separator + af.getArchiveFilePath()))) {
-					System.out.println("........");
-//					deleteFiles(new File(ZcyUtil.getDocumentPath() + File.separator + af.getArchiveFilePath()));
+				String filePath = ZcyUtil.getDocumentPath() + File.separator + af.getArchiveFilePath();
+				if (!pathSet.contains(filePath)) {
+					deleteFiles(new File(filePath));
 				}
 			}
 
@@ -845,6 +850,8 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 						}
 
 						if (subFile.getName().toLowerCase().contains(".pdf")) {
+							
+							
 							files.add(arfile);
 						}
 					} else {
@@ -875,6 +882,8 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 		for (String line : lines) {
 			line = line.replaceAll(" ", "").trim();
+			line = line.replaceAll("'", "");
+			line = line.replaceAll(".", "");
 
 			if (line.contains("年度第") || line.contains("度第")) {
 				code = line;
@@ -902,22 +911,24 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 				Date dateTime = DateUtil.getDateTime(line.trim().replaceAll(" ", ""));
 				Calendar c = Calendar.getInstance();
-				c.setTime(dateTime);
-				archive.setYear(c.get(Calendar.YEAR));
-				if (dateType == "立案") {
 
-					archive.setArchiveOpenDate(dateTime);
+				if (dateTime != null) {
+					c.setTime(dateTime);
+					archive.setYear(c.get(Calendar.YEAR));
+					if (dateType == "立案") {
 
-				} else if (dateType == "结案") {
+						archive.setArchiveOpenDate(dateTime);
 
-					archive.setArchiveCloseDate(dateTime);
+					} else if (dateType == "结案") {
 
-				} else if (dateType == "归档") {
+						archive.setArchiveCloseDate(dateTime);
 
-					archive.setArchiveDate(dateTime);
+					} else if (dateType == "归档") {
 
+						archive.setArchiveDate(dateTime);
+
+					}
 				}
-
 				dateType = "";
 			} else if (dateType == "号数") {
 
@@ -925,7 +936,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 				dateType = "";
 			}
 
-			System.out.println(line);
+			// System.out.println(line);
 
 		}
 

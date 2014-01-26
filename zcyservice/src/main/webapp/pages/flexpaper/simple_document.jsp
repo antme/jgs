@@ -178,7 +178,6 @@
 			    if(userRolestr && userRolestr.indexOf("adm_archive_print")!=-1){
 			    	canPrint = true;
                 }
-              
 				
 				$('#documentViewer').FlexPaperViewer({
 					 config : {
