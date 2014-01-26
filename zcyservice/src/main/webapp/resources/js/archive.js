@@ -90,6 +90,18 @@ function approveDestoryArchive(){
 
 function rejectArchive(){
 	 postAjaxRequest("/ecs/archive/reject.do", {id:id}, function(data){
+		 $.messager.alert("档案审核","拒绝成功！");
+
+		 window.location.href="index.jsp?p=web/archive/archiveapprove";
+	 });
+}
+
+
+function rejectDestoryArchive(){
+	
+	 postAjaxRequest("/ecs/archive/destroy/reject.do", {id:id}, function(data){
+		 $.messager.alert("档案审核","拒绝成功！");
+
 		 window.location.href="index.jsp?p=web/archive/archiveapprove";
 	 });
 }
@@ -102,6 +114,14 @@ function initEditArchivePage(id){
 	     	   $("#addarchiveForm").form("load",data.data);
 	     	   $("#addarchiveForm").append("<input id='sid' name='id' type='hidden' value='"+id+"' />");
 	     	   var fileAttach="";
+	     	   fileCache = new Array();
+	     	   mainFileAttach="";
+	     	   deletedFiles = "";
+	    	   $("#mainFileAttach").val("");
+	    	   $("#deletedFiles").val("");
+	    	   $("#mainFile").val("");
+			   $("#infoTable1").html("");
+
 	     	   var files = data.data.files;
 	     	   if(files && files.length>0){
 	     		   for(var i in files){		     			   
@@ -110,16 +130,14 @@ function initEditArchivePage(id){
 	     	                 addReadyFileInfo(files[i].id, files[i].archiveFileName, "", "");
 	     	                 $("#mainFile").val(files[i].archiveFilePath);
 	     			   }else{
-	     				     $("#infoTable1").html("");
 	     				     addReadyFileInfo1(files[i].id, files[i].archiveFileName, "", "");
 	     				     fileAttach+=files[i].archiveFilePath+","
 	     				     
 	     			   }
 	     		   }
 	     	   }
-             $("#mainFileAttach").val(fileAttach);
-
-
+             mainFileAttach = fileAttach;            
+             $("#mainFileAttach").val(mainFileAttach);
    	   });
       $("#archive_title").find(".public_title_text").text("编辑档案");
   }else{
@@ -142,9 +160,7 @@ function initArchiveManagePage(){
 	      },
 	      success : function(data) {
 	    	  data = JSON.parse(data);
-	    	  $("#mainFileAttach").val("");
-	    	  $("#deletedFiles").val("");
-	    	  $("#mainFile").val("");
+
 	    	  $("#submited").removeAttr("disabled");
 	    	  if($("#sid").val()==undefined){
 	    		  
@@ -155,9 +171,10 @@ function initArchiveManagePage(){
 		    		  $.messager.alert("添加档案","添加档案成功！");
 	    		  })
 			   }else{
-				   initEditArchivePage(data.data.id);
 				   dealMessageWithCallBack(data, "编辑档案", function(){
 					   $.messager.alert("编辑档案","编辑档案成功！");
+					   initEditArchivePage(data.data.id);
+
 				   })				  
 			   }  
 	

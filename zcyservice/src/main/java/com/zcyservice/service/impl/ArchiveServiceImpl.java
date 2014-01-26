@@ -1,14 +1,9 @@
 package com.zcyservice.service.impl;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,7 +24,6 @@ import org.springframework.stereotype.Service;
 import com.zcy.bean.BaseEntity;
 import com.zcy.bean.EntityResults;
 import com.zcy.cfg.CFGManager;
-import com.zcy.dbhelper.DataBaseQuery;
 import com.zcy.dbhelper.DataBaseQueryBuilder;
 import com.zcy.dbhelper.DataBaseQueryOpertion;
 import com.zcy.exception.ResponseException;
@@ -355,7 +349,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 	public void rejectDestoryArchive(Archive archive) {
 
-		archive.setArchiveProcessStatus(ProcessStatus.REJECTED);
+		archive.setArchiveProcessStatus(ProcessStatus.DESTROYED_REJECTED);
 		this.dao.updateById(archive);
 	}
 
@@ -396,32 +390,41 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 		if (EcUtil.isValid(archive.getId())) {
 
-			String deletedFiles = archive.getDeletedFiles();
+			DataBaseQueryBuilder existsQuery = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+			existsQuery.and(DataBaseQueryOpertion.NOT_EQUALS, ArchiveFile.ID, archive.getId());
+			existsQuery.and(Archive.ARCHIVE_TYPE, archive.getArchiveType());
 
-			Set<String> ids = new HashSet<String>();
-			if (EcUtil.isValid(deletedFiles)) {
-				String deletedList[] = deletedFiles.split(",");
-				for (String dlf : deletedList) {
-					if (EcUtil.isValid(dlf)) {
-						ids.add(dlf.trim());
-					}
-				}
+			if (this.dao.exists(existsQuery)) {
+				throw new ResponseException("此卷中已经存在，请不要重复上传");
 			}
 
-			if (EcUtil.isValid(ids)) {
+			Archive oldArchive = (Archive) this.dao.findById(archive.getId(), Archive.TABLE_NAME, Archive.class);
 
-				DataBaseQueryBuilder query = new DataBaseQueryBuilder(ArchiveFile.TABLE_NAME);
-				query.and(DataBaseQueryOpertion.IN, ArchiveFile.ID, ids);
-				List<ArchiveFile> dlist = this.dao.listByQuery(query, ArchiveFile.class);
-
-				for (ArchiveFile af : dlist) {
-					deleteFiles(new File(ZcyUtil.getDocumentPath() + File.separator + af.getArchiveFilePath()));
-				}
-				this.dao.deleteByQuery(query);
-
+			if (oldArchive.getArchiveProcessStatus().equals(ProcessStatus.REJECTED)) {
+				archive.setArchiveProcessStatus(ProcessStatus.NEW);
+			} else if (oldArchive.getArchiveProcessStatus().equals(ProcessStatus.DESTROYED_REJECTED)) {
+				archive.setArchiveProcessStatus(ProcessStatus.DESTROYING);
 			}
 
 			List<ArchiveFile> newArfiles = createArchiveFiles(archive);
+
+			DataBaseQueryBuilder query = new DataBaseQueryBuilder(ArchiveFile.TABLE_NAME);
+			query.and(ArchiveFile.ARCHIVE_ID, archive.getId());
+			List<ArchiveFile> dlist = this.dao.listByQuery(query, ArchiveFile.class);
+
+			Set<String> pathSet = new HashSet<String>();
+			for (ArchiveFile naf : newArfiles) {
+				pathSet.add(ZcyUtil.getDocumentPath() + File.separator + naf.getArchiveFilePath());
+
+			}
+			for (ArchiveFile af : dlist) {
+				if (!pathSet.contains(new File(ZcyUtil.getDocumentPath() + File.separator + af.getArchiveFilePath()))) {
+					System.out.println("........");
+//					deleteFiles(new File(ZcyUtil.getDocumentPath() + File.separator + af.getArchiveFilePath()));
+				}
+			}
+
+			this.dao.deleteByQuery(query);
 
 			for (ArchiveFile naf : newArfiles) {
 
@@ -480,11 +483,9 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 		if (EcUtil.isValid(archive.getMainFileAttach())) {
 			String files[] = archive.getMainFileAttach().split(",");
-			
 
 			for (String fileName : files) {
 
-				
 				if (EcUtil.isValid(fileName)) {
 					if (archive.getArchiveType().equalsIgnoreCase(Archive.ARCHIVE_TYPE_MAIN)) {
 						moveFile(archive, fileName, "正卷中附件");

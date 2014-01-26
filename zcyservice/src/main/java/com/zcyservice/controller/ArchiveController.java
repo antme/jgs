@@ -142,7 +142,7 @@ public class ArchiveController extends AbstractController {
 	}
 	
 	@RequestMapping("/destroy/approve.do")
-	@Permission(groupName = PermissionConstants.adm_archive_approve, permissionID = PermissionConstants.adm_archive_approve)
+	@Permission(groupName = PermissionConstants.adm_archive_destory_approve, permissionID = PermissionConstants.adm_archive_destory_approve)
 	public void approveDestroyArchive(HttpServletRequest request, HttpServletResponse response) {
 		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
 		archiveService.approveDestroyArchive(archive);
@@ -156,6 +156,22 @@ public class ArchiveController extends AbstractController {
 		archiveService.rejectArchive(archive);
 		responseWithData(null, request, response);
 	}
+	
+	@RequestMapping("/scan.do")
+	@LoginRequired(required=false)
+	public void scanArchives(HttpServletRequest request, HttpServletResponse response) {
+		archiveService.scanArchines();
+		responseWithData(null, request, response);
+	}
+	
+	@RequestMapping("/destroy/reject.do")
+	@Permission(groupName = PermissionConstants.adm_archive_destory_approve, permissionID = PermissionConstants.adm_archive_destory_approve)
+	public void rejectDestroyArchive(HttpServletRequest request, HttpServletResponse response) {
+		Archive archive = (Archive) parserJsonParameters(request, true, Archive.class);
+		archiveService.rejectArchive(archive);
+		responseWithData(null, request, response);
+	}
+
 
 	@RequestMapping("/upload.do")
 	@Permission(groupName = PermissionConstants.adm_archive_manage, permissionID = PermissionConstants.adm_archive_manage)

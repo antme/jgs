@@ -25,7 +25,7 @@
 	    
 	    pdfdoc 	= doc + ".pdf";
 	    
-	    if(doc.contains(".png") || doc.contains(".jpg") ){
+	    if(doc.contains(".png") || doc.contains(".jpg") || doc.contains(".jpeg") || doc.contains(".gif") ){
 	        ZcyUtil.imgageToPdf(ZcyUtil.getDocumentPath() + File.separator + doc, ZcyUtil.getDocumentPath() + File.separator + pdfdoc);
 	    }
 	    

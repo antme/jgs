@@ -367,6 +367,7 @@ function addReadyFileInfo(fileid,fileName,message,status){
 }
 function addReadyFileInfo1(fileid,fileName,message,status){
 	//用表格显示
+
 	var infoTable = document.getElementById("infoTable1");
 	var row = infoTable.insertRow();
 	row.id = fileid;
