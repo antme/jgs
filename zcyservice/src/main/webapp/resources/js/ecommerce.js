@@ -621,7 +621,7 @@ function createLogPage(data, tableName){
 	var labels = {};
 	
 	var mfclabels = {
-			mfcCompanyName: "厂商公司", 
+			mfcCompanyName: "厂商公司"
 	
 	}
 	

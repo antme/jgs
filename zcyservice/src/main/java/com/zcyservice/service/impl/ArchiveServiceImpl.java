@@ -161,15 +161,20 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 	public EntityResults<Archive> listPubArchives(Archive archive) {
 
-		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
-		query.and(DataBaseQueryOpertion.NOT_IN, Archive.ARCHIVE_PROCESS_STATUS, new String[] { ProcessStatus.DRAFT.toString(), ProcessStatus.NEW.toString(),
-		        ProcessStatus.DESTROYING.toString(), ProcessStatus.REJECTED.toString() });
+		DataBaseQueryBuilder query = getPubQuery();
 
 		mergeArchiveQuery(query, archive);
 
 		return this.dao.listByQueryWithPagnation(query, Archive.class);
 
 	}
+
+	public DataBaseQueryBuilder getPubQuery() {
+	    DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		query.and(DataBaseQueryOpertion.NOT_IN, Archive.ARCHIVE_PROCESS_STATUS, new String[] { ProcessStatus.DRAFT.toString(), ProcessStatus.NEW.toString(),
+		        ProcessStatus.DESTROYING.toString(), ProcessStatus.REJECTED.toString() });
+	    return query;
+    }
 
 	private void mergeArchiveQuery(DataBaseQueryBuilder query, Archive archive) {
 
@@ -631,18 +636,19 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 	public Map<String, Object> listArchiveReportByYear() {
 
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		
 		query.distinct(Archive.YEAR);
 		List<Archive> reports = this.dao.distinctQuery(query, Archive.class);
 
-		Map<String, Object> result = new HashMap<String, Object>();
 
-		List<Map<String, Object>> colorMapList = new ArrayList<Map<String, Object>>();
 
 		Map<String, Object> yearsCountMap = new HashMap<String, Object>();
 		for (Archive archive : reports) {
 
-			DataBaseQueryBuilder cquery = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+			DataBaseQueryBuilder cquery = getPubQuery();
 			cquery.and(Archive.YEAR, archive.getYear());
+			
+			
 			int count = this.dao.count(cquery);
 			yearsCountMap.put("year" + archive.getYear(), count);
 
@@ -883,7 +889,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		for (String line : lines) {
 			line = line.replaceAll(" ", "").trim();
 			line = line.replaceAll("'", "");
-			line = line.replaceAll(".", "");
+			line = line.replaceAll("\\.", "");
 
 			if (line.contains("年度第") || line.contains("度第")) {
 				code = line;

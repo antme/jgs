@@ -102,8 +102,8 @@
     line-height: 29px;
     overflow: hidden;
     width: 194px;
-    *margin-left:-10px;
-    _margin-left:-10px;
+    
+    
 }
 .f-information{
 	height:auto;
@@ -136,6 +136,7 @@
     border:0;
     text-algin:center;
     line-height:28px;
+    margin-left:5px;
 }
 
 .btn_delected{

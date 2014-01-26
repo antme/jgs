@@ -28,9 +28,9 @@
 	        <thead>
 	            <tr>
 	                <th data-options="field:'ck',checkbox:true" width="70"></th>
-	                <th align="center"  field="groupName"  sortable="false" width='200' align="center" resizable="true">权限名称</th>
-	                <th align="center"  field="description"  sortable="false" width='200' align="center" resizable="true">描述</th>
-	                <th data-options="field:'id',formatter:formatterGroupOperation" width='200' align="center" resizable="true">操作</th>
+	                <th align="center"  field="groupName"  sortable="false" width='100' align="center" resizable="true">权限名称</th>
+	                <th align="center"  field="description"  sortable="false" width='250' align="center" resizable="true">描述</th>
+	                <th data-options="field:'id',formatter:formatterGroupOperation" width='100' align="center" resizable="true">操作</th>
 	            </tr>
 	        </thead>
 	        
@@ -78,7 +78,7 @@
 	});
 	function openAddGroupWindow(){
 		$("#addRoleGroupForm").form("clear");
-		$("#groupName").removeAttr("disabled");
+		$("#groupName").removeAttr("readonly");
 		$('#addRoleGroup').window('setTitle', "新增权限组");
 	      openDialog("addRoleGroup");
 	}
@@ -112,9 +112,9 @@
 	    	if(rows[i].id==id){
 	    		$("#addRoleGroupForm").form('load', rows[i]);
 	    		if(rows[i].groupName=="管理员"){
-	    			$("#groupName").attr("disabled", "true");
+	    			$("#groupName").attr("readonly", "readonly");
 	    		}else{
-	    			$("#groupName").removeAttr("disabled");
+	    			$("#groupName").removeAttr("readonly");
 	    		}
 	    		var arr = rows[i].permissions.split(",");
 

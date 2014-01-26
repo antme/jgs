@@ -26,13 +26,13 @@
 				<thead>
 					<tr>
                         <th align="center"  field="archiveCode"  width="100"  sortable="false">案号</th>
-                        <th align="center"  field="archiveName"  width="100"  sortable="false">案由</th>
+                        <th align="center"  field="archiveApplicant"  width="60"  sortable="false">申请人</th>
+                        <th align="center"  field="archiveName"  width="160"  sortable="false">案由</th>
+                        <th align="center"  field="archiveType"  formatter="formatterArchiveType"  width="50"  sortable="false">类型</th>
                         <th align="center"  field="archiveStatus" formatter="formatterArchiveStatus"  width="100" sortable="false" >档案状态</th>
 
-                        <th align="center"  field="createdOn" width="120" sortable="false" >档案归档时间</th>
-                        <th align="center"  field="updatedOn" width="120" sortable="false" >档案修改时间</th>
-                        
-                         <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="50">档案预览</th>
+                        <th align="center"  field="archiveDate" width="85" formatter="showEstDateFormatter" sortable="false" >归档时间</th>
+                        <th align="center" data-options="field:'id'" formatter="formatterArchiveView"  width="50">预览</th>
                     </tr>
 				</thead>
 			</table>

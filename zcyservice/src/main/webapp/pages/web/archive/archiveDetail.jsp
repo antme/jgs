@@ -71,16 +71,16 @@
         $("#archiveCode_info").text(rowArchiveData.archiveCode);
         $("#archiveName_info").text(rowArchiveData.archiveName);
         $("#archiveStatus_info").text(formatterArchiveStatus(rowArchiveData.archiveStatus));
-        $("#createdOn_info").text(rowArchiveData.createdOn);
-        $("#updatedOn_info").text(rowArchiveData.updatedOn);
+        $("#createdOn_info").text(showEstDateFormatter(rowArchiveData.createdOn));
+        $("#updatedOn_info").text(showEstDateFormatter(rowArchiveData.updatedOn));
         $("#archiveResult_info").text(rowArchiveData.archiveResult);
         $("#archiveApplicant_info").text(rowArchiveData.archiveApplicant);
         $("#archiveOppositeApplicant_info").text(rowArchiveData.archiveOppositeApplicant);
         $("#archiveThirdPerson_info").text(rowArchiveData.archiveThirdPerson);
         $("#archiveJudge_info").text(rowArchiveData.archiveJudge);
-        $("#archiveOpenDate_info").text(rowArchiveData.archiveOpenDate);
-        $("#archiveCloseDate_info").text(rowArchiveData.archiveCloseDate);
-        $("#archiveDate_info").text(rowArchiveData.archiveDate);
+        $("#archiveOpenDate_info").text(showEstDateFormatter(rowArchiveData.archiveOpenDate));
+        $("#archiveCloseDate_info").text(showEstDateFormatter(rowArchiveData.archiveCloseDate));
+        $("#archiveDate_info").text(showEstDateFormatter(rowArchiveData.archiveDate));
         $("#archiveSerialNumber_info").text(rowArchiveData.archiveSerialNumber);
         
 		       	

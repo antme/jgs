@@ -13,6 +13,7 @@ import com.zcy.bean.SystemConfig;
 import com.zcy.bean.User;
 import com.zcy.cfg.CFGManager;
 import com.zcy.dbhelper.DataBaseQueryBuilder;
+import com.zcy.dbhelper.DataBaseQueryOpertion;
 import com.zcy.exception.ResponseException;
 import com.zcy.util.EcUtil;
 import com.zcyservice.bean.vo.SearchVo;
@@ -67,6 +68,12 @@ public class SystemServiceImpl extends AbstractArchiveService implements ISystem
 		}
 
 		if (!EcUtil.isEmpty(group.getId())) {
+			DataBaseQueryBuilder query = new DataBaseQueryBuilder(RoleGroup.TABLE_NAME);
+			query.and(RoleGroup.GROUP_NAME, group.getGroupName());
+			query.and(DataBaseQueryOpertion.NOT_EQUALS, RoleGroup.ID, group.getId());
+			if (this.dao.exists(query)) {
+				throw new ResponseException("权限组名字不能重复");
+			}
 
 			this.dao.updateById(group);
 		} else {
