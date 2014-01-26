@@ -575,6 +575,17 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(ArchiveBorrowing.TABLE_NAME);
 		query.join(ArchiveBorrowing.TABLE_NAME, Archive.TABLE_NAME, ArchiveBorrowing.ARCHIVE_ID, Archive.ID);
 
+		DataBaseQueryBuilder archiveQuery = new DataBaseQueryBuilder(Archive.TABLE_NAME);
+		mergeArchiveQuery(archiveQuery, archive);
+		List<Archive> arList = this.dao.listByQuery(archiveQuery, Archive.class);
+
+		Set<String> ids = new HashSet<String>();
+		for (Archive ac : arList) {
+			ids.add(ac.getId());
+
+		}
+
+
 		List<String> columnList = new Archive().getColumnList();
 		columnList.remove(Archive.CREATED_ON);
 		columnList.remove(Archive.UPDATED_ON);
@@ -583,6 +594,10 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		query.joinColumns(Archive.TABLE_NAME, columnList);
 		query.limitColumns(new ArchiveBorrowing().getColumnList());
 
+		if (archiveQuery.getQueryStr() != null) {
+			query.and(DataBaseQueryOpertion.IN, ArchiveBorrowing.TABLE_NAME + "." + ArchiveBorrowing.ARCHIVE_ID, ids);
+		}
+		
 		return this.dao.listByQueryWithPagnation(query, ArchiveBorrowing.class);
 	}
 
@@ -607,6 +622,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 		DataBaseQueryBuilder query = new DataBaseQueryBuilder(Archive.TABLE_NAME);
 		query.groupBy(searchvo.getReportType(), false);
+		query.and(Archive.ARCHIVE_TYPE, Archive.ARCHIVE_TYPE_MAIN);
 
 		List<Archive> allReports = this.dao.listByQuery(query, Archive.class);
 

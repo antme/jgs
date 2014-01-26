@@ -17,7 +17,7 @@ var swfu,swfu1,swfu2,swf3;
                     upload_progress_handler : uploadProgress,
                     upload_error_handler : uploadError,
                     upload_complete_handler : uploadComplete,
-                    upload_success_handler : uploadSuccess,
+                    upload_success_handler : uploadPdfSuccess,
     
                     // Button Settings
                     button_image_url : "/resources/images/file_btn.png",
@@ -55,7 +55,7 @@ var swfu,swfu1,swfu2,swf3;
                     file_queued_handler : fileQueued1,
                     upload_progress_handler : uploadProgress1,
                     upload_error_handler : uploadError1,
-                    upload_success_handler : uploadSuccess1,
+                    upload_success_handler : uploadPdfSuccess1,
                     upload_complete_handler : uploadComplete1,
     
                     // Button Settings

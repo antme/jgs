@@ -268,22 +268,25 @@ function uploadProgress3(file, bytesLoaded) {
 }
 
 
-function uploadSuccess(file, serverData) {
+function uploadPdfSuccess(file, serverData) {
 	try {
-		var progress = new FileProgress(file, this.customSettings.upload_target);
+		
 		addFileInfo(file.id,"文件上传完成");
 		var obj = serverData;
-        obj = JSON.parse(obj);
+		
+	    obj = JSON.parse(obj);
+
+		
         $("#addarchiveForm").form("load",obj.data);
         $("#mainFile").val(obj.data.filePath);
 
 	} catch (ex) {
+		console.log(ex);
 		this.debug(ex);
 	}
 }
-function uploadSuccess1(file, serverData) {
+function uploadPdfSuccess1(file, serverData) {
 	try {
-		var progress = new FileProgress1(file,  this.customSettings.upload_target);
 		addFileInfo1(file.id,"文件上传完成");
 		var obj = serverData;
         obj = JSON.parse(obj);
