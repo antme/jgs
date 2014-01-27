@@ -121,6 +121,19 @@
                 <span class="span_style_label width_border_bottom"><label class="display_nones">归档状态</label></span>
                 <span class="span_style width_borders"><div class="display_input" id="archiveStatus"></div></span>
             </div>
+            
+            <%
+
+    if(action!=null && action.equalsIgnoreCase("approvedestroy")){
+
+%>   
+            <div class="div_span " id="destroyComments_div" >
+                 <span class="span_style_label width_border_noright div_span_Noleft"><label class="display_nones">销毁备注：</label></span>
+                 <span class="span_style width_border_one"><div id="destroyComments" class="display_input598"></div></span>
+            </div>
+            <%
+    }
+%> 
             <br/>
         </div>
 		<div id="documentViewer" class="flexpaper_viewer" style="position:absolute;width:720px;height:750px;z-index:2; margin-left: 40px;"></div>
@@ -245,7 +258,7 @@
 					 $("#archiveSerialNumber").text(data.data.archiveSerialNumber);
 					 
 					 
-					 
+					 $("#destroyComments").text(data.data.destroyComments);
 					 $('#firstTrees').tree({
 						    state: "closed",
 							onClick: function(node){
