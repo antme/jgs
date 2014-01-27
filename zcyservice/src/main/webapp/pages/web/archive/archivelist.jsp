@@ -21,6 +21,11 @@
     <div class="line_clear"></div>
    <%@ include file="/pages/web/archive/searcharchive.jsp"%>
     <div class="line_clear"></div>
+     <div style="margin-left:40px;">
+       <span class="span_style">“<img height="16" width="16" src="/resources/images/print-preview.png" />”</span>
+       <span class="span_style">代表预览</span>
+       
+    </div>
 	<div style="margin-left:40px;">
 			<table id="archiveList"  class="easyui-datagrid_tf" url="/ecs/archive/listPubArchives.do" iconCls="icon-save" sortOrder="asc" pagination="true" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true, singleSelect:true,width:900">
 				<thead>

@@ -136,7 +136,7 @@
 %> 
             <br/>
         </div>
-        <div>备注：第一次加载预览文档会比较慢，请耐心等待，第二次以后加载会很快。</div>
+        <div class="div_span " style="margin-left:100px;">备注：第一次加载预览文档会比较慢，请耐心等待，第二次以后加载会很快。</div>
 		<div id="documentViewer" class="flexpaper_viewer" style="position:absolute;width:720px;height:750px;z-index:2; margin-left: 40px;"></div>
 		<div id="documentFiles" style="width:200px;height:350px; float:right; margin-right:10px;">
 		
