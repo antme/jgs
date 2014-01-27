@@ -100,6 +100,14 @@ public class UserServiceImpl extends AbstractService implements IUserService {
 	}
 
 	public User login(User user) {
+		
+		if (CFGManager.getProperty("sysOnline") != null && !"admin".equalsIgnoreCase(user.getUserName())) {
+			if ("yes".equalsIgnoreCase(CFGManager.getProperty("sysOnline"))) {
+				throw new ResponseException("系统维护，请稍后登录");
+			}
+
+		}
+		
 		DataBaseQueryBuilder builder = new DataBaseQueryBuilder(User.TABLE_NAME);
 		builder.and(User.PASSWORD, DataEncrypt.generatePassword(user.getPassword()));
 

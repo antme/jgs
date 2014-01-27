@@ -23,18 +23,16 @@ Sigar sigar = new Sigar();
 			<form action="/ecs/sys/cfg/add.do" method="post" novalidate class="sys-form">
 			
 		<div class="">
-            <span class=""><label class="">新增档案是否需要审核：</label></span>
-            <span class="span_style">
-            	<input type="radio" name="isArchiveNeedApprove" id="isArchiveNeedApprove_yes" value="yes" class="sex_input" /> <label>是</label> 
-				<input type="radio" name="isArchiveNeedApprove" value="no" id="isArchiveNeedApprove_no" class="sex_input" /> <label>否</label>            
-            </span> 
-            <div class="line_clear"></div>
-            <span class=""><label class="">系统进入维护：</label></span>
+
+            <span class="span_style"><label class="">系统进入维护：</label></span>
           
             <span class="span_style">
            		<input type="radio" name="sysOnline" id="sysOnline_yes" value="yes" class="sex_input" /> <label>是</label> 
-                <input type="radio" name="sysOffline" value="no" id="sysOnline_no" class="sex_input" /> <label>否</label>
+                <input type="radio" name="sysOnline" value="no" id="sysOnline_no" class="sex_input" /> <label>否</label>
+                <span class="span_style" style="margin-left:50px;"><label class="">备注系统进入维护后用户将不能登录</label></span>
             </span> 
+        
+            
         </div>
         
         
@@ -42,8 +40,14 @@ Sigar sigar = new Sigar();
                     <input type="submit" value="保存" />			    
 			</form>
 		</div>
-
-
+		<hr>
+    		<div class="p_height_div"></div>
+            
+            <span class="span_style"><label class="">扫描新档案：</label></span>
+          
+            <span class="span_style">
+           		<button onclick="scanDocument();">扫描</button>
+            </span> 
 
 
 
@@ -51,7 +55,11 @@ Sigar sigar = new Sigar();
 		$(document).ready(function() {
 			loadSystemConfig();
 		});
-		
+		function scanDocument(){
+			postAjaxRequest("/ecs/archive/scan.do", {}, function(data) {  
+				displayAlert("扫描完毕");
+			})
+		}
 		function loadSystemConfig(){
 		    
 		    postAjaxRequest("/ecs/sys/cfg/list.do", {}, function(data) {    

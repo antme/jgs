@@ -6,10 +6,10 @@ function formatterArchiveView(val, row, rowindex) {
 function formatterArchiveType(val, row, rowindex) {
 	
 	if(val == "MAIN"){
-		return "正卷中";
+		return "正卷宗";
 	}
 	
-	return "副卷中";
+	return "副卷宗";
 	
 }
 
@@ -307,9 +307,9 @@ var myloader = function(param,success,error){
             var items = $.map(data.rows, function(item){
             	var displayName = item.archiveCode;
             	if(item.archiveType == "MAIN"){
-            		displayName = displayName + "-正卷中";
+            		displayName = displayName + "-正卷";
             	}else{
-            		displayName = displayName + "-副卷中";
+            		displayName = displayName + "-副卷";
             	}
             	
                 return {
