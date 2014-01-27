@@ -3,6 +3,7 @@ package com.ecomm.dao;
 import java.io.IOException;
 
 import junit.framework.TestCase;
+import lib.ConvertThread;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -11,7 +12,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.zcy.dao.IQueryDao;
 import com.zcy.dao.QueryDaoImpl;
-import com.zcyservice.bean.vo.SearchVo;
+import com.zcyservice.bean.Archive;
 import com.zcyservice.service.IArchiveService;
 import com.zcyservice.service.ISystemService;
 import com.zcyservice.service.IUserService;
@@ -57,7 +58,14 @@ public class BaseTestCase extends TestCase {
 
 	public void testEmpty() throws IOException, InterruptedException {
 
-		System.out.println(archiveService.countArchive(new SearchVo()).getEntityList());
+		archiveService.scanArchines();
+		
+		System.out.println("waiting for process swf *****************************************");
+		while(true){
+			
+		}
+		
+//		archiveService.getDocumentInfo("D:\\zcy\\doc\\2013461\\副卷宗\\2013461.pdf", new Archive());
 
 	}
 

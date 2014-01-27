@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,6 +18,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lib.ConvertThread;
 import lib.pdf2swf;
 
 import org.apache.log4j.LogManager;
@@ -72,6 +74,8 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		} else {
 			logger.error("请创建好扫描目录: " + scanPath);
 		}
+		
+		new ConvertThread(true).start();
 	}
 
 	private void scanArchiveFiles(File subFile, String archiveType) {
@@ -110,13 +114,15 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 						for (ArchiveFile file : attachFiles) {
 							file.setArchiveId(arc.getId());
-							this.dao.insert(file);
+
+							saveArchiveFile(file);
 						}
 					}
 
 					for (ArchiveFile file : mainFiles) {
 						file.setArchiveId(arc.getId());
-						this.dao.insert(file);
+						
+						saveArchiveFile(file);
 					}
 
 				} else {
@@ -137,6 +143,36 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 		} else {
 			logger.debug("Ignore archive folder due to archive exists: " + arc.getFolderCode());
 		}
+
+	}
+
+	public void saveArchiveFile(ArchiveFile file) {
+
+		try {
+			this.dao.insert(file);
+		} catch (Exception e) {
+			// 大数据乱码情况，过滤掉
+
+			if (file.getArchiveTextData() != null) {
+
+				try {
+					file.setArchiveTextData(new String(file.getArchiveTextData().getBytes(), "UTF-8"));
+					this.dao.insert(file);
+				} catch (Exception e1) {
+					file.setArchiveTextData(null);
+					this.dao.insert(file);
+				}
+
+			} else {
+				throw e;
+			}
+
+		}
+
+		if(EcUtil.isValid(file.getArchiveFilePath())){
+			ConvertThread.queue.offer(file.getArchiveFilePath());
+		}
+		
 	}
 
 	public EntityResults<Archive> listArchives(Archive archive) {
@@ -443,12 +479,13 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 				if (EcUtil.isEmpty(naf.getId())) {
 					naf.setArchiveId(archive.getId());
-					this.dao.insert(naf);
+					saveArchiveFile(naf);
 				}
 
 			}
 
 			this.dao.updateById(archive);
+			
 
 		} else {
 
@@ -472,9 +509,17 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 			archive.setIsNew(true);
 			deleteArchiveFiles(archive.getFolderCode(), archive.getArchiveType());
-			createArchiveFiles(archive);
+			List<ArchiveFile> files = createArchiveFiles(archive);
+			
+			if (files.size() > 0 && EcUtil.isEmpty(archive.getId())) {
+				dao.insert(archive);
+				for (ArchiveFile afile : files) {
+					afile.setArchiveId(archive.getId());
+					saveArchiveFile(afile);
+				}
+			}
 		}
-
+		new ConvertThread(true).start();
 		return archive;
 	}
 
@@ -520,13 +565,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			files.addAll(scanMainDocumentFolder(file.getAbsolutePath() + File.separator + "副卷宗附件", archive, ArchiveFileProperty.ATTACH_FILE));
 		}
 
-		if (files.size() > 0 && EcUtil.isEmpty(archive.getId())) {
-			dao.insert(archive);
-			for (ArchiveFile afile : files) {
-				afile.setArchiveId(archive.getId());
-				this.dao.insert(afile);
-			}
-		}
+
 
 		return files;
 
@@ -906,8 +945,11 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 			line = line.replaceAll("'", "");
 			line = line.replaceAll("\\.", "");
 
-			if (line.contains("年度第") || line.contains("度第")) {
+			if (line.contains("年度第") || line.contains("度第") || line.contains("年度")) {
 				code = line;
+				code = code.replaceAll("0", "〇");
+				code = code.replaceAll("◦", "");
+				code = code.replaceAll("号-", "号");
 			} else if (line.startsWith("案由")) {
 				reason = line.replaceFirst("案由", "");
 			} else if (line.startsWith("处理结果")) {
@@ -930,6 +972,7 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 				dateType = "号数";
 			} else if ((line.contains("年") && line.contains("月") && line.contains("日")) && dateType != null) {
 
+				line = line.replaceAll("丨", "");
 				Date dateTime = DateUtil.getDateTime(line.trim().replaceAll(" ", ""));
 
 				if (dateTime != null) {
@@ -970,14 +1013,24 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 		}
 
-		archive.setArchiveCode(code);
-		archive.setArchiveName(reason);
-		archive.setArchiveResult(results);
-		archive.setArchiveApplicant(applicant);
-		archive.setArchiveOppositeApplicant(applicantBad);
-		archive.setArchiveThirdPerson(thirdApplicant);
-		archive.setArchiveJudge(judgePerson);
+		
+		archive.setArchiveCode(relaceArchiveText(code));
+		archive.setArchiveName(relaceArchiveText(reason));
+		archive.setArchiveResult(relaceArchiveText(results));
+		archive.setArchiveApplicant(relaceArchiveText(applicant));
+		archive.setArchiveOppositeApplicant(relaceArchiveText(applicantBad));
+		archive.setArchiveThirdPerson(relaceArchiveText(thirdApplicant));
+		archive.setArchiveJudge(relaceArchiveText(judgePerson));
 
+	}
+	
+	private String relaceArchiveText(String text){
+		
+		if(text == null){
+			return text;
+		}
+		text =  text.replaceAll("：", "");
+		return text.replaceAll("\\*", "");
 	}
 
 }
