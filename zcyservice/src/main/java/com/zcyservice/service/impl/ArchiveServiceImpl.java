@@ -1003,16 +1003,17 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 				archive.setArchiveSerialNumber(line);
 				dateType = "";
 			}
-			if (EcUtil.isEmpty(archive.getYear())) {
-				Calendar c = Calendar.getInstance();
-
-				archive.setYear(c.get(Calendar.YEAR));
-			}
+	
 
 			// System.out.println(line);
 
 		}
 
+		if (EcUtil.isEmpty(archive.getYear())) {
+			Calendar c = Calendar.getInstance();
+
+			archive.setYear(c.get(Calendar.YEAR));
+		}
 		
 		archive.setArchiveCode(relaceArchiveText(code));
 		archive.setArchiveName(relaceArchiveText(reason));
