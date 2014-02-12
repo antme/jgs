@@ -272,6 +272,28 @@ function getGridCheckedIds(gridId, key, filterValue) {
 	return ids;
 }
 
+
+//easy ui 获取grid多选数据的id， 可以根据key和filterValue过滤数据
+function getGridCheckedIdsIgnoreValue(gridId, key, filterValue) {
+	var rows = $('#' + gridId).datagrid('getChecked');
+	var ids = new Array();
+	for (i = 0; i < rows.length; i++) {
+		if (key) {
+			var rowValue = eval("rows[i]." + key);
+
+			if (rowValue && filterValue && rowValue == filterValue) {
+				//ignore
+			}else{
+				ids.push(rows[i].id);
+			}
+		} else {
+			ids.push(rows[i].id);
+		}
+
+	}
+	return ids;
+}
+
 String.prototype.replaceAll = function(s1,s2) { 
     return this.replace(new RegExp(s1,"gm"),s2); 
 }

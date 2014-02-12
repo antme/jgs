@@ -36,11 +36,17 @@ FileSystemUsage usage = null;
 FileSystem fs=null;
 for(int i=0;i<fslist.length;i++){
     fs = fslist[i];
-    usage = sigar.getFileSystemUsage(fs.getDirName());
-    Total=Total+usage.getTotal();
-    Free=Free+usage.getFree();
-    Used=Used+usage.getUsed();
-    name=fs.getSysTypeName();
+    try{
+    	usage = sigar.getFileSystemUsage(fs.getDirName());
+        
+        Total=Total+usage.getTotal();
+        Free=Free+usage.getFree();
+        Used=Used+usage.getUsed();
+        name=fs.getSysTypeName();
+    }catch(Exception e){
+    	//do nothing
+
+    }
 }
 Total=Total/(1024*1024);
 Free=Free/(1024*1024);

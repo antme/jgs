@@ -947,7 +947,8 @@ public class ArchiveServiceImpl extends AbstractArchiveService implements IArchi
 
 			if (line.contains("年度第") || line.contains("度第") || line.contains("年度")) {
 				code = line;
-				code = code.replaceAll("0", "〇");
+				code = code.replaceAll("二0一三", "二〇一三");
+				code = code.replaceAll("二0一四", "二〇一四");
 				code = code.replaceAll("◦", "");
 				code = code.replaceAll("号-", "号");
 			} else if (line.startsWith("案由")) {

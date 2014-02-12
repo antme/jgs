@@ -23,6 +23,7 @@
 			<div>
                <span class="span_style">“<img height="16" width="16" src="/resources/images/table_edit.png" />”</span>
                <span class="span_style">代表编辑</span>
+               <span class="span_style">管理员权限不能删除</span>
             </div>
 			<table class="easyui-datagrid_tf" data-options="checkOnSelect:false, remoteFilter:true, fitColumns: true" id="groupList"  url="/ecs/sys/group/list.do" iconCls="icon-save" sortOrder="asc"  pagination="true"  data-options="onClickRow: onGroupPermissionClickRow">
 	        <thead>
@@ -88,7 +89,7 @@
 	}
 	
 	function deleteRoles(){
-		var ids = getGridCheckedIds('groupList');
+		var ids = getGridCheckedIdsIgnoreValue('groupList', 'groupName', "管理员");
 	    if(ids.length == 0){        
 	        alert("请在列表中选择需要删除的数据，也可以点击标题左边的选择框全部选择本页的数据删除！");
 	        return false;
