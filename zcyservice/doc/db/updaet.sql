@@ -1,2 +1,2 @@
 use zcy;
-alter table archivefile modify column archiveTextData LONGTEXT default null;
+alter table ArchiveFile modify column archiveTextData LONGTEXT default null;
